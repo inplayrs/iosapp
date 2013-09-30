@@ -21,7 +21,7 @@
 
 @implementation IPRegisterViewController
 
-@synthesize registerButton, termsLabel, termsUnderlineLabel, registerUsernameField, registerPasswordField, registerEmailField, loginViewController, infoViewController;
+@synthesize registerButton, termsLabel, registerUsernameField, registerPasswordField, registerEmailField, infoViewController, termsButton;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -57,13 +57,18 @@
     [self.registerButton setBackgroundImage:image3 forState:UIControlStateDisabled];
     self.registerButton.titleLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:18.0];
     self.termsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
-    NSDictionary *underlineAttribute = @{NSUnderlineStyleAttributeName: @1};
-    self.termsUnderlineLabel.attributedText = [[NSAttributedString alloc] initWithString:@"Terms"
-                                                             attributes:underlineAttribute];
+    self.termsButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        UIEdgeInsets titleInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
+        self.registerButton.titleEdgeInsets = titleInsets;
+    }
+    // NSDictionary *underlineAttribute = @{NSUnderlineStyleAttributeName: @1};
+    // self.termsUnderlineLabel.attributedText = [[NSAttributedString alloc] initWithString:@"Terms"
+    //                                                         attributes:underlineAttribute];
+    
     // keyboardShown = NO;
     // viewMoved = NO;
     
-    loginViewController = nil;
     infoViewController = nil;
     
     /*
@@ -204,8 +209,8 @@
         [alert show];
         return;
     }
-    if (![self validateUsername:registerPasswordField.text]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Password" message:@"Please enter a password between 5 and 15 characters composed of letters and numbers only!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    if (![self validatePassword:registerPasswordField.text]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Password" message:@"Please enter a password between 5 and 15 characters composed of letters, numbers, and some special chars only!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         return;
     }
@@ -294,7 +299,12 @@
     return [usernameTest evaluateWithObject:candidate];
 }
 
-
+- (BOOL) validatePassword: (NSString *) candidate {
+    NSString *passwordRegex = @"[A-Z0-9a-z_-]{5,15}";
+    NSPredicate *passwordTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", passwordRegex];
+    
+    return [passwordTest evaluateWithObject:candidate];
+}
 
 
 @end

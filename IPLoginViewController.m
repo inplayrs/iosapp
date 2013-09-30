@@ -54,6 +54,10 @@
     [self.loginButton setBackgroundImage:image2 forState:UIControlStateHighlighted];
     [self.loginButton setBackgroundImage:image3 forState:UIControlStateDisabled];
     self.loginButton.titleLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:18.0];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        UIEdgeInsets titleInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
+        self.loginButton.titleEdgeInsets = titleInsets;
+    }
     // keyboardShown = NO;
     // viewMoved = NO;
 }

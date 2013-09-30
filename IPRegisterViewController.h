@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@class IPLoginViewController;
 @class IPInfoViewController;
 
 @interface IPRegisterViewController : UIViewController <UIAlertViewDelegate, UITextFieldDelegate> {
@@ -19,13 +18,12 @@
 
 
 @property (weak, nonatomic) IBOutlet UILabel *termsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *termsUnderlineLabel;
+// @property (weak, nonatomic) IBOutlet UILabel *termsUnderlineLabel;
 @property (weak, nonatomic) IBOutlet UITextField *registerUsernameField;
 @property (weak, nonatomic) IBOutlet UITextField *registerPasswordField;
 @property (weak, nonatomic) IBOutlet UITextField *registerEmailField;
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
 @property (weak, nonatomic) IBOutlet UIButton *termsButton;
-@property (strong, nonatomic) IPLoginViewController *loginViewController;
 @property (strong, nonatomic) IPInfoViewController *infoViewController;
 
 - (IBAction)dismissKeyboard:(id)sender;

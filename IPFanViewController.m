@@ -136,6 +136,11 @@ enum Category {
         [self.fangroupButton setBackgroundImage:image3 forState:UIControlStateDisabled];
         self.competitionButton.titleLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:18.0];
         self.fangroupButton.titleLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:18.0];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+            UIEdgeInsets titleInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
+            self.competitionButton.titleEdgeInsets = titleInsets;
+            self.fangroupButton.titleEdgeInsets = titleInsets;
+        }
     }
     
     return footerView;
@@ -334,12 +339,15 @@ numberOfRowsInComponent:(NSInteger)component
         return;
     }
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self     cancelButtonTitle:@"CANCEL" destructiveButtonTitle:nil otherButtonTitles:@"SELECT", nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"SELECT", @"CANCEL", nil];
     actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
     actionSheet.tag = COMPETITIONS;
     
-    
-    UIPickerView *picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 150, 320, 320)];
+    UIPickerView *picker;
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1)
+        picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 150, 320, 320)];
+    else
+        picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 100, 320, 216)];
     picker.showsSelectionIndicator=YES;
     picker.dataSource = self;
     picker.delegate = self;
@@ -421,12 +429,16 @@ numberOfRowsInComponent:(NSInteger)component
         return;
     }
         
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self     cancelButtonTitle:@"CANCEL" destructiveButtonTitle:nil otherButtonTitles:@"SELECT", nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"SELECT", @"CANCEL", nil];
     actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
     actionSheet.tag = FANGROUPS;
     
     
-    UIPickerView *picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 150, 320, 320)];
+    UIPickerView *picker;
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1)
+        picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 150, 320, 320)];
+    else
+        picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 100, 320, 216)];
     picker.showsSelectionIndicator=YES;
     picker.dataSource = self;
     picker.delegate = self;

@@ -36,13 +36,31 @@ enum State {
 {
     [super setSelected:selected animated:animated];
     
-    UIImageView *imageViewSelected = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-main-row-hit-state.png"]];
+    // UIImageView *imageViewSelected = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-main-row-hit-state.png"]];
     if (selected) {
-        self.selectedBackgroundView = imageViewSelected;
+        // if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-main-row-hit-state.png"]];
+            self.backgroundView = imageView;
+            // self.backgroundView = nil;
+            // self.backgroundColor = [UIColor colorWithRed:234/255.0 green:208/255.0 blue:23/255.0 alpha:1.0];
+            /*
+        } else {
+            UIImageView *imageViewSelected = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-main-row-hit-state.png"]];
+            self.selectedBackgroundView = imageViewSelected;
+        }
+             */
         self.timeLabel.textColor = [UIColor colorWithRed:45.0/255.0 green:45.0/255.0 blue:45.0/255.0 alpha:1.0];
         self.nameLabel.textColor = [UIColor colorWithRed:45.0/255.0 green:45.0/255.0 blue:45.0/255.0 alpha:1.0];
     } else {
-        self.selectedBackgroundView = nil;
+       // if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-main-row.png"]];
+            self.backgroundView = imageView;
+            // self.backgroundColor = [UIColor clearColor];
+        /*
+        } else {
+            self.selectedBackgroundView = nil;
+        }
+         */
         if (self.competitionState == COMPLETED) {
             self.timeLabel.textColor = [UIColor colorWithRed:45.0/255.0 green:45.0/255.0 blue:45.0/255.0 alpha:1.0];
             self.nameLabel.textColor = [UIColor colorWithRed:45.0/255.0 green:45.0/255.0 blue:45.0/255.0 alpha:1.0];
@@ -51,8 +69,6 @@ enum State {
             self.nameLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
         }
     }
-    
-    // Configure the view for the selected state
 }
 
 

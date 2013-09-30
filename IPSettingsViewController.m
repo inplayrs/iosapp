@@ -69,6 +69,14 @@
     self.emailLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
     self.emailLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
     self.autorefreshLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        UIEdgeInsets titleInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
+        self.logoutButton.titleEdgeInsets = titleInsets;
+        self.updateButton.titleEdgeInsets = titleInsets;
+        self.passwordButton.titleEdgeInsets = titleInsets;
+    }
+    
     passwordViewController = nil;
     loginViewController = nil;
 }

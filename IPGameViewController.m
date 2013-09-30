@@ -608,8 +608,10 @@ enum GameType {
                 rightSegmentState:UIControlStateSelected 
                     barMetrics:UIBarMetricsDefault];
     
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Avalon-Demi" size:14.0],UITextAttributeFont,nil];
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Avalon-Demi" size:14.0],UITextAttributeFont,[UIColor whiteColor],UITextAttributeTextColor,nil];
     [pointsButton setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    [pointsButton setTitleTextAttributes:attributes forState:UIControlStateSelected];
+        
     self.leftLabel.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
     self.rightLabel.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
     UIImage *image = [UIImage imageNamed: @"green_dot.png"];
@@ -639,6 +641,10 @@ enum GameType {
         [self.submitButton setBackgroundImage:image2 forState:UIControlStateHighlighted];
         [self.submitButton setBackgroundImage:image3 forState:UIControlStateDisabled];
         self.submitButton.titleLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:18.0];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+            UIEdgeInsets titleInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
+            self.submitButton.titleEdgeInsets = titleInsets;
+        }
     }
     
     switch (self.game.state) {
@@ -722,6 +728,7 @@ enum GameType {
             UIBarButtonItem *barButtonItem =[[UIBarButtonItem alloc] initWithCustomView:leaderboardButton];
             self.navigationItem.rightBarButtonItem = barButtonItem;
         }
+        [pointsButton setEnabled:YES];
     } else {
         // self.navigationItem.rightBarButtonItem = nil;
         if (!self.navigationItem.rightBarButtonItem) {
@@ -742,6 +749,7 @@ enum GameType {
             UIBarButtonItem *barButtonItem =[[UIBarButtonItem alloc] initWithCustomView:tutorialButton];
             self.navigationItem.rightBarButtonItem = barButtonItem;
         }
+        [pointsButton setEnabled:NO];
     }
     
 }

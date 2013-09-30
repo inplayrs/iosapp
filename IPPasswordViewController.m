@@ -55,6 +55,10 @@
     [self.passwordButton setBackgroundImage:image2 forState:UIControlStateHighlighted];
     [self.passwordButton setBackgroundImage:image3 forState:UIControlStateDisabled];
     self.passwordButton.titleLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:18.0];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        UIEdgeInsets titleInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
+        self.passwordButton.titleEdgeInsets = titleInsets;
+    }
 }
 
 
@@ -98,13 +102,12 @@
 }
 
 
-- (BOOL) validateUsername: (NSString *) candidate {
-    NSString *usernameRegex = @"[A-Z0-9a-z_-]{5,15}";
-    NSPredicate *usernameTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", usernameRegex];
+- (BOOL) validatePassword: (NSString *) candidate {
+    NSString *passwordRegex = @"[A-Z0-9a-z_-]{5,15}";
+    NSPredicate *passwordTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", passwordRegex];
     
-    return [usernameTest evaluateWithObject:candidate];
+    return [passwordTest evaluateWithObject:candidate];
 }
-
 
 - (IBAction)changePassword:(id)sender {
     if (([self.oldPassword.text isEqualToString:@""])  || (!self.oldPassword.text)) {
@@ -123,8 +126,8 @@
         return;
     }
     
-    if ((![self validateUsername:updatePassword.text]) || (![self validateUsername:updatePassword2.text])) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Password" message:@"Please enter a password between 5 and 15 characters composed of letters and numbers only!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    if ((![self validatePassword:updatePassword.text]) || (![self validatePassword:updatePassword2.text])) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Password" message:@"Please enter a password between 5 and 15 characters composed of letters, numbers, and some special chars only!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         return;
     }
@@ -187,5 +190,9 @@
         self.updatePassword2.text = nil;
         self.passwordButton.enabled = YES;
     }];
+}
+
+- (IBAction)dismissKeyboard:(id)sender {
+    [activeField resignFirstResponder];
 }
 @end

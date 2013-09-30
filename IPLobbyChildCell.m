@@ -25,13 +25,20 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-    
+    /*
     UIImageView *imageViewSelected = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-sub-row-hit-gray.png"]];
     if (selected) {
         self.selectedBackgroundView = imageViewSelected;
     }
-    
-    // Configure the view for the selected state
+     */
+    if (selected) {
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-sub-row-hit-gray.png"]];
+        self.backgroundView = imageView;
+    } else {
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-sub-row.png"]];
+        self.backgroundView = imageView;
+
+    }
 }
 
 

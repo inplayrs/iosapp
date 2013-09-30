@@ -177,6 +177,8 @@ enum Category {
     [[self tableView] registerNib:childNib forCellReuseIdentifier:@"IPLobbyChildCell"];
     [self.tableView setAlwaysBounceVertical:YES];
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background-only.png"]];
+    // self.edgesForExtendedLayout = UIRectEdgeNone;
+    // self.extendedLayoutIncludesOpaqueBars = YES;
     
     // Uncomment the following line to preserve selection between presentations.
     self.clearsSelectionOnViewWillAppear = YES;
@@ -458,6 +460,7 @@ enum Category {
     && indexPath.row > currentExpandedIndex
     && indexPath.row <= currentExpandedIndex + [[subItems objectAtIndex:currentExpandedIndex] count];
     
+    
     if (isChild) {
         IPLobbyChildCell *cell = [tableView dequeueReusableCellWithIdentifier:@"IPLobbyChildCell"];
         cell.nameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
@@ -500,7 +503,7 @@ enum Category {
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-sub-row.png"]];
         // UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-row.png"]];
         cell.backgroundView = imageView;
-        cell.selectedBackgroundView = nil;
+        // cell.selectedBackgroundView = nil;
         
         return cell;
     } else {
@@ -540,7 +543,7 @@ enum Category {
         
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-main-row.png"]];
         cell.backgroundView = imageView;
-        cell.selectedBackgroundView = nil;
+        // cell.selectedBackgroundView = nil;
         
         switch (competition.category) {
             case (FOOTBALL): {
@@ -694,6 +697,7 @@ enum Category {
         int newIndex = [self.tableView numberOfRowsInSection:0] - 1;
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:newIndex inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
+    
     
 }
 

@@ -39,15 +39,18 @@
 - (MFSideMenu *)sideMenu {
     SideMenuViewController *sideMenuController = [[SideMenuViewController alloc] init];
     UINavigationController *navigationController = [self navigationController];
-    // navigationController.navigationBar.tintColor = [UIColor yellowColor];
     // navigationController.navigationBar.tintColor = [UIColor colorWithRed:249/255.0 green:242/255.0 blue:7/255.0 alpha:1.0];
-    // navigationController.navigationBar.tintColor = [UIColor colorWithRed:234/255.0 green:208/255.0 blue:23/255.0 alpha:1.0];
-    [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed: @"nav-bar.png"] forBarMetrics:UIBarMetricsDefault];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        // navigationController.navigationBar.barTintColor = [UIColor colorWithRed:234/255.0 green:208/255.0 blue:23/255.0 alpha:1.0];
+        [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed: @"nav-bar.png"] forBarMetrics:UIBarMetricsDefault];
+        navigationController.navigationBar.translucent = NO;
+    } else {
+        [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed: @"nav-bar.png"] forBarMetrics:UIBarMetricsDefault];
+        [navigationController.navigationBar setTitleVerticalPositionAdjustment:5.0 forBarMetrics:UIBarMetricsDefault];
+    }
     navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                                               [UIColor blackColor], UITextAttributeTextColor,
                                                               [UIFont fontWithName:@"Avalon-Bold" size:18.0], UITextAttributeFont, [NSValue valueWithUIOffset:UIOffsetMake(0.0,0.0)],UITextAttributeTextShadowOffset, nil];
-    [navigationController.navigationBar setTitleVerticalPositionAdjustment:5.0 forBarMetrics:UIBarMetricsDefault];
-
     
     MFSideMenuOptions options = MFSideMenuOptionMenuButtonEnabled|MFSideMenuOptionBackButtonEnabled
                                                                  |MFSideMenuOptionShadowEnabled;
@@ -61,7 +64,6 @@
                                                             panMode:panMode];
     
     sideMenuController.sideMenu = sideMenu;
-    [Flurry logAllPageViews:navigationController];
     UIImage *backButtonNormal = [UIImage imageNamed:@"back-button.png"];
     UIImage *backButtonHighlighted = [UIImage imageNamed:@"back-button-hit-state.png"];
     CGRect frameimg = CGRectMake(0, 0, backButtonNormal.size.width, backButtonNormal.size.height);
@@ -106,6 +108,13 @@
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
     (UIRemoteNotificationTypeAlert)];
     
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        [application setStatusBarStyle:UIStatusBarStyleLightContent];
+        self.window.clipsToBounds =YES;
+        self.window.frame =  CGRectMake(0,20,self.window.frame.size.width,self.window.frame.size.height-20);
+        self.window.bounds = CGRectMake(0, 20, self.window.frame.size.width, self.window.frame.size.height);
+    }
+    
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     NSString *savedUsername = [prefs objectForKey:@"username"];
     NSString *savedUser = [prefs objectForKey:@"user"];
@@ -130,7 +139,7 @@
     // RKLogConfigureByName("RestKit", RKLogLevelWarning);
     // RKLogConfigureByName("RestKit/Network*", RKLogLevelTrace);
     // RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
-    // RKLogConfigureByName("*", RKLogLevelOff);
+    RKLogConfigureByName("*", RKLogLevelOff);
     
     //let AFNetworking manage the activity indicator
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;

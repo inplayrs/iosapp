@@ -18,7 +18,7 @@
 
 @implementation IPTutorialViewController
 
-@synthesize tutorialImageView, topImages;
+@synthesize tutorialImageView, topImages, globalButton, fangroupButton, h2hButton, leftButton, rightButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -206,5 +206,25 @@
             return;
         }
     }
+}
+
+- (IBAction)leftPressed:(id)sender {
+    if (imageIndex == 0)
+        return;
+    imageIndex--;
+    
+    imageIndex = (imageIndex < 0) ? ([topImages count] -1):
+    imageIndex % [topImages count];
+    tutorialImageView.image = [topImages objectAtIndex:imageIndex];
+}
+
+- (IBAction)rightPressed:(id)sender {
+    if (imageIndex == [topImages count] -1)
+        return;
+    imageIndex++;
+    
+    imageIndex = (imageIndex < 0) ? ([topImages count] -1):
+    imageIndex % [topImages count];
+    tutorialImageView.image = [topImages objectAtIndex:imageIndex];
 }
 @end

@@ -179,8 +179,9 @@ enum State {
                   forLeftSegmentState:UIControlStateNormal
                     rightSegmentState:UIControlStateSelected
                            barMetrics:UIBarMetricsDefault];
-        NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Avalon-Demi" size:14.0],UITextAttributeFont,nil];
+        NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Avalon-Demi" size:14.0],UITextAttributeFont,[UIColor whiteColor], UITextAttributeTextColor, nil];
         [pointsButton setTitleTextAttributes:attributes forState:UIControlStateNormal];
+        [pointsButton setTitleTextAttributes:attributes forState:UIControlStateSelected];
         rankHeader.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
         winningsHeader.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
         nameHeader.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
@@ -276,6 +277,12 @@ enum State {
         [self.gameButton setBackgroundImage:image3 forState:UIControlStateDisabled];
         self.competitionButton.titleLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:18.0];
         self.gameButton.titleLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:18.0];
+        
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+            UIEdgeInsets titleInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
+            self.gameButton.titleEdgeInsets = titleInsets;
+            self.competitionButton.titleEdgeInsets = titleInsets;
+        }
     }
 
     return footerView;
@@ -457,12 +464,15 @@ numberOfRowsInComponent:(NSInteger)component
         return;
     }
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self     cancelButtonTitle:@"CANCEL" destructiveButtonTitle:nil otherButtonTitles:@"SELECT", nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"SELECT", @"CANCEL", nil];
     actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
     actionSheet.tag = COMPETITIONS;
     
-    
-    UIPickerView *picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 150, 320, 320)];
+    UIPickerView *picker;
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1)
+        picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 150, 320, 320)];
+    else
+        picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 100, 320, 216)];
     picker.showsSelectionIndicator=YES;
     picker.dataSource = self;
     picker.delegate = self;
@@ -485,12 +495,16 @@ numberOfRowsInComponent:(NSInteger)component
         return;
     }
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self     cancelButtonTitle:@"CANCEL" destructiveButtonTitle:nil otherButtonTitles:@"SELECT", nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"SELECT", @"CANCEL", nil];
     actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
     actionSheet.tag = GAMES;
     
     
-    UIPickerView *picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 150, 320, 320)];
+    UIPickerView *picker;
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1)
+        picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 150, 320, 320)];
+    else
+        picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 100, 320, 216)];
     picker.showsSelectionIndicator=YES;
     picker.dataSource = self;
     picker.delegate = self;

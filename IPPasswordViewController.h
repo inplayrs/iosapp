@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *passwordButton;
 
 - (IBAction)changePassword:(id)sender;
+- (IBAction)dismissKeyboard:(id)sender;
 
 
 @end
