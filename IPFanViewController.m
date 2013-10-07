@@ -16,6 +16,7 @@
 #import "IPAppDelegate.h"
 #import "Error.h"
 #import "Game.h"
+#import "IPGameViewController.h"
 
 #define COMPETITIONS 1
 #define FANGROUPS 2
@@ -204,6 +205,8 @@ enum Category {
         }
         [self.dataController.fangroupList sortUsingSelector:@selector(compareWithName:)];
         [self.fangroupButton setEnabled:YES];
+        if (self.game)
+            [self submitFangroup:self];
      } failure:nil];
 }
 
@@ -219,6 +222,8 @@ enum Category {
         if (self.game) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Fangroup Successful" message:@"You have selected your fangroup for the duration of the competition." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
+            IPGameViewController *parentViewController = (IPGameViewController*)[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
+            [parentViewController postSelections];
             [self.navigationController popViewControllerAnimated:YES];
         } else {
             [self.fangroupButton setEnabled:NO];
@@ -338,30 +343,75 @@ numberOfRowsInComponent:(NSInteger)component
         [alert show];
         return;
     }
+
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"SELECT", @"CANCEL", nil];
-    actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
-    actionSheet.tag = COMPETITIONS;
+    CGRect frame = CGRectMake(0, 0, 320, 44);
+    UIToolbar *pickerToolbar = [[UIToolbar alloc] initWithFrame:frame];
+    pickerToolbar.barStyle = UIBarStyleBlack;
+    NSMutableArray *barItems = [[NSMutableArray alloc] init];
+    UIBarButtonItem *cancelBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCancel target:self action:@selector(actionPickerCancel:)];
+    [barItems addObject:cancelBtn];
+    UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    [barItems addObject:flexSpace];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(competitionDone:)];
+    [barItems addObject:doneButton];
+    [pickerToolbar setItems:barItems animated:NO];
+    [pickerToolbar setTintColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]];
+    [cancelBtn setTintColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]];
+    [doneButton setTintColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        [[UIBarButtonItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0] } forState:UIControlStateNormal];
+    } else {
+        NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,nil];
+        [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    }
     
-    UIPickerView *picker;
-    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1)
-        picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 150, 320, 320)];
-    else
-        picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 100, 320, 216)];
-    picker.showsSelectionIndicator=YES;
-    picker.dataSource = self;
-    picker.delegate = self;
-    picker.tag = COMPETITIONS;
+    CGFloat windowHeight = self.view.superview.frame.size.height;
+    myView = [[UIView alloc] initWithFrame:CGRectMake(0, windowHeight-260, 320, 260)];
+    [myView setBackgroundColor:[UIColor lightGrayColor]];
+    UIPickerView *myPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 44, 320, 216)];
+    myPicker.showsSelectionIndicator=YES;
+    myPicker.dataSource = self;
+    myPicker.delegate = self;
+    myPicker.tag = COMPETITIONS;
+    [myPicker selectRow:0 inComponent:0 animated:NO];
+    [myView addSubview:pickerToolbar];
+    [myView addSubview:myPicker];
     
-    
-    [actionSheet addSubview:picker];
-    [picker selectRow:0 inComponent:0 animated:NO];
-    [actionSheet showInView:self.view];
-    [actionSheet setBounds:CGRectMake(0, 0, 320, 580)];
-    
+    [self.view.superview addSubview:myView];
+    [self.view.superview bringSubviewToFront:myView];
+    [self.tableView setUserInteractionEnabled:NO];
+
 }
 
-                            
+
+-(void)competitionDone:(id)sender {
+    Competition *competition = [self.dataController.competitionList objectAtIndex:self.selectedCompetitionRow];
+    [self.competitionButton setTitle:competition.name forState:UIControlStateNormal];
+    [self getFangroups:self.selectedCompetitionID];
+    [self.competitionButton setEnabled:NO];
+    [myView removeFromSuperview];
+    [self.tableView setUserInteractionEnabled:YES];
+}
+
+-(void)actionPickerCancel:(id)sender {
+    [myView removeFromSuperview];
+    [self.tableView setUserInteractionEnabled:YES];
+}
+
+-(void)fangroupDone:(id)sender {
+    IPAppDelegate *appDelegate = (IPAppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (appDelegate.loggedin == NO) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login required" message:@"Please login first!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    [self postFangroup];
+    [myView removeFromSuperview];
+    [self.tableView setUserInteractionEnabled:YES];
+}
+
+/*
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (actionSheet.tag == COMPETITIONS)
@@ -384,37 +434,9 @@ numberOfRowsInComponent:(NSInteger)component
         
             [self postFangroup];
         }
-         /*
-        [self.fangroupButton setEnabled:NO];
-        [self.competitionButton setEnabled:YES];
-        [self.competitionButton setTitle:@"PICK COMPETITION" forState:UIControlStateNormal];
-        
-        Competition *competition = [self.dataController.competitionList objectAtIndex:selectedCompetitionRow];
-        Fangroup *fangroup = [self.dataController.fangroupList objectAtIndex:selectedFangroupRow];
-        Boolean found = NO;
-        
-        for (int i=0; i < [self.dataController.myFanList count]; i++) {
-            Fan *fan = [self.dataController.myFanList objectAtIndex:i];
-            if ([fan.competitionName isEqualToString:competition.name]) {
-                fan.fangroupName = fangroup.name;
-                fan.fangroupID = fangroup.fangroupID;
-                [self.dataController.myFanList replaceObjectAtIndex:i withObject:fan];
-                found = YES;
-                break;
-            }
-        }
-        if (!found) {
-            Fan *fan = [[Fan alloc] initWithCompetitionName:competition.name fangroupName:fangroup.name fangroupID:fangroup.fangroupID];
-            [self.dataController.myFanList addObject:fan];
-        }
-        
-        [self.tableView reloadData];
-        [self.dataController.fangroupList removeAllObjects];
-        self.selectedFangroupRow = -1;
-        self.selectedCompetitionRow = -1;
-        */
     }
 }
+*/
 
 - (IBAction)submitFangroup:(id)sender {
     
@@ -428,27 +450,43 @@ numberOfRowsInComponent:(NSInteger)component
         }
         return;
     }
-        
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"SELECT", @"CANCEL", nil];
-    actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
-    actionSheet.tag = FANGROUPS;
     
+    CGRect frame = CGRectMake(0, 0, 320, 44);
+    UIToolbar *pickerToolbar = [[UIToolbar alloc] initWithFrame:frame];
+    pickerToolbar.barStyle = UIBarStyleBlack;
+    NSMutableArray *barItems = [[NSMutableArray alloc] init];
+    UIBarButtonItem *cancelBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCancel target:self action:@selector(actionPickerCancel:)];
+    [cancelBtn setTintColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]];
+    [barItems addObject:cancelBtn];
+    UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    [barItems addObject:flexSpace];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(fangroupDone:)];
+    [doneButton setTintColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]];
+    [barItems addObject:doneButton];
+    [pickerToolbar setItems:barItems animated:NO];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        [[UIBarButtonItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0] } forState:UIControlStateNormal];
+    } else {
+        NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,nil];
+        [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    }
     
-    UIPickerView *picker;
-    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1)
-        picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 150, 320, 320)];
-    else
-        picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 100, 320, 216)];
-    picker.showsSelectionIndicator=YES;
-    picker.dataSource = self;
-    picker.delegate = self;
-    picker.tag = FANGROUPS;
+    CGFloat windowHeight = self.view.superview.frame.size.height;
+    myView = [[UIView alloc] initWithFrame:CGRectMake(0, windowHeight-260, 320, 260)];
+    [myView setBackgroundColor:[UIColor lightGrayColor]];
+    UIPickerView *myPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 44, 320, 216)];
+    myPicker.showsSelectionIndicator=YES;
+    myPicker.dataSource = self;
+    myPicker.delegate = self;
+    myPicker.tag = FANGROUPS;
+    [myPicker selectRow:0 inComponent:0 animated:NO];
+    [myView addSubview:pickerToolbar];
+    [myView addSubview:myPicker];
     
-    
-    [actionSheet addSubview:picker];
-    [picker selectRow:0 inComponent:0 animated:NO];
-    [actionSheet showInView:self.view];
-    [actionSheet setBounds:CGRectMake(0, 0, 320, 580)];
+    [self.view.superview addSubview:myView];
+    [self.view.superview bringSubviewToFront:myView];
+    [self.tableView setUserInteractionEnabled:NO];
+
 }
 
 

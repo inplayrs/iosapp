@@ -12,10 +12,11 @@
 @class LeaderboardDataController;
 @class Game;
 
-@interface IPLeaderboardViewController : UITableViewController <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIAlertViewDelegate>
+@interface IPLeaderboardViewController : UITableViewController <UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate>
 {
     IBOutlet UIView *headerView;
     IBOutlet UIView *footerView;
+    UIView *myView;
 }
 
 

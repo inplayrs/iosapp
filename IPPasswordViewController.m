@@ -46,7 +46,13 @@
     [backButton addTarget:self action:@selector(backButtonPressed:)
          forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *barButtonItem =[[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem = barButtonItem;
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+        negativeSpacer.width = -10;
+        [self.navigationItem setLeftBarButtonItems:[NSArray arrayWithObjects:negativeSpacer, barButtonItem, nil]];
+    } else {
+        self.navigationItem.leftBarButtonItem = barButtonItem;
+    }
     
     UIImage *image = [UIImage imageNamed:@"login-button-normal.png"];
     UIImage *image2 = [UIImage imageNamed:@"login-button-hit.png"];
@@ -127,7 +133,7 @@
     }
     
     if ((![self validatePassword:updatePassword.text]) || (![self validatePassword:updatePassword2.text])) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Password" message:@"Please enter a password between 5 and 15 characters composed of letters, numbers, and some special chars only!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Password" message:@"Please enter a password between 5 and 15 characters composed of letters and numbers only!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         return;
     }

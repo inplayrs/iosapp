@@ -79,7 +79,7 @@ enum State {
     self.selectedGameRow = -1;
     
     UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
-    refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"];
+    refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh" attributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]}];
     refresh.tintColor = [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0];
     [refresh addTarget:self action:@selector(refreshView:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refresh;
@@ -464,10 +464,48 @@ numberOfRowsInComponent:(NSInteger)component
         return;
     }
     
+    CGRect frame = CGRectMake(0, 0, 320, 44);
+    UIToolbar *pickerToolbar = [[UIToolbar alloc] initWithFrame:frame];
+    pickerToolbar.barStyle = UIBarStyleBlack;
+    NSMutableArray *barItems = [[NSMutableArray alloc] init];
+    UIBarButtonItem *cancelBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCancel target:self action:@selector(actionPickerCancel:)];
+    [cancelBtn setTintColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]];
+    [barItems addObject:cancelBtn];
+    UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    [barItems addObject:flexSpace];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(competitionDone:)];
+    [doneButton setTintColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]];
+    [barItems addObject:doneButton];
+    [pickerToolbar setItems:barItems animated:NO];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        [[UIBarButtonItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0] } forState:UIControlStateNormal];
+    } else {
+        NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,nil];
+        [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    }
+    
+    CGFloat windowHeight = self.view.superview.frame.size.height;
+    myView = [[UIView alloc] initWithFrame:CGRectMake(0, windowHeight-260, 320, 260)];
+    [myView setBackgroundColor:[UIColor lightGrayColor]];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+        [myView setTintColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]];
+    UIPickerView *myPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 44, 320, 216)];
+    myPicker.showsSelectionIndicator=YES;
+    myPicker.dataSource = self;
+    myPicker.delegate = self;
+    myPicker.tag = COMPETITIONS;
+    [myPicker selectRow:0 inComponent:0 animated:NO];
+    [myView addSubview:pickerToolbar];
+    [myView addSubview:myPicker];
+    
+    [self.view.superview addSubview:myView];
+    [self.view.superview bringSubviewToFront:myView];
+    [self.tableView setUserInteractionEnabled:NO];
+    
+    /*
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"SELECT", @"CANCEL", nil];
     actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
     actionSheet.tag = COMPETITIONS;
-    
     UIPickerView *picker;
     if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1)
         picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 150, 320, 320)];
@@ -477,13 +515,11 @@ numberOfRowsInComponent:(NSInteger)component
     picker.dataSource = self;
     picker.delegate = self;
     picker.tag = COMPETITIONS;
-    
-    
     [actionSheet addSubview:picker];
     [picker selectRow:0 inComponent:0 animated:NO];
     [actionSheet showInView:self.view];
     [actionSheet setBounds:CGRectMake(0, 0, 320, 580)];
-    
+    */
 }
 
 
@@ -495,29 +531,75 @@ numberOfRowsInComponent:(NSInteger)component
         return;
     }
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"SELECT", @"CANCEL", nil];
-    actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
-    actionSheet.tag = GAMES;
+    CGRect frame = CGRectMake(0, 0, 320, 44);
+    UIToolbar *pickerToolbar = [[UIToolbar alloc] initWithFrame:frame];
+    pickerToolbar.barStyle = UIBarStyleBlack;
+    NSMutableArray *barItems = [[NSMutableArray alloc] init];
+    UIBarButtonItem *cancelBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCancel target:self action:@selector(actionPickerCancel:)];
+    [cancelBtn setTintColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]];
+    [barItems addObject:cancelBtn];
+    UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    [barItems addObject:flexSpace];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(gameDone:)];
+    [doneButton setTintColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]];
+    [barItems addObject:doneButton];
+    [pickerToolbar setItems:barItems animated:NO];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        [[UIBarButtonItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0] } forState:UIControlStateNormal];
+    } else {
+        NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,nil];
+        [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    }
     
+    CGFloat windowHeight = self.view.superview.frame.size.height;
+    myView = [[UIView alloc] initWithFrame:CGRectMake(0, windowHeight-260, 320, 260)];
+    [myView setBackgroundColor:[UIColor lightGrayColor]];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+        [myView setTintColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]];
+    UIPickerView *myPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 44, 320, 216)];
+    myPicker.showsSelectionIndicator=YES;
+    myPicker.dataSource = self;
+    myPicker.delegate = self;
+    myPicker.tag = GAMES;
+    [myPicker selectRow:0 inComponent:0 animated:NO];
+    [myView addSubview:pickerToolbar];
+    [myView addSubview:myPicker];
     
-    UIPickerView *picker;
-    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1)
-        picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 150, 320, 320)];
-    else
-        picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 100, 320, 216)];
-    picker.showsSelectionIndicator=YES;
-    picker.dataSource = self;
-    picker.delegate = self;
-    picker.tag = GAMES;
+    [self.view.superview addSubview:myView];
+    [self.view.superview bringSubviewToFront:myView];
+    [self.tableView setUserInteractionEnabled:NO];
     
-    
-    [actionSheet addSubview:picker];
-    [picker selectRow:0 inComponent:0 animated:NO];
-    [actionSheet showInView:self.view];
-    [actionSheet setBounds:CGRectMake(0, 0, 320, 580)];
+
 }
 
+-(void)actionPickerCancel:(id)sender {
+    [myView removeFromSuperview];
+    [self.tableView setUserInteractionEnabled:YES];
+}
 
+-(void)competitionDone:(id)sender {
+    Competition *competition = [self.dataController.competitionList objectAtIndex:self.selectedCompetitionRow];
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:competition.name,
+                                @"name", @"Competition", @"type", nil];
+    [Flurry logEvent:@"LEADERBOARD" withParameters:dictionary];
+    self.type = COMPETITIONS;
+    [self getLeaderboard:competition.competitionID type:COMPETITIONS title:competition.name];
+    [myView removeFromSuperview];
+    [self.tableView setUserInteractionEnabled:YES];
+}
+
+-(void)gameDone:(id)sender {
+    Game *game = [self.dataController.gameList objectAtIndex:self.selectedGameRow];
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:game.name,
+                                @"name", @"Game", @"type", nil];
+    [Flurry logEvent:@"LEADERBOARD" withParameters:dictionary];
+    self.type = GAMES;
+    [self getLeaderboard:game.gameID type:GAMES title:game.name];
+    [myView removeFromSuperview];
+    [self.tableView setUserInteractionEnabled:YES];
+}
+
+/*
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (actionSheet.tag == COMPETITIONS)
@@ -544,6 +626,7 @@ numberOfRowsInComponent:(NSInteger)component
         }
     }
 }
+*/
 
 - (void)refresh:(NSInteger)type {
     NSSortDescriptor *rankSorter = [[NSSortDescriptor alloc] initWithKey:@"rank" ascending:YES];
@@ -562,7 +645,7 @@ numberOfRowsInComponent:(NSInteger)component
     [formatter setDateFormat:@"MM-dd HH:mm"];
     NSString *lastUpdated = [NSString stringWithFormat:@"Last updated on %@",
                              [formatter stringFromDate:[NSDate date]]];
-    self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:lastUpdated];
+    self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:lastUpdated attributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]}];
     [self.refreshControl endRefreshing];
     // [activityIndicator stopAnimating];
     self.isLoading = NO;

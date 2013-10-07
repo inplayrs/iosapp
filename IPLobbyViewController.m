@@ -185,7 +185,7 @@ enum Category {
     self.controllerList = [[NSMutableDictionary alloc] init];
 
     UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
-    refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"];
+    refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh" attributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]}];
     refresh.tintColor = [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0];
     [refresh addTarget:self
                 action:@selector(refreshView:)
@@ -336,7 +336,7 @@ enum Category {
          [formatter setDateFormat:@"MM-dd HH:mm"];
          NSString *lastUpdated = [NSString stringWithFormat:@"Last updated on %@",
                                   [formatter stringFromDate:[NSDate date]]];
-         self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:lastUpdated];
+         self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:lastUpdated attributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]}];
     } failure:^(RKObjectRequestOperation *operation, NSError *error){
         // NSLog(@"Failed with error: %@", [error localizedDescription]);
         self.gamesLoading = NO;

@@ -20,6 +20,7 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bottom-section-leaderboard.png" id="232">
                     <rect key="frame" x="0.0" y="-4" width="320" height="102"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="3">
                     <rect key="frame" x="10" y="10" width="300" height="34"/>

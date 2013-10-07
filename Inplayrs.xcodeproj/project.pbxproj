@@ -283,6 +283,10 @@
 		F4F714C716AEF7FB00FCCA82 /* IPMenuHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4F714C616AEF7FA00FCCA82 /* IPMenuHeaderView.xib */; };
 		F4F714CA16B1748900FCCA82 /* MenuDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F714C916B1748800FCCA82 /* MenuDataController.m */; };
 		F4F714CC16B9745C00FCCA82 /* Period.h in Resources */ = {isa = PBXBuildFile; fileRef = F4F714CB16B9745C00FCCA82 /* Period.h */; };
+		F4F8043217FEBF8B0048A944 /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F8043017FEBF8B0048A944 /* cross.png */; };
+		F4F8043317FEBF8B0048A944 /* tick.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F8043117FEBF8B0048A944 /* tick.png */; };
+		F4F8043617FEE2B40048A944 /* cross@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F8043417FEE2B40048A944 /* cross@2x.png */; };
+		F4F8043717FEE2B40048A944 /* tick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F8043517FEE2B40048A944 /* tick@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -602,6 +606,10 @@
 		F4F714C816B1748800FCCA82 /* MenuDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuDataController.h; path = Inplayrs/MenuDataController.h; sourceTree = "<group>"; };
 		F4F714C916B1748800FCCA82 /* MenuDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuDataController.m; path = Inplayrs/MenuDataController.m; sourceTree = "<group>"; };
 		F4F714CB16B9745C00FCCA82 /* Period.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Period.h; path = Inplayrs/Period.h; sourceTree = "<group>"; };
+		F4F8043017FEBF8B0048A944 /* cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cross.png; sourceTree = "<group>"; };
+		F4F8043117FEBF8B0048A944 /* tick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tick.png; sourceTree = "<group>"; };
+		F4F8043417FEE2B40048A944 /* cross@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cross@2x.png"; sourceTree = "<group>"; };
+		F4F8043517FEE2B40048A944 /* tick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tick@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -630,6 +638,10 @@
 		F4119CBA16C023360028DB2E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F4F8043417FEE2B40048A944 /* cross@2x.png */,
+				F4F8043517FEE2B40048A944 /* tick@2x.png */,
+				F4F8043017FEBF8B0048A944 /* cross.png */,
+				F4F8043117FEBF8B0048A944 /* tick.png */,
 				F47FE78B16FA4AC200FC88A6 /* 114x114-iPhone-Retina-icon.png */,
 				F4668D6217EB63C100F20046 /* 120x120-iPhone-Retina-icon.png */,
 				F429F8E1170A0A3E006E7CDE /* 57x57-iPhone-icon.png */,
@@ -1116,6 +1128,7 @@
 				F479CD761711AAB2008AF68D /* segcontrol_uns-uns.png in Resources */,
 				F479CD771711AAB2008AF68D /* segcontrol_uns.png in Resources */,
 				F479CD8F17156FE6008AF68D /* snooker.png in Resources */,
+				F4F8043317FEBF8B0048A944 /* tick.png in Resources */,
 				F479CD9017156FE6008AF68D /* motor-racing.png in Resources */,
 				F479CD9117156FE6008AF68D /* baseball.png in Resources */,
 				F479CD9217156FE6008AF68D /* cricket.png in Resources */,
@@ -1151,6 +1164,7 @@
 				F479CDCE17215CBC008AF68D /* discontrol_uns@2x.png in Resources */,
 				F479CDEE17294AA8008AF68D /* baseball@2x.png in Resources */,
 				F479CDEF17294AA8008AF68D /* basketball@2x.png in Resources */,
+				F4F8043617FEE2B40048A944 /* cross@2x.png in Resources */,
 				F479CDF017294AA8008AF68D /* cricket@2x.png in Resources */,
 				F479CDF117294AA8008AF68D /* golf@2x.png in Resources */,
 				F479CDF217294AA8008AF68D /* green_dot@2x.png in Resources */,
@@ -1204,10 +1218,12 @@
 				F47B7BEC17AA94B90008D3B9 /* bottom-section@2x.png in Resources */,
 				F47B7BEE17AA94B90008D3B9 /* top-game-bar@2x.png in Resources */,
 				F47B7BF017AA9ACF0008D3B9 /* Default-568h@2x.png in Resources */,
+				F4F8043217FEBF8B0048A944 /* cross.png in Resources */,
 				F47B7BF217AA9AE40008D3B9 /* Default@2x.png in Resources */,
 				F47B7BF617AA9B570008D3B9 /* background-only.png in Resources */,
 				F47B7BF717AA9B570008D3B9 /* bottom-section-leaderboard.png in Resources */,
 				F47B7BF817AA9B570008D3B9 /* bottom-section-leaderboard@2x.png in Resources */,
+				F4F8043717FEE2B40048A944 /* tick@2x.png in Resources */,
 				F47B7BFA17AAC12C0008D3B9 /* background-only@2x.png in Resources */,
 				F47B7BFD17AAC4A60008D3B9 /* line-divider.png in Resources */,
 				F47B7BFE17AAC4A60008D3B9 /* line-divider@2x.png in Resources */,
@@ -1459,7 +1475,7 @@
 		F4B706F01695C74700E9FCD8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",

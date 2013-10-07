@@ -62,6 +62,7 @@
 @property (nonatomic) BOOL isUpdated;
 @property (nonatomic) BOOL isLoading;
 @property (nonatomic) BOOL pointsChanged;
+@property (nonatomic) BOOL fangroupChallenge;
 @property (weak, nonatomic) NSString *oldPoints;
 @property (nonatomic) NSInteger oldState;
 

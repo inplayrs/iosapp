@@ -276,13 +276,25 @@
         } else if(self.menuSide == MFSideMenuLocationLeft &&
                   (self.menuState == MFSideMenuStateVisible || self.navigationController.viewControllers.count == 1)) {
             // show the menu button on the root view controller or if the menu is open
-            navigationItem.leftBarButtonItem = [self menuBarButtonItem];
+            if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+                UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+                negativeSpacer.width = -10;
+                [navigationItem setLeftBarButtonItems:[NSArray arrayWithObjects:negativeSpacer, [self menuBarButtonItem], nil]];
+            } else {
+                navigationItem.leftBarButtonItem = [self menuBarButtonItem];
+            }
         }
     }
     
     if([self backButtonEnabled] && self.navigationController.viewControllers.count > 1
        && self.menuState == MFSideMenuStateHidden) {
-        navigationItem.leftBarButtonItem = [self backBarButtonItem];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+            UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+            negativeSpacer.width = -10;
+            [navigationItem setLeftBarButtonItems:[NSArray arrayWithObjects:negativeSpacer, [self backBarButtonItem], nil]];
+        } else {
+            navigationItem.leftBarButtonItem = [self backBarButtonItem];
+        }
     }
 }
 

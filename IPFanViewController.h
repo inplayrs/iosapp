@@ -11,9 +11,10 @@
 @class FanDataController;
 @class Game;
 
-@interface IPFanViewController : UITableViewController <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIAlertViewDelegate>
+@interface IPFanViewController : UITableViewController <UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate>
 {
     IBOutlet UIView *footerView;
+    UIView *myView;
 }
 
 
