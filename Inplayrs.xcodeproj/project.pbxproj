@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D4501F4180B07FD0013F11B /* GCHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4501F3180B07FD0013F11B /* GCHelper.m */; };
+		1D4501F6180B091D0013F11B /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4501F5180B091D0013F11B /* GameKit.framework */; };
 		EF02996F50A3463A8FCF020F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98FD997EC8B5443B83853277 /* libPods.a */; };
 		F4008C5617301C5300B9A23E /* Avalon-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F4008C54173018C300B9A23E /* Avalon-Bold.otf */; };
 		F4008C5A173027C700B9A23E /* login-field-box@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4008C59173027C700B9A23E /* login-field-box@2x.png */; };
@@ -290,6 +292,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1D4501F2180B07FD0013F11B /* GCHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCHelper.h; sourceTree = "<group>"; };
+		1D4501F3180B07FD0013F11B /* GCHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCHelper.m; sourceTree = "<group>"; };
+		1D4501F5180B091D0013F11B /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		4200B61122664060A6C561E7 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		98FD997EC8B5443B83853277 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4008C54173018C300B9A23E /* Avalon-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avalon-Bold.otf"; sourceTree = "<group>"; };
@@ -621,6 +626,7 @@
 				F44867A717C240C600975F75 /* Security.framework in Frameworks */,
 				F47B7BDF17A6C53F0008D3B9 /* ImageIO.framework in Frameworks */,
 				F4119CC016C030640028DB2E /* SystemConfiguration.framework in Frameworks */,
+				1D4501F6180B091D0013F11B /* GameKit.framework in Frameworks */,
 				F48F94B216B98FC7004983EE /* MobileCoreServices.framework in Frameworks */,
 				F4B706CC1695C74700E9FCD8 /* UIKit.framework in Frameworks */,
 				F4B706CE1695C74700E9FCD8 /* Foundation.framework in Frameworks */,
@@ -635,6 +641,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D4501F1180B07CB0013F11B /* GameCenter */ = {
+			isa = PBXGroup;
+			children = (
+				1D4501F2180B07FD0013F11B /* GCHelper.h */,
+				1D4501F3180B07FD0013F11B /* GCHelper.m */,
+			);
+			name = GameCenter;
+			sourceTree = "<group>";
+		};
 		F4119CBA16C023360028DB2E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -938,6 +953,7 @@
 		F4B706BC1695C74700E9FCD8 = {
 			isa = PBXGroup;
 			children = (
+				1D4501F1180B07CB0013F11B /* GameCenter */,
 				F4119CBA16C023360028DB2E /* Resources */,
 				F4B70719169DD9C700E9FCD8 /* Views */,
 				F4119CBB16C0261D0028DB2E /* Controllers */,
@@ -960,6 +976,7 @@
 		F4B706CA1695C74700E9FCD8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1D4501F5180B091D0013F11B /* GameKit.framework */,
 				F44867A817C2491B00975F75 /* AdSupport.framework */,
 				F44867A617C240C600975F75 /* Security.framework */,
 				F47B7BDE17A6C53F0008D3B9 /* ImageIO.framework */,
@@ -1055,6 +1072,16 @@
 				CLASSPREFIX = Games;
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = Inplayrs;
+				TargetAttributes = {
+					F4B706C61695C74700E9FCD8 = {
+						DevelopmentTeam = TQ53V5B9SX;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
+						};
+					};
+				};
 			};
 			buildConfigurationList = F4B706C11695C74700E9FCD8 /* Build configuration list for PBXProject "Inplayrs" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1365,6 +1392,7 @@
 				F4008C651740FCC700B9A23E /* CompetitionPoints.m in Sources */,
 				F42D4CA6174A910F00206ABC /* Error.m in Sources */,
 				F47E3793175FAFA900C5C508 /* IPSettingsViewController.m in Sources */,
+				1D4501F4180B07FD0013F11B /* GCHelper.m in Sources */,
 				F47E37961760E27B00C5C508 /* Account.m in Sources */,
 				F4857F7E17733D680050FEDA /* IPLobbyChildCell.m in Sources */,
 				F4857F871777539A0050FEDA /* Banner.m in Sources */,
@@ -1475,7 +1503,8 @@
 		F4B706F01695C74700E9FCD8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1488,7 +1517,7 @@
 					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "A01FCFB4-7292-4AC6-8A40-8E65839B5104";
+				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};

@@ -20,6 +20,8 @@
 #import "CompetitionWinners.h"
 #import "Account.h"
 #import "Error.h"
+#import "GCHelper.h"
+
 
 
 @implementation IPAppDelegate
@@ -102,6 +104,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    ///////////////////////
+    // GAME CENTER LOGIN //
+    ///////////////////////
+    [[GCHelper sharedInstance] authenticateLocalUser];
+
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [Flurry startSession:@"8C4BSDMV8CNX5KKZFWMG"];
     [self setupNavigationControllerApp];
