@@ -21,12 +21,16 @@
 #import "Account.h"
 #import "Error.h"
 #import "GCHelper.h"
+#import <FacebookSDK/FacebookSDK.h> //facebook
+#import "IPMultiLoginViewController.h" //facebook
 
 
 
 @implementation IPAppDelegate
-
 @synthesize window = _window;
+@synthesize rootViewController = _rootViewController;
+
+
 @synthesize username, user, loggedin, refreshLobby;
 
 - (IPLobbyViewController *)lobbyController {
@@ -394,6 +398,43 @@
 {
     self.refreshLobby = YES;
 }
+
+
+// FBSample logic
+// If we have a valid session at the time of openURL call, we handle Facebook transitions
+// by passing the url argument to handleOpenURL; see the "Just Login" sample application for
+// a more detailed discussion of handleOpenURL
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    // attempt to extract a token from the url
+    return [FBAppCall handleOpenURL:url
+                  sourceApplication:sourceApplication
+                    fallbackHandler:^(FBAppCall *call) {
+                        NSLog(@"In fallback handler");
+                    }];
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application {
+    // FBSample logic
+    // if the app is going away, we close the session object
+    [FBSession.activeSession close];
+}
+
+
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    // FBSample logic
+    // Call the 'activateApp' method to log an app event for use in analytics and advertising reporting.
+    [FBAppEvents activateApp];
+    
+    // FBSample logic
+    // We need to properly handle activation of the application with regards to SSO
+    //  (e.g., returning from iOS 6.0 authorization dialog or from fast app switching).
+    [FBAppCall handleDidBecomeActive];
+}
+
 
 
 @end

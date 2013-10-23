@@ -128,6 +128,9 @@
      }];
 }
 
+- (IBAction)addFriends:(UIButton *)sender {
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -246,6 +249,4 @@
     
     return [emailTest evaluateWithObject:candidate];
 }
-
-
 @end

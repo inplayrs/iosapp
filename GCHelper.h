@@ -14,8 +14,6 @@
     BOOL userAuthenticated;
 }
 
-
-
 @property (assign, readonly) BOOL gameCenterAvailable;
 
 + (GCHelper *)sharedInstance;

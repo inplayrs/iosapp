@@ -11,6 +11,7 @@
 @class IPPasswordViewController;
 @class IPLoginViewController;
 
+
 @interface IPSettingsViewController : UIViewController <UIAlertViewDelegate, UITextFieldDelegate> {
     UITextField *activeField;
 }
@@ -26,7 +27,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *emailText;
 @property (strong, nonatomic) IPPasswordViewController *passwordViewController;
 @property (strong, nonatomic) IPLoginViewController *loginViewController;
-
 
 - (IBAction)logoutUser:(UIButton *)sender;
 - (IBAction)updateUser:(UIButton *)sender;
