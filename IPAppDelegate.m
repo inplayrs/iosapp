@@ -20,14 +20,22 @@
 #import "CompetitionWinners.h"
 #import "Account.h"
 #import "Error.h"
+<<<<<<< HEAD
 #import "GCHelper.h" // GameCenter Login
 #import "IPLoginViewController.h"  // Facebook session login
+=======
+#import "GCHelper.h"
+#import <FacebookSDK/FacebookSDK.h> //facebook
+#import "IPMultiLoginViewController.h" //facebook
+>>>>>>> iOS-David
 
 
 
 @implementation IPAppDelegate
-
 @synthesize window = _window;
+@synthesize rootViewController = _rootViewController;
+
+
 @synthesize username, user, loggedin, refreshLobby;
 @synthesize session = _session; //FaceBook session login
 
@@ -403,6 +411,7 @@
 }
 
 
+<<<<<<< HEAD
 
 //FB//
 
@@ -416,6 +425,12 @@
 // state, as well as its arguments passed to the state completion handler indicate whether the login
 // was successful; note that if the session is nil or closed when handleOpenURL is called, the expression
 // will be boolean NO, meaning the URL was not handled by the authenticating application
+=======
+// FBSample logic
+// If we have a valid session at the time of openURL call, we handle Facebook transitions
+// by passing the url argument to handleOpenURL; see the "Just Login" sample application for
+// a more detailed discussion of handleOpenURL
+>>>>>>> iOS-David
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
@@ -423,6 +438,7 @@
     // attempt to extract a token from the url
     return [FBAppCall handleOpenURL:url
                   sourceApplication:sourceApplication
+<<<<<<< HEAD
                         withSession:self.session];
 }
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -446,14 +462,38 @@
     [self.session close];
     [FBSession.activeSession close];
 
+=======
+                    fallbackHandler:^(FBAppCall *call) {
+                        NSLog(@"In fallback handler");
+                    }];
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application {
+    // FBSample logic
+    // if the app is going away, we close the session object
+    [FBSession.activeSession close];
+>>>>>>> iOS-David
 }
 
 
 
+<<<<<<< HEAD
 
 
 //FB//
 
+=======
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    // FBSample logic
+    // Call the 'activateApp' method to log an app event for use in analytics and advertising reporting.
+    [FBAppEvents activateApp];
+    
+    // FBSample logic
+    // We need to properly handle activation of the application with regards to SSO
+    //  (e.g., returning from iOS 6.0 authorization dialog or from fast app switching).
+    [FBAppCall handleDidBecomeActive];
+}
+>>>>>>> iOS-David
 
 
 

@@ -27,7 +27,7 @@ static GCHelper *sharedHelper = nil;
 - (BOOL)isGameCenterAvailable {
     // check for presence of GKLocalPlayer API
     Class gcClass = (NSClassFromString(@"GKLocalPlayer"));
-    NSLog(@"isGameCenterAvailable...");
+    NSLog(@"GameCenter is available...");
     
     return (gcClass);
 }
@@ -52,9 +52,13 @@ static GCHelper *sharedHelper = nil;
     if ([GKLocalPlayer localPlayer].isAuthenticated && !userAuthenticated) {
         NSLog(@"Authentication changed: player authenticated.");
         userAuthenticated = TRUE;
+        
+        
     } else if (![GKLocalPlayer localPlayer].isAuthenticated && userAuthenticated) {
         NSLog(@"Authentication changed: player not authenticated");
         userAuthenticated = FALSE;
+        
+
     }
     
 }
@@ -64,35 +68,27 @@ static GCHelper *sharedHelper = nil;
 - (void)authenticateLocalUser{
     
     if (!gameCenterAvailable) return;
-    NSLog(@"Authenticating local user...");
+    NSLog(@"Authenticating local user via gamecenter...");
     if ([GKLocalPlayer localPlayer].authenticated == NO) {
         GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
         [localPlayer setAuthenticateHandler:(^(UIViewController* viewcontroller, NSError *error) {
             if(localPlayer.isAuthenticated)
             {
-                //david_ip1 daviddavidD1
+                //david_ip1 daviddavidD1 test user account
                 NSLog(@"User alias: %@",[[GKLocalPlayer localPlayer]alias]);
                 NSLog(@"User id: %@",[[GKLocalPlayer localPlayer]playerID]);
-                
-                NSLog(@"User id: %@ %@",[[GKLocalPlayer localPlayer]playerID],[[GKLocalPlayer localPlayer]alias]);
-                
-                NSLog(@"user/register?username=%@&password=%@",[[GKLocalPlayer localPlayer]alias],[[GKLocalPlayer localPlayer]playerID]);
-                
-                // NSLog(@"user/register?username=%@&password=%@"[[GKLocalPlayer localPlayer]playerID],[[GKLocalPlayer localPlayer]alias]);
-                //RKObjectManager *objectManager = [RKObjectManager sharedManager];
-                //NSTimeZone *localTime = [NSTimeZone systemTimeZone];
-                //NSString *timezone = [localTime abbreviation];
-                //NSString *path = [NSString stringWithFormat:@"user/register?username=aaaaaaa&password=aaaaaatimezone=aaaaa"];
-                //[objectManager postObject:nil path:path parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *result)];
             }
             else
             {
                 // not logged in
                 NSLog(@"NOT LOGGED IN TO GAMECENTER");
             }
+            
+            
         })];
     } else {
         NSLog(@"Already authenticated for gamecenter");
+
     }
 }
 

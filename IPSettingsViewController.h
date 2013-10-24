@@ -12,6 +12,7 @@
 @class IPLoginViewController;
 @class FPViewController;  // facebook friend picker
 
+
 @interface IPSettingsViewController : UIViewController <UIAlertViewDelegate, UITextFieldDelegate> {
     UITextField *activeField;
 }
@@ -28,7 +29,6 @@
 @property (strong, nonatomic) IPPasswordViewController *passwordViewController;
 @property (strong, nonatomic) IPLoginViewController *loginViewController;
 @property (strong, nonatomic) FPViewController *FaceBookViewController;  // Facebook friend picker
-
 
 - (IBAction)logoutUser:(UIButton *)sender;
 - (IBAction)updateUser:(UIButton *)sender;

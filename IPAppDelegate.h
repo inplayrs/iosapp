@@ -2,15 +2,19 @@
 //  IPAppDelegate.h
 //
 //
-
+#import <FacebookSDK/FacebookSDK.h>
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
 
+<<<<<<< HEAD
 //FB
 @class FPViewController;  //FriendPicker
 @class IPLoginViewController;  //FaceBook Login session
 
 //FB
+=======
+@class IPMultiLoginViewController;
+>>>>>>> iOS-David
 
 @interface IPAppDelegate : UIResponder <UIApplicationDelegate> {
     NSString *username;
@@ -26,6 +30,9 @@
 @property (nonatomic, retain) NSString *user;
 @property (nonatomic) BOOL loggedin;
 @property (nonatomic) BOOL refreshLobby;
+@property (strong, nonatomic) IPMultiLoginViewController *rootViewController;
+
+
 
 //FB
 @property (strong, nonatomic) FPViewController *rootViewController;  //FriendPicker
@@ -34,3 +41,9 @@
 //FB
 
 @end
+
+
+
+
+
+

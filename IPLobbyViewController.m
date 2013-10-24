@@ -284,7 +284,7 @@ enum Category {
 /* OLD LOGIN VC
 - (void) loginPressed:(id)sender {
     if (!self.registerViewController) {
-        self.registerViewController = [[IPRegisterViewController alloc] initWithNibName:@"IPRegisterViewController" bundle:nil];
+        self.registerViewController = [[IPRegisterViewController alloc] initWithNibName:@"IPMultiLoginViewController" bundle:nil];
     }
     if (self.registerViewController)
         [self.navigationController pushViewController:self.registerViewController animated:YES];
