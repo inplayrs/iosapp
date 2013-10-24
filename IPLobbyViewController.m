@@ -18,7 +18,6 @@
 #import "Competition.h"
 #import "Banner.h"
 #import <SDWebImage/UIButton+WebCache.h>
-#import "IPLoginFBViewController.h" // facebook session login
 
 
 enum State {
@@ -54,7 +53,7 @@ enum Category {
 
 @implementation IPLobbyViewController
 
-@synthesize controllerList, detailViewController, registerViewController, topItems, subItems, bannerImages, bannerItems, tempTopItems, tempSubItems, bannerButton, FaceBookRegisterViewController;
+@synthesize controllerList, detailViewController, registerViewController, topItems, subItems, bannerImages, bannerItems, tempTopItems, tempSubItems, bannerButton;
 
 
 - (void) dealloc {
@@ -271,25 +270,14 @@ enum Category {
 }
 
 
-// facebook session login//
-
-- (void) loginPressed:(id)sender {
-    if (!self.FaceBookRegisterViewController) {
-        self.FaceBookRegisterViewController = [[IPLoginFBViewController alloc] initWithNibName:@"IPLoginFBViewController"bundle:nil];
-    }
-    if (self.FaceBookRegisterViewController)
-        [self.navigationController pushViewController:self.FaceBookRegisterViewController animated:YES];
-}
-
-/* OLD LOGIN VC
 - (void) loginPressed:(id)sender {
     if (!self.registerViewController) {
-        self.registerViewController = [[IPRegisterViewController alloc] initWithNibName:@"IPRegisterViewController" bundle:nil];
+        self.registerViewController = [[IPRegisterViewController alloc] initWithNibName:@"IPMultiLoginViewController" bundle:nil];
     }
     if (self.registerViewController)
         [self.navigationController pushViewController:self.registerViewController animated:YES];
 }
-*/
+
 
 - (void)didReceiveMemoryWarning
 {

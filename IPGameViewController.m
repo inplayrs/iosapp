@@ -22,7 +22,6 @@
 #import "Flurry.h"
 #import "Error.h"
 
-
 #define CONFIRM_BANK 1
 
 #define NOTSUBMITTED -1
@@ -1319,7 +1318,6 @@ enum GameType {
                     if (selectionAtIndex.selection == -1) {
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Missing selections" message:@"Please pick all selections!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                         [alert show];
-                        
                         return;
                     }
                 

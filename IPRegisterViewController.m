@@ -31,7 +31,6 @@
         // Custom initialization
     }
     return self;
-    
 }
 
 - (void)viewDidLoad
@@ -269,7 +268,6 @@
 }
 
 
-
 - (IBAction)dismissKeyboard:(id)sender {
     [activeField resignFirstResponder];
 }
@@ -307,10 +305,5 @@
     return [passwordTest evaluateWithObject:candidate];
 }
 
-
-//////FB/////
-
-
-////FB/////
 
 @end

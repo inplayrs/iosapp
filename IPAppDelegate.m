@@ -20,17 +20,18 @@
 #import "CompetitionWinners.h"
 #import "Account.h"
 #import "Error.h"
-#import "GCHelper.h" // GameCenter Login
-#import "IPLoginViewController.h"  // Facebook session login
+#import "GCHelper.h"
+#import <FacebookSDK/FacebookSDK.h> //facebook
+#import "IPMultiLoginViewController.h" //facebook
 
 
 
 @implementation IPAppDelegate
-
 @synthesize window = _window;
-@synthesize username, user, loggedin, refreshLobby;
-@synthesize session = _session; //FaceBook session login
+@synthesize rootViewController = _rootViewController;
 
+
+@synthesize username, user, loggedin, refreshLobby;
 
 - (IPLobbyViewController *)lobbyController {
     return [[IPLobbyViewController alloc] initWithNibName:@"IPLobbyViewController" bundle:nil];
@@ -103,8 +104,6 @@
     [self.window makeKeyAndVisible];
 }
  */
-
-
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -371,8 +370,6 @@
             } failure:nil];
         }
     }
-    
-    
         
     
     return YES;
@@ -403,19 +400,10 @@
 }
 
 
-
-//FB//
-
 // FBSample logic
-// The native facebook application transitions back to an authenticating application when the user
-// chooses to either log in, or cancel. The url passed to this method contains the token in the
-// case of a successful login. By passing the url to the handleOpenURL method of FBAppCall the provided
-// session object can parse the URL, and capture the token for use by the rest of the authenticating
-// application; the return value of handleOpenURL indicates whether or not the URL was handled by the
-// session object, and does not reflect whether or not the login was successful; the session object's
-// state, as well as its arguments passed to the state completion handler indicate whether the login
-// was successful; note that if the session is nil or closed when handleOpenURL is called, the expression
-// will be boolean NO, meaning the URL was not handled by the authenticating application
+// If we have a valid session at the time of openURL call, we handle Facebook transitions
+// by passing the url argument to handleOpenURL; see the "Just Login" sample application for
+// a more detailed discussion of handleOpenURL
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
@@ -423,37 +411,29 @@
     // attempt to extract a token from the url
     return [FBAppCall handleOpenURL:url
                   sourceApplication:sourceApplication
-                        withSession:self.session];
-}
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    [FBAppEvents activateApp];
-    [FBAppCall handleDidBecomeActive];
+                    fallbackHandler:^(FBAppCall *call) {
+                        NSLog(@"In fallback handler");
+                    }];
 }
 
-
-// FBSample logic
-// Whether it is in applicationWillTerminate, in applicationDidEnterBackground, or in some other part
-// of your application, it is important that you close an active session when it is no longer useful
-// to your application; if a session is not properly closed, a retain cycle may occur between the block
-// and an object that holds a reference to the session object; close releases the handler, breaking any
-// inadvertant retain cycles
 - (void)applicationWillTerminate:(UIApplication *)application {
     // FBSample logic
-    // if the app is going away, we close the session if it is open
-    // this is a good idea because things may be hanging off the session, that need
-    // releasing (completion block, etc.) and other components in the app may be awaiting
-    // close notification in order to do cleanup
-    [self.session close];
+    // if the app is going away, we close the session object
     [FBSession.activeSession close];
-
 }
 
 
 
-
-
-//FB//
-
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    // FBSample logic
+    // Call the 'activateApp' method to log an app event for use in analytics and advertising reporting.
+    [FBAppEvents activateApp];
+    
+    // FBSample logic
+    // We need to properly handle activation of the application with regards to SSO
+    //  (e.g., returning from iOS 6.0 authorization dialog or from fast app switching).
+    [FBAppCall handleDidBecomeActive];
+}
 
 
 

@@ -26,9 +26,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *termsButton;
 @property (strong, nonatomic) IPInfoViewController *infoViewController;
 
-
-
-
 - (IBAction)dismissKeyboard:(id)sender;
 - (IBAction)termsPressed:(id)sender;
 - (IBAction)registerUser:(id)sender;
