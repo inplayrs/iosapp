@@ -7,21 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D07A68F18172A1F00E0F783 /* IPSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D07A68E18172A1F00E0F783 /* IPSettingsViewController.xib */; };
 		1D4501F4180B07FD0013F11B /* GCHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4501F3180B07FD0013F11B /* GCHelper.m */; };
 		1D4501F6180B091D0013F11B /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4501F5180B091D0013F11B /* GameKit.framework */; };
-<<<<<<< HEAD
 		1D5EEAA9180B520C00DF987E /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D5EEAA8180B520C00DF987E /* FacebookSDK.framework */; };
 		1DFB439F1815D8DB007FE1DB /* IPLoginFBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB439E1815D8DB007FE1DB /* IPLoginFBViewController.m */; };
 		1DFB43A11815D97B007FE1DB /* IPLoginFBViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DFB43A01815D97B007FE1DB /* IPLoginFBViewController.xib */; };
 		1DFB43A31815EBC4007FE1DB /* FaceBook_login.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DFB43A21815EBC4007FE1DB /* FaceBook_login.png */; };
 		1DFB43A818167A22007FE1DB /* FPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB43A618167A22007FE1DB /* FPViewController.m */; };
 		1DFB43A918167A22007FE1DB /* FPViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DFB43A718167A22007FE1DB /* FPViewController.xib */; };
-=======
-		1D6043371816B87300F058B0 /* IPMultiLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D6043341816B87300F058B0 /* IPMultiLoginViewController.xib */; };
-		1D6043381816B87300F058B0 /* IPMultiLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6043361816B87300F058B0 /* IPMultiLoginViewController.m */; };
-		1D60433A1816B88800F058B0 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6043391816B88800F058B0 /* FacebookSDK.framework */; };
->>>>>>> iOS-David
 		EF02996F50A3463A8FCF020F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98FD997EC8B5443B83853277 /* libPods.a */; };
 		F4008C5617301C5300B9A23E /* Avalon-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F4008C54173018C300B9A23E /* Avalon-Bold.otf */; };
 		F4008C5A173027C700B9A23E /* login-field-box@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4008C59173027C700B9A23E /* login-field-box@2x.png */; };
@@ -216,6 +209,7 @@
 		F47E3788174FCC0B00C5C508 /* submit-button-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F47E3783174FCC0B00C5C508 /* submit-button-background@2x.png */; };
 		F47E3789174FCC0B00C5C508 /* submit-button-hit-state@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F47E3784174FCC0B00C5C508 /* submit-button-hit-state@2x.png */; };
 		F47E378A174FCC0B00C5C508 /* submit-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F47E3785174FCC0B00C5C508 /* submit-button@2x.png */; };
+		F47E3790175FA63700C5C508 /* IPSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F47E378F175FA63600C5C508 /* IPSettingsViewController.xib */; };
 		F47E3793175FAFA900C5C508 /* IPSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F47E3792175FAFA900C5C508 /* IPSettingsViewController.m */; };
 		F47E37961760E27B00C5C508 /* Account.m in Sources */ = {isa = PBXBuildFile; fileRef = F47E37951760E27B00C5C508 /* Account.m */; };
 		F47FE78C16FA4AC200FC88A6 /* 114x114-iPhone-Retina-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F47FE78B16FA4AC200FC88A6 /* 114x114-iPhone-Retina-icon.png */; };
@@ -304,11 +298,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1D07A68E18172A1F00E0F783 /* IPSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPSettingsViewController.xib; sourceTree = "<group>"; };
 		1D4501F2180B07FD0013F11B /* GCHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCHelper.h; sourceTree = "<group>"; };
 		1D4501F3180B07FD0013F11B /* GCHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCHelper.m; sourceTree = "<group>"; };
 		1D4501F5180B091D0013F11B /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
-<<<<<<< HEAD
 		1D5EEAA8180B520C00DF987E /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		1DFB439D1815D8DB007FE1DB /* IPLoginFBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPLoginFBViewController.h; sourceTree = "<group>"; };
 		1DFB439E1815D8DB007FE1DB /* IPLoginFBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPLoginFBViewController.m; sourceTree = "<group>"; };
@@ -317,12 +309,6 @@
 		1DFB43A518167A22007FE1DB /* FPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPViewController.h; sourceTree = "<group>"; };
 		1DFB43A618167A22007FE1DB /* FPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPViewController.m; sourceTree = "<group>"; };
 		1DFB43A718167A22007FE1DB /* FPViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FPViewController.xib; sourceTree = "<group>"; };
-=======
-		1D6043341816B87300F058B0 /* IPMultiLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPMultiLoginViewController.xib; sourceTree = "<group>"; };
-		1D6043351816B87300F058B0 /* IPMultiLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPMultiLoginViewController.h; sourceTree = "<group>"; };
-		1D6043361816B87300F058B0 /* IPMultiLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPMultiLoginViewController.m; sourceTree = "<group>"; };
-		1D6043391816B88800F058B0 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
->>>>>>> iOS-David
 		4200B61122664060A6C561E7 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		98FD997EC8B5443B83853277 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4008C54173018C300B9A23E /* Avalon-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avalon-Bold.otf"; sourceTree = "<group>"; };
@@ -533,6 +519,7 @@
 		F47E3783174FCC0B00C5C508 /* submit-button-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "submit-button-background@2x.png"; sourceTree = "<group>"; };
 		F47E3784174FCC0B00C5C508 /* submit-button-hit-state@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "submit-button-hit-state@2x.png"; sourceTree = "<group>"; };
 		F47E3785174FCC0B00C5C508 /* submit-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "submit-button@2x.png"; sourceTree = "<group>"; };
+		F47E378F175FA63600C5C508 /* IPSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPSettingsViewController.xib; sourceTree = "<group>"; };
 		F47E3791175FAF9800C5C508 /* IPSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPSettingsViewController.h; sourceTree = "<group>"; };
 		F47E3792175FAFA900C5C508 /* IPSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPSettingsViewController.m; sourceTree = "<group>"; };
 		F47E37941760E26700C5C508 /* Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Account.h; path = Inplayrs/Account.h; sourceTree = "<group>"; };
@@ -662,11 +649,7 @@
 				F4B7072A169DDBFE00E9FCD8 /* QuartzCore.framework in Frameworks */,
 				F47B7BDD17A6C4F10008D3B9 /* SDWebImage.framework in Frameworks */,
 				F44867AC17C249EB00975F75 /* libFlurry.a in Frameworks */,
-<<<<<<< HEAD
 				1D5EEAA9180B520C00DF987E /* FacebookSDK.framework in Frameworks */,
-=======
-				1D60433A1816B88800F058B0 /* FacebookSDK.framework in Frameworks */,
->>>>>>> iOS-David
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -682,7 +665,6 @@
 			name = GameCenter;
 			sourceTree = "<group>";
 		};
-<<<<<<< HEAD
 		1DFB439C1815D8A7007FE1DB /* FBLogin */ = {
 			isa = PBXGroup;
 			children = (
@@ -701,16 +683,6 @@
 				1DFB43A718167A22007FE1DB /* FPViewController.xib */,
 			);
 			name = IPFriendPicker;
-=======
-		1D6043331816B82100F058B0 /* Facebook */ = {
-			isa = PBXGroup;
-			children = (
-				1D6043341816B87300F058B0 /* IPMultiLoginViewController.xib */,
-				1D6043351816B87300F058B0 /* IPMultiLoginViewController.h */,
-				1D6043361816B87300F058B0 /* IPMultiLoginViewController.m */,
-			);
-			name = Facebook;
->>>>>>> iOS-David
 			sourceTree = "<group>";
 		};
 		F4119CBA16C023360028DB2E /* Resources */ = {
@@ -1017,12 +989,8 @@
 		F4B706BC1695C74700E9FCD8 = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
 				1DFB43A418160398007FE1DB /* IPFriendPicker */,
 				1DFB439C1815D8A7007FE1DB /* FBLogin */,
-=======
-				1D6043331816B82100F058B0 /* Facebook */,
->>>>>>> iOS-David
 				1D4501F1180B07CB0013F11B /* GameCenter */,
 				F4119CBA16C023360028DB2E /* Resources */,
 				F4B70719169DD9C700E9FCD8 /* Views */,
@@ -1046,11 +1014,7 @@
 		F4B706CA1695C74700E9FCD8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
 				1D5EEAA8180B520C00DF987E /* FacebookSDK.framework */,
-=======
-				1D6043391816B88800F058B0 /* FacebookSDK.framework */,
->>>>>>> iOS-David
 				1D4501F5180B091D0013F11B /* GameKit.framework */,
 				F44867A817C2491B00975F75 /* AdSupport.framework */,
 				F44867A617C240C600975F75 /* Security.framework */,
@@ -1089,7 +1053,6 @@
 		F4B70719169DD9C700E9FCD8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				1D07A68E18172A1F00E0F783 /* IPSettingsViewController.xib */,
 				F4F714BE16AEB4AB00FCCA82 /* IPLobbyViewController.xib */,
 				F4857F7F1775B3E20050FEDA /* IPBannerView.xib */,
 				F4AFEDEF16D930F40055F376 /* IPLobbyItemCell.xib */,
@@ -1104,6 +1067,7 @@
 				F494240616E6265400AC0644 /* IPLoginViewController.xib */,
 				F44867A117C0C60C00975F75 /* IPRegisterViewController.xib */,
 				F44867B117C36ED100975F75 /* IPPasswordViewController.xib */,
+				F47E378F175FA63600C5C508 /* IPSettingsViewController.xib */,
 				F429F8CA1704B08D006E7CDE /* IPInfoViewController.xib */,
 				F429F8D317086162006E7CDE /* IPLeaderboardHeaderView.xib */,
 				F429F8D5170865F3006E7CDE /* IPLeaderboardFooterView.xib */,
@@ -1190,7 +1154,6 @@
 				F4119CB016BAF01A0028DB2E /* IPGameViewController.xib in Resources */,
 				F4119CB616C00C7D0028DB2E /* IPGameFooterView.xib in Resources */,
 				F4119CC216C910620028DB2E /* green_dot.png in Resources */,
-				1D6043371816B87300F058B0 /* IPMultiLoginViewController.xib in Resources */,
 				F4119CC816C910C30028DB2E /* lobby-row.png in Resources */,
 				F4119CD016C910D80028DB2E /* lobby-row-hit-state.png in Resources */,
 				F4119CD216C910D80028DB2E /* menu-button-hit-state.png in Resources */,
@@ -1283,7 +1246,6 @@
 				F479D15E172EAE49008AF68D /* american-football@2x.png in Resources */,
 				F479D15F172EAE49008AF68D /* awards.png in Resources */,
 				F479D160172EAE49008AF68D /* awards@2x.png in Resources */,
-				1D07A68F18172A1F00E0F783 /* IPSettingsViewController.xib in Resources */,
 				F479D165172EAE6D008AF68D /* finance.png in Resources */,
 				F479D166172EAE6D008AF68D /* finance@2x.png in Resources */,
 				F479D167172EAE6D008AF68D /* ice-hockey.png in Resources */,
@@ -1309,6 +1271,7 @@
 				1DFB43A11815D97B007FE1DB /* IPLoginFBViewController.xib in Resources */,
 				F47E3789174FCC0B00C5C508 /* submit-button-hit-state@2x.png in Resources */,
 				F47E378A174FCC0B00C5C508 /* submit-button@2x.png in Resources */,
+				F47E3790175FA63700C5C508 /* IPSettingsViewController.xib in Resources */,
 				F4857F7B17733BE10050FEDA /* IPLobbyChildCell.xib in Resources */,
 				F4857F801775B3E20050FEDA /* IPBannerView.xib in Resources */,
 				F4857F901779A4D20050FEDA /* entered-tick.png in Resources */,
@@ -1451,7 +1414,6 @@
 				F4F714C416AEEF7F00FCCA82 /* IPGameViewController.m in Sources */,
 				F4F714CA16B1748900FCCA82 /* MenuDataController.m in Sources */,
 				F48F94AD16B97488004983EE /* Period.m in Sources */,
-				1D6043381816B87300F058B0 /* IPMultiLoginViewController.m in Sources */,
 				F48F94B016B974BD004983EE /* GameDataController.m in Sources */,
 				F49DD0C816BA9A0D004A08F2 /* IPGameItemCell.m in Sources */,
 				F4119CEF16CEBD940028DB2E /* Selection.m in Sources */,
@@ -1566,11 +1528,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-<<<<<<< HEAD
 					/Users/David_B/Documents/FacebookSDK,
-=======
-					"/Users/David_B/Downloads/iosapp-master",
->>>>>>> iOS-David
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Inplayrs/Inplayrs-Prefix.pch";
@@ -1595,11 +1553,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-<<<<<<< HEAD
 					/Users/David_B/Documents/FacebookSDK,
-=======
-					"/Users/David_B/Downloads/iosapp-master",
->>>>>>> iOS-David
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Inplayrs/Inplayrs-Prefix.pch";

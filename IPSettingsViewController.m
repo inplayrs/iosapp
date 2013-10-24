@@ -127,16 +127,10 @@
      }];
 }
 
-<<<<<<< HEAD
 
     
     
     
-=======
-- (IBAction)addFriends:(UIButton *)sender {
-}
-
->>>>>>> iOS-David
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -269,13 +263,10 @@
     
     return [emailTest evaluateWithObject:candidate];
 }
-<<<<<<< HEAD
 
 
 
 
 
 
-=======
->>>>>>> iOS-David
 @end
