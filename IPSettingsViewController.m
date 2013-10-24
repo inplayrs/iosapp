@@ -16,7 +16,7 @@
 #import "Error.h"
 #import "IPPasswordViewController.h"
 #import "IPLoginViewController.h"
-
+#import "FPViewController.h"   //Facebook friends picker
 
 @interface IPSettingsViewController ()
 
@@ -24,8 +24,7 @@
 
 @implementation IPSettingsViewController
 
-@synthesize logoutButton, updateButton, userLabel, userNameLabel, emailLabel, autorefreshLabel, autorefreshSwitch, passwordButton, emailText, passwordViewController, loginViewController;
-
+@synthesize logoutButton, updateButton, userLabel, userNameLabel, emailLabel, autorefreshLabel, autorefreshSwitch, passwordButton, emailText, passwordViewController, loginViewController,FaceBookViewController;
 
 - (void) dealloc {
     self.navigationController.sideMenu.menuStateEventBlock = nil;
@@ -128,6 +127,10 @@
      }];
 }
 
+
+    
+    
+    
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -240,12 +243,30 @@
         [self.navigationController pushViewController:self.passwordViewController animated:YES];
 }
 
+
+//////FB/////
+- (IBAction)ConntectToFaceBook:(id)sender {
+    if (!self.FaceBookViewController) {
+            self.FaceBookViewController = [[FPViewController alloc] initWithNibName:@"IPFaceBookViewController" bundle:nil];
+        }
+        if (self.FaceBookViewController)
+            [self.navigationController pushViewController:self.FaceBookViewController animated:YES];
+    }
+    
+    
+    
+////FB/////
+
 - (BOOL) validateEmail: (NSString *) candidate {
     NSString *emailRegex = @"[A-Z0-9a-z._%+-]{1,63}+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}";
-    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"dSELF MATCHES %@", emailRegex];
     
     return [emailTest evaluateWithObject:candidate];
 }
+
+
+
+
 
 
 @end

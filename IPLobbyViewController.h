@@ -10,6 +10,7 @@
 
 @class IPGameViewController;
 @class IPRegisterViewController;
+@class IPLoginFBViewController; //facebook sesson login
 
 @interface IPLobbyViewController : UITableViewController
 {
@@ -25,6 +26,8 @@
 
 @property (strong, nonatomic) IPGameViewController *detailViewController;
 @property (strong, nonatomic) IPRegisterViewController *registerViewController;
+@property (strong, nonatomic) IPLoginFBViewController *FaceBookRegisterViewController; //facebook sesson login
+
 @property (strong, nonatomic) NSMutableDictionary *controllerList;
 @property (nonatomic) BOOL gamesLoading;
 @property (nonatomic, copy) NSMutableArray *topItems;

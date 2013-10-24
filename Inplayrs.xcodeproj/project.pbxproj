@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		1D4501F4180B07FD0013F11B /* GCHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4501F3180B07FD0013F11B /* GCHelper.m */; };
 		1D4501F6180B091D0013F11B /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4501F5180B091D0013F11B /* GameKit.framework */; };
+		1D5EEAA9180B520C00DF987E /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D5EEAA8180B520C00DF987E /* FacebookSDK.framework */; };
+		1DFB439F1815D8DB007FE1DB /* IPLoginFBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB439E1815D8DB007FE1DB /* IPLoginFBViewController.m */; };
+		1DFB43A11815D97B007FE1DB /* IPLoginFBViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DFB43A01815D97B007FE1DB /* IPLoginFBViewController.xib */; };
+		1DFB43A31815EBC4007FE1DB /* FaceBook_login.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DFB43A21815EBC4007FE1DB /* FaceBook_login.png */; };
+		1DFB43A818167A22007FE1DB /* FPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DFB43A618167A22007FE1DB /* FPViewController.m */; };
+		1DFB43A918167A22007FE1DB /* FPViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DFB43A718167A22007FE1DB /* FPViewController.xib */; };
 		EF02996F50A3463A8FCF020F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98FD997EC8B5443B83853277 /* libPods.a */; };
 		F4008C5617301C5300B9A23E /* Avalon-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F4008C54173018C300B9A23E /* Avalon-Bold.otf */; };
 		F4008C5A173027C700B9A23E /* login-field-box@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4008C59173027C700B9A23E /* login-field-box@2x.png */; };
@@ -295,6 +301,14 @@
 		1D4501F2180B07FD0013F11B /* GCHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCHelper.h; sourceTree = "<group>"; };
 		1D4501F3180B07FD0013F11B /* GCHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCHelper.m; sourceTree = "<group>"; };
 		1D4501F5180B091D0013F11B /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		1D5EEAA8180B520C00DF987E /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		1DFB439D1815D8DB007FE1DB /* IPLoginFBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPLoginFBViewController.h; sourceTree = "<group>"; };
+		1DFB439E1815D8DB007FE1DB /* IPLoginFBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPLoginFBViewController.m; sourceTree = "<group>"; };
+		1DFB43A01815D97B007FE1DB /* IPLoginFBViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPLoginFBViewController.xib; sourceTree = "<group>"; };
+		1DFB43A21815EBC4007FE1DB /* FaceBook_login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FaceBook_login.png; sourceTree = "<group>"; };
+		1DFB43A518167A22007FE1DB /* FPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPViewController.h; sourceTree = "<group>"; };
+		1DFB43A618167A22007FE1DB /* FPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPViewController.m; sourceTree = "<group>"; };
+		1DFB43A718167A22007FE1DB /* FPViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FPViewController.xib; sourceTree = "<group>"; };
 		4200B61122664060A6C561E7 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		98FD997EC8B5443B83853277 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4008C54173018C300B9A23E /* Avalon-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avalon-Bold.otf"; sourceTree = "<group>"; };
@@ -635,6 +649,7 @@
 				F4B7072A169DDBFE00E9FCD8 /* QuartzCore.framework in Frameworks */,
 				F47B7BDD17A6C4F10008D3B9 /* SDWebImage.framework in Frameworks */,
 				F44867AC17C249EB00975F75 /* libFlurry.a in Frameworks */,
+				1D5EEAA9180B520C00DF987E /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -650,9 +665,30 @@
 			name = GameCenter;
 			sourceTree = "<group>";
 		};
+		1DFB439C1815D8A7007FE1DB /* FBLogin */ = {
+			isa = PBXGroup;
+			children = (
+				1DFB43A01815D97B007FE1DB /* IPLoginFBViewController.xib */,
+				1DFB439D1815D8DB007FE1DB /* IPLoginFBViewController.h */,
+				1DFB439E1815D8DB007FE1DB /* IPLoginFBViewController.m */,
+			);
+			name = FBLogin;
+			sourceTree = "<group>";
+		};
+		1DFB43A418160398007FE1DB /* IPFriendPicker */ = {
+			isa = PBXGroup;
+			children = (
+				1DFB43A518167A22007FE1DB /* FPViewController.h */,
+				1DFB43A618167A22007FE1DB /* FPViewController.m */,
+				1DFB43A718167A22007FE1DB /* FPViewController.xib */,
+			);
+			name = IPFriendPicker;
+			sourceTree = "<group>";
+		};
 		F4119CBA16C023360028DB2E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1DFB43A21815EBC4007FE1DB /* FaceBook_login.png */,
 				F4F8043417FEE2B40048A944 /* cross@2x.png */,
 				F4F8043517FEE2B40048A944 /* tick@2x.png */,
 				F4F8043017FEBF8B0048A944 /* cross.png */,
@@ -953,6 +989,8 @@
 		F4B706BC1695C74700E9FCD8 = {
 			isa = PBXGroup;
 			children = (
+				1DFB43A418160398007FE1DB /* IPFriendPicker */,
+				1DFB439C1815D8A7007FE1DB /* FBLogin */,
 				1D4501F1180B07CB0013F11B /* GameCenter */,
 				F4119CBA16C023360028DB2E /* Resources */,
 				F4B70719169DD9C700E9FCD8 /* Views */,
@@ -976,6 +1014,7 @@
 		F4B706CA1695C74700E9FCD8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1D5EEAA8180B520C00DF987E /* FacebookSDK.framework */,
 				1D4501F5180B091D0013F11B /* GameKit.framework */,
 				F44867A817C2491B00975F75 /* AdSupport.framework */,
 				F44867A617C240C600975F75 /* Security.framework */,
@@ -1229,6 +1268,7 @@
 				F47E3780174FC1F400C5C508 /* leaderboard-button@2x.png in Resources */,
 				F47E3787174FCC0B00C5C508 /* rank-points-main-background@2x.png in Resources */,
 				F47E3788174FCC0B00C5C508 /* submit-button-background@2x.png in Resources */,
+				1DFB43A11815D97B007FE1DB /* IPLoginFBViewController.xib in Resources */,
 				F47E3789174FCC0B00C5C508 /* submit-button-hit-state@2x.png in Resources */,
 				F47E378A174FCC0B00C5C508 /* submit-button@2x.png in Resources */,
 				F47E3790175FA63700C5C508 /* IPSettingsViewController.xib in Resources */,
@@ -1269,6 +1309,7 @@
 				F47B7C1D17B0FE1C0008D3B9 /* settings.png in Resources */,
 				F47B7C1E17B0FE1C0008D3B9 /* settings@2x.png in Resources */,
 				F47B7C2117B0FE1C0008D3B9 /* winners.png in Resources */,
+				1DFB43A31815EBC4007FE1DB /* FaceBook_login.png in Resources */,
 				F47B7C2217B0FE1C0008D3B9 /* winners@2x.png in Resources */,
 				F47B7C2417B6BC7D0008D3B9 /* menu-final-row-line@2x.png in Resources */,
 				F47B7C2717BBAC340008D3B9 /* login-button-hit@2x.png in Resources */,
@@ -1310,6 +1351,7 @@
 				F422C69D17E861CB003CA923 /* screen_4.png in Resources */,
 				F4668D6317EB63C100F20046 /* 120x120-iPhone-Retina-icon.png in Resources */,
 				F422C69F17E861CB003CA923 /* screen_2.png in Resources */,
+				1DFB43A918167A22007FE1DB /* FPViewController.xib in Resources */,
 				F422C6A017E861CB003CA923 /* screen_3.png in Resources */,
 				F422C6A117E861CB003CA923 /* screen_5.png in Resources */,
 				F422C6A217E861CB003CA923 /* screen_6.png in Resources */,
@@ -1379,6 +1421,7 @@
 				F4AFEDEE16D930900055F376 /* IPLobbyItemCell.m in Sources */,
 				F494240716E6265400AC0644 /* IPLoginViewController.m in Sources */,
 				F494240B16E648B900AC0644 /* MF_Base64Additions.m in Sources */,
+				1DFB439F1815D8DB007FE1DB /* IPLoginFBViewController.m in Sources */,
 				F494240F16E6500100AC0644 /* IPFanViewController.m in Sources */,
 				F494241316E6564800AC0644 /* FanDataController.m in Sources */,
 				F494241616E6611400AC0644 /* Fangroup.m in Sources */,
@@ -1392,6 +1435,7 @@
 				F4008C651740FCC700B9A23E /* CompetitionPoints.m in Sources */,
 				F42D4CA6174A910F00206ABC /* Error.m in Sources */,
 				F47E3793175FAFA900C5C508 /* IPSettingsViewController.m in Sources */,
+				1DFB43A818167A22007FE1DB /* FPViewController.m in Sources */,
 				1D4501F4180B07FD0013F11B /* GCHelper.m in Sources */,
 				F47E37961760E27B00C5C508 /* Account.m in Sources */,
 				F4857F7E17733D680050FEDA /* IPLobbyChildCell.m in Sources */,
@@ -1483,7 +1527,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					/Users/David_B/Documents/FacebookSDK,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Inplayrs/Inplayrs-Prefix.pch";
@@ -1507,7 +1552,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					/Users/David_B/Documents/FacebookSDK,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Inplayrs/Inplayrs-Prefix.pch";
@@ -1516,6 +1562,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "";
