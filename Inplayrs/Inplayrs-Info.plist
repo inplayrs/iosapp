@@ -14,6 +14,9 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
+				<string>80x80-iPhone-Retina-icon</string>
+				<string>58x58-iPhone-Retina-icon</string>
+				<string>29x29-iPhone-icon</string>
 				<string>120x120-iPhone-Retina-icon</string>
 				<string>114x114-iPhone-Retina-icon.png</string>
 				<string>57x57-iPhone-icon.png</string>
