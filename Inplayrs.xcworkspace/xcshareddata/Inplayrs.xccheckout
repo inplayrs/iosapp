@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>FEFD23FD-5CC8-4272-8D6C-631C7264AB80</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Inplayrs</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>2742D928-FD79-4AFB-B15D-95AE18A60048</key>
+		<string>https://github.com/inplayrs/iosapp.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Inplayrs.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>2742D928-FD79-4AFB-B15D-95AE18A60048</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/inplayrs/iosapp.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>2742D928-FD79-4AFB-B15D-95AE18A60048</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>2742D928-FD79-4AFB-B15D-95AE18A60048</string>
+			<key>IDESourceControlWCCName</key>
+			<string>iosapp</string>
+		</dict>
+	</array>
+</dict>
+</plist>
