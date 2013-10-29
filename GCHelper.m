@@ -48,17 +48,17 @@ static GCHelper *sharedHelper = nil;
 }
 
 - (void)authenticationChanged {
-    
     if ([GKLocalPlayer localPlayer].isAuthenticated && !userAuthenticated) {
-        NSLog(@"Authentication changed: player authenticated.");
+        NSLog(@" Changed Game center avaliabe.");
         userAuthenticated = TRUE;
+
         
         
     } else if (![GKLocalPlayer localPlayer].isAuthenticated && userAuthenticated) {
-        NSLog(@"Authentication changed: player not authenticated");
+        NSLog(@" Game center not avaliabe");
         userAuthenticated = FALSE;
-        
 
+        
     }
     
 }
@@ -68,28 +68,32 @@ static GCHelper *sharedHelper = nil;
 - (void)authenticateLocalUser{
     
     if (!gameCenterAvailable) return;
-    NSLog(@"Authenticating local user via gamecenter...");
-    if ([GKLocalPlayer localPlayer].authenticated == NO) {
+    NSLog(@"Attempting to authenticating local user via gamecenter...");
+    if ([GKLocalPlayer localPlayer].isAuthenticated == NO) {
         GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
         [localPlayer setAuthenticateHandler:(^(UIViewController* viewcontroller, NSError *error) {
-            if(localPlayer.isAuthenticated)
-            {
-                //david_ip1 daviddavidD1 test user account
-                NSLog(@"User alias: %@",[[GKLocalPlayer localPlayer]alias]);
-                NSLog(@"User id: %@",[[GKLocalPlayer localPlayer]playerID]);
-            }
-            else
-            {
-                // not logged in
-                NSLog(@"NOT LOGGED IN TO GAMECENTER");
-            }
-            
-            
+            if ([GKLocalPlayer localPlayer].isAuthenticated) {
+                    // Do this each time the app starts to check the authenticate user
+                    // david_ip2 daviddavidD1 david_ip2@gmail.com = test user account
+
+                    NSLog(@"gamecenter authentication process succeeded");
+                    //david_ip1 daviddavidD1 test user account
+                    NSLog(@"User alias: %@",[[GKLocalPlayer localPlayer]alias]);
+                    NSLog(@"User id: %@",[[GKLocalPlayer localPlayer]playerID]);
+                }
+            else if (![GKLocalPlayer localPlayer].isAuthenticated)
+                {
+                    // GameCenter is not avaliable enable facebook/email login
+                    NSLog(@"User is not signed into GameCenter");
+
+                }
         })];
     } else {
-        NSLog(@"Already authenticated for gamecenter");
+        NSLog(@"Game center not avaliabe on this device");
+        // GameCenter is not avaliable enable facebook/email login
+
+
 
     }
 }
-
 @end
