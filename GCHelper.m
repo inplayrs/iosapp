@@ -48,17 +48,17 @@ static GCHelper *sharedHelper = nil;
 }
 
 - (void)authenticationChanged {
-    
     if ([GKLocalPlayer localPlayer].isAuthenticated && !userAuthenticated) {
-        NSLog(@"Authentication changed: player authenticated.");
+        NSLog(@" Changed Game center avaliabe.");
         userAuthenticated = TRUE;
+
         
         
     } else if (![GKLocalPlayer localPlayer].isAuthenticated && userAuthenticated) {
-        NSLog(@"Authentication changed: player not authenticated");
+        NSLog(@" Game center not avaliabe");
         userAuthenticated = FALSE;
-        
 
+        
     }
     
 }
@@ -68,8 +68,8 @@ static GCHelper *sharedHelper = nil;
 - (void)authenticateLocalUser{
     
     if (!gameCenterAvailable) return;
-    NSLog(@"Authenticating local user via gamecenter...");
-    if ([GKLocalPlayer localPlayer].authenticated == NO) {
+    NSLog(@"Attempting to authenticating local user via gamecenter...");
+    if ([GKLocalPlayer localPlayer].isAuthenticated == NO) {
         GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
         [localPlayer setAuthenticateHandler:(^(UIViewController* viewcontroller, NSError *error) {
             if(localPlayer.isAuthenticated)
@@ -89,9 +89,11 @@ static GCHelper *sharedHelper = nil;
             
         })];
     } else {
-        NSLog(@"Already authenticated for gamecenter");
+        NSLog(@"Game center not avaliabe on this device");
+        // GameCenter is not avaliable enable facebook/email login
+
+
 
     }
 }
-
 @end
