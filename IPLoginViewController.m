@@ -212,6 +212,12 @@
         [Flurry logEvent:@"ACCOUNT" withParameters:dictionary];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login Success" message:@"You are now logged in!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
+        NSString *path;
+        if ([prefs boolForKey:@"pushNotification"] == YES)
+            path = [NSString stringWithFormat:@"user/account/update?pushActive=1&deviceID=%@", [prefs objectForKey:@"deviceID"]];
+        else
+            path = [NSString stringWithFormat:@"user/account/update?pushActive=0"];
+        [objectManager postObject:nil path:path parameters:nil success:nil failure:nil];
         self.loginButton.enabled = YES;
         self.usernameField.text = @"Enter Username";
         self.passwordField.placeholder = @"Enter Password";

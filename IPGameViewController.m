@@ -21,6 +21,7 @@
 #import "IPTutorialViewController.h"
 #import "Flurry.h"
 #import "Error.h"
+#import "MessageBarManager.h"
 
 #define CONFIRM_BANK 1
 
@@ -263,14 +264,24 @@ enum GameType {
                     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:self.game.name,
                                             @"gameName", @"Submit", @"result", nil];
                     [Flurry logEvent:@"SUBMIT" withParameters:dictionary];
+                    [[MessageBarManager sharedInstance] showMessageWithTitle:@"Entry Successful"
+                                                                 description:@"You have successfully entered your selections."
+                                                                        type:MessageBarMessageTypeSuccess];
+                    /*
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Entry Successful" message:@"You have successfully entered your selections for this game!  Your entry has been submitted to all 3 pools." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     [alert show];
+                     */
                 } else {
                     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:self.game.name,
                                                 @"gameName", @"Late", @"result", nil];
                     [Flurry logEvent:@"SUBMIT" withParameters:dictionary];
+                    [[MessageBarManager sharedInstance] showMessageWithTitle:@"Entry Successful"
+                                                                 description:@"You have successfully entered your selections."
+                                                                        type:MessageBarMessageTypeSuccess];
+                    /*
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Entry Successful" message:@"You have successfully entered your selections for this game!  The game has started, so you will not be entered into the Fan and H2H pools." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     [alert show];
+                     */
                 }
                 IPAppDelegate *appDelegate = (IPAppDelegate *)[[UIApplication sharedApplication] delegate];
                 appDelegate.refreshLobby = YES;
@@ -279,8 +290,13 @@ enum GameType {
                 NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:self.game.name,
                                             @"gameName", @"Update", @"result", nil];
                 [Flurry logEvent:@"SUBMIT" withParameters:dictionary];
+                [[MessageBarManager sharedInstance] showMessageWithTitle:@"Update Successful"
+                                                             description:@"You have successfully updated your selections."
+                                                                    type:MessageBarMessageTypeSuccess];
+                /*
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update Successful" message:@"You have successfully updated your selections for this game!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
+                 */
             }
     
         } failure:^(RKObjectRequestOperation *operation, NSError *error){
@@ -329,8 +345,10 @@ enum GameType {
         NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:self.game.name,
                                     @"gameName", selection.potentialPoints, @"potentialPoints", @"Success", @"result", nil];
         [Flurry logEvent:@"BANK" withParameters:dictionary];
+        /*
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Bank Successful" message:@"You have successfully banked your selection!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
+         */
         
    } failure:^(RKObjectRequestOperation *operation, NSError *error){
        self.isLoading = NO;
@@ -382,7 +400,7 @@ enum GameType {
     } else {
         self.navigationItem.leftBarButtonItem = barButtonItem;
     }
-    
+    [self.submitButton setEnabled:NO];
     
     self.dataController = [[GameDataController alloc] init];
     fanViewController = nil;
@@ -696,11 +714,13 @@ enum GameType {
         case (PREPLAY):
             if (self.dataController.userState == NOTSUBMITTED) {
                 [self.submitButton setTitle:@"SUBMIT" forState:UIControlStateNormal];
-                [self.submitButton setEnabled:YES];
             } else {
                 [self.submitButton setTitle:@"UPDATE" forState:UIControlStateNormal];
-                [self.submitButton setEnabled:YES];
             }
+            if (self.isLoaded)
+                [self.submitButton setEnabled:YES];
+            else
+                [self.submitButton setEnabled:NO];
             break;
         case (SUSPENDED):
         default:

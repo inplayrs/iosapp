@@ -14,7 +14,8 @@
 #import "Game.h"
 #import "RestKit.h"
 #import "IPAppDelegate.h"
-#import "IPRegisterViewController.h"
+// #import "IPRegisterViewController.h"
+#import "IPMultiLoginViewController.h"
 #import "Competition.h"
 #import "Banner.h"
 #import <SDWebImage/UIButton+WebCache.h>
@@ -53,7 +54,7 @@ enum Category {
 
 @implementation IPLobbyViewController
 
-@synthesize controllerList, detailViewController, registerViewController, topItems, subItems, bannerImages, bannerItems, tempTopItems, tempSubItems, bannerButton;
+@synthesize controllerList, detailViewController, multiLoginViewController, topItems, subItems, bannerImages, bannerItems, tempTopItems, tempSubItems, bannerButton;
 
 
 - (void) dealloc {
@@ -166,7 +167,7 @@ enum Category {
     // self.dataController = [[LobbyDataController alloc] init];
     self.title = @"Lobby";
     detailViewController = nil;
-    registerViewController = nil;
+    multiLoginViewController = nil;
     
     // this isn't needed on the rootViewController of the navigation controller
     // [self.navigationController.sideMenu setupSideMenuBarButtonItem];
@@ -271,11 +272,11 @@ enum Category {
 
 
 - (void) loginPressed:(id)sender {
-    if (!self.registerViewController) {
-        self.registerViewController = [[IPRegisterViewController alloc] initWithNibName:@"IPMultiLoginViewController" bundle:nil];
+    if (!self.multiLoginViewController) {
+        self.multiLoginViewController = [[IPMultiLoginViewController alloc] initWithNibName:@"IPMultiLoginViewController" bundle:nil];
     }
-    if (self.registerViewController)
-        [self.navigationController pushViewController:self.registerViewController animated:YES];
+    if (self.multiLoginViewController)
+        [self.navigationController pushViewController:self.multiLoginViewController animated:YES];
 }
 
 

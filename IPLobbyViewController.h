@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @class IPGameViewController;
-@class IPRegisterViewController;
+// @class IPRegisterViewController;
+@class IPMultiLoginViewController;
 
 @interface IPLobbyViewController : UITableViewController
 {
@@ -24,7 +25,8 @@
 - (void)getCompetitions:(id)sender;
 
 @property (strong, nonatomic) IPGameViewController *detailViewController;
-@property (strong, nonatomic) IPRegisterViewController *registerViewController;
+// @property (strong, nonatomic) IPRegisterViewController *registerViewController;
+@property (strong, nonatomic) IPMultiLoginViewController *multiLoginViewController;
 @property (strong, nonatomic) NSMutableDictionary *controllerList;
 @property (nonatomic) BOOL gamesLoading;
 @property (nonatomic, copy) NSMutableArray *topItems;

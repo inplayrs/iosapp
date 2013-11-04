@@ -220,8 +220,10 @@ enum Category {
         self.selectedFangroupRow = -1;
         self.selectedCompetitionRow = -1;
         if (self.game) {
+            /*
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Fangroup Successful" message:@"You have selected your fangroup for the duration of the competition." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
+             */
             IPGameViewController *parentViewController = (IPGameViewController*)[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
             [parentViewController postSelections];
             [self.navigationController popViewControllerAnimated:YES];

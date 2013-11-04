@@ -322,6 +322,10 @@ enum State {
     cell.nameLabel.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
     cell.pointsLabel.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
     cell.winningsLabel.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
+    cell.rankLabel.textColor = [UIColor whiteColor];
+    cell.nameLabel.textColor = [UIColor whiteColor];
+    cell.pointsLabel.textColor = [UIColor whiteColor];
+    cell.winningsLabel.textColor = [UIColor whiteColor];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"leaderboard-row.png"]];
     cell.backgroundView = imageView;
     // cell.backgroundColor = [UIColor colorWithRed:36.0/255.0 green:37.0/255.0 blue:37.0/255.0 alpha:1.0];
@@ -346,6 +350,36 @@ enum State {
         rankString = @"-";
     else
         rankString = [NSString stringWithFormat:@"%d", (int)leaderboardAtIndex.rank];
+    
+    if (leaderboardAtIndex.rank == 1) {
+        cell.rankLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:13.0];
+        cell.nameLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:13.0];
+        cell.pointsLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:13.0];
+        cell.winningsLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:13.0];
+    }
+    
+    IPAppDelegate *appDelegate = (IPAppDelegate *)[[UIApplication sharedApplication] delegate];
+    if ([appDelegate.user isEqualToString:leaderboardAtIndex.name]) {
+        cell.rankLabel.textColor = [UIColor greenColor];
+        cell.nameLabel.textColor = [UIColor greenColor];
+        cell.pointsLabel.textColor = [UIColor greenColor];
+        cell.winningsLabel.textColor = [UIColor greenColor];
+    }
+    if (self.type == GAMES) {
+        if ([self.dataController.gamePoints.fangroupName isEqualToString:leaderboardAtIndex.name]) {
+            cell.rankLabel.textColor = [UIColor greenColor];
+            cell.nameLabel.textColor = [UIColor greenColor];
+            cell.pointsLabel.textColor = [UIColor greenColor];
+            cell.winningsLabel.textColor = [UIColor greenColor];
+        }
+    } else if (self.type == COMPETITIONS) {
+        if ([self.dataController.competitionPoints.fangroupName isEqualToString:leaderboardAtIndex.name]) {
+            cell.rankLabel.textColor = [UIColor greenColor];
+            cell.nameLabel.textColor = [UIColor greenColor];
+            cell.pointsLabel.textColor = [UIColor greenColor];
+            cell.winningsLabel.textColor = [UIColor greenColor];
+        }
+    }
     
     [[cell rankLabel] setText:rankString];
     [[cell nameLabel] setText:leaderboardAtIndex.name];

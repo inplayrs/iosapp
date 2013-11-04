@@ -21,7 +21,7 @@
 
 @implementation IPRegisterViewController
 
-@synthesize registerButton, termsLabel, registerUsernameField, registerPasswordField, registerEmailField, infoViewController, termsButton;
+@synthesize registerButton, registerUsernameField, registerPasswordField, registerEmailField, infoViewController;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -62,8 +62,6 @@
     [self.registerButton setBackgroundImage:image2 forState:UIControlStateHighlighted];
     [self.registerButton setBackgroundImage:image3 forState:UIControlStateDisabled];
     self.registerButton.titleLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:18.0];
-    self.termsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
-    self.termsButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
         UIEdgeInsets titleInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
         self.registerButton.titleEdgeInsets = titleInsets;
@@ -79,14 +77,6 @@
     
 }
 
-
-- (void) termsPressed:(id)sender {
-    if (!self.infoViewController) {
-        self.infoViewController = [[IPInfoViewController alloc] initWithNibName:@"IPInfoViewController" bundle:nil];
-    }
-    if (self.infoViewController)
-        [self.navigationController pushViewController:self.infoViewController animated:YES];
-}
 
 - (void) backButtonPressed:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
@@ -238,6 +228,7 @@
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
         [prefs setObject:appDelegate.username forKey:@"username"];
         [prefs setObject:appDelegate.user forKey:@"user"];
+        [prefs setObject:@"email" forKey:@"loginmethod"];
         [Flurry setUserID:appDelegate.user];
         
         NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"REGISTER",
@@ -249,7 +240,8 @@
         self.registerPasswordField.placeholder = @"Enter Password";
         self.registerPasswordField.text = nil;
         self.registerEmailField.text = @"Enter Email";
-        [self.navigationController popViewControllerAnimated:YES];
+        // [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController popToRootViewControllerAnimated:YES];
     } failure:^(RKObjectRequestOperation *operation, NSError *error){
         NSArray *errorMessages = [[error userInfo] objectForKey:RKObjectMapperErrorObjectsKey];
         Error *myerror = [errorMessages objectAtIndex:0];

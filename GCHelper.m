@@ -75,6 +75,8 @@ static GCHelper *sharedHelper = nil;
             if(localPlayer.isAuthenticated)
             {
                 //david_ip1 daviddavidD1 test user account
+                NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+                [prefs setObject:@"gamecenter" forKey:@"loginmethod"];
                 NSLog(@"User alias: %@",[[GKLocalPlayer localPlayer]alias]);
                 NSLog(@"User id: %@",[[GKLocalPlayer localPlayer]playerID]);
             }

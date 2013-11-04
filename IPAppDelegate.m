@@ -28,7 +28,7 @@
 
 @implementation IPAppDelegate
 @synthesize window = _window;
-@synthesize rootViewController = _rootViewController;
+// @synthesize rootViewController = _rootViewController;
 
 
 @synthesize username, user, loggedin, refreshLobby;
