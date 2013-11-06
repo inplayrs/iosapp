@@ -13,6 +13,7 @@
 #import "Flurry.h"
 #import "Error.h"
 #import "IPInfoViewController.h"
+#import "TSMessage.h"
 
 
 @interface IPRegisterViewController ()
@@ -234,8 +235,21 @@
         NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"REGISTER",
                                     @"type", @"Success", @"result", nil];
         [Flurry logEvent:@"ACCOUNT" withParameters:dictionary];
+        [TSMessage showNotificationInViewController:self
+                                              title:@"Congratulations"
+                                           subtitle:@"You are now registered for INPLAYRS!"
+                                              image:nil
+                                               type:TSMessageNotificationTypeSuccess
+                                           duration:TSMessageNotificationDurationAutomatic
+                                           callback:nil
+                                        buttonTitle:nil
+                                     buttonCallback:nil
+                                         atPosition:TSMessageNotificationPositionTop
+                                canBeDismisedByUser:YES];
+        /*
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Congratulations" message:@"You are now registered for INPLAYRS!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
+         */
         self.registerUsernameField.text = @"Enter Username";
         self.registerPasswordField.placeholder = @"Enter Password";
         self.registerPasswordField.text = nil;

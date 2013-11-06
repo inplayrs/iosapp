@@ -94,12 +94,16 @@
     // setting the profileID property of the FBProfilePictureView instance
     // causes the control to fetch and display the profile picture for the user
 
-    NSLog(@"FBLoginView encountered an error=%@", user.first_name);
+    NSLog(@"FBLoginView first name=%@", user.first_name);
+    NSLog(@"FBLoginView last name=%@", user.last_name);
+    NSLog(@"FBLoginView id=%@", user.id);
+    NSLog(@"FBLoginView name=%@", user.name);
+    NSLog(@"FBLoginView username=%@", user.username);
     
     self.loggedInUser = user;
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    [prefs setObject:@"facebook" forKey:@"loginmethod"];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    // NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    // [prefs setObject:@"facebook" forKey:@"loginmethod"];
+    // [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 

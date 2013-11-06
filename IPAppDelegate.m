@@ -22,13 +22,11 @@
 #import "Error.h"
 #import "GCHelper.h"
 #import <FacebookSDK/FacebookSDK.h> //facebook
-#import "IPMultiLoginViewController.h" //facebook
 
 
 
 @implementation IPAppDelegate
 @synthesize window = _window;
-// @synthesize rootViewController = _rootViewController;
 
 
 @synthesize username, user, loggedin, refreshLobby;
@@ -111,7 +109,8 @@
     ///////////////////////
     // GAME CENTER LOGIN //
     ///////////////////////
-    [[GCHelper sharedInstance] authenticateLocalUser];
+    // [[GCHelper sharedInstance] authenticateLocalUser];
+    [[GCHelper sharedInstance] authenticateLocalPlayer];
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [Flurry startSession:@"8C4BSDMV8CNX5KKZFWMG"];
@@ -428,6 +427,7 @@
     // FBSample logic
     // Call the 'activateApp' method to log an app event for use in analytics and advertising reporting.
     [FBAppEvents activateApp];
+    [FBAppEvents setFlushBehavior:FBAppEventsFlushBehaviorExplicitOnly];
     
     // FBSample logic
     // We need to properly handle activation of the application with regards to SSO

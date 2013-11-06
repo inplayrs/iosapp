@@ -25,14 +25,6 @@
 		F4008C6D17451D5000B9A23E /* back-button.png in Resources */ = {isa = PBXBuildFile; fileRef = F4008C6817451D4B00B9A23E /* back-button.png */; };
 		F4008C6E17451D5000B9A23E /* back-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4008C6917451D4C00B9A23E /* back-button@2x.png */; };
 		F4008C6F17451D5000B9A23E /* menu-top-row-with-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4008C6A17451D4F00B9A23E /* menu-top-row-with-logo@2x.png */; };
-		F40F7D58182552AF00EBA8A1 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F40F7D57182552AF00EBA8A1 /* FacebookSDK.framework */; };
-		F40F7D631827C3A900EBA8A1 /* icon-error.png in Resources */ = {isa = PBXBuildFile; fileRef = F40F7D5B1827C3A900EBA8A1 /* icon-error.png */; };
-		F40F7D641827C3A900EBA8A1 /* icon-error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F40F7D5C1827C3A900EBA8A1 /* icon-error@2x.png */; };
-		F40F7D651827C3A900EBA8A1 /* icon-info.png in Resources */ = {isa = PBXBuildFile; fileRef = F40F7D5D1827C3A900EBA8A1 /* icon-info.png */; };
-		F40F7D661827C3A900EBA8A1 /* icon-info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F40F7D5E1827C3A900EBA8A1 /* icon-info@2x.png */; };
-		F40F7D671827C3A900EBA8A1 /* icon-success.png in Resources */ = {isa = PBXBuildFile; fileRef = F40F7D5F1827C3A900EBA8A1 /* icon-success.png */; };
-		F40F7D681827C3A900EBA8A1 /* icon-success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F40F7D601827C3A900EBA8A1 /* icon-success@2x.png */; };
-		F40F7D691827C3A900EBA8A1 /* MessageBarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F40F7D621827C3A900EBA8A1 /* MessageBarManager.m */; };
 		F4119CAE16BADEFC0028DB2E /* IPGameItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4119CAD16BADEFB0028DB2E /* IPGameItemCell.xib */; };
 		F4119CB016BAF01A0028DB2E /* IPGameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4119CAF16BAF01A0028DB2E /* IPGameViewController.xib */; };
 		F4119CB616C00C7D0028DB2E /* IPGameFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4119CB516C00C7C0028DB2E /* IPGameFooterView.xib */; };
@@ -270,6 +262,28 @@
 		F4B86F6D17BE54CA00B6FA20 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = F4B86F6C17BE54CA00B6FA20 /* Default.png */; };
 		F4B86F7017BFAA2200B6FA20 /* login-screen-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4B86F6E17BFAA2100B6FA20 /* login-screen-logo@2x.png */; };
 		F4B86F7117BFAA2200B6FA20 /* login-screen-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = F4B86F6F17BFAA2100B6FA20 /* login-screen-logo.png */; };
+		F4CB02011827D04E0016AB1D /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F40F7D57182552AF00EBA8A1 /* FacebookSDK.framework */; };
+		F4CB0229182AB0F90016AB1D /* TSMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CB0210182AB0F90016AB1D /* TSMessage.m */; };
+		F4CB022A182AB0F90016AB1D /* NotificationBackgroundError.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CB0213182AB0F90016AB1D /* NotificationBackgroundError.png */; };
+		F4CB022B182AB0F90016AB1D /* NotificationBackgroundError@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CB0214182AB0F90016AB1D /* NotificationBackgroundError@2x.png */; };
+		F4CB022C182AB0F90016AB1D /* NotificationBackgroundErrorIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CB0215182AB0F90016AB1D /* NotificationBackgroundErrorIcon.png */; };
+		F4CB022D182AB0F90016AB1D /* NotificationBackgroundErrorIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CB0216182AB0F90016AB1D /* NotificationBackgroundErrorIcon@2x.png */; };
+		F4CB022E182AB0F90016AB1D /* NotificationBackgroundMessage.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CB0217182AB0F90016AB1D /* NotificationBackgroundMessage.png */; };
+		F4CB022F182AB0F90016AB1D /* NotificationBackgroundMessage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CB0218182AB0F90016AB1D /* NotificationBackgroundMessage@2x.png */; };
+		F4CB0230182AB0F90016AB1D /* NotificationBackgroundSuccess.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CB0219182AB0F90016AB1D /* NotificationBackgroundSuccess.png */; };
+		F4CB0231182AB0F90016AB1D /* NotificationBackgroundSuccess@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CB021A182AB0F90016AB1D /* NotificationBackgroundSuccess@2x.png */; };
+		F4CB0232182AB0F90016AB1D /* NotificationBackgroundSuccessIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CB021B182AB0F90016AB1D /* NotificationBackgroundSuccessIcon.png */; };
+		F4CB0233182AB0F90016AB1D /* NotificationBackgroundSuccessIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CB021C182AB0F90016AB1D /* NotificationBackgroundSuccessIcon@2x.png */; };
+		F4CB0234182AB0F90016AB1D /* NotificationBackgroundWarning.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CB021D182AB0F90016AB1D /* NotificationBackgroundWarning.png */; };
+		F4CB0235182AB0F90016AB1D /* NotificationBackgroundWarning@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CB021E182AB0F90016AB1D /* NotificationBackgroundWarning@2x.png */; };
+		F4CB0236182AB0F90016AB1D /* NotificationBackgroundWarningIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CB021F182AB0F90016AB1D /* NotificationBackgroundWarningIcon.png */; };
+		F4CB0237182AB0F90016AB1D /* NotificationBackgroundWarningIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CB0220182AB0F90016AB1D /* NotificationBackgroundWarningIcon@2x.png */; };
+		F4CB0238182AB0F90016AB1D /* NotificationButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CB0221182AB0F90016AB1D /* NotificationButtonBackground.png */; };
+		F4CB0239182AB0F90016AB1D /* NotificationButtonBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CB0222182AB0F90016AB1D /* NotificationButtonBackground@2x.png */; };
+		F4CB023A182AB0F90016AB1D /* TSMessagesDefaultDesign.json in Resources */ = {isa = PBXBuildFile; fileRef = F4CB0223182AB0F90016AB1D /* TSMessagesDefaultDesign.json */; };
+		F4CB023B182AB0F90016AB1D /* TSBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CB0226182AB0F90016AB1D /* TSBlurView.m */; };
+		F4CB023C182AB0F90016AB1D /* TSMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CB0228182AB0F90016AB1D /* TSMessageView.m */; };
+		F4CB0241182AB4130016AB1D /* HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CB0240182AB4130016AB1D /* HexColor.m */; };
 		F4E4CCAC17BD026E00468FB6 /* fan-hit.png in Resources */ = {isa = PBXBuildFile; fileRef = F4E4CC9E17BD026E00468FB6 /* fan-hit.png */; };
 		F4E4CCAD17BD026E00468FB6 /* fan-hit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4E4CC9F17BD026E00468FB6 /* fan-hit@2x.png */; };
 		F4E4CCAE17BD026E00468FB6 /* info-hit.png in Resources */ = {isa = PBXBuildFile; fileRef = F4E4CCA017BD026E00468FB6 /* info-hit.png */; };
@@ -329,14 +343,6 @@
 		F4008C6A17451D4F00B9A23E /* menu-top-row-with-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-top-row-with-logo@2x.png"; sourceTree = "<group>"; };
 		F4008C78174A90C300B9A23E /* Error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Error.h; path = Inplayrs/Error.h; sourceTree = "<group>"; };
 		F40F7D57182552AF00EBA8A1 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
-		F40F7D5B1827C3A900EBA8A1 /* icon-error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-error.png"; sourceTree = "<group>"; };
-		F40F7D5C1827C3A900EBA8A1 /* icon-error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-error@2x.png"; sourceTree = "<group>"; };
-		F40F7D5D1827C3A900EBA8A1 /* icon-info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-info.png"; sourceTree = "<group>"; };
-		F40F7D5E1827C3A900EBA8A1 /* icon-info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-info@2x.png"; sourceTree = "<group>"; };
-		F40F7D5F1827C3A900EBA8A1 /* icon-success.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-success.png"; sourceTree = "<group>"; };
-		F40F7D601827C3A900EBA8A1 /* icon-success@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-success@2x.png"; sourceTree = "<group>"; };
-		F40F7D611827C3A900EBA8A1 /* MessageBarManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageBarManager.h; sourceTree = "<group>"; };
-		F40F7D621827C3A900EBA8A1 /* MessageBarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageBarManager.m; sourceTree = "<group>"; };
 		F4119CAD16BADEFB0028DB2E /* IPGameItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPGameItemCell.xib; sourceTree = "<group>"; };
 		F4119CAF16BAF01A0028DB2E /* IPGameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPGameViewController.xib; sourceTree = "<group>"; };
 		F4119CB516C00C7C0028DB2E /* IPGameFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPGameFooterView.xib; sourceTree = "<group>"; };
@@ -604,6 +610,31 @@
 		F4B86F6C17BE54CA00B6FA20 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		F4B86F6E17BFAA2100B6FA20 /* login-screen-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-screen-logo@2x.png"; sourceTree = "<group>"; };
 		F4B86F6F17BFAA2100B6FA20 /* login-screen-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-screen-logo.png"; sourceTree = "<group>"; };
+		F4CB020F182AB0F90016AB1D /* TSMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSMessage.h; sourceTree = "<group>"; };
+		F4CB0210182AB0F90016AB1D /* TSMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSMessage.m; sourceTree = "<group>"; };
+		F4CB0213182AB0F90016AB1D /* NotificationBackgroundError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NotificationBackgroundError.png; sourceTree = "<group>"; };
+		F4CB0214182AB0F90016AB1D /* NotificationBackgroundError@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationBackgroundError@2x.png"; sourceTree = "<group>"; };
+		F4CB0215182AB0F90016AB1D /* NotificationBackgroundErrorIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NotificationBackgroundErrorIcon.png; sourceTree = "<group>"; };
+		F4CB0216182AB0F90016AB1D /* NotificationBackgroundErrorIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationBackgroundErrorIcon@2x.png"; sourceTree = "<group>"; };
+		F4CB0217182AB0F90016AB1D /* NotificationBackgroundMessage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NotificationBackgroundMessage.png; sourceTree = "<group>"; };
+		F4CB0218182AB0F90016AB1D /* NotificationBackgroundMessage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationBackgroundMessage@2x.png"; sourceTree = "<group>"; };
+		F4CB0219182AB0F90016AB1D /* NotificationBackgroundSuccess.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NotificationBackgroundSuccess.png; sourceTree = "<group>"; };
+		F4CB021A182AB0F90016AB1D /* NotificationBackgroundSuccess@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationBackgroundSuccess@2x.png"; sourceTree = "<group>"; };
+		F4CB021B182AB0F90016AB1D /* NotificationBackgroundSuccessIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NotificationBackgroundSuccessIcon.png; sourceTree = "<group>"; };
+		F4CB021C182AB0F90016AB1D /* NotificationBackgroundSuccessIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationBackgroundSuccessIcon@2x.png"; sourceTree = "<group>"; };
+		F4CB021D182AB0F90016AB1D /* NotificationBackgroundWarning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NotificationBackgroundWarning.png; sourceTree = "<group>"; };
+		F4CB021E182AB0F90016AB1D /* NotificationBackgroundWarning@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationBackgroundWarning@2x.png"; sourceTree = "<group>"; };
+		F4CB021F182AB0F90016AB1D /* NotificationBackgroundWarningIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NotificationBackgroundWarningIcon.png; sourceTree = "<group>"; };
+		F4CB0220182AB0F90016AB1D /* NotificationBackgroundWarningIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationBackgroundWarningIcon@2x.png"; sourceTree = "<group>"; };
+		F4CB0221182AB0F90016AB1D /* NotificationButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NotificationButtonBackground.png; sourceTree = "<group>"; };
+		F4CB0222182AB0F90016AB1D /* NotificationButtonBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationButtonBackground@2x.png"; sourceTree = "<group>"; };
+		F4CB0223182AB0F90016AB1D /* TSMessagesDefaultDesign.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TSMessagesDefaultDesign.json; sourceTree = "<group>"; };
+		F4CB0225182AB0F90016AB1D /* TSBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSBlurView.h; sourceTree = "<group>"; };
+		F4CB0226182AB0F90016AB1D /* TSBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSBlurView.m; sourceTree = "<group>"; };
+		F4CB0227182AB0F90016AB1D /* TSMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSMessageView.h; sourceTree = "<group>"; };
+		F4CB0228182AB0F90016AB1D /* TSMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSMessageView.m; sourceTree = "<group>"; };
+		F4CB0240182AB4130016AB1D /* HexColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HexColor.m; sourceTree = "<group>"; };
+		F4CB0242182AB4510016AB1D /* HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HexColor.h; sourceTree = "<group>"; };
 		F4E4CC9E17BD026E00468FB6 /* fan-hit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fan-hit.png"; sourceTree = "<group>"; };
 		F4E4CC9F17BD026E00468FB6 /* fan-hit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fan-hit@2x.png"; sourceTree = "<group>"; };
 		F4E4CCA017BD026E00468FB6 /* info-hit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-hit.png"; sourceTree = "<group>"; };
@@ -650,6 +681,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4CB02011827D04E0016AB1D /* FacebookSDK.framework in Frameworks */,
 				F44867A917C2491B00975F75 /* AdSupport.framework in Frameworks */,
 				F44867A717C240C600975F75 /* Security.framework in Frameworks */,
 				F47B7BDF17A6C53F0008D3B9 /* ImageIO.framework in Frameworks */,
@@ -663,7 +695,6 @@
 				F4B7072A169DDBFE00E9FCD8 /* QuartzCore.framework in Frameworks */,
 				F47B7BDD17A6C4F10008D3B9 /* SDWebImage.framework in Frameworks */,
 				F44867AC17C249EB00975F75 /* libFlurry.a in Frameworks */,
-				F40F7D58182552AF00EBA8A1 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -687,29 +718,6 @@
 				1D6043361816B87300F058B0 /* IPMultiLoginViewController.m */,
 			);
 			name = Facebook;
-			sourceTree = "<group>";
-		};
-		F40F7D591827C37100EBA8A1 /* MessageBar */ = {
-			isa = PBXGroup;
-			children = (
-				F40F7D5A1827C3A900EBA8A1 /* Icons */,
-				F40F7D611827C3A900EBA8A1 /* MessageBarManager.h */,
-				F40F7D621827C3A900EBA8A1 /* MessageBarManager.m */,
-			);
-			name = MessageBar;
-			sourceTree = "<group>";
-		};
-		F40F7D5A1827C3A900EBA8A1 /* Icons */ = {
-			isa = PBXGroup;
-			children = (
-				F40F7D5B1827C3A900EBA8A1 /* icon-error.png */,
-				F40F7D5C1827C3A900EBA8A1 /* icon-error@2x.png */,
-				F40F7D5D1827C3A900EBA8A1 /* icon-info.png */,
-				F40F7D5E1827C3A900EBA8A1 /* icon-info@2x.png */,
-				F40F7D5F1827C3A900EBA8A1 /* icon-success.png */,
-				F40F7D601827C3A900EBA8A1 /* icon-success@2x.png */,
-			);
-			path = Icons;
 			sourceTree = "<group>";
 		};
 		F4119CBA16C023360028DB2E /* Resources */ = {
@@ -1018,7 +1026,7 @@
 		F4B706BC1695C74700E9FCD8 = {
 			isa = PBXGroup;
 			children = (
-				F40F7D591827C37100EBA8A1 /* MessageBar */,
+				F4CB020D182AB0F90016AB1D /* TSMessages */,
 				1D6043331816B82100F058B0 /* Facebook */,
 				1D4501F1180B07CB0013F11B /* GameCenter */,
 				F4119CBA16C023360028DB2E /* Resources */,
@@ -1110,6 +1118,70 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		F4CB020D182AB0F90016AB1D /* TSMessages */ = {
+			isa = PBXGroup;
+			children = (
+				F4CB020E182AB0F90016AB1D /* Classes */,
+				F4CB0211182AB0F90016AB1D /* Resources */,
+				F4CB0224182AB0F90016AB1D /* Views */,
+			);
+			path = TSMessages;
+			sourceTree = "<group>";
+		};
+		F4CB020E182AB0F90016AB1D /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F4CB020F182AB0F90016AB1D /* TSMessage.h */,
+				F4CB0210182AB0F90016AB1D /* TSMessage.m */,
+				F4CB0240182AB4130016AB1D /* HexColor.m */,
+				F4CB0242182AB4510016AB1D /* HexColor.h */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		F4CB0211182AB0F90016AB1D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F4CB0212182AB0F90016AB1D /* Images */,
+				F4CB0223182AB0F90016AB1D /* TSMessagesDefaultDesign.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		F4CB0212182AB0F90016AB1D /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				F4CB0213182AB0F90016AB1D /* NotificationBackgroundError.png */,
+				F4CB0214182AB0F90016AB1D /* NotificationBackgroundError@2x.png */,
+				F4CB0215182AB0F90016AB1D /* NotificationBackgroundErrorIcon.png */,
+				F4CB0216182AB0F90016AB1D /* NotificationBackgroundErrorIcon@2x.png */,
+				F4CB0217182AB0F90016AB1D /* NotificationBackgroundMessage.png */,
+				F4CB0218182AB0F90016AB1D /* NotificationBackgroundMessage@2x.png */,
+				F4CB0219182AB0F90016AB1D /* NotificationBackgroundSuccess.png */,
+				F4CB021A182AB0F90016AB1D /* NotificationBackgroundSuccess@2x.png */,
+				F4CB021B182AB0F90016AB1D /* NotificationBackgroundSuccessIcon.png */,
+				F4CB021C182AB0F90016AB1D /* NotificationBackgroundSuccessIcon@2x.png */,
+				F4CB021D182AB0F90016AB1D /* NotificationBackgroundWarning.png */,
+				F4CB021E182AB0F90016AB1D /* NotificationBackgroundWarning@2x.png */,
+				F4CB021F182AB0F90016AB1D /* NotificationBackgroundWarningIcon.png */,
+				F4CB0220182AB0F90016AB1D /* NotificationBackgroundWarningIcon@2x.png */,
+				F4CB0221182AB0F90016AB1D /* NotificationButtonBackground.png */,
+				F4CB0222182AB0F90016AB1D /* NotificationButtonBackground@2x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		F4CB0224182AB0F90016AB1D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F4CB0225182AB0F90016AB1D /* TSBlurView.h */,
+				F4CB0226182AB0F90016AB1D /* TSBlurView.m */,
+				F4CB0227182AB0F90016AB1D /* TSMessageView.h */,
+				F4CB0228182AB0F90016AB1D /* TSMessageView.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1189,6 +1261,7 @@
 				F4119CD216C910D80028DB2E /* menu-button-hit-state.png in Resources */,
 				F4119CDC16CA6E4F0028DB2E /* menu-button.png in Resources */,
 				F4119CED16CEBD770028DB2E /* Selection.h in Resources */,
+				F4CB022B182AB0F90016AB1D /* NotificationBackgroundError@2x.png in Resources */,
 				F4A540A216D6655F00E95491 /* IPGameItemCell2.xib in Resources */,
 				F4AFEDF016D930F40055F376 /* IPLobbyItemCell.xib in Resources */,
 				F4AFEDF216D93E6B0055F376 /* golf.png in Resources */,
@@ -1220,7 +1293,6 @@
 				F429F8F5170B19A4006E7CDE /* submit-button-hit-state.png in Resources */,
 				F429F8F6170B19A4006E7CDE /* grey-button.png in Resources */,
 				F479CD731711AAB2008AF68D /* segcontrol_sel-uns.png in Resources */,
-				F40F7D671827C3A900EBA8A1 /* icon-success.png in Resources */,
 				F479CD741711AAB2008AF68D /* segcontrol_sel.png in Resources */,
 				F479CD751711AAB2008AF68D /* segcontrol_uns-sel.png in Resources */,
 				F479CD761711AAB2008AF68D /* segcontrol_uns-uns.png in Resources */,
@@ -1228,6 +1300,8 @@
 				F479CD8F17156FE6008AF68D /* snooker.png in Resources */,
 				F4F8043317FEBF8B0048A944 /* tick.png in Resources */,
 				F479CD9017156FE6008AF68D /* motor-racing.png in Resources */,
+				F4CB0238182AB0F90016AB1D /* NotificationButtonBackground.png in Resources */,
+				F4CB0232182AB0F90016AB1D /* NotificationBackgroundSuccessIcon.png in Resources */,
 				F479CD9117156FE6008AF68D /* baseball.png in Resources */,
 				F479CD9217156FE6008AF68D /* cricket.png in Resources */,
 				F479CD9A1720261F008AF68D /* bank-normal.png in Resources */,
@@ -1236,19 +1310,22 @@
 				F479CD9D1720261F008AF68D /* gamecontrol_sel.png in Resources */,
 				F479CD9E1720261F008AF68D /* gamecontrol_uns-sel.png in Resources */,
 				F479CD9F1720261F008AF68D /* gamecontrol_uns-uns.png in Resources */,
-				F40F7D651827C3A900EBA8A1 /* icon-info.png in Resources */,
 				F479CDA01720261F008AF68D /* gamecontrol_uns.png in Resources */,
+				F4CB023A182AB0F90016AB1D /* TSMessagesDefaultDesign.json in Resources */,
 				F479CDA217215547008AF68D /* game-screen-row.png in Resources */,
 				F479CDA81721594C008AF68D /* segcontrol_sel-uns@2x.png in Resources */,
+				F4CB022C182AB0F90016AB1D /* NotificationBackgroundErrorIcon.png in Resources */,
 				F479CDA91721594C008AF68D /* segcontrol_sel@2x.png in Resources */,
 				F479CDAA1721594C008AF68D /* segcontrol_uns-sel@2x.png in Resources */,
+				F4CB0234182AB0F90016AB1D /* NotificationBackgroundWarning.png in Resources */,
 				F479CDAB1721594C008AF68D /* segcontrol_uns-uns@2x.png in Resources */,
 				F479CDAC1721594C008AF68D /* segcontrol_uns@2x.png in Resources */,
 				F479CDB417215A9C008AF68D /* bank-normal@2x.png in Resources */,
+				F4CB022F182AB0F90016AB1D /* NotificationBackgroundMessage@2x.png in Resources */,
 				F479CDB517215A9C008AF68D /* bank-select@2x.png in Resources */,
 				F479CDB617215A9C008AF68D /* gamecontrol_sel-uns@2x.png in Resources */,
-				F40F7D661827C3A900EBA8A1 /* icon-info@2x.png in Resources */,
 				F479CDB717215A9C008AF68D /* gamecontrol_sel@2x.png in Resources */,
+				F4CB0233182AB0F90016AB1D /* NotificationBackgroundSuccessIcon@2x.png in Resources */,
 				F479CDB817215A9C008AF68D /* gamecontrol_uns-sel@2x.png in Resources */,
 				F479CDB917215A9C008AF68D /* gamecontrol_uns-uns@2x.png in Resources */,
 				F479CDBA17215A9C008AF68D /* gamecontrol_uns@2x.png in Resources */,
@@ -1262,13 +1339,13 @@
 				F479CDCC17215CBC008AF68D /* discontrol_uns-uns@2x.png in Resources */,
 				F479CDCD17215CBC008AF68D /* discontrol_uns.png in Resources */,
 				F479CDCE17215CBC008AF68D /* discontrol_uns@2x.png in Resources */,
+				F4CB022E182AB0F90016AB1D /* NotificationBackgroundMessage.png in Resources */,
 				F479CDEE17294AA8008AF68D /* baseball@2x.png in Resources */,
 				F479CDEF17294AA8008AF68D /* basketball@2x.png in Resources */,
 				F4F8043617FEE2B40048A944 /* cross@2x.png in Resources */,
 				F479CDF017294AA8008AF68D /* cricket@2x.png in Resources */,
 				F479CDF117294AA8008AF68D /* golf@2x.png in Resources */,
 				F479CDF217294AA8008AF68D /* green_dot@2x.png in Resources */,
-				F40F7D681827C3A900EBA8A1 /* icon-success@2x.png in Resources */,
 				F479CDF317294AA8008AF68D /* motor-racing@2x.png in Resources */,
 				F479CDF417294AA8008AF68D /* snooker@2x.png in Resources */,
 				F479CDF517294AA8008AF68D /* football@2x.png in Resources */,
@@ -1276,6 +1353,7 @@
 				F479CDFB172EADC0008AF68D /* reality-tv.png in Resources */,
 				F479CDFC172EADC0008AF68D /* reality-tv@2x.png in Resources */,
 				F479CDFD172EADC0008AF68D /* rugby.png in Resources */,
+				F4CB0230182AB0F90016AB1D /* NotificationBackgroundSuccess.png in Resources */,
 				F479CDFE172EADC0008AF68D /* rugby@2x.png in Resources */,
 				F479D15D172EAE49008AF68D /* american-football.png in Resources */,
 				F479D15E172EAE49008AF68D /* american-football@2x.png in Resources */,
@@ -1304,6 +1382,7 @@
 				F47E3780174FC1F400C5C508 /* leaderboard-button@2x.png in Resources */,
 				F47E3787174FCC0B00C5C508 /* rank-points-main-background@2x.png in Resources */,
 				F47E3788174FCC0B00C5C508 /* submit-button-background@2x.png in Resources */,
+				F4CB0236182AB0F90016AB1D /* NotificationBackgroundWarningIcon.png in Resources */,
 				F47E3789174FCC0B00C5C508 /* submit-button-hit-state@2x.png in Resources */,
 				F47E378A174FCC0B00C5C508 /* submit-button@2x.png in Resources */,
 				F4857F7B17733BE10050FEDA /* IPLobbyChildCell.xib in Resources */,
@@ -1323,7 +1402,6 @@
 				F47B7BF217AA9AE40008D3B9 /* Default@2x.png in Resources */,
 				F47B7BF617AA9B570008D3B9 /* background-only.png in Resources */,
 				F47B7BF717AA9B570008D3B9 /* bottom-section-leaderboard.png in Resources */,
-				F40F7D641827C3A900EBA8A1 /* icon-error@2x.png in Resources */,
 				F47B7BF817AA9B570008D3B9 /* bottom-section-leaderboard@2x.png in Resources */,
 				F4F8043717FEE2B40048A944 /* tick@2x.png in Resources */,
 				F47B7BFA17AAC12C0008D3B9 /* background-only@2x.png in Resources */,
@@ -1332,7 +1410,6 @@
 				F47B7BFE17AAC4A60008D3B9 /* line-divider@2x.png in Resources */,
 				F47B7C0117AFB9690008D3B9 /* neverinplay.png in Resources */,
 				F47B7C0217AFB9690008D3B9 /* neverinplay@2x.png in Resources */,
-				F40F7D631827C3A900EBA8A1 /* icon-error.png in Resources */,
 				F47B7C1317B0FE1C0008D3B9 /* fan.png in Resources */,
 				F47B7C1417B0FE1C0008D3B9 /* fan@2x.png in Resources */,
 				F47B7C1517B0FE1C0008D3B9 /* info.png in Resources */,
@@ -1345,12 +1422,15 @@
 				F47B7C1C17B0FE1C0008D3B9 /* lobby@2x.png in Resources */,
 				F47B7C1D17B0FE1C0008D3B9 /* settings.png in Resources */,
 				F47B7C1E17B0FE1C0008D3B9 /* settings@2x.png in Resources */,
+				F4CB0239182AB0F90016AB1D /* NotificationButtonBackground@2x.png in Resources */,
 				F47B7C2117B0FE1C0008D3B9 /* winners.png in Resources */,
 				F47B7C2217B0FE1C0008D3B9 /* winners@2x.png in Resources */,
 				F47B7C2417B6BC7D0008D3B9 /* menu-final-row-line@2x.png in Resources */,
+				F4CB0231182AB0F90016AB1D /* NotificationBackgroundSuccess@2x.png in Resources */,
 				F47B7C2717BBAC340008D3B9 /* login-button-hit@2x.png in Resources */,
 				F47B7C2817BBAC340008D3B9 /* login-button-normal@2x.png in Resources */,
 				F47B7C2E17BBBDB50008D3B9 /* gamecontrol_sel-sel.png in Resources */,
+				F4CB0235182AB0F90016AB1D /* NotificationBackgroundWarning@2x.png in Resources */,
 				F47B7C2F17BBBDB50008D3B9 /* gamecontrol_sel-sel@2x.png in Resources */,
 				F47B7C3017BBBDB50008D3B9 /* leaderboard-row.png in Resources */,
 				F47B7C3217BCFCA00008D3B9 /* lobby-sub-row.png in Resources */,
@@ -1363,6 +1443,7 @@
 				F4E4CCB217BD026E00468FB6 /* lobby-hit.png in Resources */,
 				F4E4CCB317BD026E00468FB6 /* lobby-hit@2x.png in Resources */,
 				F4E4CCB417BD026E00468FB6 /* settings-hit.png in Resources */,
+				F4CB022D182AB0F90016AB1D /* NotificationBackgroundErrorIcon@2x.png in Resources */,
 				F4E4CCB517BD026E00468FB6 /* settings-hit@2x.png in Resources */,
 				F4E4CCB817BD026E00468FB6 /* winners-hit.png in Resources */,
 				F4E4CCB917BD026E00468FB6 /* winners-hit@2x.png in Resources */,
@@ -1383,6 +1464,7 @@
 				F41F601717E1BE6D003B713B /* tutorial-button@2x.png in Resources */,
 				F41F601817E1BE6D003B713B /* tutorial-icon-hit-state.png in Resources */,
 				F41F601917E1BE6D003B713B /* tutorial-icon-hit-state@2x.png in Resources */,
+				F4CB0237182AB0F90016AB1D /* NotificationBackgroundWarningIcon@2x.png in Resources */,
 				F41F601A17E1BE6D003B713B /* tutorial-icon.png in Resources */,
 				F41F601B17E1BE6D003B713B /* tutorial-icon@2x.png in Resources */,
 				F422C69D17E861CB003CA923 /* screen_4.png in Resources */,
@@ -1396,6 +1478,7 @@
 				F422C6A517E861CB003CA923 /* screen_9.png in Resources */,
 				F422C6A617E861CB003CA923 /* screen_2@2x.png in Resources */,
 				F422C6A717E861CB003CA923 /* screen_6@2x.png in Resources */,
+				F4CB022A182AB0F90016AB1D /* NotificationBackgroundError.png in Resources */,
 				F422C6A817E861CB003CA923 /* screen_8@2x.png in Resources */,
 				F422C6A917E861CB003CA923 /* screen_9@2x.png in Resources */,
 				F422C6AA17E861CB003CA923 /* screen_7@2x.png in Resources */,
@@ -1445,6 +1528,7 @@
 				F4F714B616A712FA00FCCA82 /* MFSideMenu.m in Sources */,
 				F4F714B716A712FA00FCCA82 /* UINavigationController+MFSideMenu.m in Sources */,
 				F4F714B816A712FA00FCCA82 /* IPAppDelegate.m in Sources */,
+				F4CB023C182AB0F90016AB1D /* TSMessageView.m in Sources */,
 				F4F714B916A712FA00FCCA82 /* SideMenuViewController.m in Sources */,
 				F4F714BF16AEB4AB00FCCA82 /* IPLobbyViewController.m in Sources */,
 				F4F714C416AEEF7F00FCCA82 /* IPGameViewController.m in Sources */,
@@ -1460,6 +1544,7 @@
 				F494240B16E648B900AC0644 /* MF_Base64Additions.m in Sources */,
 				F494240F16E6500100AC0644 /* IPFanViewController.m in Sources */,
 				F494241316E6564800AC0644 /* FanDataController.m in Sources */,
+				F4CB023B182AB0F90016AB1D /* TSBlurView.m in Sources */,
 				F494241616E6611400AC0644 /* Fangroup.m in Sources */,
 				F429F8CB1704B08D006E7CDE /* IPInfoViewController.m in Sources */,
 				F429F8CF17085403006E7CDE /* Leaderboard.m in Sources */,
@@ -1469,14 +1554,15 @@
 				F429F8F9170EDE64006E7CDE /* Competition.m in Sources */,
 				F479CD82171486C7008AF68D /* Fan.m in Sources */,
 				F4008C651740FCC700B9A23E /* CompetitionPoints.m in Sources */,
+				F4CB0229182AB0F90016AB1D /* TSMessage.m in Sources */,
 				F42D4CA6174A910F00206ABC /* Error.m in Sources */,
 				F47E3793175FAFA900C5C508 /* IPSettingsViewController.m in Sources */,
+				F4CB0241182AB4130016AB1D /* HexColor.m in Sources */,
 				1D4501F4180B07FD0013F11B /* GCHelper.m in Sources */,
 				F47E37961760E27B00C5C508 /* Account.m in Sources */,
 				F4857F7E17733D680050FEDA /* IPLobbyChildCell.m in Sources */,
 				F4857F871777539A0050FEDA /* Banner.m in Sources */,
 				F4AE7C04179824D400303B34 /* IPWinnersViewController.m in Sources */,
-				F40F7D691827C3A900EBA8A1 /* MessageBarManager.m in Sources */,
 				F47B7BDB17A67FFC0008D3B9 /* CompetitionWinners.m in Sources */,
 				F44867A417C0CD7400975F75 /* IPRegisterViewController.m in Sources */,
 				F44867B517C3707800975F75 /* IPPasswordViewController.m in Sources */,
@@ -1561,12 +1647,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)",
-					"/Users/David_B/Downloads/iosapp-master",
-					/Users/inplayrs/Documents/Code/Inplayrs,
-				);
+				FRAMEWORK_SEARCH_PATHS = /Users/inplayrs/Documents/Code/Inplayrs;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Inplayrs/Inplayrs-Prefix.pch";
 				INFOPLIST_FILE = "Inplayrs/Inplayrs-Info.plist";
@@ -1587,12 +1668,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)",
-					"/Users/David_B/Downloads/iosapp-master",
-					/Users/inplayrs/Documents/Code/Inplayrs,
-				);
+				FRAMEWORK_SEARCH_PATHS = /Users/inplayrs/Documents/Code/Inplayrs;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Inplayrs/Inplayrs-Prefix.pch";
 				INFOPLIST_FILE = "Inplayrs/Inplayrs-Info.plist";

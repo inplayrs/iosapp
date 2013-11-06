@@ -16,6 +16,7 @@
 #import "Error.h"
 #import "IPPasswordViewController.h"
 #import "IPLoginViewController.h"
+#import "TSMessage.h"
 
 
 @interface IPSettingsViewController ()
@@ -177,8 +178,21 @@
         NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"LOGOUT",
                                 @"type", @"Success", @"result", nil];
         [Flurry logEvent:@"ACCOUNT" withParameters:dictionary];
+        [TSMessage showNotificationInViewController:self
+                                              title:@"Logout Successful"
+                                           subtitle:@"You are now logged out."
+                                              image:nil
+                                               type:TSMessageNotificationTypeSuccess
+                                           duration:TSMessageNotificationDurationAutomatic
+                                           callback:nil
+                                        buttonTitle:nil
+                                     buttonCallback:nil
+                                         atPosition:TSMessageNotificationPositionTop
+                                canBeDismisedByUser:YES];
+        /*
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logout Success" message:@"You are now logged out!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
+         */
     } else {
         if (!self.loginViewController) {
             self.loginViewController = [[IPLoginViewController alloc] initWithNibName:@"IPLoginViewController" bundle:nil];
@@ -211,8 +225,21 @@
         NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"SAVE",
                                     @"type", @"Success", @"result", nil];
         [Flurry logEvent:@"ACCOUNT" withParameters:dictionary];
+        [TSMessage showNotificationInViewController:self
+                                              title:@"Save Successful"
+                                           subtitle:@"Your settings have been saved."
+                                              image:nil
+                                               type:TSMessageNotificationTypeSuccess
+                                           duration:TSMessageNotificationDurationAutomatic
+                                           callback:nil
+                                        buttonTitle:nil
+                                     buttonCallback:nil
+                                         atPosition:TSMessageNotificationPositionTop
+                                canBeDismisedByUser:YES];
+        /*
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Save Successful" message:@"Your settings have been saved!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
+         */
         
         [self.updateButton setEnabled:YES];
         [self.passwordButton setEnabled:YES];

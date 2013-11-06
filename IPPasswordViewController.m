@@ -12,6 +12,7 @@
 #import "RestKit.h"
 #import "Flurry.h"
 #import "Error.h"
+#import "TSMessage.h"
 
 
 @interface IPPasswordViewController ()
@@ -168,8 +169,21 @@
         NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"PASSWORD",
                                     @"type", @"Success", @"result", nil];
         [Flurry logEvent:@"ACCOUNT" withParameters:dictionary];
+        [TSMessage showNotificationInViewController:self
+                                              title:@"Update Successful"
+                                           subtitle:@"Your password has been updated."
+                                              image:nil
+                                               type:TSMessageNotificationTypeSuccess
+                                           duration:TSMessageNotificationDurationAutomatic
+                                           callback:nil
+                                        buttonTitle:nil
+                                     buttonCallback:nil
+                                         atPosition:TSMessageNotificationPositionTop
+                                canBeDismisedByUser:YES];
+        /*
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success" message:@"Your password has been changed!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
+         */
         self.oldPassword.placeholder = @"Enter Current Password";
         self.updatePassword.placeholder = @"Enter New Password";
         self.updatePassword2.placeholder = @"Re-Enter New Password";

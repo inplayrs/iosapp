@@ -2,10 +2,8 @@
 //  IPAppDelegate.h
 //
 //
-#import <FacebookSDK/FacebookSDK.h>
-#import <UIKit/UIKit.h>
 
-// @class IPMultiLoginViewController;
+#import <UIKit/UIKit.h>
 
 @interface IPAppDelegate : UIResponder <UIApplicationDelegate> {
     NSString *username;
@@ -19,7 +17,6 @@
 @property (nonatomic, retain) NSString *user;
 @property (nonatomic) BOOL loggedin;
 @property (nonatomic) BOOL refreshLobby;
-// @property (strong, nonatomic) IPMultiLoginViewController *rootViewController;
 
 
 

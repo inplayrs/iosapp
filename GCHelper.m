@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Inplayrs. All rights reserved.
 //
 
+
 #import "GCHelper.h"
-#import "RestKit.h"
 
 
 @implementation GCHelper
@@ -24,6 +24,7 @@ static GCHelper *sharedHelper = nil;
     return sharedHelper;
 }
 
+/*
 - (BOOL)isGameCenterAvailable {
     // check for presence of GKLocalPlayer API
     Class gcClass = (NSClassFromString(@"GKLocalPlayer"));
@@ -62,7 +63,31 @@ static GCHelper *sharedHelper = nil;
     }
     
 }
+ */
+
 #pragma mark User functions
+
+- (void) authenticateLocalPlayer
+{
+    GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
+    localPlayer.authenticateHandler = ^(UIViewController *viewController, NSError *error){
+        if (viewController != nil)
+        {
+            NSLog (@"user not logged in to GC");
+        }
+        else if ([GKLocalPlayer localPlayer].isAuthenticated)
+        {
+            NSLog(@"gamecenter authentication process succeeded");
+            //david_ip1 daviddavidD1 test user account
+            NSLog(@"User alias: %@",[[GKLocalPlayer localPlayer] alias]);
+            NSLog(@"User id: %@",[[GKLocalPlayer localPlayer] playerID]);
+        }
+        else
+        {
+            NSLog(@"user not authenicated");
+        }
+    };
+}
 
 
 - (void)authenticateLocalUser{
@@ -72,21 +97,23 @@ static GCHelper *sharedHelper = nil;
     if ([GKLocalPlayer localPlayer].isAuthenticated == NO) {
         GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
         [localPlayer setAuthenticateHandler:(^(UIViewController* viewcontroller, NSError *error) {
-            if(localPlayer.isAuthenticated)
-            {
-                //david_ip1 daviddavidD1 test user account
-                NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-                [prefs setObject:@"gamecenter" forKey:@"loginmethod"];
-                NSLog(@"User alias: %@",[[GKLocalPlayer localPlayer]alias]);
-                NSLog(@"User id: %@",[[GKLocalPlayer localPlayer]playerID]);
-            }
-            else
-            {
-                // not logged in
-                NSLog(@"NOT LOGGED IN TO GAMECENTER");
-            }
-            
-            
+            if ([GKLocalPlayer localPlayer].isAuthenticated) {
+                    // Do this each time the app starts to check the authenticate user
+                    // david_ip2 daviddavidD1 david_ip2@gmail.com = test user account
+
+                    NSLog(@"gamecenter authentication process succeeded");
+                    //david_ip1 daviddavidD1 test user account
+                    NSLog(@"User alias: %@",[[GKLocalPlayer localPlayer]alias]);
+                    NSLog(@"User id: %@",[[GKLocalPlayer localPlayer]playerID]);
+                    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+                    [prefs setObject:@"gamecenter" forKey:@"loginmethod"];
+                }
+            else if (![GKLocalPlayer localPlayer].isAuthenticated)
+                {
+                    // GameCenter is not avaliable enable facebook/email login
+                    NSLog(@"User is not signed into GameCenter");
+
+                }
         })];
     } else {
         NSLog(@"Game center not avaliabe on this device");
@@ -96,4 +123,5 @@ static GCHelper *sharedHelper = nil;
 
     }
 }
+
 @end

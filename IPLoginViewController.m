@@ -12,6 +12,7 @@
 #import "RestKit.h"
 #import "Flurry.h"
 #import "Error.h"
+#import "TSMessage.h"
 
 
 @interface IPLoginViewController ()
@@ -210,8 +211,21 @@
         NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"LOGIN",
                                      @"type", @"Success", @"result", nil];
         [Flurry logEvent:@"ACCOUNT" withParameters:dictionary];
+        [TSMessage showNotificationInViewController:self
+                                               title:@"Login Successful"
+                                            subtitle:@"You are now logged in."
+                                               image:nil
+                                                type:TSMessageNotificationTypeSuccess
+                                            duration:TSMessageNotificationDurationAutomatic
+                                            callback:nil
+                                         buttonTitle:nil
+                                      buttonCallback:nil
+                                          atPosition:TSMessageNotificationPositionTop
+                                 canBeDismisedByUser:YES];
+         /*
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login Success" message:@"You are now logged in!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
+          */
         NSString *path;
         if ([prefs boolForKey:@"pushNotification"] == YES)
             path = [NSString stringWithFormat:@"user/account/update?pushActive=1&deviceID=%@", [prefs objectForKey:@"deviceID"]];

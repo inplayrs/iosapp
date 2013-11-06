@@ -18,6 +18,6 @@
 
 + (GCHelper *)sharedInstance;
 - (void)authenticateLocalUser;
-
+- (void)authenticateLocalPlayer;
 
 @end
