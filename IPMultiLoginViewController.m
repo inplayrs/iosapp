@@ -12,7 +12,7 @@
 #import "IPInfoViewController.h"
 
 
-@interface IPMultiLoginViewController () <FBLoginViewDelegate>
+@interface IPMultiLoginViewController () <FBLoginViewDelegate, UIAlertViewDelegate>
 @property (strong, nonatomic) id<FBGraphUser> loggedInUser;
 
 @end
@@ -101,8 +101,8 @@
     NSLog(@"FBLoginView username=%@", user.username);
     
     self.loggedInUser = user;
-    // NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    // [prefs setObject:@"facebook" forKey:@"loginmethod"];
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    [prefs setObject:@"facebook" forKey:@"loginmethod"];
     // [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
@@ -110,7 +110,36 @@
 - (void)loginView:(FBLoginView *)loginView handleError:(NSError *)error {
     // see https://developers.facebook.com/docs/reference/api/errors/ for general guidance on error handling for Facebook API
     // our policy here is to let the login view handle errors, but to log the results
-    NSLog(@"FBLoginView encountered an error=%@", error);
+    NSString *alertMessage, *alertTitle;
+    if (error.fberrorShouldNotifyUser) {
+        // If the SDK has a message for the user, surface it. This conveniently
+        // handles cases like password change or iOS6 app slider state.
+        alertTitle = @"Facebook Error";
+        alertMessage = error.fberrorUserMessage;
+    } else if (error.fberrorCategory == FBErrorCategoryAuthenticationReopenSession) {
+        // It is important to handle session closures since they can happen
+        // outside of the app. You can inspect the error for more context
+        // but this sample generically notifies the user.
+        alertTitle = @"Session Error";
+        alertMessage = @"Your current session is no longer valid. Please log in again.";
+    } else if (error.fberrorCategory == FBErrorCategoryUserCancelled) {
+        // The user has cancelled a login. You can inspect the error
+        // for more context. For this sample, we will simply ignore it.
+        NSLog(@"user cancelled login");
+    } else {
+        // For simplicity, this sample treats other errors blindly.
+        alertTitle  = @"Unknown Error";
+        alertMessage = @"Error. Please try again later.";
+        NSLog(@"Unexpected error:%@", error);
+    }
+    
+    if (alertMessage) {
+        [[[UIAlertView alloc] initWithTitle:alertTitle
+                                    message:alertMessage
+                                   delegate:nil
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil] show];
+    }
 }
 
 

@@ -11,6 +11,7 @@
 @class IPGameViewController;
 // @class IPRegisterViewController;
 @class IPMultiLoginViewController;
+@class IPStatsViewController;
 
 @interface IPLobbyViewController : UITableViewController
 {
@@ -27,6 +28,7 @@
 @property (strong, nonatomic) IPGameViewController *detailViewController;
 // @property (strong, nonatomic) IPRegisterViewController *registerViewController;
 @property (strong, nonatomic) IPMultiLoginViewController *multiLoginViewController;
+@property (strong, nonatomic) IPStatsViewController *statsViewController;
 @property (strong, nonatomic) NSMutableDictionary *controllerList;
 @property (nonatomic) BOOL gamesLoading;
 @property (nonatomic, copy) NSMutableArray *topItems;

@@ -20,6 +20,7 @@
     [menuList addObject:@"Lobby"];
     [menuList addObject:@"Leaderboard"];
     [menuList addObject:@"Winners"];
+    [menuList addObject:@"Stats"];
     [menuList addObject:@"Fan"];
     [menuList addObject:@"Tutorial"];
     [menuList addObject:@"Settings"];

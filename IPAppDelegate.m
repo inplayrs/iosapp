@@ -20,8 +20,8 @@
 #import "CompetitionWinners.h"
 #import "Account.h"
 #import "Error.h"
-#import "GCHelper.h"
-#import <FacebookSDK/FacebookSDK.h> //facebook
+// #import "GCHelper.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 
 
@@ -109,8 +109,7 @@
     ///////////////////////
     // GAME CENTER LOGIN //
     ///////////////////////
-    // [[GCHelper sharedInstance] authenticateLocalUser];
-    [[GCHelper sharedInstance] authenticateLocalPlayer];
+    // [[GCHelper sharedInstance] authenticateLocalPlayer];
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [Flurry startSession:@"8C4BSDMV8CNX5KKZFWMG"];
@@ -121,8 +120,6 @@
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
         [application setStatusBarStyle:UIStatusBarStyleLightContent];
         self.window.clipsToBounds =YES;
-        // self.window.frame =  CGRectMake(0,20,self.window.frame.size.width,self.window.frame.size.height-20);
-        // self.window.bounds = CGRectMake(0, 20, self.window.frame.size.width, self.window.frame.size.height);
     }
     
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -369,10 +366,12 @@
             } failure:nil];
         }
     }
-        
     
+    // [[GCHelper sharedInstance] authenticateLocalPlayer];
     return YES;
 }
+
+
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {

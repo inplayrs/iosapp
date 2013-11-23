@@ -14,6 +14,7 @@
 @class IPInfoViewController;
 @class IPWinnersViewController;
 @class IPTutorialViewController;
+@class IPStatsViewController;
 
 @interface SideMenuViewController : UITableViewController
 // <UISearchBarDelegate>
@@ -34,5 +35,6 @@
 @property (strong, nonatomic) IPInfoViewController *infoController;
 @property (strong, nonatomic) IPWinnersViewController *winnersController;
 @property (strong, nonatomic) IPTutorialViewController *tutorialController;
+@property (strong, nonatomic) IPStatsViewController *statsController;
 
 @end

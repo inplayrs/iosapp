@@ -284,6 +284,10 @@
 		F4CB023B182AB0F90016AB1D /* TSBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CB0226182AB0F90016AB1D /* TSBlurView.m */; };
 		F4CB023C182AB0F90016AB1D /* TSMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CB0228182AB0F90016AB1D /* TSMessageView.m */; };
 		F4CB0241182AB4130016AB1D /* HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CB0240182AB4130016AB1D /* HexColor.m */; };
+		F4CB0244182BCA880016AB1D /* IPStatsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4CB0243182BCA880016AB1D /* IPStatsViewController.xib */; };
+		F4CB0247182BCACF0016AB1D /* IPStatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CB0246182BCACF0016AB1D /* IPStatsViewController.m */; };
+		F4CB024A1832A17E0016AB1D /* green_up.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CB02481832A17E0016AB1D /* green_up.png */; };
+		F4CB024B1832A17E0016AB1D /* red_down.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CB02491832A17E0016AB1D /* red_down.png */; };
 		F4E4CCAC17BD026E00468FB6 /* fan-hit.png in Resources */ = {isa = PBXBuildFile; fileRef = F4E4CC9E17BD026E00468FB6 /* fan-hit.png */; };
 		F4E4CCAD17BD026E00468FB6 /* fan-hit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4E4CC9F17BD026E00468FB6 /* fan-hit@2x.png */; };
 		F4E4CCAE17BD026E00468FB6 /* info-hit.png in Resources */ = {isa = PBXBuildFile; fileRef = F4E4CCA017BD026E00468FB6 /* info-hit.png */; };
@@ -635,6 +639,11 @@
 		F4CB0228182AB0F90016AB1D /* TSMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSMessageView.m; sourceTree = "<group>"; };
 		F4CB0240182AB4130016AB1D /* HexColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HexColor.m; sourceTree = "<group>"; };
 		F4CB0242182AB4510016AB1D /* HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HexColor.h; sourceTree = "<group>"; };
+		F4CB0243182BCA880016AB1D /* IPStatsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPStatsViewController.xib; sourceTree = "<group>"; };
+		F4CB0245182BCACF0016AB1D /* IPStatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPStatsViewController.h; sourceTree = "<group>"; };
+		F4CB0246182BCACF0016AB1D /* IPStatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPStatsViewController.m; sourceTree = "<group>"; };
+		F4CB02481832A17E0016AB1D /* green_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_up.png; sourceTree = "<group>"; };
+		F4CB02491832A17E0016AB1D /* red_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_down.png; sourceTree = "<group>"; };
 		F4E4CC9E17BD026E00468FB6 /* fan-hit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fan-hit.png"; sourceTree = "<group>"; };
 		F4E4CC9F17BD026E00468FB6 /* fan-hit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fan-hit@2x.png"; sourceTree = "<group>"; };
 		F4E4CCA017BD026E00468FB6 /* info-hit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-hit.png"; sourceTree = "<group>"; };
@@ -723,6 +732,8 @@
 		F4119CBA16C023360028DB2E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F4CB02481832A17E0016AB1D /* green_up.png */,
+				F4CB02491832A17E0016AB1D /* red_down.png */,
 				F47FE78B16FA4AC200FC88A6 /* 114x114-iPhone-Retina-icon.png */,
 				F4668D6217EB63C100F20046 /* 120x120-iPhone-Retina-icon.png */,
 				F4F80438180560CA0048A944 /* 29x29-iPhone-icon.png */,
@@ -978,6 +989,8 @@
 				F429F8C91704B08D006E7CDE /* IPInfoViewController.m */,
 				F41F600317E0A901003B713B /* IPTutorialViewController.h */,
 				F41F600417E0A911003B713B /* IPTutorialViewController.m */,
+				F4CB0245182BCACF0016AB1D /* IPStatsViewController.h */,
+				F4CB0246182BCACF0016AB1D /* IPStatsViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1114,6 +1127,7 @@
 				F4E4CCBC17BD202E00468FB6 /* IPFanViewController.xib */,
 				F429F8D917086A81006E7CDE /* IPLeaderboardItemCell.xib */,
 				F41F600117E0A7C4003B713B /* IPTutorialViewController.xib */,
+				F4CB0243182BCA880016AB1D /* IPStatsViewController.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1304,6 +1318,7 @@
 				F4CB0232182AB0F90016AB1D /* NotificationBackgroundSuccessIcon.png in Resources */,
 				F479CD9117156FE6008AF68D /* baseball.png in Resources */,
 				F479CD9217156FE6008AF68D /* cricket.png in Resources */,
+				F4CB024B1832A17E0016AB1D /* red_down.png in Resources */,
 				F479CD9A1720261F008AF68D /* bank-normal.png in Resources */,
 				F479CD9B1720261F008AF68D /* bank-select.png in Resources */,
 				F479CD9C1720261F008AF68D /* gamecontrol_sel-uns.png in Resources */,
@@ -1426,6 +1441,7 @@
 				F47B7C2117B0FE1C0008D3B9 /* winners.png in Resources */,
 				F47B7C2217B0FE1C0008D3B9 /* winners@2x.png in Resources */,
 				F47B7C2417B6BC7D0008D3B9 /* menu-final-row-line@2x.png in Resources */,
+				F4CB024A1832A17E0016AB1D /* green_up.png in Resources */,
 				F4CB0231182AB0F90016AB1D /* NotificationBackgroundSuccess@2x.png in Resources */,
 				F47B7C2717BBAC340008D3B9 /* login-button-hit@2x.png in Resources */,
 				F47B7C2817BBAC340008D3B9 /* login-button-normal@2x.png in Resources */,
@@ -1476,6 +1492,7 @@
 				F422C6A317E861CB003CA923 /* screen_7.png in Resources */,
 				F422C6A417E861CB003CA923 /* screen_8.png in Resources */,
 				F422C6A517E861CB003CA923 /* screen_9.png in Resources */,
+				F4CB0244182BCA880016AB1D /* IPStatsViewController.xib in Resources */,
 				F422C6A617E861CB003CA923 /* screen_2@2x.png in Resources */,
 				F422C6A717E861CB003CA923 /* screen_6@2x.png in Resources */,
 				F4CB022A182AB0F90016AB1D /* NotificationBackgroundError.png in Resources */,
@@ -1560,6 +1577,7 @@
 				F4CB0241182AB4130016AB1D /* HexColor.m in Sources */,
 				1D4501F4180B07FD0013F11B /* GCHelper.m in Sources */,
 				F47E37961760E27B00C5C508 /* Account.m in Sources */,
+				F4CB0247182BCACF0016AB1D /* IPStatsViewController.m in Sources */,
 				F4857F7E17733D680050FEDA /* IPLobbyChildCell.m in Sources */,
 				F4857F871777539A0050FEDA /* Banner.m in Sources */,
 				F4AE7C04179824D400303B34 /* IPWinnersViewController.m in Sources */,

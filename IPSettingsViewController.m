@@ -17,6 +17,7 @@
 #import "IPPasswordViewController.h"
 #import "IPLoginViewController.h"
 #import "TSMessage.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 
 @interface IPSettingsViewController ()
@@ -175,6 +176,10 @@
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
         [prefs setObject:appDelegate.username forKey:@"username"];
         [prefs setObject:appDelegate.user forKey:@"user"];
+        if ([[prefs objectForKey:@"loginmethod"] isEqualToString:@"facebook"]) {
+            NSLog (@"calling facebook logout");
+            [FBSession.activeSession closeAndClearTokenInformation];
+        }
         NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"LOGOUT",
                                 @"type", @"Success", @"result", nil];
         [Flurry logEvent:@"ACCOUNT" withParameters:dictionary];
@@ -189,10 +194,6 @@
                                      buttonCallback:nil
                                          atPosition:TSMessageNotificationPositionTop
                                 canBeDismisedByUser:YES];
-        /*
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Logout Success" message:@"You are now logged out!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-         */
     } else {
         if (!self.loginViewController) {
             self.loginViewController = [[IPLoginViewController alloc] initWithNibName:@"IPLoginViewController" bundle:nil];
@@ -236,10 +237,6 @@
                                      buttonCallback:nil
                                          atPosition:TSMessageNotificationPositionTop
                                 canBeDismisedByUser:YES];
-        /*
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Save Successful" message:@"Your settings have been saved!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-         */
         
         [self.updateButton setEnabled:YES];
         [self.passwordButton setEnabled:YES];

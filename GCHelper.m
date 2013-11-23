@@ -12,9 +12,10 @@
 
 @implementation GCHelper
 
-@synthesize gameCenterAvailable;
+// @synthesize gameCenterAvailable;
 
 #pragma mark Initialization
+
 
 static GCHelper *sharedHelper = nil;
 + (GCHelper *) sharedInstance {
@@ -23,6 +24,7 @@ static GCHelper *sharedHelper = nil;
     }
     return sharedHelper;
 }
+
 
 /*
 - (BOOL)isGameCenterAvailable {
@@ -63,7 +65,7 @@ static GCHelper *sharedHelper = nil;
     }
     
 }
- */
+*/
 
 #pragma mark User functions
 
@@ -90,6 +92,7 @@ static GCHelper *sharedHelper = nil;
 }
 
 
+/*
 - (void)authenticateLocalUser{
     
     if (!gameCenterAvailable) return;
@@ -123,5 +126,6 @@ static GCHelper *sharedHelper = nil;
 
     }
 }
+ */
 
 @end
