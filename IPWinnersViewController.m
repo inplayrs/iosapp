@@ -10,6 +10,7 @@
 #import "MFSideMenu.h"
 #import "RestKit.h"
 #import "CompetitionWinners.h"
+#import "OverallWinners.h"
 #import "IPAppDelegate.h"
 #import "Error.h"
 
@@ -37,7 +38,7 @@ enum Category {
 
 @implementation IPWinnersViewController
 
-@synthesize winnersList;
+@synthesize competitionWinnersList, gameWinnersList, overallWinnersList, winnersTab;
 
 - (void) dealloc {
     self.navigationController.sideMenu.menuStateEventBlock = nil;
@@ -56,7 +57,9 @@ enum Category {
 {
     [super viewDidLoad];
     
-    winnersList = [[NSMutableArray alloc] init];
+    competitionWinnersList = [[NSMutableArray alloc] init];
+    gameWinnersList = [[NSMutableArray alloc] init];
+    overallWinnersList = [[NSMutableArray alloc] init];
     self.title = @"Winners";
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background-only.png"]];
     
@@ -68,7 +71,7 @@ enum Category {
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self getMyWinnersList:self];
+    [self getGameWinnersList:self];
 }
 
 
@@ -78,22 +81,99 @@ enum Category {
     // Dispose of any resources that can be recreated.
 }
 
-- (void)getMyWinnersList:(id)sender
+- (void)getCompetitionWinnersList:(id)sender
 {
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     [objectManager getObjectsAtPath:@"competition/winners" parameters:nil success:
      ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
-        [winnersList removeAllObjects];
+        [competitionWinnersList removeAllObjects];
         NSArray* temp = [result array];
         for (int i=0; i<temp.count; i++) {
             CompetitionWinners *competitionWinners = [temp objectAtIndex:i];
             if (!competitionWinners.name)
                 competitionWinners.name = @"Unassigned";
-            [winnersList addObject:competitionWinners];
+            [competitionWinnersList addObject:competitionWinners];
         }
-        [winnersList sortUsingSelector:@selector(compareWithDate:)];
-        [self.tableView reloadData];
+        [competitionWinnersList sortUsingSelector:@selector(compareWithDate:)];
+        [self getOverallWinnersList:self];
     } failure:nil];
+}
+
+- (void)getGameWinnersList:(id)sender
+{
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    [objectManager getObjectsAtPath:@"game/winners" parameters:nil success:
+     ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
+         [gameWinnersList removeAllObjects];
+         NSArray* temp = [result array];
+         for (int i=0; i<temp.count; i++) {
+             CompetitionWinners *gameWinners = [temp objectAtIndex:i];
+             if (!gameWinners.name)
+                 gameWinners.name = @"Unassigned";
+             [gameWinnersList addObject:gameWinners];
+         }
+         [gameWinnersList sortUsingSelector:@selector(compareWithDate:)];
+         [self getCompetitionWinnersList:self];
+     } failure:nil];
+}
+
+- (void)getOverallWinnersList:(id)sender
+{
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    [objectManager getObjectsAtPath:@"user/leaderboard" parameters:nil success:
+     ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
+         [overallWinnersList removeAllObjects];
+         NSArray* temp = [result array];
+         for (int i=0; i<temp.count; i++) {
+             OverallWinners *overallWinners = [temp objectAtIndex:i];
+             if (!overallWinners.username)
+                 overallWinners.username = @"Unknown";
+             if (!overallWinners.winnings)
+                 overallWinners.winnings = @"";
+             [overallWinnersList addObject:overallWinners];
+         }
+         NSSortDescriptor *rankSorter = [[NSSortDescriptor alloc] initWithKey:@"rank" ascending:YES];
+         NSSortDescriptor *nameSorter = [[NSSortDescriptor alloc] initWithKey:@"username" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+         [overallWinnersList sortedArrayUsingDescriptors:[NSArray arrayWithObjects:rankSorter, nameSorter, nil]];
+         [self.tableView reloadData];
+     } failure:nil];
+}
+
+- (UIView *)headerView
+{
+    if (!headerView) {
+        [[NSBundle mainBundle] loadNibNamed:@"IPWinnersHeaderView" owner:self options:nil];
+        UIImage *segmentSelected = [UIImage imageNamed:@"segcontrol_sel.png"];
+        UIImage *segmentUnselected = [UIImage imageNamed:@"segcontrol_uns.png"];
+        UIImage *segmentSelectedUnselected = [UIImage imageNamed:@"segcontrol_sel-uns.png"];
+        UIImage *segUnselectedSelected = [UIImage imageNamed:@"segcontrol_uns-sel.png"];
+        UIImage *segmentUnselectedUnselected = [UIImage imageNamed:@"segcontrol_uns-uns.png"];
+        
+        [winnersTab setBackgroundImage:segmentUnselected forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+        [winnersTab setBackgroundImage:segmentSelected forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+        [winnersTab setDividerImage:segmentUnselectedUnselected
+                  forLeftSegmentState:UIControlStateNormal
+                    rightSegmentState:UIControlStateNormal
+                           barMetrics:UIBarMetricsDefault];
+        [winnersTab setDividerImage:segmentSelectedUnselected
+                  forLeftSegmentState:UIControlStateSelected
+                    rightSegmentState:UIControlStateNormal
+                           barMetrics:UIBarMetricsDefault];
+        [winnersTab setDividerImage:segUnselectedSelected
+                  forLeftSegmentState:UIControlStateNormal
+                    rightSegmentState:UIControlStateSelected
+                           barMetrics:UIBarMetricsDefault];
+        NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Avalon-Demi" size:14.0],UITextAttributeFont,[UIColor whiteColor], UITextAttributeTextColor, nil];
+        [winnersTab setTitleTextAttributes:attributes forState:UIControlStateNormal];
+        [winnersTab setTitleTextAttributes:attributes forState:UIControlStateSelected];
+    }
+    
+    return headerView;
+}
+
+
+- (IBAction)switchTab:(id)sender {
+    [self.tableView reloadData];
 }
 
 
@@ -105,8 +185,12 @@ enum Category {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
-    return [winnersList count];
+    if (winnersTab.selectedSegmentIndex == 0)
+        return [gameWinnersList count];
+    else if (winnersTab.selectedSegmentIndex == 1)
+        return [competitionWinnersList count];
+    else
+        return [overallWinnersList count];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -116,116 +200,155 @@ enum Category {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"winnersCell";
+    if (winnersTab.selectedSegmentIndex == 2) {
+        static NSString *CellIdentifier = @"overallWinnersCell";
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
+        }
+        OverallWinners *overallWinners;
+        overallWinners = [overallWinnersList objectAtIndex:indexPath.row];
+        NSString *winners = [NSString stringWithFormat:@"%d", overallWinners.rank];
+        winners = [winners stringByAppendingString:@"    "];
+        winners = [winners stringByAppendingString:overallWinners.username];
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-row.png"]];
+        [cell setBackgroundView:imageView];
+        cell.textLabel.text = winners;
+        cell.detailTextLabel.text = [@"$" stringByAppendingString:overallWinners.winnings];
+        cell.textLabel.backgroundColor = [UIColor clearColor];
+        cell.detailTextLabel.textColor = [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0];
+        // cell.detailTextLabel.textColor = [UIColor whiteColor];
+        cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.textLabel.font = [UIFont fontWithName:@"Avalon-Demi" size:14.0];
+        cell.detailTextLabel.font = [UIFont fontWithName:@"Avalon-Demi" size:14.0];
+        return cell;
+    } else {
+        static NSString *CellIdentifier = @"winnersCell";
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        }
+        CompetitionWinners *competitionWinners;
+        if (winnersTab.selectedSegmentIndex == 0)
+            competitionWinners = [gameWinnersList objectAtIndex:indexPath.row];
+        else
+            competitionWinners = [competitionWinnersList objectAtIndex:indexPath.row];
+        NSString *competition = [competitionWinners.name stringByReplacingOccurrencesOfString:@":" withString:@""];
+        competition = [competition stringByAppendingString:@":  "];
+        NSString *winners = @"";
+        if ([competitionWinners.winners count] > 0) {
+            if ([competitionWinners.winners objectAtIndex:0])
+                winners = [competitionWinners.winners objectAtIndex:0];
+        }
+        for (int i=1; i<[competitionWinners.winners count]; i++) {
+            NSString *string = [competitionWinners.winners objectAtIndex:i];
+            winners = [winners stringByAppendingFormat:@", %@", string];
+        }
+        competition = [competition stringByAppendingString:winners];
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-row.png"]];
+        [cell setBackgroundView:imageView];
+        cell.textLabel.text = competition;
+        cell.textLabel.backgroundColor = [UIColor clearColor];
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.textLabel.font = [UIFont fontWithName:@"Avalon-Demi" size:14.0];
+    
+        switch (competitionWinners.category) {
+            case (FOOTBALL): {
+                UIImage *image = [UIImage imageNamed: @"football.png"];
+                cell.imageView.image = image;
+                break;
+            }
+            case (BASKETBALL): {
+                UIImage *image = [UIImage imageNamed: @"basketball.png"];
+                cell.imageView.image = image;
+                break;
+            }
+            case (TENNIS): {
+                UIImage *image = [UIImage imageNamed: @"tennis.png"];
+                cell.imageView.image = image;
+                break;
+            }
+            case (GOLF): {
+                UIImage *image = [UIImage imageNamed: @"golf.png"];
+                cell.imageView.image = image;
+                break;
+            }
+            case (SNOOKER): {
+                UIImage *image = [UIImage imageNamed: @"snooker.png"];
+                cell.imageView.image = image;
+                break;
+            }
+            case (MOTORRACING): {
+                UIImage *image = [UIImage imageNamed: @"motor-racing.png"];
+                cell.imageView.image = image;
+                break;
+            }
+            case (CRICKET): {
+                UIImage *image = [UIImage imageNamed: @"cricket.png"];
+                cell.imageView.image = image;
+                break;
+            }
+            case (RUGBY): {
+                UIImage *image = [UIImage imageNamed: @"rugby.png"];
+                cell.imageView.image = image;
+                break;
+            }
+            case (BASEBALL): {
+                UIImage *image = [UIImage imageNamed: @"baseball.png"];
+                cell.imageView.image = image;
+                break;
+            }
+            case (ICEHOCKEY): {
+                UIImage *image = [UIImage imageNamed: @"ice-hockey.png"];
+                cell.imageView.image = image;
+                break;
+            }
+            case (AMERICANFOOTBALL): {
+                UIImage *image = [UIImage imageNamed: @"american-football.png"];
+                cell.imageView.image = image;
+                break;
+            }
+            case (FINANCE): {
+                UIImage *image = [UIImage imageNamed: @"finance.png"];
+                cell.imageView.image = image;
+                break;
+            }
+            case (REALITYTV): {
+                UIImage *image = [UIImage imageNamed: @"reality-tv.png"];
+                cell.imageView.image = image;
+                break;
+            }
+            case (AWARDS): {
+                UIImage *image = [UIImage imageNamed: @"awards.png"];
+                cell.imageView.image = image;
+                break;
+            }
+            default: {
+                UIImage *image = [UIImage imageNamed: @"football.png"];
+                cell.imageView.image = image;
+                break;
+            }
+        }
+        return cell;
     }
-   
-    CompetitionWinners *competitionWinners = [winnersList objectAtIndex:indexPath.row];
-    NSString *competition = [competitionWinners.name stringByAppendingString:@":  "];
-    NSString *winners = @"";
-    if ([competitionWinners.winners count] > 0) {
-        if ([competitionWinners.winners objectAtIndex:0])
-            winners = [competitionWinners.winners objectAtIndex:0];
-    }
-    for (int i=1; i<[competitionWinners.winners count]; i++) {
-        NSString *string = [competitionWinners.winners objectAtIndex:i];
-        winners = [winners stringByAppendingFormat:@", %@", string];
-    }
-    competition = [competition stringByAppendingString:winners];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-row.png"]];
-    [cell setBackgroundView:imageView];
-    cell.textLabel.text = competition;
-    cell.textLabel.backgroundColor = [UIColor clearColor];
-    // cell.textLabel.textColor = [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0];
-    cell.textLabel.textColor = [UIColor whiteColor];
-    cell.textLabel.font = [UIFont fontWithName:@"Avalon-Demi" size:14.0];
-    
-    switch (competitionWinners.category) {
-        case (FOOTBALL): {
-            UIImage *image = [UIImage imageNamed: @"football.png"];
-            cell.imageView.image = image;
-            break;
-        }
-        case (BASKETBALL): {
-            UIImage *image = [UIImage imageNamed: @"basketball.png"];
-            cell.imageView.image = image;
-            break;
-        }
-        case (TENNIS): {
-            UIImage *image = [UIImage imageNamed: @"tennis.png"];
-            cell.imageView.image = image;
-            break;
-        }
-        case (GOLF): {
-            UIImage *image = [UIImage imageNamed: @"golf.png"];
-            cell.imageView.image = image;
-            break;
-        }
-        case (SNOOKER): {
-            UIImage *image = [UIImage imageNamed: @"snooker.png"];
-            cell.imageView.image = image;
-            break;
-        }
-        case (MOTORRACING): {
-            UIImage *image = [UIImage imageNamed: @"motor-racing.png"];
-            cell.imageView.image = image;
-            break;
-        }
-        case (CRICKET): {
-            UIImage *image = [UIImage imageNamed: @"cricket.png"];
-            cell.imageView.image = image;
-            break;
-        }
-        case (RUGBY): {
-            UIImage *image = [UIImage imageNamed: @"rugby.png"];
-            cell.imageView.image = image;
-            break;
-        }
-        case (BASEBALL): {
-            UIImage *image = [UIImage imageNamed: @"baseball.png"];
-            cell.imageView.image = image;
-            break;
-        }
-        case (ICEHOCKEY): {
-            UIImage *image = [UIImage imageNamed: @"ice-hockey.png"];
-            cell.imageView.image = image;
-            break;
-        }
-        case (AMERICANFOOTBALL): {
-            UIImage *image = [UIImage imageNamed: @"american-football.png"];
-            cell.imageView.image = image;
-            break;
-        }
-        case (FINANCE): {
-            UIImage *image = [UIImage imageNamed: @"finance.png"];
-            cell.imageView.image = image;
-            break;
-        }
-        case (REALITYTV): {
-            UIImage *image = [UIImage imageNamed: @"reality-tv.png"];
-            cell.imageView.image = image;
-            break;
-        }
-        case (AWARDS): {
-            UIImage *image = [UIImage imageNamed: @"awards.png"];
-            cell.imageView.image = image;
-            break;
-        }
-        default: {
-            UIImage *image = [UIImage imageNamed: @"football.png"];
-            cell.imageView.image = image;
-            break;
-        }
-    }
-    
-    
-    return cell;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return [self headerView];
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return [[self headerView] bounds].size.height;
+}
 
 
 @end

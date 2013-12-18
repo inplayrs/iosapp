@@ -17,7 +17,7 @@
 #import "IPAppDelegate.h"
 #import "IPLeaderboardViewController.h"
 #import "IPFanViewController.h"
-#import "IPRegisterViewController.h"
+#import "IPMultiLoginViewController.h"
 #import "IPTutorialViewController.h"
 #import "Flurry.h"
 #import "Error.h"
@@ -56,7 +56,7 @@ enum GameType {
 
 @implementation IPGameViewController
 
-@synthesize leftLabel, rightLabel, pointsButton, left, selectedRow, selectionHeader1, selectionHeader2, selectionHeader3, selectionHeader4, selectionHeader5, selectionLabel0, selectionLabel1, selectionLabel2, isLoaded, isUpdated, isLoading, pointsChanged, inplayIndicator, leaderboardViewController, fanViewController, registerViewController, tutorialViewController, submitButton, fangroupChallenge;
+@synthesize leftLabel, rightLabel, pointsButton, left, selectedRow, selectionHeader1, selectionHeader2, selectionHeader3, selectionHeader4, selectionHeader5, selectionLabel0, selectionLabel1, selectionLabel2, isLoaded, isUpdated, isLoading, pointsChanged, inplayIndicator, leaderboardViewController, fanViewController, multiLoginViewController, tutorialViewController, submitButton, fangroupChallenge, username;
 
 
 - (void)getPeriods:(id)sender
@@ -141,7 +141,11 @@ enum GameType {
 {
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    NSString *path = [NSString stringWithFormat:@"game/points?game_id=%d", self.game.gameID];
+    NSString *path;
+    if (username)
+        path = [NSString stringWithFormat:@"game/points?game_id=%d&username=%@", self.game.gameID, self.username];
+    else
+        path = [NSString stringWithFormat:@"game/points?game_id=%d", self.game.gameID];
     [objectManager getObjectsAtPath:path parameters:nil success:
      ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
         
@@ -267,7 +271,7 @@ enum GameType {
                     [Flurry logEvent:@"SUBMIT" withParameters:dictionary];
                     [TSMessage showNotificationInViewController:self
                                                           title:@"Entry Successful"
-                                                       subtitle:@"Your selections have been entered."
+                                                       subtitle:@"Your selections have been entered. Your entry has been submitted to all 3 pools."
                                                           image:nil
                                                            type:TSMessageNotificationTypeSuccess
                                                        duration:TSMessageNotificationDurationAutomatic
@@ -276,17 +280,13 @@ enum GameType {
                                                  buttonCallback:nil
                                                      atPosition:TSMessageNotificationPositionTop
                                             canBeDismisedByUser:YES];
-                    /*
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Entry Successful" message:@"You have successfully entered your selections for this game!  Your entry has been submitted to all 3 pools." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                    [alert show];
-                     */
                 } else {
                     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:self.game.name,
                                                 @"gameName", @"Late", @"result", nil];
                     [Flurry logEvent:@"SUBMIT" withParameters:dictionary];
                     [TSMessage showNotificationInViewController:self
                                                           title:@"Entry Successful"
-                                                       subtitle:@"Your selections have been entered."
+                                                       subtitle:@"Your selections have been entered. The game has started, so your entry has been submitted to the global pool only."
                                                           image:nil
                                                            type:TSMessageNotificationTypeSuccess
                                                        duration:TSMessageNotificationDurationAutomatic
@@ -295,10 +295,6 @@ enum GameType {
                                                  buttonCallback:nil
                                                      atPosition:TSMessageNotificationPositionTop
                                             canBeDismisedByUser:YES];
-                    /*
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Entry Successful" message:@"You have successfully entered your selections for this game!  The game has started, so you will not be entered into the Fan and H2H pools." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                    [alert show];
-                     */
                 }
                 IPAppDelegate *appDelegate = (IPAppDelegate *)[[UIApplication sharedApplication] delegate];
                 appDelegate.refreshLobby = YES;
@@ -318,10 +314,6 @@ enum GameType {
                                                 buttonCallback:nil
                                                  atPosition:TSMessageNotificationPositionTop
                                                 canBeDismisedByUser:YES];
-                /*
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update Successful" message:@"You have successfully updated your selections for this game!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                [alert show];
-                 */
             }
     
         } failure:^(RKObjectRequestOperation *operation, NSError *error){
@@ -381,10 +373,6 @@ enum GameType {
                                      buttonCallback:nil
                                          atPosition:TSMessageNotificationPositionTop
                                 canBeDismisedByUser:YES];
-        /*
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Bank Successful" message:@"You have successfully banked your selection!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-         */
         
    } failure:^(RKObjectRequestOperation *operation, NSError *error){
        self.isLoading = NO;
@@ -415,9 +403,10 @@ enum GameType {
 {
     [super viewDidLoad];
     Game *theGame = self.game;
-    if (theGame) {
+    if (username)
+        self.title = username;
+    else if (theGame)
         self.title = theGame.name;
-    }
     [self.tableView setAlwaysBounceVertical:YES];
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background-only.png"]];
     UIImage *backButtonNormal = [UIImage imageNamed:@"back-button.png"];
@@ -441,7 +430,7 @@ enum GameType {
     self.dataController = [[GameDataController alloc] init];
     fanViewController = nil;
     leaderboardViewController = nil;
-    registerViewController = nil;
+    multiLoginViewController = nil;
     tutorialViewController = nil;
     selectedRow = 0;
     if (self.game.type >= 30) {
@@ -477,8 +466,12 @@ enum GameType {
     if (!self.tutorialViewController) {
         self.tutorialViewController = [[IPTutorialViewController alloc] initWithNibName:@"IPTutorialViewController" bundle:nil];
     }
-    if (self.tutorialViewController)
+    if (self.tutorialViewController) {
         [self.navigationController pushViewController:self.tutorialViewController animated:YES];
+        NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"Tutorial",
+                                    @"click", nil];
+        [Flurry logEvent:@"MENU" withParameters:dictionary];
+    }
 }
 
 - (void) viewDidDisappear:(BOOL)animated
@@ -718,7 +711,10 @@ enum GameType {
                 [self.submitButton setTitle:@"NO WINNINGS!" forState:UIControlStateDisabled];
             } else {
                 NSString *winnings;
-                winnings = [@"YOU WON " stringByAppendingString:self.dataController.points.winnings];
+                if (self.username)
+                    winnings = [self.username stringByAppendingFormat:@" WON %@", self.dataController.points.winnings];
+                else
+                    winnings = [@"YOU WON " stringByAppendingString:self.dataController.points.winnings];
                 winnings = [winnings stringByAppendingString:@"!"];
                 [self.submitButton setTitle:winnings forState:UIControlStateNormal];
                 [self.submitButton setTitleColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0] forState:UIControlStateNormal];
@@ -777,6 +773,8 @@ enum GameType {
     self.isLoaded = YES;
     self.isLoading = NO;
     
+    if (self.username)
+        return;
     if (self.dataController.userState == SUBMITTED) {
             UIImage *leaderboardButtonNormal = [UIImage imageNamed:@"leaderboard-button.png"];
             UIImage *leaderboardButtonHighlighted = [UIImage imageNamed:@"leaderboard-button-hit-state.png"];
@@ -1352,13 +1350,13 @@ enum GameType {
     switch (self.dataController.userState) {
         case (NOTSUBMITTED):
             if (appDelegate.loggedin == NO) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Registration required" message:@"Please register or login first!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sign In required" message:@"Please register or login first!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
-                if (!self.registerViewController) {
-                    self.registerViewController = [[IPRegisterViewController alloc] initWithNibName:@"IPRegisterViewController" bundle:nil];
+                if (!self.multiLoginViewController) {
+                    self.multiLoginViewController = [[IPMultiLoginViewController alloc] initWithNibName:@"IPMultiLoginViewController" bundle:nil];
                 }
-                if (self.registerViewController)
-                    [self.navigationController pushViewController:self.registerViewController animated:YES];
+                if (self.multiLoginViewController)
+                    [self.navigationController pushViewController:self.multiLoginViewController animated:YES];
                 return;
             }
             /*
@@ -1385,7 +1383,7 @@ enum GameType {
             break;
         case (SUBMITTED):
             if (appDelegate.loggedin == NO) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login required" message:@"Please login first!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sign In required" message:@"Please register or login first!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
                 return;
             }
@@ -1407,7 +1405,7 @@ enum GameType {
     if (((periodAtIndex.state == INPLAY) || (periodAtIndex.state == SUSPENDED)) && (self.game.state != PREPLAY)) {
             IPAppDelegate *appDelegate = (IPAppDelegate *)[[UIApplication sharedApplication] delegate];
             if (appDelegate.loggedin == NO) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login required" message:@"Please login first!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sign In required" message:@"Please register or login first!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
             } else {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirm Bank" message:@"Are you sure you want to bank and take your points now?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Confirm", nil];

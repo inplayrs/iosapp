@@ -18,9 +18,10 @@
 #import "Leaderboard.h"
 #import "CompetitionPoints.h"
 #import "CompetitionWinners.h"
+#import "OverallWinners.h"
 #import "Account.h"
+#import "Stats.h"
 #import "Error.h"
-// #import "GCHelper.h"
 #import <FacebookSDK/FacebookSDK.h>
 
 
@@ -106,10 +107,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    ///////////////////////
-    // GAME CENTER LOGIN //
-    ///////////////////////
+
     // [[GCHelper sharedInstance] authenticateLocalPlayer];
+    // [[GCHelper sharedInstance] authenticateLocalUser];
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [Flurry startSession:@"8C4BSDMV8CNX5KKZFWMG"];
@@ -154,7 +154,6 @@
     // Initialize HTTPClient
     NSURL *baseURL = [NSURL URLWithString:@"https://api.inplayrs.com/"];
     // NSURL *baseURL = [NSURL URLWithString:@"https://api-dev.inplayrs.com/"];
-    // NSURL *baseURL = [NSURL URLWithString:@"http://79.125.20.234:8080/com.inplayrs.rest"];
     
     // AFHTTPClient* client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
     AFHTTPClient* client = [AFHTTPClient clientWithBaseURL:baseURL];
@@ -299,11 +298,45 @@
      @"winners":        @"winners"
      }];
     
+    RKObjectMapping *gameWinnersMapping = [RKObjectMapping mappingForClass:[CompetitionWinners class]];
+    [gameWinnersMapping addAttributeMappingsFromDictionary:@{
+     @"game_id":        @"competitionID",
+     @"game":           @"name",
+     @"category_id":    @"category",
+     @"gameEndDate":    @"endDate",
+     @"winners":        @"winners"
+     }];
+    
+    RKObjectMapping *overallWinnersMapping = [RKObjectMapping mappingForClass:[OverallWinners class]];
+    [overallWinnersMapping addAttributeMappingsFromDictionary:@{
+     @"rank":           @"rank",
+     @"username":       @"username",
+     @"winnings":       @"winnings"
+     }];
+    
     RKObjectMapping *userAccountMapping = [RKObjectMapping mappingForClass:[Account class]];
     [userAccountMapping addAttributeMappingsFromDictionary:@{
      @"email":          @"email",
+     @"username":       @"username"
      }];
     
+    RKObjectMapping *userStatsMapping = [RKObjectMapping mappingForClass:[Stats class]];
+    [userStatsMapping addAttributeMappingsFromDictionary:@{
+     @"username":           @"username",
+     @"total_winnings":     @"totalWinnings",
+     @"total_rank":         @"totalRank",
+     @"num_users_in_system":@"totalUsers",
+     @"total_games_played": @"totalGames",
+     @"total_pc_correct":   @"totalCorrect",
+     @"total_user_rating":  @"userRating",
+     @"global_winnings":    @"globalWinnings",
+     @"fangroup_winnings":  @"fangroupWinnings",
+     @"h2h_winnings":       @"h2hWinnings",
+     @"global_games_won":   @"globalWon",
+     @"fangroup_pools_won": @"fangroupWon",
+     @"h2h_won":            @"h2hWon",
+     }];
+
     RKObjectMapping *errorMapping = [RKObjectMapping mappingForClass:[Error class]];
     [errorMapping addAttributeMappingsFromDictionary:@{
      @"code":       @"code",
@@ -324,7 +357,11 @@
     RKResponseDescriptor *competitionLeaderboardResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:competitionLeaderboardMapping method:RKRequestMethodGET pathPattern:@"competition/leaderboard" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *competitionPointsResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:competitionPointsMapping method:RKRequestMethodGET pathPattern:@"competition/points" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *competitionWinnersResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:competitionWinnersMapping method:RKRequestMethodGET pathPattern:@"competition/winners" keyPath:nil statusCodes:nil];
+    RKResponseDescriptor *gameWinnersResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:gameWinnersMapping method:RKRequestMethodGET pathPattern:@"game/winners" keyPath:nil statusCodes:nil];
+    RKResponseDescriptor *overallWinnersResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:overallWinnersMapping method:RKRequestMethodGET pathPattern:@"user/leaderboard" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *userAccountResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userAccountMapping method:RKRequestMethodGET pathPattern:@"user/account" keyPath:nil statusCodes:nil];
+    RKResponseDescriptor *userAccountUpdateResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userAccountMapping method:RKRequestMethodPOST pathPattern:@"user/account/update" keyPath:nil statusCodes:nil];
+    RKResponseDescriptor *userStatsResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userStatsMapping method:RKRequestMethodGET pathPattern:@"user/stats" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *errorDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:errorMapping method:RKRequestMethodGET pathPattern:nil keyPath:nil statusCodes:statusCodes];
     RKResponseDescriptor *registerDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userAccountMapping method:RKRequestMethodGET pathPattern:@"user/register" keyPath:nil statusCodes:successStatusCodes];
     
@@ -340,9 +377,26 @@
     [objectManager addResponseDescriptor:competitionLeaderboardResponseDescriptor];
     [objectManager addResponseDescriptor:competitionPointsResponseDescriptor];
     [objectManager addResponseDescriptor:competitionWinnersResponseDescriptor];
+    [objectManager addResponseDescriptor:gameWinnersResponseDescriptor];
+    [objectManager addResponseDescriptor:overallWinnersResponseDescriptor];
     [objectManager addResponseDescriptor:userAccountResponseDescriptor];
+    [objectManager addResponseDescriptor:userAccountUpdateResponseDescriptor];
+    [objectManager addResponseDescriptor:userStatsResponseDescriptor];
     [objectManager addResponseDescriptor:errorDescriptor];
     [objectManager addResponseDescriptor:registerDescriptor];
+    
+    // Whenever a person opens the app, check for a cached session
+    if ((FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) && (self.loggedin)) {
+        // If there's one, just open the session silently, without showing the user the login UI
+        [FBSession openActiveSessionWithReadPermissions:@[@"basic_info"]
+                                           allowLoginUI:NO
+                                      completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
+                                          // Handler for session state changes
+                                          // This method will be called EACH time the session state changes,
+                                          // also for intermediate states and NOT just when the session open
+                                          //[self sessionStateChanged:session state:state error:error];
+                                      }];
+    }
     
     // check if push notification setting changed and if so notify server
     if (self.loggedin) {
@@ -367,7 +421,6 @@
         }
     }
     
-    // [[GCHelper sharedInstance] authenticateLocalPlayer];
     return YES;
 }
 
@@ -398,37 +451,31 @@
 }
 
 
-// FBSample logic
-// If we have a valid session at the time of openURL call, we handle Facebook transitions
-// by passing the url argument to handleOpenURL; see the "Just Login" sample application for
-// a more detailed discussion of handleOpenURL
+
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
-    // attempt to extract a token from the url
-    return [FBAppCall handleOpenURL:url
-                  sourceApplication:sourceApplication
-                    fallbackHandler:^(FBAppCall *call) {
-                        NSLog(@"In fallback handler");
-                    }];
+    
+    // Call FBAppCall's handleOpenURL:sourceApplication to handle Facebook app responses
+    BOOL wasHandled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+    
+    // You can add your app-specific url handling code here if needed
+    
+    return wasHandled;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    // FBSample logic
     // if the app is going away, we close the session object
     [FBSession.activeSession close];
 }
 
 
-
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // FBSample logic
     // Call the 'activateApp' method to log an app event for use in analytics and advertising reporting.
     [FBAppEvents activateApp];
     [FBAppEvents setFlushBehavior:FBAppEventsFlushBehaviorExplicitOnly];
     
-    // FBSample logic
     // We need to properly handle activation of the application with regards to SSO
     //  (e.g., returning from iOS 6.0 authorization dialog or from fast app switching).
     [FBAppCall handleDidBecomeActive];

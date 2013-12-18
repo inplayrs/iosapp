@@ -6,10 +6,17 @@
 //  Copyright (c) 2013 Inplayrs. All rights reserved.
 //
 
-// #import "IPAppDelegate.h"
+#import "IPAppDelegate.h"
 #import "IPRegisterViewController.h"
+#import "IPLoginViewController.h"
 #import "IPMultiLoginViewController.h"
 #import "IPInfoViewController.h"
+#import "RestKit.h"
+#import "Flurry.h"
+#import "TSMessage.h"
+#import "Error.h"
+#import "Account.h"
+#import "MF_Base64Additions.h"
 
 
 @interface IPMultiLoginViewController () <FBLoginViewDelegate, UIAlertViewDelegate>
@@ -20,27 +27,12 @@
 @implementation IPMultiLoginViewController
 
 @synthesize loggedInUser = _loggedInUser;
-@synthesize registerViewController, registerButton, termsButton, termsLabel, infoViewController;
+@synthesize registerViewController, registerButton, termsButton, termsLabel, infoViewController, loginButton, loginViewController, loginLabel, fbID, fbUsername, fbName, fbEmail, loginView;
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"Register";
-
-    // Create Login View so that the app will be granted "status_update" permission.
-    /*
-    FBLoginView *loginview = [[FBLoginView alloc] init];
-
-    loginview.frame = CGRectOffset(loginview.frame, 5, 5);
-    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
-        loginview.frame = CGRectOffset(loginview.frame, 5, 25);
-    }
-    loginview.delegate = self;
-
-    [self.view addSubview:loginview];
-
-    [loginview sizeToFit];
-     */
+    self.title = @"Sign In";
     
     UIImage *backButtonNormal = [UIImage imageNamed:@"back-button.png"];
     UIImage *backButtonHighlighted = [UIImage imageNamed:@"back-button-hit-state.png"];
@@ -72,10 +64,13 @@
     }
     self.termsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
     self.termsButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
+    self.loginButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
+    self.loginLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
     
     registerViewController = nil;
     infoViewController = nil;
-
+    loginViewController = nil;
+    loginView.readPermissions = @[@"email"];
 }
 
 - (void)viewDidUnload {
@@ -93,17 +88,49 @@
     //self.labelFirstName.text = [NSString stringWithFormat:@"Hello %@!", user.first_name];
     // setting the profileID property of the FBProfilePictureView instance
     // causes the control to fetch and display the profile picture for the user
-
+    /*
     NSLog(@"FBLoginView first name=%@", user.first_name);
     NSLog(@"FBLoginView last name=%@", user.last_name);
     NSLog(@"FBLoginView id=%@", user.id);
     NSLog(@"FBLoginView name=%@", user.name);
     NSLog(@"FBLoginView username=%@", user.username);
-    
+     */
+    self.fbID = user.id;
+    self.fbUsername = user.username;
+    self.fbName = [user.name stringByReplacingOccurrencesOfString:@" " withString:@""];
+    self.fbEmail = [user objectForKey:@"email"];
     self.loggedInUser = user;
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    [prefs setObject:@"facebook" forKey:@"loginmethod"];
-    // [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    IPAppDelegate *appDelegate = (IPAppDelegate *)[[UIApplication sharedApplication] delegate];
+    if ((!appDelegate.loggedin) && (FBSession.activeSession.state == FBSessionStateOpen)) {
+        RKObjectManager *objectManager = [RKObjectManager sharedManager];
+        NSString *path = [NSString stringWithFormat:@"user/account?fbID=%@", self.fbID];
+        [objectManager getObjectsAtPath:path parameters:nil success:
+            ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
+                Account *account = [result firstObject];
+                if (account.username) {
+                    appDelegate.user = account.username;
+                    appDelegate.username = [appDelegate.user stringByAppendingFormat:@":%@", self.fbID];
+                    appDelegate.username = [appDelegate.username base64String];
+                    appDelegate.username = [@"Basic " stringByAppendingString:appDelegate.username];
+                    [self getGames];
+                } else {
+                    [self registerUser];
+                }
+            } failure:^(RKObjectRequestOperation *operation, NSError *error){
+                [FBSession.activeSession close];
+                NSArray *errorMessages = [[error userInfo] objectForKey:RKObjectMapperErrorObjectsKey];
+                Error *myerror = [errorMessages objectAtIndex:0];
+                if (!myerror.message)
+                    myerror.message = @"Please try again or register via email!";
+                NSString *errorString = [NSString stringWithFormat:@"%d", (int)myerror.code];
+                NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"LOGINFB",
+                                         @"type", @"Fail", @"result", errorString, @"error", nil];
+                [Flurry logEvent:@"ACCOUNT" withParameters:dictionary];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login Failed" message:myerror.message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alert show];
+            }];
+    }
 }
 
 
@@ -143,6 +170,136 @@
 }
 
 
+- (void)getGames
+{
+    IPAppDelegate *appDelegate = (IPAppDelegate *)[[UIApplication sharedApplication] delegate];
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    [objectManager.HTTPClient setDefaultHeader:@"Authorization" value:appDelegate.username];
+    
+    [objectManager getObjectsAtPath:@"competition/list" parameters:nil success:
+     ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
+         appDelegate.loggedin = YES;
+         appDelegate.refreshLobby = YES;
+         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+         [prefs setObject:appDelegate.username forKey:@"username"];
+         [prefs setObject:appDelegate.user forKey:@"user"];
+         [prefs setObject:self.fbID forKey:@"password"];
+         [prefs setObject:self.fbID forKey:@"fbID"];
+         [prefs setObject:@"facebook" forKey:@"loginmethod"];
+         [Flurry setUserID:appDelegate.user];
+         NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"LOGINFB",
+                                     @"type", @"Success", @"result", nil];
+         [Flurry logEvent:@"ACCOUNT" withParameters:dictionary];
+         [TSMessage showNotificationInViewController:self
+                                               title:@"Login Successful"
+                                            subtitle:@"You are now logged in."
+                                               image:nil
+                                                type:TSMessageNotificationTypeSuccess
+                                            duration:TSMessageNotificationDurationAutomatic
+                                            callback:nil
+                                         buttonTitle:nil
+                                      buttonCallback:nil
+                                          atPosition:TSMessageNotificationPositionTop
+                                 canBeDismisedByUser:YES];
+         NSString *path;
+         if ([prefs boolForKey:@"pushNotification"] == YES)
+             path = [NSString stringWithFormat:@"user/account/update?pushActive=1&deviceID=%@", [prefs objectForKey:@"deviceID"]];
+         else
+             path = [NSString stringWithFormat:@"user/account/update?pushActive=0"];
+         [objectManager postObject:nil path:path parameters:nil success:nil failure:nil];
+         [self.navigationController popToRootViewControllerAnimated:YES];
+     } failure:^(RKObjectRequestOperation *operation, NSError *error){
+         [FBSession.activeSession close];
+         NSArray *errorMessages = [[error userInfo] objectForKey:RKObjectMapperErrorObjectsKey];
+         Error *myerror = [errorMessages objectAtIndex:0];
+         if (!myerror.message)
+             myerror.message = @"Please try again or Login via Inplayrs!";
+         if (myerror.code == 1)
+             myerror.message = @"This facebook ID is already linked, please login via Inplayrs";
+         NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"LOGINFB",
+                                     @"type", @"Fail", @"result", nil];
+         [Flurry logEvent:@"ACCOUNT" withParameters:dictionary];
+         if (!appDelegate.loggedin)
+             [[objectManager HTTPClient] setDefaultHeader:@"Authorization" value:@"Basic Z3Vlc3QxOnB3Ng=="];
+         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login failed" message:myerror.message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+         [alert show];
+     }];
+    
+}
+
+- (void)registerUser {
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    NSTimeZone *localTime = [NSTimeZone systemTimeZone];
+    NSString *timezone = [localTime abbreviation];
+    NSString *path = [NSString stringWithFormat:@"user/register?fbID=%@&password=%@&timezone=%@&fbFullName=%@", self.fbID, self.fbID, timezone, self.fbName];
+    if (self.fbUsername)
+        path = [path stringByAppendingFormat:@"&fbUsername=%@", self.fbUsername];
+    if (self.fbEmail)
+        path = [path stringByAppendingFormat:@"&fbEmail=%@", self.fbEmail];
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    if ([prefs boolForKey:@"pushNotification"] == YES)
+        path = [path stringByAppendingFormat:@"&pushActive=1&deviceID=%@", [prefs objectForKey:@"deviceID"]];
+    else
+        path = [path stringByAppendingString:@"&pushActive=0"];
+    
+    [objectManager postObject:nil path:path parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
+        Account *account = [result firstObject];
+        if (account.username) {
+            IPAppDelegate *appDelegate = (IPAppDelegate *)[[UIApplication sharedApplication] delegate];
+            appDelegate.user = account.username;
+            appDelegate.username = [account.username stringByAppendingFormat:@":%@", self.fbID];
+            appDelegate.username = [appDelegate.username base64String];
+            appDelegate.username = [@"Basic " stringByAppendingString:appDelegate.username];
+            appDelegate.loggedin = YES;
+            appDelegate.refreshLobby = YES;
+            [objectManager.HTTPClient setDefaultHeader:@"Authorization" value:appDelegate.username];
+            NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+            [prefs setObject:appDelegate.username forKey:@"username"];
+            [prefs setObject:appDelegate.user forKey:@"user"];
+            [prefs setObject:self.fbID forKey:@"password"];
+            [prefs setObject:self.fbID forKey:@"fbID"];
+            [prefs setObject:@"facebook" forKey:@"loginmethod"];
+            [Flurry setUserID:appDelegate.user];
+        
+            NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"REGISTERFB",
+                                    @"type", @"Success", @"result", nil];
+            [Flurry logEvent:@"ACCOUNT" withParameters:dictionary];
+            [TSMessage showNotificationInViewController:self
+                                              title:@"Congratulations"
+                                           subtitle:@"You are now registered for INPLAYRS!"
+                                              image:nil
+                                               type:TSMessageNotificationTypeSuccess
+                                           duration:TSMessageNotificationDurationAutomatic
+                                           callback:nil
+                                        buttonTitle:nil
+                                     buttonCallback:nil
+                                         atPosition:TSMessageNotificationPositionTop
+                                canBeDismisedByUser:YES];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        } else {
+            [FBSession.activeSession close];
+            NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"REGISTERFB",
+            @"type", @"Fail", @"result", @"No username", @"error", nil];
+            [Flurry logEvent:@"ACCOUNT" withParameters:dictionary];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login Failed" message:@"Please try again or register via email!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+        }
+    } failure:^(RKObjectRequestOperation *operation, NSError *error){
+        [FBSession.activeSession close];
+        NSArray *errorMessages = [[error userInfo] objectForKey:RKObjectMapperErrorObjectsKey];
+        Error *myerror = [errorMessages objectAtIndex:0];
+        if (!myerror.message)
+            myerror.message = @"Please try again or register via email!";
+        NSString *errorString = [NSString stringWithFormat:@"%d", (int)myerror.code];
+        NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"REGISTERFB",
+                                    @"type", @"Fail", @"result", errorString, @"error", nil];
+        [Flurry logEvent:@"ACCOUNT" withParameters:dictionary];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login Failed" message:myerror.message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }];
+}
+
+
 - (void) backButtonPressed:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -164,4 +321,15 @@
     if (self.infoViewController)
         [self.navigationController pushViewController:self.infoViewController animated:YES];
 }
+
+
+- (IBAction)loginPressed:(id)sender {
+    if (!self.loginViewController) {
+        self.loginViewController = [[IPLoginViewController alloc] initWithNibName:@"IPLoginViewController" bundle:nil];
+    }
+    if (self.loginViewController)
+        [self.navigationController pushViewController:self.loginViewController animated:YES];
+}
+
+
 @end

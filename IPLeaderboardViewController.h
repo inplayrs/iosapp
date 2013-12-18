@@ -11,6 +11,7 @@
 @class Leaderboard;
 @class LeaderboardDataController;
 @class Game;
+@class IPGameViewController;
 
 @interface IPLeaderboardViewController : UITableViewController <UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate>
 {
@@ -55,6 +56,8 @@
 @property (nonatomic) NSInteger type;
 @property (nonatomic) BOOL isLoading;
 @property (strong, nonatomic) Game *game;
+@property (strong, nonatomic) NSMutableDictionary *controllerList;
+@property (strong, nonatomic) IPGameViewController *detailViewController;
 
 
 @end

@@ -18,6 +18,7 @@
 #import "MFSideMenu.h"
 #import "CompetitionPoints.h"
 #import "Flurry.h"
+#import "IPGameViewController.h"
 
 
 #define COMPETITIONS 1
@@ -37,7 +38,7 @@ enum State {
 
 @implementation IPLeaderboardViewController
 
-@synthesize leftLabel, rightLabel, pointsButton, left, rankHeader, nameHeader, pointsHeader, winningsHeader, competitionButton, gameButton, isLoading, inplayIndicator;
+@synthesize leftLabel, rightLabel, pointsButton, left, rankHeader, nameHeader, pointsHeader, winningsHeader, competitionButton, gameButton, isLoading, inplayIndicator, controllerList, detailViewController;
 
 
 - (void) dealloc {
@@ -87,6 +88,8 @@ enum State {
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background-only.png"]];
     
     self.type = 0;
+    self.controllerList = [[NSMutableDictionary alloc] init];
+    detailViewController = nil;
 
 }
 
@@ -327,6 +330,10 @@ enum State {
     cell.pointsLabel.textColor = [UIColor whiteColor];
     cell.winningsLabel.textColor = [UIColor whiteColor];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"leaderboard-row.png"]];
+    if ((self.pointsButton.selectedSegmentIndex == 0) && (self.type == GAMES) && (self.game.state == COMPLETED))
+        [cell.entryImage setHidden:NO];
+    else
+        [cell.entryImage setHidden:YES];
     cell.backgroundView = imageView;
     // cell.backgroundColor = [UIColor colorWithRed:36.0/255.0 green:37.0/255.0 blue:37.0/255.0 alpha:1.0];
     
@@ -425,6 +432,30 @@ enum State {
         return 0;
     else
         return [[self footerView] bounds].size.height;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ((self.pointsButton.selectedSegmentIndex == 0) && (self.type == GAMES)) {
+        if (self.game.state == COMPLETED) {
+            Leaderboard *leaderboardAtIndex = [self.dataController.globalGameLeaderboard objectAtIndex:indexPath.row];
+            if ([controllerList objectForKey:leaderboardAtIndex.name] == nil) {
+                detailViewController = [[IPGameViewController alloc] initWithNibName:@"IPGameViewController" bundle:nil];
+                detailViewController.game = self.game;
+                detailViewController.username = leaderboardAtIndex.name;
+                NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,nil];
+                [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
+                [[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]];
+                [controllerList setObject:detailViewController forKey:leaderboardAtIndex.name];
+            }
+            if ([controllerList objectForKey:leaderboardAtIndex.name] == nil) {
+                NSLog (@"something wrong");
+            } else {
+                [self.navigationController pushViewController:[controllerList objectForKey:leaderboardAtIndex.name] animated:YES];
+            }
+            return;
+        }
+    }
 }
 
 - (IBAction)changePoints:(id)sender

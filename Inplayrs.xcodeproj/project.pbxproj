@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1D07A68F18172A1F00E0F783 /* IPSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D07A68E18172A1F00E0F783 /* IPSettingsViewController.xib */; };
-		1D4501F4180B07FD0013F11B /* GCHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4501F3180B07FD0013F11B /* GCHelper.m */; };
-		1D4501F6180B091D0013F11B /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4501F5180B091D0013F11B /* GameKit.framework */; };
 		1D6043371816B87300F058B0 /* IPMultiLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D6043341816B87300F058B0 /* IPMultiLoginViewController.xib */; };
 		1D6043381816B87300F058B0 /* IPMultiLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6043361816B87300F058B0 /* IPMultiLoginViewController.m */; };
 		EF02996F50A3463A8FCF020F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98FD997EC8B5443B83853277 /* libPods.a */; };
@@ -286,8 +284,6 @@
 		F4CB0241182AB4130016AB1D /* HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CB0240182AB4130016AB1D /* HexColor.m */; };
 		F4CB0244182BCA880016AB1D /* IPStatsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4CB0243182BCA880016AB1D /* IPStatsViewController.xib */; };
 		F4CB0247182BCACF0016AB1D /* IPStatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CB0246182BCACF0016AB1D /* IPStatsViewController.m */; };
-		F4CB024A1832A17E0016AB1D /* green_up.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CB02481832A17E0016AB1D /* green_up.png */; };
-		F4CB024B1832A17E0016AB1D /* red_down.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CB02491832A17E0016AB1D /* red_down.png */; };
 		F4E4CCAC17BD026E00468FB6 /* fan-hit.png in Resources */ = {isa = PBXBuildFile; fileRef = F4E4CC9E17BD026E00468FB6 /* fan-hit.png */; };
 		F4E4CCAD17BD026E00468FB6 /* fan-hit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4E4CC9F17BD026E00468FB6 /* fan-hit@2x.png */; };
 		F4E4CCAE17BD026E00468FB6 /* info-hit.png in Resources */ = {isa = PBXBuildFile; fileRef = F4E4CCA017BD026E00468FB6 /* info-hit.png */; };
@@ -302,6 +298,26 @@
 		F4E4CCB917BD026E00468FB6 /* winners-hit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4E4CCAB17BD026E00468FB6 /* winners-hit@2x.png */; };
 		F4E4CCBB17BD1E1A00468FB6 /* IPFanFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4E4CCBA17BD1E1A00468FB6 /* IPFanFooterView.xib */; };
 		F4E4CCBD17BD202E00468FB6 /* IPFanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4E4CCBC17BD202E00468FB6 /* IPFanViewController.xib */; };
+		F4F046EC18464FA8004D1498 /* friends-hit.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F046E418464FA8004D1498 /* friends-hit.png */; };
+		F4F046ED18464FA8004D1498 /* friends-hit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F046E518464FA8004D1498 /* friends-hit@2x.png */; };
+		F4F046EE18464FA8004D1498 /* friends.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F046E618464FA8004D1498 /* friends.png */; };
+		F4F046EF18464FA8004D1498 /* friends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F046E718464FA8004D1498 /* friends@2x.png */; };
+		F4F046F018464FA8004D1498 /* stats-hit.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F046E818464FA8004D1498 /* stats-hit.png */; };
+		F4F046F118464FA8004D1498 /* stats-hit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F046E918464FA8004D1498 /* stats-hit@2x.png */; };
+		F4F046F218464FA8004D1498 /* stats.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F046EA18464FA8004D1498 /* stats.png */; };
+		F4F046F318464FA8004D1498 /* stats@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F046EB18464FA8004D1498 /* stats@2x.png */; };
+		F4F046F91850A905004D1498 /* Stats.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F046F81850A905004D1498 /* Stats.m */; };
+		F4F046FC1850CAC8004D1498 /* PieChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F046FB1850CAC8004D1498 /* PieChartView.m */; };
+		F4F047031857D141004D1498 /* IPWinnersHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4F047021857D141004D1498 /* IPWinnersHeaderView.xib */; };
+		F4F047061858820F004D1498 /* OverallWinners.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F047051858820F004D1498 /* OverallWinners.m */; };
+		F4F047081858D540004D1498 /* IPFacebookLinkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4F047071858D540004D1498 /* IPFacebookLinkViewController.xib */; };
+		F4F0470B1858D57F004D1498 /* IPFacebookLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0470A1858D57F004D1498 /* IPFacebookLinkViewController.m */; };
+		F4F04712185A3A8A004D1498 /* amber.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F0470C185A3A8A004D1498 /* amber.png */; };
+		F4F04713185A3A8A004D1498 /* amber@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F0470D185A3A8A004D1498 /* amber@2x.png */; };
+		F4F04714185A3A8A004D1498 /* leaderboard-row-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F0470E185A3A8A004D1498 /* leaderboard-row-normal.png */; };
+		F4F04715185A3A8A004D1498 /* leaderboard-row-normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F0470F185A3A8A004D1498 /* leaderboard-row-normal@2x.png */; };
+		F4F04716185A3A8A004D1498 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F04710185A3A8A004D1498 /* user.png */; };
+		F4F04717185A3A8A004D1498 /* user@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F04711185A3A8A004D1498 /* user@2x.png */; };
 		F4F714B616A712FA00FCCA82 /* MFSideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F714AB16A712FA00FCCA82 /* MFSideMenu.m */; };
 		F4F714B716A712FA00FCCA82 /* UINavigationController+MFSideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F714AD16A712FA00FCCA82 /* UINavigationController+MFSideMenu.m */; };
 		F4F714B816A712FA00FCCA82 /* IPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F714AF16A712FA00FCCA82 /* IPAppDelegate.m */; };
@@ -324,9 +340,6 @@
 
 /* Begin PBXFileReference section */
 		1D07A68E18172A1F00E0F783 /* IPSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPSettingsViewController.xib; sourceTree = "<group>"; };
-		1D4501F2180B07FD0013F11B /* GCHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCHelper.h; sourceTree = "<group>"; };
-		1D4501F3180B07FD0013F11B /* GCHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCHelper.m; sourceTree = "<group>"; };
-		1D4501F5180B091D0013F11B /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		1D6043341816B87300F058B0 /* IPMultiLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPMultiLoginViewController.xib; sourceTree = "<group>"; };
 		1D6043351816B87300F058B0 /* IPMultiLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPMultiLoginViewController.h; sourceTree = "<group>"; };
 		1D6043361816B87300F058B0 /* IPMultiLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPMultiLoginViewController.m; sourceTree = "<group>"; };
@@ -642,8 +655,6 @@
 		F4CB0243182BCA880016AB1D /* IPStatsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPStatsViewController.xib; sourceTree = "<group>"; };
 		F4CB0245182BCACF0016AB1D /* IPStatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPStatsViewController.h; sourceTree = "<group>"; };
 		F4CB0246182BCACF0016AB1D /* IPStatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPStatsViewController.m; sourceTree = "<group>"; };
-		F4CB02481832A17E0016AB1D /* green_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_up.png; sourceTree = "<group>"; };
-		F4CB02491832A17E0016AB1D /* red_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_down.png; sourceTree = "<group>"; };
 		F4E4CC9E17BD026E00468FB6 /* fan-hit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fan-hit.png"; sourceTree = "<group>"; };
 		F4E4CC9F17BD026E00468FB6 /* fan-hit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fan-hit@2x.png"; sourceTree = "<group>"; };
 		F4E4CCA017BD026E00468FB6 /* info-hit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-hit.png"; sourceTree = "<group>"; };
@@ -658,6 +669,30 @@
 		F4E4CCAB17BD026E00468FB6 /* winners-hit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "winners-hit@2x.png"; sourceTree = "<group>"; };
 		F4E4CCBA17BD1E1A00468FB6 /* IPFanFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPFanFooterView.xib; sourceTree = "<group>"; };
 		F4E4CCBC17BD202E00468FB6 /* IPFanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPFanViewController.xib; sourceTree = "<group>"; };
+		F4F046E418464FA8004D1498 /* friends-hit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "friends-hit.png"; sourceTree = "<group>"; };
+		F4F046E518464FA8004D1498 /* friends-hit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "friends-hit@2x.png"; sourceTree = "<group>"; };
+		F4F046E618464FA8004D1498 /* friends.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = friends.png; sourceTree = "<group>"; };
+		F4F046E718464FA8004D1498 /* friends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "friends@2x.png"; sourceTree = "<group>"; };
+		F4F046E818464FA8004D1498 /* stats-hit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stats-hit.png"; sourceTree = "<group>"; };
+		F4F046E918464FA8004D1498 /* stats-hit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stats-hit@2x.png"; sourceTree = "<group>"; };
+		F4F046EA18464FA8004D1498 /* stats.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stats.png; sourceTree = "<group>"; };
+		F4F046EB18464FA8004D1498 /* stats@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stats@2x.png"; sourceTree = "<group>"; };
+		F4F046F71850A8F8004D1498 /* Stats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stats.h; path = Inplayrs/Stats.h; sourceTree = "<group>"; };
+		F4F046F81850A905004D1498 /* Stats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Stats.m; path = Inplayrs/Stats.m; sourceTree = "<group>"; };
+		F4F046FA1850CAC8004D1498 /* PieChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieChartView.h; sourceTree = "<group>"; };
+		F4F046FB1850CAC8004D1498 /* PieChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieChartView.m; sourceTree = "<group>"; };
+		F4F047021857D141004D1498 /* IPWinnersHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPWinnersHeaderView.xib; sourceTree = "<group>"; };
+		F4F04704185881FB004D1498 /* OverallWinners.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OverallWinners.h; path = Inplayrs/OverallWinners.h; sourceTree = "<group>"; };
+		F4F047051858820F004D1498 /* OverallWinners.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OverallWinners.m; path = Inplayrs/OverallWinners.m; sourceTree = "<group>"; };
+		F4F047071858D540004D1498 /* IPFacebookLinkViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPFacebookLinkViewController.xib; sourceTree = "<group>"; };
+		F4F047091858D56D004D1498 /* IPFacebookLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPFacebookLinkViewController.h; sourceTree = "<group>"; };
+		F4F0470A1858D57F004D1498 /* IPFacebookLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPFacebookLinkViewController.m; sourceTree = "<group>"; };
+		F4F0470C185A3A8A004D1498 /* amber.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = amber.png; sourceTree = "<group>"; };
+		F4F0470D185A3A8A004D1498 /* amber@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "amber@2x.png"; sourceTree = "<group>"; };
+		F4F0470E185A3A8A004D1498 /* leaderboard-row-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leaderboard-row-normal.png"; sourceTree = "<group>"; };
+		F4F0470F185A3A8A004D1498 /* leaderboard-row-normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leaderboard-row-normal@2x.png"; sourceTree = "<group>"; };
+		F4F04710185A3A8A004D1498 /* user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user.png; sourceTree = "<group>"; };
+		F4F04711185A3A8A004D1498 /* user@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user@2x.png"; sourceTree = "<group>"; };
 		F4F714AA16A712FA00FCCA82 /* MFSideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFSideMenu.h; sourceTree = "<group>"; };
 		F4F714AB16A712FA00FCCA82 /* MFSideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MFSideMenu.m; sourceTree = "<group>"; };
 		F4F714AC16A712FA00FCCA82 /* UINavigationController+MFSideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+MFSideMenu.h"; sourceTree = "<group>"; };
@@ -695,7 +730,6 @@
 				F44867A717C240C600975F75 /* Security.framework in Frameworks */,
 				F47B7BDF17A6C53F0008D3B9 /* ImageIO.framework in Frameworks */,
 				F4119CC016C030640028DB2E /* SystemConfiguration.framework in Frameworks */,
-				1D4501F6180B091D0013F11B /* GameKit.framework in Frameworks */,
 				F48F94B216B98FC7004983EE /* MobileCoreServices.framework in Frameworks */,
 				F4B706CC1695C74700E9FCD8 /* UIKit.framework in Frameworks */,
 				F4B706CE1695C74700E9FCD8 /* Foundation.framework in Frameworks */,
@@ -710,21 +744,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1D4501F1180B07CB0013F11B /* GameCenter */ = {
-			isa = PBXGroup;
-			children = (
-				1D4501F2180B07FD0013F11B /* GCHelper.h */,
-				1D4501F3180B07FD0013F11B /* GCHelper.m */,
-			);
-			name = GameCenter;
-			sourceTree = "<group>";
-		};
 		1D6043331816B82100F058B0 /* Facebook */ = {
 			isa = PBXGroup;
 			children = (
 				1D6043341816B87300F058B0 /* IPMultiLoginViewController.xib */,
 				1D6043351816B87300F058B0 /* IPMultiLoginViewController.h */,
 				1D6043361816B87300F058B0 /* IPMultiLoginViewController.m */,
+				F4F047071858D540004D1498 /* IPFacebookLinkViewController.xib */,
+				F4F047091858D56D004D1498 /* IPFacebookLinkViewController.h */,
+				F4F0470A1858D57F004D1498 /* IPFacebookLinkViewController.m */,
 			);
 			name = Facebook;
 			sourceTree = "<group>";
@@ -732,8 +760,20 @@
 		F4119CBA16C023360028DB2E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				F4CB02481832A17E0016AB1D /* green_up.png */,
-				F4CB02491832A17E0016AB1D /* red_down.png */,
+				F4F0470C185A3A8A004D1498 /* amber.png */,
+				F4F0470D185A3A8A004D1498 /* amber@2x.png */,
+				F4F0470E185A3A8A004D1498 /* leaderboard-row-normal.png */,
+				F4F0470F185A3A8A004D1498 /* leaderboard-row-normal@2x.png */,
+				F4F04710185A3A8A004D1498 /* user.png */,
+				F4F04711185A3A8A004D1498 /* user@2x.png */,
+				F4F046E418464FA8004D1498 /* friends-hit.png */,
+				F4F046E518464FA8004D1498 /* friends-hit@2x.png */,
+				F4F046E618464FA8004D1498 /* friends.png */,
+				F4F046E718464FA8004D1498 /* friends@2x.png */,
+				F4F046E818464FA8004D1498 /* stats-hit.png */,
+				F4F046E918464FA8004D1498 /* stats-hit@2x.png */,
+				F4F046EA18464FA8004D1498 /* stats.png */,
+				F4F046EB18464FA8004D1498 /* stats@2x.png */,
 				F47FE78B16FA4AC200FC88A6 /* 114x114-iPhone-Retina-icon.png */,
 				F4668D6217EB63C100F20046 /* 120x120-iPhone-Retina-icon.png */,
 				F4F80438180560CA0048A944 /* 29x29-iPhone-icon.png */,
@@ -947,6 +987,8 @@
 		F4119CBB16C0261D0028DB2E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F4F046FA1850CAC8004D1498 /* PieChartView.h */,
+				F4F046FB1850CAC8004D1498 /* PieChartView.m */,
 				F44867AA17C249EB00975F75 /* Flurry.h */,
 				F44867AB17C249EB00975F75 /* libFlurry.a */,
 				F494240C16E6500000AC0644 /* IPFanViewController.h */,
@@ -1010,10 +1052,14 @@
 				F429F8F8170EDE64006E7CDE /* Competition.m */,
 				F47B7BD917A67FE90008D3B9 /* CompetitionWinners.h */,
 				F47B7BDA17A67FFC0008D3B9 /* CompetitionWinners.m */,
+				F4F04704185881FB004D1498 /* OverallWinners.h */,
+				F4F047051858820F004D1498 /* OverallWinners.m */,
 				F494241416E6610600AC0644 /* Fangroup.h */,
 				F494241516E6611300AC0644 /* Fangroup.m */,
 				F479CD80171486AB008AF68D /* Fan.h */,
 				F479CD81171486C7008AF68D /* Fan.m */,
+				F4F046F71850A8F8004D1498 /* Stats.h */,
+				F4F046F81850A905004D1498 /* Stats.m */,
 				F47E37941760E26700C5C508 /* Account.h */,
 				F47E37951760E27B00C5C508 /* Account.m */,
 				F4857F851777538B0050FEDA /* Banner.h */,
@@ -1041,7 +1087,6 @@
 			children = (
 				F4CB020D182AB0F90016AB1D /* TSMessages */,
 				1D6043331816B82100F058B0 /* Facebook */,
-				1D4501F1180B07CB0013F11B /* GameCenter */,
 				F4119CBA16C023360028DB2E /* Resources */,
 				F4B70719169DD9C700E9FCD8 /* Views */,
 				F4119CBB16C0261D0028DB2E /* Controllers */,
@@ -1065,7 +1110,6 @@
 			isa = PBXGroup;
 			children = (
 				F40F7D57182552AF00EBA8A1 /* FacebookSDK.framework */,
-				1D4501F5180B091D0013F11B /* GameKit.framework */,
 				F44867A817C2491B00975F75 /* AdSupport.framework */,
 				F44867A617C240C600975F75 /* Security.framework */,
 				F47B7BDE17A6C53F0008D3B9 /* ImageIO.framework */,
@@ -1120,6 +1164,7 @@
 				F44867B117C36ED100975F75 /* IPPasswordViewController.xib */,
 				F429F8CA1704B08D006E7CDE /* IPInfoViewController.xib */,
 				F429F8D317086162006E7CDE /* IPLeaderboardHeaderView.xib */,
+				F4F047021857D141004D1498 /* IPWinnersHeaderView.xib */,
 				F429F8D5170865F3006E7CDE /* IPLeaderboardFooterView.xib */,
 				F4E4CCBA17BD1E1A00468FB6 /* IPFanFooterView.xib */,
 				F429F8D717086677006E7CDE /* IPLeaderboardViewController.xib */,
@@ -1231,7 +1276,7 @@
 						DevelopmentTeam = TQ53V5B9SX;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -1263,6 +1308,7 @@
 				F4B706D61695C74700E9FCD8 /* InfoPlist.strings in Resources */,
 				F4F714C016AEB4AB00FCCA82 /* IPLobbyViewController.xib in Resources */,
 				F4F714C516AEEF7F00FCCA82 /* IPGameHeaderView.xib in Resources */,
+				F4F04712185A3A8A004D1498 /* amber.png in Resources */,
 				F4F714C716AEF7FB00FCCA82 /* IPMenuHeaderView.xib in Resources */,
 				F4F714CC16B9745C00FCCA82 /* Period.h in Resources */,
 				F4119CAE16BADEFC0028DB2E /* IPGameItemCell.xib in Resources */,
@@ -1299,6 +1345,7 @@
 				F429F8DA17086A81006E7CDE /* IPLeaderboardItemCell.xib in Resources */,
 				F429F8E2170A0A3F006E7CDE /* 57x57-iPhone-icon.png in Resources */,
 				F429F8E7170A0A9E006E7CDE /* login-field-box.png in Resources */,
+				F4F046EF18464FA8004D1498 /* friends@2x.png in Resources */,
 				F429F8E8170A0A9E006E7CDE /* login-button-normal.png in Resources */,
 				F429F8E9170A0A9E006E7CDE /* login-button-hit.png in Resources */,
 				F429F8F1170B19A4006E7CDE /* rank-points-main-background.png in Resources */,
@@ -1316,9 +1363,9 @@
 				F479CD9017156FE6008AF68D /* motor-racing.png in Resources */,
 				F4CB0238182AB0F90016AB1D /* NotificationButtonBackground.png in Resources */,
 				F4CB0232182AB0F90016AB1D /* NotificationBackgroundSuccessIcon.png in Resources */,
+				F4F04717185A3A8A004D1498 /* user@2x.png in Resources */,
 				F479CD9117156FE6008AF68D /* baseball.png in Resources */,
 				F479CD9217156FE6008AF68D /* cricket.png in Resources */,
-				F4CB024B1832A17E0016AB1D /* red_down.png in Resources */,
 				F479CD9A1720261F008AF68D /* bank-normal.png in Resources */,
 				F479CD9B1720261F008AF68D /* bank-select.png in Resources */,
 				F479CD9C1720261F008AF68D /* gamecontrol_sel-uns.png in Resources */,
@@ -1332,6 +1379,7 @@
 				F4CB022C182AB0F90016AB1D /* NotificationBackgroundErrorIcon.png in Resources */,
 				F479CDA91721594C008AF68D /* segcontrol_sel@2x.png in Resources */,
 				F479CDAA1721594C008AF68D /* segcontrol_uns-sel@2x.png in Resources */,
+				F4F04716185A3A8A004D1498 /* user.png in Resources */,
 				F4CB0234182AB0F90016AB1D /* NotificationBackgroundWarning.png in Resources */,
 				F479CDAB1721594C008AF68D /* segcontrol_uns-uns@2x.png in Resources */,
 				F479CDAC1721594C008AF68D /* segcontrol_uns@2x.png in Resources */,
@@ -1341,6 +1389,7 @@
 				F479CDB617215A9C008AF68D /* gamecontrol_sel-uns@2x.png in Resources */,
 				F479CDB717215A9C008AF68D /* gamecontrol_sel@2x.png in Resources */,
 				F4CB0233182AB0F90016AB1D /* NotificationBackgroundSuccessIcon@2x.png in Resources */,
+				F4F046EE18464FA8004D1498 /* friends.png in Resources */,
 				F479CDB817215A9C008AF68D /* gamecontrol_uns-sel@2x.png in Resources */,
 				F479CDB917215A9C008AF68D /* gamecontrol_uns-uns@2x.png in Resources */,
 				F479CDBA17215A9C008AF68D /* gamecontrol_uns@2x.png in Resources */,
@@ -1352,6 +1401,8 @@
 				F479CDCA17215CBC008AF68D /* discontrol_uns-sel@2x.png in Resources */,
 				F479CDCB17215CBC008AF68D /* discontrol_uns-uns.png in Resources */,
 				F479CDCC17215CBC008AF68D /* discontrol_uns-uns@2x.png in Resources */,
+				F4F047081858D540004D1498 /* IPFacebookLinkViewController.xib in Resources */,
+				F4F04714185A3A8A004D1498 /* leaderboard-row-normal.png in Resources */,
 				F479CDCD17215CBC008AF68D /* discontrol_uns.png in Resources */,
 				F479CDCE17215CBC008AF68D /* discontrol_uns@2x.png in Resources */,
 				F4CB022E182AB0F90016AB1D /* NotificationBackgroundMessage.png in Resources */,
@@ -1377,18 +1428,22 @@
 				1D07A68F18172A1F00E0F783 /* IPSettingsViewController.xib in Resources */,
 				F479D165172EAE6D008AF68D /* finance.png in Resources */,
 				F479D166172EAE6D008AF68D /* finance@2x.png in Resources */,
+				F4F046F318464FA8004D1498 /* stats@2x.png in Resources */,
 				F479D167172EAE6D008AF68D /* ice-hockey.png in Resources */,
 				F479D168172EAE6D008AF68D /* ice-hockey@2x.png in Resources */,
+				F4F046F018464FA8004D1498 /* stats-hit.png in Resources */,
 				F4008C5A173027C700B9A23E /* login-field-box@2x.png in Resources */,
 				F4008C5E173115DE00B9A23E /* Avalon-Book.otf in Resources */,
 				F4008C5F173115DE00B9A23E /* Avalon-Demi.otf in Resources */,
 				F4008C60173115DE00B9A23E /* Avalon-Medium.otf in Resources */,
+				F4F046F218464FA8004D1498 /* stats.png in Resources */,
 				F4008C62173948E600B9A23E /* menu-button-hit-state@2x.png in Resources */,
 				F4008C6B17451D5000B9A23E /* back-button-hit-state.png in Resources */,
 				F4008C6C17451D5000B9A23E /* back-button-hit-state@2x.png in Resources */,
 				F4008C6D17451D5000B9A23E /* back-button.png in Resources */,
 				F4008C6E17451D5000B9A23E /* back-button@2x.png in Resources */,
 				F4008C6F17451D5000B9A23E /* menu-top-row-with-logo@2x.png in Resources */,
+				F4F04713185A3A8A004D1498 /* amber@2x.png in Resources */,
 				F47E3777174FBD7500C5C508 /* completed-row.png in Resources */,
 				F47E3778174FBD7500C5C508 /* grey-button@2x.png in Resources */,
 				F47E377D174FC1F400C5C508 /* leaderboard-button-hit-state.png in Resources */,
@@ -1399,6 +1454,7 @@
 				F47E3788174FCC0B00C5C508 /* submit-button-background@2x.png in Resources */,
 				F4CB0236182AB0F90016AB1D /* NotificationBackgroundWarningIcon.png in Resources */,
 				F47E3789174FCC0B00C5C508 /* submit-button-hit-state@2x.png in Resources */,
+				F4F04715185A3A8A004D1498 /* leaderboard-row-normal@2x.png in Resources */,
 				F47E378A174FCC0B00C5C508 /* submit-button@2x.png in Resources */,
 				F4857F7B17733BE10050FEDA /* IPLobbyChildCell.xib in Resources */,
 				F4857F801775B3E20050FEDA /* IPBannerView.xib in Resources */,
@@ -1441,10 +1497,10 @@
 				F47B7C2117B0FE1C0008D3B9 /* winners.png in Resources */,
 				F47B7C2217B0FE1C0008D3B9 /* winners@2x.png in Resources */,
 				F47B7C2417B6BC7D0008D3B9 /* menu-final-row-line@2x.png in Resources */,
-				F4CB024A1832A17E0016AB1D /* green_up.png in Resources */,
 				F4CB0231182AB0F90016AB1D /* NotificationBackgroundSuccess@2x.png in Resources */,
 				F47B7C2717BBAC340008D3B9 /* login-button-hit@2x.png in Resources */,
 				F47B7C2817BBAC340008D3B9 /* login-button-normal@2x.png in Resources */,
+				F4F047031857D141004D1498 /* IPWinnersHeaderView.xib in Resources */,
 				F47B7C2E17BBBDB50008D3B9 /* gamecontrol_sel-sel.png in Resources */,
 				F4CB0235182AB0F90016AB1D /* NotificationBackgroundWarning@2x.png in Resources */,
 				F47B7C2F17BBBDB50008D3B9 /* gamecontrol_sel-sel@2x.png in Resources */,
@@ -1463,6 +1519,7 @@
 				F4E4CCB517BD026E00468FB6 /* settings-hit@2x.png in Resources */,
 				F4E4CCB817BD026E00468FB6 /* winners-hit.png in Resources */,
 				F4E4CCB917BD026E00468FB6 /* winners-hit@2x.png in Resources */,
+				F4F046ED18464FA8004D1498 /* friends-hit@2x.png in Resources */,
 				F4E4CCBB17BD1E1A00468FB6 /* IPFanFooterView.xib in Resources */,
 				F4E4CCBD17BD202E00468FB6 /* IPFanViewController.xib in Resources */,
 				F4B86F6D17BE54CA00B6FA20 /* Default.png in Resources */,
@@ -1505,6 +1562,7 @@
 				F422C6B217E87409003CA923 /* screen_1@568.png in Resources */,
 				F422C6B317E87409003CA923 /* screen_1@2x.png in Resources */,
 				F422C6B417E87409003CA923 /* screen_1.png in Resources */,
+				F4F046F118464FA8004D1498 /* stats-hit@2x.png in Resources */,
 				F48ED6DD17E8AD5600E37812 /* screen_9@568.png in Resources */,
 				F48ED6DE17E8AD5600E37812 /* screen_8@568.png in Resources */,
 				F48ED6DF17E8AD5600E37812 /* screen_7@568.png in Resources */,
@@ -1512,6 +1570,7 @@
 				F48ED6E117E8AD5600E37812 /* screen_5@568.png in Resources */,
 				F48ED6E217E8AD5600E37812 /* screen_4@568.png in Resources */,
 				F48ED6E317E8AD5600E37812 /* screen_3@568.png in Resources */,
+				F4F046EC18464FA8004D1498 /* friends-hit.png in Resources */,
 				F48ED6E417E8AD5600E37812 /* screen_2@568.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1546,6 +1605,7 @@
 				F4F714B716A712FA00FCCA82 /* UINavigationController+MFSideMenu.m in Sources */,
 				F4F714B816A712FA00FCCA82 /* IPAppDelegate.m in Sources */,
 				F4CB023C182AB0F90016AB1D /* TSMessageView.m in Sources */,
+				F4F047061858820F004D1498 /* OverallWinners.m in Sources */,
 				F4F714B916A712FA00FCCA82 /* SideMenuViewController.m in Sources */,
 				F4F714BF16AEB4AB00FCCA82 /* IPLobbyViewController.m in Sources */,
 				F4F714C416AEEF7F00FCCA82 /* IPGameViewController.m in Sources */,
@@ -1560,6 +1620,8 @@
 				F494240716E6265400AC0644 /* IPLoginViewController.m in Sources */,
 				F494240B16E648B900AC0644 /* MF_Base64Additions.m in Sources */,
 				F494240F16E6500100AC0644 /* IPFanViewController.m in Sources */,
+				F4F046FC1850CAC8004D1498 /* PieChartView.m in Sources */,
+				F4F046F91850A905004D1498 /* Stats.m in Sources */,
 				F494241316E6564800AC0644 /* FanDataController.m in Sources */,
 				F4CB023B182AB0F90016AB1D /* TSBlurView.m in Sources */,
 				F494241616E6611400AC0644 /* Fangroup.m in Sources */,
@@ -1575,9 +1637,9 @@
 				F42D4CA6174A910F00206ABC /* Error.m in Sources */,
 				F47E3793175FAFA900C5C508 /* IPSettingsViewController.m in Sources */,
 				F4CB0241182AB4130016AB1D /* HexColor.m in Sources */,
-				1D4501F4180B07FD0013F11B /* GCHelper.m in Sources */,
 				F47E37961760E27B00C5C508 /* Account.m in Sources */,
 				F4CB0247182BCACF0016AB1D /* IPStatsViewController.m in Sources */,
+				F4F0470B1858D57F004D1498 /* IPFacebookLinkViewController.m in Sources */,
 				F4857F7E17733D680050FEDA /* IPLobbyChildCell.m in Sources */,
 				F4857F871777539A0050FEDA /* Banner.m in Sources */,
 				F4AE7C04179824D400303B34 /* IPWinnersViewController.m in Sources */,
@@ -1684,8 +1746,8 @@
 		F4B706F01695C74700E9FCD8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Inplayrs Ltd (TQ53V5B9SX)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Inplayrs Ltd (TQ53V5B9SX)";
 				FRAMEWORK_SEARCH_PATHS = /Users/inplayrs/Documents/Code/Inplayrs;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Inplayrs/Inplayrs-Prefix.pch";
@@ -1695,7 +1757,7 @@
 					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "75B25BFC-02B8-448E-9D9A-4290313B8D0D";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};

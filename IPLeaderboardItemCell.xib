@@ -10,7 +10,7 @@
         <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="25" id="2" customClass="IPLeaderboardItemCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="25"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2" id="Iw5-RK-eER">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" tableViewCell="2" id="Iw5-RK-eER">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="24"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
@@ -42,11 +42,16 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tick.png" id="gox-CW-tID">
+                        <rect key="frame" x="30" y="4" width="16" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                 </subviews>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.094117647060000004" green="0.094117647060000004" blue="0.094117647060000004" alpha="1" colorSpace="calibratedRGB"/>
             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
+                <outlet property="entryImage" destination="gox-CW-tID" id="eSN-yp-Pdi"/>
                 <outlet property="nameLabel" destination="497" id="651"/>
                 <outlet property="pointsLabel" destination="532" id="652"/>
                 <outlet property="rankLabel" destination="3" id="650"/>
@@ -54,4 +59,7 @@
             </connections>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="tick.png" width="16" height="16"/>
+    </resources>
 </document>

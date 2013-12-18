@@ -164,7 +164,7 @@
         [objectManager.HTTPClient setDefaultHeader:@"Authorization" value:appDelegate.username];
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
         [prefs setObject:appDelegate.username forKey:@"username"];
-
+        [prefs setObject:self.updatePassword.text forKey:@"password"];
         
         NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"PASSWORD",
                                     @"type", @"Success", @"result", nil];
@@ -180,10 +180,7 @@
                                      buttonCallback:nil
                                          atPosition:TSMessageNotificationPositionTop
                                 canBeDismisedByUser:YES];
-        /*
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success" message:@"Your password has been changed!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-         */
+
         self.oldPassword.placeholder = @"Enter Current Password";
         self.updatePassword.placeholder = @"Enter New Password";
         self.updatePassword2.placeholder = @"Re-Enter New Password";

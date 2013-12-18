@@ -15,7 +15,8 @@
 #import "Account.h"
 #import "Error.h"
 #import "IPPasswordViewController.h"
-#import "IPLoginViewController.h"
+#import "IPMultiLoginViewController.h"
+#import "IPFacebookLinkViewController.h"
 #import "TSMessage.h"
 #import <FacebookSDK/FacebookSDK.h>
 
@@ -26,7 +27,7 @@
 
 @implementation IPSettingsViewController
 
-@synthesize logoutButton, updateButton, userLabel, userNameLabel, emailLabel, autorefreshLabel, autorefreshSwitch, passwordButton, emailText, passwordViewController, loginViewController;
+@synthesize logoutButton, updateButton, userLabel, emailLabel, autorefreshLabel, autorefreshSwitch, passwordButton, emailText, passwordViewController, multiLoginViewController, facebookLinkViewController, facebookLabel, facebookLink, userText;
 
 
 - (void) dealloc {
@@ -65,10 +66,10 @@
     [self.passwordButton setBackgroundImage:image2 forState:UIControlStateHighlighted];
     [self.passwordButton setBackgroundImage:image3 forState:UIControlStateDisabled];
     self.passwordButton.titleLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:18.0];
+    self.facebookLink.titleLabel.textColor = [UIColor blackColor];
     
     self.userLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
-    self.userNameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
-    self.emailLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
+    self.facebookLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
     self.emailLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
     self.autorefreshLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
     
@@ -80,7 +81,8 @@
     }
     
     passwordViewController = nil;
-    loginViewController = nil;
+    multiLoginViewController = nil;
+    facebookLinkViewController = nil;
 }
          
 - (void)viewDidAppear:(BOOL)animated
@@ -92,20 +94,34 @@
         [self.logoutButton setEnabled:YES];
         [self.logoutButton setTitle:@"LOGOUT" forState:UIControlStateNormal];
         [self.updateButton setEnabled:YES];
-        [self.passwordButton setEnabled:YES];
-        self.userNameLabel.text = appDelegate.user;
-        if ((!self.emailText.text) || ([self.emailText.text isEqualToString:@""]))
-            [self getAccount:appDelegate.user];
+        if ([[prefs objectForKey:@"loginmethod"] isEqualToString:@"email"])
+            [self.passwordButton setEnabled:YES];
+        [self.userText setText:appDelegate.user];
+        [self getAccount:appDelegate.user];
         [self.autorefreshSwitch setOn:[prefs boolForKey:@"autoRefresh"]];
         [self.autorefreshSwitch setEnabled:YES];
         [self.emailText setEnabled:YES];
+        [self.userText setEnabled:YES];
+        if ([prefs objectForKey:@"fbID"]) {
+            self.facebookLink.backgroundColor = [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0];
+            [self.facebookLink setTitle:@"Linked" forState:UIControlStateDisabled];
+            [self.facebookLink setEnabled:NO];
+        } else {
+            self.facebookLink.backgroundColor = [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0];
+            [self.facebookLink setTitle:@"Link..." forState:UIControlStateNormal];
+            [self.facebookLink setEnabled:YES];
+        }
     } else {
         [self.updateButton setEnabled:NO];
         [self.logoutButton setEnabled:YES];
-        [self.logoutButton setTitle:@"LOGIN" forState:UIControlStateNormal];
+        [self.logoutButton setTitle:@"SIGN IN" forState:UIControlStateNormal];
         [self.passwordButton setEnabled:NO];
         [self.autorefreshSwitch setEnabled:NO];
         [self.emailText setEnabled:NO];
+        [self.userText setEnabled:NO];
+        self.facebookLink.titleLabel.text = @"";
+        self.facebookLink.enabled = NO;
+        self.facebookLink.backgroundColor = [UIColor clearColor];
     }
 }
 
@@ -114,24 +130,30 @@
     [self.logoutButton setEnabled:NO];
     [self.updateButton setEnabled:NO];
     [self.passwordButton setEnabled:NO];
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     NSString *path = [NSString stringWithFormat:@"user/account?username=%@", username];
     [objectManager getObjectsAtPath:path parameters:nil success:
      ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
          Account *account = [result firstObject];
-         self.emailText.text = account.email;
+         if (account.email)
+             [self.emailText setText:account.email];
          [self.logoutButton setEnabled:YES];
          [self.updateButton setEnabled:YES];
-         [self.passwordButton setEnabled:YES];
+         if ([[prefs objectForKey:@"loginmethod"] isEqualToString:@"email"])
+             [self.passwordButton setEnabled:YES];
      } failure:^(RKObjectRequestOperation *operation, NSError *error){
          [self.logoutButton setEnabled:YES];
          [self.updateButton setEnabled:YES];
-         [self.passwordButton setEnabled:YES];
+         if ([[prefs objectForKey:@"loginmethod"] isEqualToString:@"email"])
+             [self.passwordButton setEnabled:YES];
      }];
 }
 
-- (IBAction)addFriends:(UIButton *)sender {
+- (IBAction)dismissKeyboard:(id)sender {
+    [activeField resignFirstResponder];
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -144,7 +166,6 @@
     [textField resignFirstResponder];
     return YES;
 }
-
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     [textField resignFirstResponder];
@@ -167,19 +188,21 @@
         [objectManager.HTTPClient setDefaultHeader:@"Authorization" value:appDelegate.username];
         [self.updateButton setEnabled:NO];
         [self.logoutButton setEnabled:YES];
-        [self.logoutButton setTitle:@"LOGIN" forState:UIControlStateNormal];
+        [self.logoutButton setTitle:@"SIGN IN" forState:UIControlStateNormal];
         [self.passwordButton setEnabled:NO];
         [self.autorefreshSwitch setEnabled:NO];
         [self.emailText setEnabled:NO];
-        self.userNameLabel.text = @"";
+        [self.userText setEnabled:NO];
+        self.userText.text = @"";
         self.emailText.text = @"";
+        [self.facebookLink setTitle:@"" forState:UIControlStateDisabled];
+        [self.facebookLink setEnabled:NO];
+        self.facebookLink.backgroundColor = [UIColor clearColor];
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+        [FBSession.activeSession close];
         [prefs setObject:appDelegate.username forKey:@"username"];
-        [prefs setObject:appDelegate.user forKey:@"user"];
-        if ([[prefs objectForKey:@"loginmethod"] isEqualToString:@"facebook"]) {
-            NSLog (@"calling facebook logout");
-            [FBSession.activeSession closeAndClearTokenInformation];
-        }
+        [prefs setObject:nil forKey:@"user"];
+        [prefs setObject:nil forKey:@"password"];
         NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"LOGOUT",
                                 @"type", @"Success", @"result", nil];
         [Flurry logEvent:@"ACCOUNT" withParameters:dictionary];
@@ -195,18 +218,25 @@
                                          atPosition:TSMessageNotificationPositionTop
                                 canBeDismisedByUser:YES];
     } else {
-        if (!self.loginViewController) {
-            self.loginViewController = [[IPLoginViewController alloc] initWithNibName:@"IPLoginViewController" bundle:nil];
+        if (!self.multiLoginViewController) {
+            self.multiLoginViewController = [[IPMultiLoginViewController alloc] initWithNibName:@"IPMultiLoginViewController" bundle:nil];
         }
-        if (self.loginViewController)
-            [self.navigationController pushViewController:self.loginViewController animated:YES];
+        if (self.multiLoginViewController)
+            [self.navigationController pushViewController:self.multiLoginViewController animated:YES];
     }
 
 }
 
 - (IBAction)updateUser:(UIButton *)sender {
-    if (![self validateEmail:self.emailText.text]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Email" message:@"Please enter a valid email address!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    if ((self.emailText.text) && (![self.emailText.text isEqualToString:@""])) {
+        if (![self validateEmail:self.emailText.text]) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Email" message:@"Please enter a valid email address!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
+    }
+    if (![self validateUsername:self.userText.text]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Username" message:@"Please enter a username between 5 and 15 characters composed of letters and numbers only!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         return;
     }
@@ -217,10 +247,14 @@
     NSTimeZone *localTime = [NSTimeZone systemTimeZone];
     NSString *timezone = [localTime abbreviation];
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    IPAppDelegate *appDelegate = (IPAppDelegate *)[[UIApplication sharedApplication] delegate];
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    NSString *path = [NSString stringWithFormat:@"user/account/update?timezone=%@&email=%@", timezone, self.emailText.text];
-    
+    NSString *path = [NSString stringWithFormat:@"user/account/update?timezone=%@", timezone];
+    if ((self.emailText.text) && (![self.emailText.text isEqualToString:@""]))
+        path = [path stringByAppendingFormat:@"&email=%@", self.emailText.text];
+    if (![self.userText.text isEqualToString:appDelegate.user])
+        path = [path stringByAppendingFormat:@"&username=%@", self.userText.text];
     [objectManager postObject:nil path:path parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
         [prefs setBool:self.autorefreshSwitch.on forKey:@"autoRefresh"];
         NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"SAVE",
@@ -239,11 +273,24 @@
                                 canBeDismisedByUser:YES];
         
         [self.updateButton setEnabled:YES];
-        [self.passwordButton setEnabled:YES];
+        if ([[prefs objectForKey:@"loginmethod"] isEqualToString:@"email"])
+            [self.passwordButton setEnabled:YES];
         [self.logoutButton setEnabled:YES];
+        if (![self.userText.text isEqualToString:appDelegate.user]) {
+            appDelegate.user = self.userText.text;
+            NSString *password = [prefs objectForKey:@"password"];
+            appDelegate.username = [self.userText.text stringByAppendingFormat:@":%@", password];
+            appDelegate.username = [appDelegate.username base64String];
+            appDelegate.username = [@"Basic " stringByAppendingString:appDelegate.username];
+            [prefs setObject:appDelegate.username forKey:@"username"];
+            [prefs setObject:appDelegate.user forKey:@"user"];
+            [objectManager.HTTPClient setDefaultHeader:@"Authorization" value:appDelegate.username];
+            [Flurry setUserID:appDelegate.user];
+        }
     } failure:^(RKObjectRequestOperation *operation, NSError *error){
         [self.updateButton setEnabled:YES];
-        [self.passwordButton setEnabled:YES];
+        if ([[prefs objectForKey:@"loginmethod"] isEqualToString:@"email"])
+            [self.passwordButton setEnabled:YES];
         [self.logoutButton setEnabled:YES];
         NSArray *errorMessages = [[error userInfo] objectForKey:RKObjectMapperErrorObjectsKey];
         Error *myerror = [errorMessages objectAtIndex:0];
@@ -267,10 +314,27 @@
         [self.navigationController pushViewController:self.passwordViewController animated:YES];
 }
 
+- (IBAction)linkFacebook:(id)sender {
+    if (!self.facebookLinkViewController) {
+        self.facebookLinkViewController = [[IPFacebookLinkViewController alloc] initWithNibName:@"IPFacebookLinkViewController" bundle:nil];
+    }
+    if (self.facebookLinkViewController)
+        [self.navigationController pushViewController:self.facebookLinkViewController animated:YES];
+}
+
+- (BOOL) validateUsername: (NSString *) candidate {
+    NSString *usernameRegex = @"[A-Z0-9a-z_-]{5,15}";
+    NSPredicate *usernameTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", usernameRegex];
+    
+    return [usernameTest evaluateWithObject:candidate];
+}
+
 - (BOOL) validateEmail: (NSString *) candidate {
     NSString *emailRegex = @"[A-Z0-9a-z._%+-]{1,63}+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}";
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
     
     return [emailTest evaluateWithObject:candidate];
 }
+
+
 @end

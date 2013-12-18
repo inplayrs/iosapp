@@ -137,8 +137,8 @@
             break;
         }
         case (3): {
-            UIImage *image = [UIImage imageNamed: @"winners.png"];
-            UIImage *imageHighlighted = [UIImage imageNamed: @"winners-hit.png"];
+            UIImage *image = [UIImage imageNamed: @"stats.png"];
+            UIImage *imageHighlighted = [UIImage imageNamed: @"stats-hit.png"];
             cell.imageView.image = image;
             cell.imageView.highlightedImage = imageHighlighted;
             break;

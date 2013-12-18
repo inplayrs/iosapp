@@ -14,12 +14,12 @@
 #import "Game.h"
 #import "RestKit.h"
 #import "IPAppDelegate.h"
-// #import "IPRegisterViewController.h"
 #import "IPMultiLoginViewController.h"
 #import "IPStatsViewController.h"
 #import "Competition.h"
 #import "Banner.h"
 #import <SDWebImage/UIButton+WebCache.h>
+#import "Flurry.h"
 
 
 enum State {
@@ -206,7 +206,7 @@ enum Category {
         [self.navigationItem.rightBarButtonItem setTitleTextAttributes:attributes forState:UIControlStateDisabled];
         [self.navigationItem.rightBarButtonItem setEnabled:YES];
     } else {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Register" style:UIBarButtonItemStylePlain target:self action:@selector(loginPressed:)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Sign In" style:UIBarButtonItemStylePlain target:self action:@selector(loginPressed:)];
         self.navigationItem.rightBarButtonItem.tintColor = [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0];
         NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,[UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0],UITextAttributeFont,nil];
         [self.navigationItem.rightBarButtonItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
@@ -224,7 +224,6 @@ enum Category {
     
     [self.tableView setTableHeaderView:[self headerView]];
     
-    // [[GCHelper sharedInstance] authenticateLocalPlayer];
     [NSTimer scheduledTimerWithTimeInterval:.06 target:self selector:@selector(getCompetitions:) userInfo:nil repeats:NO];
     // timer = [NSTimer scheduledTimerWithTimeInterval:5.00 target:self selector:@selector(changeBanner:) userInfo:nil repeats:YES];
     // [self getGames:self];
@@ -246,7 +245,7 @@ enum Category {
         [self.navigationItem.rightBarButtonItem setEnabled:YES];
         [self.navigationItem.rightBarButtonItem setTintColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]];
     } else {
-        [self.navigationItem.rightBarButtonItem setTitle:@"Register"];
+        [self.navigationItem.rightBarButtonItem setTitle:@"Sign In"];
         [self.navigationItem.rightBarButtonItem setAction:@selector(loginPressed:)];
         [self.navigationItem.rightBarButtonItem setEnabled:YES];
         if (appDelegate.refreshLobby)
@@ -278,16 +277,24 @@ enum Category {
     if (!self.multiLoginViewController) {
         self.multiLoginViewController = [[IPMultiLoginViewController alloc] initWithNibName:@"IPMultiLoginViewController" bundle:nil];
     }
-    if (self.multiLoginViewController)
+    if (self.multiLoginViewController) {
         [self.navigationController pushViewController:self.multiLoginViewController animated:YES];
+        NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"Signin",
+                                    @"click", nil];
+        [Flurry logEvent:@"MENU" withParameters:dictionary];
+    }
 }
 
 - (void) statsPressed:(id)sender {
     if (!self.statsViewController) {
         self.statsViewController = [[IPStatsViewController alloc] initWithNibName:@"IPStatsViewController" bundle:nil];
     }
-    if (self.statsViewController)
+    if (self.statsViewController) {
         [self.navigationController pushViewController:self.statsViewController animated:YES];
+        NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"Stats",
+                                    @"click", nil];
+        [Flurry logEvent:@"MENU" withParameters:dictionary];
+    }
 }
 
 

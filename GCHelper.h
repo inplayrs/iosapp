@@ -11,14 +11,14 @@
 
 
 @interface GCHelper : NSObject {
-    // BOOL gameCenterAvailable;
-    // BOOL userAuthenticated;
+    BOOL gameCenterAvailable;
+    BOOL userAuthenticated;
 }
 
-// @property (assign, readonly) BOOL gameCenterAvailable;
+@property (assign, readonly) BOOL gameCenterAvailable;
 
 + (GCHelper *)sharedInstance;
-// - (void)authenticateLocalUser;
+- (void)authenticateLocalUser;
 - (void)authenticateLocalPlayer;
 
 @end

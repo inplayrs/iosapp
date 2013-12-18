@@ -12,7 +12,7 @@
 
 @implementation GCHelper
 
-// @synthesize gameCenterAvailable;
+@synthesize gameCenterAvailable;
 
 #pragma mark Initialization
 
@@ -26,7 +26,7 @@ static GCHelper *sharedHelper = nil;
 }
 
 
-/*
+
 - (BOOL)isGameCenterAvailable {
     // check for presence of GKLocalPlayer API
     Class gcClass = (NSClassFromString(@"GKLocalPlayer"));
@@ -65,7 +65,7 @@ static GCHelper *sharedHelper = nil;
     }
     
 }
-*/
+
 
 #pragma mark User functions
 
@@ -92,7 +92,6 @@ static GCHelper *sharedHelper = nil;
 }
 
 
-/*
 - (void)authenticateLocalUser{
     
     if (!gameCenterAvailable) return;
@@ -126,6 +125,6 @@ static GCHelper *sharedHelper = nil;
 
     }
 }
- */
+
 
 @end

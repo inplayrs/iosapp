@@ -57,21 +57,10 @@
                         <action selector="loginUser:" destination="-1" eventType="touchUpInside" id="31"/>
                     </connections>
                 </button>
-                <view contentMode="scaleToFill" id="Pvu-5G-9e7" customClass="FBLoginView">
-                    <rect key="frame" x="50" y="10" width="220" height="42"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login-screen-logo.png" id="i2e-9h-N9I">
+                    <rect key="frame" x="72" y="20" width="176" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    <connections>
-                        <outlet property="delegate" destination="-1" id="0cC-ZF-Gv9"/>
-                    </connections>
-                </view>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Or" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Eop-gY-hsl">
-                    <rect key="frame" x="50" y="56" width="220" height="22"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
@@ -82,5 +71,6 @@
     </objects>
     <resources>
         <image name="login-field-box.png" width="289" height="44"/>
+        <image name="login-screen-logo.png" width="176" height="30"/>
     </resources>
 </document>

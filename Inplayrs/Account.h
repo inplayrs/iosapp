@@ -11,9 +11,10 @@
 @interface Account : NSObject
 
 @property (nonatomic, copy) NSString *email;
+@property (nonatomic, copy) NSString *username;
 
 
--(id)initWithEmail:(NSString *)email;
+-(id)initWithEmail:(NSString *)email username:(NSString *)username;
 
 
 @end

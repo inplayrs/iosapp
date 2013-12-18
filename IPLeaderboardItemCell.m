@@ -10,7 +10,7 @@
 
 @implementation IPLeaderboardItemCell
 
-@synthesize rankLabel, nameLabel, pointsLabel, winningsLabel;
+@synthesize rankLabel, nameLabel, pointsLabel, winningsLabel, entryImage;
 
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

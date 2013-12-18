@@ -13,7 +13,7 @@
 @class Selection;
 @class IPLeaderboardViewController;
 @class IPFanViewController;
-@class IPRegisterViewController;
+@class IPMultiLoginViewController;
 @class IPTutorialViewController;
 
 @interface IPGameViewController : UITableViewController <UIAlertViewDelegate>
@@ -39,7 +39,7 @@
 @property (strong, nonatomic) GameDataController *dataController;
 @property (strong, nonatomic) IPLeaderboardViewController *leaderboardViewController;
 @property (strong, nonatomic) IPFanViewController *fanViewController;
-@property (strong, nonatomic) IPRegisterViewController *registerViewController;
+@property (strong, nonatomic) IPMultiLoginViewController *multiLoginViewController;
 @property (strong, nonatomic) IPTutorialViewController *tutorialViewController;
 @property (weak, nonatomic) IBOutlet UIButton *submitButton;
 @property (weak, nonatomic) IBOutlet UILabel *leftLabel;
@@ -65,6 +65,7 @@
 @property (nonatomic) BOOL fangroupChallenge;
 @property (weak, nonatomic) NSString *oldPoints;
 @property (nonatomic) NSInteger oldState;
+@property (nonatomic) NSString *username;
 
 
 @end

@@ -191,17 +191,26 @@
         if (![self validateEmail:registerEmailField.text]) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Email" message:@"Please enter a valid email address!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
+            NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"REGISTER",
+                                        @"type", @"Fail", @"result", @"email", @"error", nil];
+            [Flurry logEvent:@"ACCOUNT" withParameters:dictionary];
             return;
         }
     }
     if (![self validateUsername:registerUsernameField.text]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Username" message:@"Please enter a username between 5 and 15 characters composed of letters and numbers only!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
+        NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"REGISTER",
+                                    @"type", @"Fail", @"result", @"username", @"error", nil];
+        [Flurry logEvent:@"ACCOUNT" withParameters:dictionary];
         return;
     }
     if (![self validatePassword:registerPasswordField.text]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Password" message:@"Please enter a password between 5 and 15 characters composed of letters and numbers only!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
+        NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"REGISTER",
+                                    @"type", @"Fail", @"result", @"password", @"error", nil];
+        [Flurry logEvent:@"ACCOUNT" withParameters:dictionary];
         return;
     }
     [self.view endEditing:YES];
@@ -229,6 +238,7 @@
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
         [prefs setObject:appDelegate.username forKey:@"username"];
         [prefs setObject:appDelegate.user forKey:@"user"];
+        [prefs setObject:self.registerPasswordField.text forKey:@"password"];
         [prefs setObject:@"email" forKey:@"loginmethod"];
         [Flurry setUserID:appDelegate.user];
         

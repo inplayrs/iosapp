@@ -7,6 +7,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IPMultiLoginViewController">
             <connections>
+                <outlet property="loginButton" destination="PyG-JA-swi" id="ibX-KB-oUW"/>
+                <outlet property="loginLabel" destination="Qa9-pP-5rH" id="ySH-QI-GOs"/>
+                <outlet property="loginView" destination="y0I-3p-Qqm" id="6bs-Gx-fV5"/>
                 <outlet property="registerButton" destination="Uhu-45-RMa" id="etx-jG-a97"/>
                 <outlet property="termsButton" destination="Mml-Y8-Zsw" id="m3X-Hh-eim"/>
                 <outlet property="termsLabel" destination="G0B-JU-h4e" id="IsE-bJ-B4c"/>
@@ -50,8 +53,17 @@
                         <action selector="registerPressed:" destination="-1" eventType="touchUpInside" id="46g-bN-6P1"/>
                     </connections>
                 </button>
-                <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="By clicking button, I agree to the" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="G0B-JU-h4e">
+                <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="By clicking above, I agree to the" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="G0B-JU-h4e">
                     <rect key="frame" x="25" y="223" width="220" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                    <size key="shadowOffset" width="0.0" height="0.0"/>
+                </label>
+                <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Already registered?" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Qa9-pP-5rH">
+                    <rect key="frame" x="45" y="277" width="140" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
@@ -71,6 +83,20 @@
                     </state>
                     <connections>
                         <action selector="termsPressed:" destination="-1" eventType="touchUpInside" id="Zsx-a6-4KH"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="PyG-JA-swi">
+                    <rect key="frame" x="190" y="273" width="80" height="28"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.91605839420000001" green="0.81386861310000003" blue="0.088446624089999995" alpha="1" colorSpace="deviceRGB"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <state key="normal" title="Login now">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="loginPressed:" destination="-1" eventType="touchUpInside" id="SdO-Ve-KCq"/>
                     </connections>
                 </button>
             </subviews>

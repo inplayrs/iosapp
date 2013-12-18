@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *pointsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *winningsLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *entryImage;
 
 
 

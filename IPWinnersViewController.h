@@ -10,10 +10,21 @@
 
 
 @interface IPWinnersViewController : UITableViewController
+{
+    IBOutlet UIView *headerView;
+    
+}
 
-@property (nonatomic, copy) NSMutableArray *winnersList;
+- (void)getCompetitionWinnersList:(id)sender;
+- (void)getGameWinnersList:(id)sender;
+- (void)getOverallWinnersList:(id)sender;
+- (UIView *)headerView;
+- (IBAction)switchTab:(id)sender;
 
-- (void)getMyWinnersList:(id)sender;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *winnersTab;
+@property (nonatomic, copy) NSMutableArray *competitionWinnersList;
+@property (nonatomic, copy) NSMutableArray *gameWinnersList;
+@property (nonatomic, copy) NSMutableArray *overallWinnersList;
 
 
 @end

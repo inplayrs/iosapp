@@ -1,22 +1,23 @@
 //
-//  Account.m
+//  OverallWinners.m
 //  Inplayrs
 //
 //  Created by Anil Bhagchandani on 03/01/2013.
 //  Copyright (c) 2013 Inplayrs. All rights reserved.
 //
 
-#import "Account.h"
+#import "OverallWinners.h"
 
-@implementation Account
+@implementation OverallWinners
 
 
--(id)initWithEmail:(NSString *)email username:(NSString *)username
+-(id)initWithUsername:(NSString *)username rank:(NSInteger)rank winnings:(NSString *)winnings
 {
     self = [super init];
     if (self) {
-        _email = email;
         _username = username;
+        _rank = rank;
+        _winnings = winnings;
         return self;
     }
     return nil;
