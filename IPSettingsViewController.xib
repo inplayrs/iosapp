@@ -108,7 +108,7 @@
                 <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="993">
                     <rect key="frame" x="231" y="136" width="51" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="onTintColor" red="0.91605839420000001" green="0.81386861310000003" blue="0.088446624089999995" alpha="1" colorSpace="deviceRGB"/>
+                    <color key="onTintColor" red="1" green="0.94901960784313721" blue="0.16078431372549018" alpha="1" colorSpace="deviceRGB"/>
                 </switch>
                 <textField opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minimumFontSize="14" background="login-field-box.png" id="1280">
                     <rect key="frame" x="70" y="50" width="240" height="32"/>

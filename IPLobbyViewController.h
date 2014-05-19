@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @class IPGameViewController;
-// @class IPRegisterViewController;
 @class IPMultiLoginViewController;
 @class IPStatsViewController;
 
@@ -26,7 +25,6 @@
 - (void)getCompetitions:(id)sender;
 
 @property (strong, nonatomic) IPGameViewController *detailViewController;
-// @property (strong, nonatomic) IPRegisterViewController *registerViewController;
 @property (strong, nonatomic) IPMultiLoginViewController *multiLoginViewController;
 @property (strong, nonatomic) IPStatsViewController *statsViewController;
 @property (strong, nonatomic) NSMutableDictionary *controllerList;

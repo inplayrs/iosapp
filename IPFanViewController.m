@@ -73,7 +73,7 @@ enum Category {
     [super viewDidLoad];
     
     self.dataController = [[FanDataController alloc] init];
-    self.title = @"Fan";
+    self.title = @"Fan Groups";
     
     // this isn't needed on the rootViewController of the navigation controller
     [self.navigationController.sideMenu setupSideMenuBarButtonItem];
@@ -128,7 +128,7 @@ enum Category {
         [[NSBundle mainBundle] loadNibNamed:@"IPFanFooterView" owner:self options:nil];
         UIImage *image = [UIImage imageNamed:@"submit-button.png"];
         UIImage *image2 = [UIImage imageNamed:@"submit-button-hit-state.png"];
-        UIImage *image3 = [UIImage imageNamed:@"grey-button.png"];
+        UIImage *image3 = [UIImage imageNamed:@"submit-button-disabled.png"];
         [self.competitionButton setBackgroundImage:image forState:UIControlStateNormal];
         [self.competitionButton setBackgroundImage:image2 forState:UIControlStateHighlighted];
         [self.competitionButton setBackgroundImage:image3 forState:UIControlStateDisabled];
@@ -358,11 +358,11 @@ numberOfRowsInComponent:(NSInteger)component
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(competitionDone:)];
     [barItems addObject:doneButton];
     [pickerToolbar setItems:barItems animated:NO];
-    [pickerToolbar setTintColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]];
-    [cancelBtn setTintColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]];
-    [doneButton setTintColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]];
+    [pickerToolbar setTintColor:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]];
+    [cancelBtn setTintColor:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]];
+    [doneButton setTintColor:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]];
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
-        [[UIBarButtonItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0] } forState:UIControlStateNormal];
+        [[UIBarButtonItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0] } forState:UIControlStateNormal];
     } else {
         NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,nil];
         [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
@@ -458,16 +458,16 @@ numberOfRowsInComponent:(NSInteger)component
     pickerToolbar.barStyle = UIBarStyleBlack;
     NSMutableArray *barItems = [[NSMutableArray alloc] init];
     UIBarButtonItem *cancelBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCancel target:self action:@selector(actionPickerCancel:)];
-    [cancelBtn setTintColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]];
+    [cancelBtn setTintColor:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]];
     [barItems addObject:cancelBtn];
     UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [barItems addObject:flexSpace];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(fangroupDone:)];
-    [doneButton setTintColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]];
+    [doneButton setTintColor:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]];
     [barItems addObject:doneButton];
     [pickerToolbar setItems:barItems animated:NO];
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
-        [[UIBarButtonItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0] } forState:UIControlStateNormal];
+        [[UIBarButtonItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0] } forState:UIControlStateNormal];
     } else {
         NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,nil];
         [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
@@ -523,8 +523,17 @@ numberOfRowsInComponent:(NSInteger)component
     
     // UIImageView *imageViewSelected = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-row-hit-state.png"]];
     // [cell setSelectedBackgroundView:imageViewSelected];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-row.png"]];
-    [cell setBackgroundView:imageView];
+    // UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-row.png"]];
+    // [cell setBackgroundView:imageView];
+    if (indexPath.row % 2) {
+        cell.backgroundColor = [UIColor colorWithRed:49/255.0 green:52/255.0 blue:62/255.0 alpha:1];
+        cell.contentView.backgroundColor = [UIColor colorWithRed:49/255.0 green:52/255.0 blue:62/255.0 alpha:1];
+        cell.backgroundView.backgroundColor = [UIColor colorWithRed:49/255.0 green:52/255.0 blue:62/255.0 alpha:1];
+    } else {
+        cell.backgroundColor = [UIColor colorWithRed:32/255.0 green:35/255.0 blue:45/255.0 alpha:1];
+        cell.contentView.backgroundColor = [UIColor colorWithRed:32/255.0 green:35/255.0 blue:45/255.0 alpha:1];
+        cell.backgroundView.backgroundColor = [UIColor colorWithRed:32/255.0 green:35/255.0 blue:45/255.0 alpha:1];
+    }
    
     cell.textLabel.text = string;
     cell.textLabel.backgroundColor = [UIColor clearColor];

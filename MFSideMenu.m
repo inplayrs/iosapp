@@ -215,8 +215,9 @@
 #pragma mark - UIBarButtonItems & Callbacks
 
 - (UIBarButtonItem *)menuBarButtonItem {
-    UIImage *menuButtonNormal = [UIImage imageNamed:@"menu-button.png"];
-    UIImage *menuButtonHighlighted = [UIImage imageNamed:@"menu-button-hit-state.png"];
+    // UIImage *menuButtonNormal = [UIImage imageNamed:@"menu-button.png"];
+    UIImage *menuButtonNormal = [UIImage imageNamed:@"hamburger.png"];
+    UIImage *menuButtonHighlighted = [UIImage imageNamed:@"hamburger-hit-state.png"];
     CGRect frameimg = CGRectMake(0, 0, menuButtonNormal.size.width, menuButtonNormal.size.height);
     UIButton *menuButton = [[UIButton alloc] initWithFrame:frameimg];
     [menuButton setBackgroundImage:menuButtonNormal forState:UIControlStateNormal];
@@ -250,6 +251,7 @@
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,[UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0],UITextAttributeFont,nil];
     [barButtonItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
      */
+    /*
     UIImage *backButtonNormal = [UIImage imageNamed:@"back-button.png"];
     UIImage *backButtonHighlighted = [UIImage imageNamed:@"back-button-hit-state.png"];
     CGRect frameimg = CGRectMake(0, 0, backButtonNormal.size.width, backButtonNormal.size.height);
@@ -259,6 +261,13 @@
     [backButton addTarget:self action:@selector(backButtonPressed:)
          forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *barButtonItem =[[UIBarButtonItem alloc] initWithCustomView:backButton];
+     */
+    UIBarButtonItem *barButtonItem;
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+        barButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+    else
+        barButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+    // UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithTitle:@" " style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
     /*
     [barButtonItem setTitle:@"Back"];
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,[UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0],UITextAttributeFont,nil];
@@ -276,6 +285,7 @@
         } else if(self.menuSide == MFSideMenuLocationLeft &&
                   (self.menuState == MFSideMenuStateVisible || self.navigationController.viewControllers.count == 1)) {
             // show the menu button on the root view controller or if the menu is open
+            /*
             if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
                 UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
                 negativeSpacer.width = -10;
@@ -283,11 +293,14 @@
             } else {
                 navigationItem.leftBarButtonItem = [self menuBarButtonItem];
             }
+             */
+            navigationItem.leftBarButtonItem = [self menuBarButtonItem];
         }
     }
     
     if([self backButtonEnabled] && self.navigationController.viewControllers.count > 1
        && self.menuState == MFSideMenuStateHidden) {
+        /*
         if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
             UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
             negativeSpacer.width = -10;
@@ -295,6 +308,8 @@
         } else {
             navigationItem.leftBarButtonItem = [self backBarButtonItem];
         }
+         */
+        navigationItem.backBarButtonItem = [self backBarButtonItem];
     }
 }
 

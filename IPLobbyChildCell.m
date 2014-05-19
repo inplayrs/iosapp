@@ -31,13 +31,18 @@
         self.selectedBackgroundView = imageViewSelected;
     }
      */
+    self.contentView.backgroundColor = [UIColor clearColor];
+    self.backgroundColor = [UIColor clearColor];
+
     if (selected) {
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-sub-row-hit-gray.png"]];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-bar-drop-down-bar-hit-state.png"]];
+        self.backgroundView = imageView;
+    } else if (self.gameState == 2) {
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-bar-drop-done.png"]];
         self.backgroundView = imageView;
     } else {
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-sub-row.png"]];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-bar-drop-down-bar.png"]];
         self.backgroundView = imageView;
-
     }
 }
 

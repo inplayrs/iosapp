@@ -33,7 +33,6 @@
 
 - (IBAction)changeSelection:(id)sender
 {
-    // NSLog(@"changed selection = %d", self.selectionButton.selectedSegmentIndex);
     NSString *selector = NSStringFromSelector(_cmd);
     selector = [selector stringByAppendingString:@"atIndexPath:"];
     

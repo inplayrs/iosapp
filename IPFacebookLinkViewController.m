@@ -29,6 +29,7 @@
     [super viewDidLoad];
     self.title = @"Facebook";
     
+    /*
     UIImage *backButtonNormal = [UIImage imageNamed:@"back-button.png"];
     UIImage *backButtonHighlighted = [UIImage imageNamed:@"back-button-hit-state.png"];
     CGRect frameimg = CGRectMake(0, 0, backButtonNormal.size.width, backButtonNormal.size.height);
@@ -45,6 +46,11 @@
     } else {
         self.navigationItem.leftBarButtonItem = barButtonItem;
     }
+     */
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+    else
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
 }
 
 
@@ -65,10 +71,12 @@
     // causes the control to fetch and display the profile picture for the user
     
     
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    // NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     IPAppDelegate *appDelegate = (IPAppDelegate *)[[UIApplication sharedApplication] delegate];
-    if ((appDelegate.loggedin) && (![prefs objectForKey:@"fbID"]) && (FBSession.activeSession.state == FBSessionStateOpen)) {
-        self.fbID = user.id;
+    // if ((appDelegate.loggedin) && (![prefs objectForKey:@"fbID"]) && (FBSession.activeSession.state == FBSessionStateOpen)) {
+    if ((appDelegate.loggedin) && (FBSession.activeSession.state == FBSessionStateOpen)) {
+        // self.fbID = user.id;
+        self.fbID = [user objectForKey:@"id"];
         self.fbUsername = user.username;
         self.fbName = [user.name stringByReplacingOccurrencesOfString:@" " withString:@""];
         self.fbEmail = [user objectForKey:@"email"];

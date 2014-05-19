@@ -18,7 +18,7 @@
 
 @implementation IPTutorialViewController
 
-@synthesize tutorialImageView, topImages, globalButton, fangroupButton, h2hButton, leftButton, rightButton;
+@synthesize tutorialImageView, topImages, leftButton, rightButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,11 +48,11 @@
     
     topImages = [[NSMutableArray alloc] init];
     if (IS_WIDESCREEN) {
-        UIImage *image1 = [UIImage imageNamed:@"screen_1@568.png"];
-        UIImage *image2 = [UIImage imageNamed:@"screen_2@568.png"];
-        UIImage *image3 = [UIImage imageNamed:@"screen_3@568.png"];
-        UIImage *image4 = [UIImage imageNamed:@"screen_6@568.png"];
-        UIImage *image5 = [UIImage imageNamed:@"screen_7@568.png"];
+        UIImage *image1 = [UIImage imageNamed:@"screen_1.png"];
+        UIImage *image2 = [UIImage imageNamed:@"screen_2.png"];
+        UIImage *image3 = [UIImage imageNamed:@"screen_3.png"];
+        UIImage *image4 = [UIImage imageNamed:@"screen_6.png"];
+        UIImage *image5 = [UIImage imageNamed:@"screen_7.png"];
         [topImages addObject:image1];
         [topImages addObject:image2];
         [topImages addObject:image3];
@@ -61,11 +61,11 @@
         tutorialImageView.frame = CGRectMake(0, 0, 320, 504);
         tutorialImageView.image = image1;
     } else {
-        UIImage *image1 = [UIImage imageNamed:@"screen_1.png"];
-        UIImage *image2 = [UIImage imageNamed:@"screen_2.png"];
-        UIImage *image3 = [UIImage imageNamed:@"screen_3.png"];
-        UIImage *image4 = [UIImage imageNamed:@"screen_6.png"];
-        UIImage *image5 = [UIImage imageNamed:@"screen_7.png"];
+        UIImage *image1 = [UIImage imageNamed:@"screen_1s.png"];
+        UIImage *image2 = [UIImage imageNamed:@"screen_2s.png"];
+        UIImage *image3 = [UIImage imageNamed:@"screen_3s.png"];
+        UIImage *image4 = [UIImage imageNamed:@"screen_6s.png"];
+        UIImage *image5 = [UIImage imageNamed:@"screen_7s.png"];
         [topImages addObject:image1];
         [topImages addObject:image2];
         [topImages addObject:image3];
@@ -116,11 +116,9 @@
     imageIndex = (imageIndex < 0) ? ([topImages count] -1):
     imageIndex % [topImages count];
     tutorialImageView.image = [topImages objectAtIndex:imageIndex];
-    // UIImageView *imageView = [[UIImageView alloc] initWithImage:[topImages objectAtIndex:imageIndex]];
-    // [UIView transitionFromView:tutorialImageView toView:tutorialImageView duration:1.0 options:UIViewAnimationOptionCurveEaseInOut completion:NULL];
 }
 
-
+/*
 - (IBAction)globalPressed:(id)sender {
     switch (imageIndex) {
         case 0:
@@ -207,6 +205,7 @@
         }
     }
 }
+ */
 
 - (IBAction)leftPressed:(id)sender {
     if (imageIndex == 0)

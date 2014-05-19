@@ -15,5 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *inplayIcon;
 @property (weak, nonatomic) IBOutlet UIImageView *categoryIcon;
 @property (nonatomic) NSInteger competitionState;
+@property (nonatomic) NSInteger competitionCategory;
+@property (nonatomic) NSInteger row;
 
 @end

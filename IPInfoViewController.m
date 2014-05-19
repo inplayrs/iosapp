@@ -42,7 +42,7 @@
     activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     activityIndicator.frame = CGRectMake(160.0, 160.0, 40.0, 40.0);
     activityIndicator.center = self.view.center;
-    activityIndicator.color = [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0];
+    activityIndicator.color = [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0];
     activityIndicator.hidesWhenStopped = YES;
     [infoView addSubview:activityIndicator];
     [infoView bringSubviewToFront:activityIndicator];

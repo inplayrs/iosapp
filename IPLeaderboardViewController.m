@@ -19,10 +19,18 @@
 #import "CompetitionPoints.h"
 #import "Flurry.h"
 #import "IPGameViewController.h"
+#import "FriendPool.h"
+#import "PoolPoints.h"
+#import "IPAddFriendsViewController.h"
 
 
 #define COMPETITIONS 1
 #define GAMES 2
+
+#define GLOBAL 0
+#define FANGROUP 1
+#define FRIEND 2
+
 #define SELECTBUTTON 0
 #define LARGESTRANK 2000000000
 
@@ -38,7 +46,7 @@ enum State {
 
 @implementation IPLeaderboardViewController
 
-@synthesize leftLabel, rightLabel, pointsButton, left, rankHeader, nameHeader, pointsHeader, winningsHeader, competitionButton, gameButton, isLoading, inplayIndicator, controllerList, detailViewController;
+@synthesize leftLabel, rightLabel, pointsButton, left, rankHeader, nameHeader, pointsHeader, winningsHeader, isLoading, inplayIndicator, controllerList, detailViewController, friendPool, competitionID, competitionName, addFriendsViewController, fromWinners;
 
 
 - (void) dealloc {
@@ -68,28 +76,31 @@ enum State {
     // this isn't needed on the rootViewController of the navigation controller
     [self.navigationController.sideMenu setupSideMenuBarButtonItem];
     
-    self.title = @"Leaderboard";
+    // self.title = @"Leaderboard";
     self.dataController = [[LeaderboardDataController alloc] init];
     
     UINib *nib = [UINib nibWithNibName:@"IPLeaderboardItemCell" bundle:nil];
     [[self tableView] registerNib:nib forCellReuseIdentifier:@"IPLeaderboardItemCell"];
     
+    /*
     self.selectedCompetitionID = -1;
     self.selectedGameID = -1;
     self.selectedCompetitionRow = -1;
     self.selectedGameRow = -1;
+     */
     
     UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
-    refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh" attributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]}];
-    refresh.tintColor = [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0];
+    refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh" attributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]}];
+    refresh.tintColor = [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0];
     [refresh addTarget:self action:@selector(refreshView:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refresh;
     [self.tableView setAlwaysBounceVertical:YES];
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background-only.png"]];
     
-    self.type = 0;
+    self.type = GAMES;
     self.controllerList = [[NSMutableDictionary alloc] init];
     detailViewController = nil;
+    addFriendsViewController = nil;
 
 }
 
@@ -97,18 +108,51 @@ enum State {
 {
     [super viewDidAppear:animated];
     self.isLoading = NO;
-    if (self.game) {
-        // self.title = self.game.name;
-        NSString *stateString = [NSString stringWithFormat:@"%d", (int)self.game.state];
-        NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:self.game.name,
-                                    @"name", stateString, @"state", @"fromGame", @"type", nil];
+    if (competitionID) {
+        self.type = COMPETITIONS;
+        if (competitionName)
+            self.title = competitionName;
+        else
+            self.title = @"Global";
+        [self getLeaderboard:competitionID type:COMPETITIONS];
+        NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"Competition", @"type", nil];
         [Flurry logEvent:@"LEADERBOARD" withParameters:dictionary];
+    } else if (self.lbType == FRIEND) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Invite" style:UIBarButtonItemStylePlain target:self action:@selector(addFriends:)];
+        self.navigationItem.rightBarButtonItem.tintColor = [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0];
+        NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,[UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0],UITextAttributeFont,nil];
+        [self.navigationItem.rightBarButtonItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
+        [self.navigationItem.rightBarButtonItem setEnabled:YES];
         self.type = GAMES;
-        [self getLeaderboard:self.game.gameID type:GAMES title:self.game.name];
+        self.title = friendPool.name;
+        [self getFriendLeaderboard:self.game.gameID poolID:self.friendPool.poolID type:GAMES];
+        [self getFriendLeaderboard:self.game.competitionID poolID:self.friendPool.poolID type:COMPETITIONS];
+        NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"Friend", @"type", nil];
+        [Flurry logEvent:@"LEADERBOARD" withParameters:dictionary];
+    } else if (self.lbType == GLOBAL) {
+        self.type = GAMES;
+        if (fromWinners)
+            self.title = self.game.name;
+        else
+            self.title = @"Global";
+        [self getLeaderboard:self.game.gameID type:GAMES];
+        [self getLeaderboard:self.game.competitionID type:COMPETITIONS];
+        NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"Global", @"type", nil];
+        [Flurry logEvent:@"LEADERBOARD" withParameters:dictionary];
+    } else if (self.lbType == FANGROUP) {
+        self.type = GAMES;
+        self.title = @"Fangroup";
+        [self getFangroupLeaderboard:self.game.gameID type:GAMES];
+        [self getFangroupLeaderboard:self.game.competitionID type:COMPETITIONS];
+        NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"Fangroup", @"type", nil];
+        [Flurry logEvent:@"LEADERBOARD" withParameters:dictionary];
+    }
+    /*
     } else {
         [self getCompetitions:self];
         [self getGames:self];
     }
+     */
 }
 
 - (void) backButtonPressed:(id)sender {
@@ -119,24 +163,36 @@ enum State {
 {
     if (!self.isLoading) {
         self.isLoading = YES;
-        if (self.game) {
-            [self getLeaderboard:self.game.gameID type:GAMES title:self.game.name];
+        if (competitionID) {
+            [self getLeaderboard:self.game.competitionID type:COMPETITIONS];
+        } else if (self.lbType == FRIEND) {
+            [self getFriendLeaderboard:self.game.gameID poolID:self.friendPool.poolID type:GAMES];
+            [self getFriendLeaderboard:self.game.competitionID poolID:self.friendPool.poolID type:COMPETITIONS];
+        } else if (self.lbType == GLOBAL) {
+            [self getLeaderboard:self.game.gameID type:GAMES];
+            [self getLeaderboard:self.game.competitionID type:COMPETITIONS];
+        } else if (self.lbType == FANGROUP) {
+            [self getFangroupLeaderboard:self.game.gameID type:GAMES];
+            [self getFangroupLeaderboard:self.game.competitionID type:COMPETITIONS];
+        }
+        /*
         } else {
             [self getCompetitions:self];
             [self getGames:self];
             if (self.type == GAMES) {
                 Game *game = [self.dataController.gameList objectAtIndex:self.selectedGameRow];
                 if (game)
-                    [self getLeaderboard:game.gameID type:GAMES title:game.name];
+                    [self getLeaderboard:game.gameID type:GAMES];
             } else if (self.type == COMPETITIONS) {
                 Competition *competition = [self.dataController.competitionList objectAtIndex:self.selectedCompetitionRow];
                 if (competition)
-                    [self getLeaderboard:competition.competitionID type:COMPETITIONS title:competition.name];
+                    [self getLeaderboard:competition.competitionID type:COMPETITIONS];
             } else {
                 self.isLoading = NO;
                 [self.refreshControl endRefreshing];
             }
         }
+         */
     } else {
         [self.refreshControl endRefreshing];
     }
@@ -162,6 +218,7 @@ enum State {
 {
     if (!headerView) {
         [[NSBundle mainBundle] loadNibNamed:@"IPLeaderboardHeaderView" owner:self options:nil];
+        
         UIImage *segmentSelected = [UIImage imageNamed:@"segcontrol_sel.png"];
         UIImage *segmentUnselected = [UIImage imageNamed:@"segcontrol_uns.png"];
         UIImage *segmentSelectedUnselected = [UIImage imageNamed:@"segcontrol_sel-uns.png"];
@@ -182,9 +239,10 @@ enum State {
                   forLeftSegmentState:UIControlStateNormal
                     rightSegmentState:UIControlStateSelected
                            barMetrics:UIBarMetricsDefault];
-        NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Avalon-Demi" size:14.0],UITextAttributeFont,[UIColor whiteColor], UITextAttributeTextColor, nil];
-        [pointsButton setTitleTextAttributes:attributes forState:UIControlStateNormal];
-        [pointsButton setTitleTextAttributes:attributes forState:UIControlStateSelected];
+        NSDictionary *attributesUnselected = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Avalon-Demi" size:14.0],UITextAttributeFont,[UIColor colorWithRed:96/255.0 green:97/255.0 blue:120/255.0 alpha:1], UITextAttributeTextColor, nil];
+        NSDictionary *attributesSelected = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Avalon-Demi" size:14.0],UITextAttributeFont,[UIColor colorWithRed:32/255.0 green:35/255.0 blue:45/255.0 alpha:1], UITextAttributeTextColor, nil];
+        [pointsButton setTitleTextAttributes:attributesUnselected forState:UIControlStateNormal];
+        [pointsButton setTitleTextAttributes:attributesSelected forState:UIControlStateSelected];
         rankHeader.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
         winningsHeader.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
         nameHeader.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
@@ -196,7 +254,7 @@ enum State {
     self.winningsHeader.text = @"WINNINGS";
     self.nameHeader.text = @"NAME";
     self.pointsHeader.text = @"POINTS";
-    if (self.pointsButton.selectedSegmentIndex == 1) {
+    if (self.lbType == FANGROUP) {
         self.nameHeader.text = @"TEAM";
         self.pointsHeader.text = @"AVG PTS";
     }
@@ -205,7 +263,11 @@ enum State {
     
     if (self.game) {
         UIImage *image = [UIImage imageNamed: @"green_dot.png"];
-        [self.inplayIndicator setImage:image];
+        UIImage *amberImage = [UIImage imageNamed:@"amber.png"];
+        if (self.game.inplayType == 0)
+            [self.inplayIndicator setImage:amberImage];
+        else
+            [self.inplayIndicator setImage:image];
         if ((self.game.state == INPLAY) || (self.game.state == SUSPENDED)) {
             [self.inplayIndicator setHidden:NO];
         } else {
@@ -213,7 +275,56 @@ enum State {
         }
     }
     
-
+    Points *points = self.dataController.gamePoints;
+    CompetitionPoints *competitionPoints = self.dataController.competitionPoints;
+    PoolPoints *poolGamePoints = self.dataController.poolGamePoints;
+    PoolPoints *poolCompetitionPoints = self.dataController.poolCompetitionPoints;
+    if (self.lbType == GLOBAL) {
+        switch (self.pointsButton.selectedSegmentIndex) {
+            case (0):
+                self.left = [points.globalPoints stringByAppendingFormat:@" points    %@/%@", points.globalRank, points.globalPoolSize];
+                [self.leftLabel setText:self.left];
+                [self.rightLabel setText:points.globalPot];
+                break;
+            case (1):
+                self.left = [competitionPoints.globalWinnings stringByAppendingFormat:@"    %@/%@",competitionPoints.globalRank, competitionPoints.globalPoolSize];
+                [self.leftLabel setText:self.left];
+                [self.rightLabel setText:competitionPoints.totalGlobalWinnings];
+                break;
+        }
+    } else if (self.lbType == FANGROUP) {
+        switch (self.pointsButton.selectedSegmentIndex) {
+            case (0):
+                if (points.lateEntry)
+                    self.left = [points.fangroupName stringByAppendingString:@"    (Not Entered)"];
+                else
+                    self.left = [points.fangroupName stringByAppendingFormat:@"    %@/%@", points.fangroupRank, points.numFangroups];
+                [self.leftLabel setText:self.left];
+                [self.rightLabel setText:points.fangroupPot];
+                break;
+            case (1):
+                self.left = [competitionPoints.fangroupName stringByAppendingFormat:@"    %@/%@",competitionPoints.fangroupRank, competitionPoints.numFangroups];
+                [self.leftLabel setText:self.left];
+                [self.rightLabel setText:competitionPoints.totalFangroupWinnings];
+                break;
+        }
+    } else if (self.lbType == FRIEND) {
+        switch (self.pointsButton.selectedSegmentIndex) {
+            case (0):
+                self.left = [poolGamePoints.points stringByAppendingFormat:@" points    %@/%@", poolGamePoints.poolRank, poolGamePoints.poolSize];
+                [self.leftLabel setText:self.left];
+                [self.rightLabel setText:poolGamePoints.poolPotSize];
+                break;
+            case (1):
+                self.left = [poolCompetitionPoints.poolWinnings stringByAppendingFormat:@"    %@/%@",poolCompetitionPoints.poolRank, poolCompetitionPoints.poolSize];
+                [self.leftLabel setText:self.left];
+                [self.rightLabel setText:poolCompetitionPoints.totalPoolWinnings];
+                break;
+        }
+    }
+   
+    
+    /*
     if (self.type == GAMES) {
         Points *points = self.dataController.gamePoints;
         switch (self.pointsButton.selectedSegmentIndex) {
@@ -261,17 +372,44 @@ enum State {
         }
             
     }
+     */
     
     return headerView;
 }
 
+- (UIView *)compHeaderView
+{
+    if (!compHeaderView) {
+        [[NSBundle mainBundle] loadNibNamed:@"IPCompLeaderboardHeaderView" owner:self options:nil];
+        rankHeader.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
+        winningsHeader.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
+        nameHeader.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
+        pointsHeader.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
+        leftLabel.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
+        rightLabel.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
+    }
+    self.rankHeader.text = @"RANK";
+    self.winningsHeader.text = @"WINNINGS";
+    self.nameHeader.text = @"NAME";
+    self.pointsHeader.text = @"GAMES";
+    
+    CompetitionPoints *competitionPoints = self.dataController.competitionPoints;
+    self.left = [competitionPoints.globalWinnings stringByAppendingFormat:@"    %@/%@",competitionPoints.globalRank, competitionPoints.globalPoolSize];
+    [self.leftLabel setText:self.left];
+    [self.rightLabel setText:competitionPoints.totalGlobalWinnings];
+    
+    return compHeaderView;
+}
+
+
+/*
 - (UIView *)footerView
 {
     if (!footerView) {
         [[NSBundle mainBundle] loadNibNamed:@"IPLeaderboardFooterView" owner:self options:nil];
         UIImage *image = [UIImage imageNamed:@"submit-button.png"];
         UIImage *image2 = [UIImage imageNamed:@"submit-button-hit-state.png"];
-        UIImage *image3 = [UIImage imageNamed:@"grey-button.png"];
+        UIImage *image3 = [UIImage imageNamed:@"submit-button-disabled.png"];
         [self.competitionButton setBackgroundImage:image forState:UIControlStateNormal];
         [self.competitionButton setBackgroundImage:image2 forState:UIControlStateHighlighted];
         [self.competitionButton setBackgroundImage:image3 forState:UIControlStateDisabled];
@@ -290,6 +428,7 @@ enum State {
 
     return footerView;
 }
+ */
 
 
 #pragma mark - Table view data source
@@ -301,18 +440,14 @@ enum State {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ((self.pointsButton.selectedSegmentIndex == 0) && (self.type == GAMES))
+    if (((self.lbType == GLOBAL) || (self.lbType == FRIEND)) && (self.type == GAMES))
         return [self.dataController.globalGameLeaderboard count];
-    else if ((self.pointsButton.selectedSegmentIndex == 1) && (self.type == GAMES))
+    else if ((self.lbType == FANGROUP) && (self.type == GAMES))
         return [self.dataController.fangroupGameLeaderboard count];
-    else if ((self.pointsButton.selectedSegmentIndex == 2) && (self.type == GAMES))
-        return [self.dataController.userinfangroupGameLeaderboard count];
-    else if ((self.pointsButton.selectedSegmentIndex == 0) && (self.type == COMPETITIONS))
+    else if (((self.lbType == GLOBAL) || (self.lbType == FRIEND)) && (self.type == COMPETITIONS))
         return [self.dataController.globalCompetitionLeaderboard count];
-    else if ((self.pointsButton.selectedSegmentIndex == 1) && (self.type == COMPETITIONS))
+    else if ((self.lbType == FANGROUP) && (self.type == COMPETITIONS))
         return [self.dataController.fangroupCompetitionLeaderboard count];
-    else if ((self.pointsButton.selectedSegmentIndex == 2) && (self.type == COMPETITIONS))
-        return [self.dataController.userinfangroupCompetitionLeaderboard count];
     else
         return 0;
 }
@@ -328,32 +463,37 @@ enum State {
     cell.rankLabel.textColor = [UIColor whiteColor];
     cell.nameLabel.textColor = [UIColor whiteColor];
     cell.pointsLabel.textColor = [UIColor whiteColor];
-    cell.winningsLabel.textColor = [UIColor whiteColor];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"leaderboard-row.png"]];
-    if ((self.pointsButton.selectedSegmentIndex == 0) && (self.type == GAMES) && (self.game.state == COMPLETED))
-        [cell.entryImage setHidden:NO];
-    else
-        [cell.entryImage setHidden:YES];
-    cell.backgroundView = imageView;
-    // cell.backgroundColor = [UIColor colorWithRed:36.0/255.0 green:37.0/255.0 blue:37.0/255.0 alpha:1.0];
+    cell.winningsLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0];
+    
+    if (((self.lbType == GLOBAL) || (self.lbType == FRIEND)) && (self.type == GAMES) && (self.game.state == COMPLETED)) {
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    cell.row = indexPath.row;
+    /*
+    if (indexPath.row % 2) {
+        cell.backgroundColor = [UIColor colorWithRed:49/255.0 green:52/255.0 blue:62/255.0 alpha:1];
+        cell.contentView.backgroundColor = [UIColor colorWithRed:49/255.0 green:52/255.0 blue:62/255.0 alpha:1];
+    } else {
+        cell.backgroundColor = [UIColor colorWithRed:32/255.0 green:35/255.0 blue:45/255.0 alpha:1];
+        cell.contentView.backgroundColor = [UIColor colorWithRed:32/255.0 green:35/255.0 blue:45/255.0 alpha:1];
+    }
+     */
     
     Leaderboard *leaderboardAtIndex;
-    if ((self.pointsButton.selectedSegmentIndex == 0) && (self.type == GAMES)) {
+    if (((self.lbType == GLOBAL) || (self.lbType == FRIEND)) && (self.type == GAMES)) {
         leaderboardAtIndex = [self.dataController.globalGameLeaderboard objectAtIndex:indexPath.row];
-    } else if ((self.pointsButton.selectedSegmentIndex == 1) && (self.type == GAMES)) {
+    } else if ((self.lbType == FANGROUP) && (self.type == GAMES)) {
         leaderboardAtIndex = [self.dataController.fangroupGameLeaderboard objectAtIndex:indexPath.row];
-    } else if ((self.pointsButton.selectedSegmentIndex == 2) && (self.type == GAMES)) {
-        leaderboardAtIndex = [self.dataController.userinfangroupGameLeaderboard objectAtIndex:indexPath.row];
-    } else if ((self.pointsButton.selectedSegmentIndex == 0) && (self.type == COMPETITIONS)) {
+    } else if (((self.lbType == GLOBAL) || (self.lbType == FRIEND)) && (self.type == COMPETITIONS)) {
         leaderboardAtIndex = [self.dataController.globalCompetitionLeaderboard objectAtIndex:indexPath.row];
-    } else if ((self.pointsButton.selectedSegmentIndex == 1) && (self.type == COMPETITIONS)) {
+    } else if ((self.lbType == FANGROUP) && (self.type == COMPETITIONS)) {
         leaderboardAtIndex = [self.dataController.fangroupCompetitionLeaderboard objectAtIndex:indexPath.row];
-    } else if ((self.pointsButton.selectedSegmentIndex == 2) && (self.type == COMPETITIONS)) {
-        leaderboardAtIndex = [self.dataController.userinfangroupCompetitionLeaderboard objectAtIndex:indexPath.row];
     }
     
     NSString *rankString;
-    if ((leaderboardAtIndex.rank == -1) || (leaderboardAtIndex.rank == 0) || (leaderboardAtIndex.rank == LARGESTRANK))
+    if ((leaderboardAtIndex.rank == -1) || (leaderboardAtIndex.rank == 0) || (leaderboardAtIndex.rank >= LARGESTRANK))
         rankString = @"-";
     else
         rankString = [NSString stringWithFormat:@"%d", (int)leaderboardAtIndex.rank];
@@ -367,24 +507,18 @@ enum State {
     
     IPAppDelegate *appDelegate = (IPAppDelegate *)[[UIApplication sharedApplication] delegate];
     if ([appDelegate.user isEqualToString:leaderboardAtIndex.name]) {
-        cell.rankLabel.textColor = [UIColor greenColor];
-        cell.nameLabel.textColor = [UIColor greenColor];
-        cell.pointsLabel.textColor = [UIColor greenColor];
-        cell.winningsLabel.textColor = [UIColor greenColor];
+        cell.rankLabel.textColor = [UIColor colorWithRed:189/255.0 green:233/255.0 blue:51/255.0 alpha:1];
+        cell.nameLabel.textColor = [UIColor colorWithRed:189/255.0 green:233/255.0 blue:51/255.0 alpha:1];
     }
     if (self.type == GAMES) {
         if ([self.dataController.gamePoints.fangroupName isEqualToString:leaderboardAtIndex.name]) {
-            cell.rankLabel.textColor = [UIColor greenColor];
-            cell.nameLabel.textColor = [UIColor greenColor];
-            cell.pointsLabel.textColor = [UIColor greenColor];
-            cell.winningsLabel.textColor = [UIColor greenColor];
+            cell.rankLabel.textColor = [UIColor colorWithRed:189/255.0 green:233/255.0 blue:51/255.0 alpha:1];
+            cell.nameLabel.textColor = [UIColor colorWithRed:189/255.0 green:233/255.0 blue:51/255.0 alpha:1];
         }
     } else if (self.type == COMPETITIONS) {
         if ([self.dataController.competitionPoints.fangroupName isEqualToString:leaderboardAtIndex.name]) {
-            cell.rankLabel.textColor = [UIColor greenColor];
-            cell.nameLabel.textColor = [UIColor greenColor];
-            cell.pointsLabel.textColor = [UIColor greenColor];
-            cell.winningsLabel.textColor = [UIColor greenColor];
+            cell.rankLabel.textColor = [UIColor colorWithRed:189/255.0 green:233/255.0 blue:51/255.0 alpha:1];
+            cell.nameLabel.textColor = [UIColor colorWithRed:189/255.0 green:233/255.0 blue:51/255.0 alpha:1];
         }
     }
     
@@ -408,16 +542,22 @@ enum State {
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    return [self headerView];
+    if (competitionID)
+        return [self compHeaderView];
+    else
+        return [self headerView];
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return [[self headerView] bounds].size.height;
+    if (competitionID)
+        return [[self compHeaderView] bounds].size.height;
+    else
+        return [[self headerView] bounds].size.height;
 }
 
-
+/*
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
     if (self.game)
@@ -433,24 +573,28 @@ enum State {
     else
         return [[self footerView] bounds].size.height;
 }
+ */
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ((self.pointsButton.selectedSegmentIndex == 0) && (self.type == GAMES)) {
+    if (((self.lbType == GLOBAL) || (self.lbType == FRIEND)) && (self.type == GAMES)) {
         if (self.game.state == COMPLETED) {
             Leaderboard *leaderboardAtIndex = [self.dataController.globalGameLeaderboard objectAtIndex:indexPath.row];
             if ([controllerList objectForKey:leaderboardAtIndex.name] == nil) {
                 detailViewController = [[IPGameViewController alloc] initWithNibName:@"IPGameViewController" bundle:nil];
                 detailViewController.game = self.game;
                 detailViewController.username = leaderboardAtIndex.name;
+                detailViewController.fromLeaderboard = YES;
                 NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,nil];
                 [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
-                [[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]];
+                [[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]];
+                if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+                    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+                else
+                    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
                 [controllerList setObject:detailViewController forKey:leaderboardAtIndex.name];
             }
-            if ([controllerList objectForKey:leaderboardAtIndex.name] == nil) {
-                NSLog (@"something wrong");
-            } else {
+            if ([controllerList objectForKey:leaderboardAtIndex.name]) {
                 [self.navigationController pushViewController:[controllerList objectForKey:leaderboardAtIndex.name] animated:YES];
             }
             return;
@@ -460,10 +604,28 @@ enum State {
 
 - (IBAction)changePoints:(id)sender
 {
+    if (self.pointsButton.selectedSegmentIndex == 0)
+        self.type = GAMES;
+    else
+        self.type = COMPETITIONS;
     [self.tableView reloadData];
 }
 
+- (void)addFriends:(id)sender {
+    if (!self.addFriendsViewController) {
+        self.addFriendsViewController = [[IPAddFriendsViewController alloc] initWithNibName:@"IPAddFriendsViewController" bundle:nil];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+        else
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+    }
+    if (self.addFriendsViewController) {
+        self.addFriendsViewController.poolID = self.friendPool.poolID;
+        [self.navigationController pushViewController:self.addFriendsViewController animated:YES];
+    }
+}
 
+/*
 #pragma mark PickerView DataSource
 
 - (NSInteger)numberOfComponentsInPickerView:
@@ -566,25 +728,7 @@ numberOfRowsInComponent:(NSInteger)component
     [self.view.superview addSubview:myView];
     [self.view.superview bringSubviewToFront:myView];
     [self.tableView setUserInteractionEnabled:NO];
-    
-    /*
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"SELECT", @"CANCEL", nil];
-    actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
-    actionSheet.tag = COMPETITIONS;
-    UIPickerView *picker;
-    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1)
-        picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 150, 320, 320)];
-    else
-        picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 100, 320, 216)];
-    picker.showsSelectionIndicator=YES;
-    picker.dataSource = self;
-    picker.delegate = self;
-    picker.tag = COMPETITIONS;
-    [actionSheet addSubview:picker];
-    [picker selectRow:0 inComponent:0 animated:NO];
-    [actionSheet showInView:self.view];
-    [actionSheet setBounds:CGRectMake(0, 0, 320, 580)];
-    */
+ 
 }
 
 
@@ -648,7 +792,7 @@ numberOfRowsInComponent:(NSInteger)component
                                 @"name", @"Competition", @"type", nil];
     [Flurry logEvent:@"LEADERBOARD" withParameters:dictionary];
     self.type = COMPETITIONS;
-    [self getLeaderboard:competition.competitionID type:COMPETITIONS title:competition.name];
+    [self getLeaderboard:competition.competitionID type:COMPETITIONS];
     [myView removeFromSuperview];
     [self.tableView setUserInteractionEnabled:YES];
 }
@@ -659,10 +803,11 @@ numberOfRowsInComponent:(NSInteger)component
                                 @"name", @"Game", @"type", nil];
     [Flurry logEvent:@"LEADERBOARD" withParameters:dictionary];
     self.type = GAMES;
-    [self getLeaderboard:game.gameID type:GAMES title:game.name];
+    [self getLeaderboard:game.gameID type:GAMES];
     [myView removeFromSuperview];
     [self.tableView setUserInteractionEnabled:YES];
 }
+ */
 
 /*
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -696,26 +841,26 @@ numberOfRowsInComponent:(NSInteger)component
 - (void)refresh:(NSInteger)type {
     NSSortDescriptor *rankSorter = [[NSSortDescriptor alloc] initWithKey:@"rank" ascending:YES];
     NSSortDescriptor *nameSorter = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-    if (type == GAMES) {
-        [self.dataController.globalGameLeaderboard sortUsingDescriptors:[NSArray arrayWithObjects:rankSorter, nameSorter, nil]];
-        [self.dataController.fangroupGameLeaderboard sortUsingDescriptors:[NSArray arrayWithObjects:rankSorter, nameSorter, nil]];
-        [self.dataController.userinfangroupGameLeaderboard sortUsingDescriptors:[NSArray arrayWithObjects:rankSorter, nameSorter, nil]];
-    } else if (type == COMPETITIONS) {
+    if (competitionID) {
         [self.dataController.globalCompetitionLeaderboard sortUsingDescriptors:[NSArray arrayWithObjects:rankSorter, nameSorter, nil]];
+    } else if (type == GLOBAL) {
+        [self.dataController.globalGameLeaderboard sortUsingDescriptors:[NSArray arrayWithObjects:rankSorter, nameSorter, nil]];
+        [self.dataController.globalCompetitionLeaderboard sortUsingDescriptors:[NSArray arrayWithObjects:rankSorter, nameSorter, nil]];
+    } else if (type == FANGROUP) {
+        [self.dataController.fangroupGameLeaderboard sortUsingDescriptors:[NSArray arrayWithObjects:rankSorter, nameSorter, nil]];
         [self.dataController.fangroupCompetitionLeaderboard sortUsingDescriptors:[NSArray arrayWithObjects:rankSorter, nameSorter, nil]];
-        [self.dataController.userinfangroupCompetitionLeaderboard sortUsingDescriptors:[NSArray arrayWithObjects:rankSorter, nameSorter, nil]];
     }
     [self.tableView reloadData];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MM-dd HH:mm"];
     NSString *lastUpdated = [NSString stringWithFormat:@"Last updated on %@",
                              [formatter stringFromDate:[NSDate date]]];
-    self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:lastUpdated attributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]}];
+    self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:lastUpdated attributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]}];
     [self.refreshControl endRefreshing];
-    // [activityIndicator stopAnimating];
     self.isLoading = NO;
 }
 
+/*
 - (void)getCompetitions:(id)sender
 {
     [self.competitionButton setEnabled:NO];
@@ -756,9 +901,58 @@ numberOfRowsInComponent:(NSInteger)component
     } failure:nil];
     
 }
+ */
+
+- (void)getFriendLeaderboard:(NSInteger)gameID poolID:(NSInteger)poolID type:(NSInteger)type
+{
+    // friend leaderboard
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    NSString *path;
+    if (type == GAMES)
+        path = [NSString stringWithFormat:@"game/leaderboard?game_id=%d&type=pool&pool_id=%d", gameID, poolID];
+    else if (type == COMPETITIONS)
+        path = [NSString stringWithFormat:@"competition/leaderboard?comp_id=%d&type=pool&pool_id=%d", gameID, poolID];
+    [objectManager getObjectsAtPath:path parameters:nil success:
+     ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
+         if (type == GAMES)
+             [self.dataController.globalGameLeaderboard removeAllObjects];
+         else if (type == COMPETITIONS)
+             [self.dataController.globalCompetitionLeaderboard removeAllObjects];
+         NSArray* temp = [result array];
+         for (int i=0; i<temp.count; i++) {
+             Leaderboard *leaderboard = [temp objectAtIndex:i];
+             if (!leaderboard.name)
+                 leaderboard.name = @"-";
+             if (!leaderboard.points)
+                 leaderboard.points = @"0";
+             if (!leaderboard.winnings)
+                 leaderboard.winnings = @"$0";
+             else
+                 leaderboard.winnings = [@"$" stringByAppendingString:leaderboard.winnings];
+             if (type == GAMES)
+                 [self.dataController.globalGameLeaderboard addObject:leaderboard];
+             else if (type == COMPETITIONS)
+                 [self.dataController.globalCompetitionLeaderboard addObject:leaderboard];
+         }
+         if ((temp.count == 0) && (type == COMPETITIONS)) {
+             Leaderboard *leaderboard = [[Leaderboard alloc] initWithRank:LARGESTRANK name:@"No Games Done" points:@"-" winnings:@"-"];
+             [self.dataController.globalCompetitionLeaderboard addObject:leaderboard];
+         } else if ((temp.count == 0) && (type == GAMES)) {
+             Leaderboard *leaderboard = [[Leaderboard alloc] initWithRank:LARGESTRANK name:@"No Entries yet" points:@"-" winnings:@"-"];
+             [self.dataController.globalGameLeaderboard addObject:leaderboard];
+         }
+         if (type == GAMES)
+             [self getPoolGamePoints:gameID poolID:poolID];
+         else if (type == COMPETITIONS)
+             [self getPoolCompetitionPoints:gameID poolID:poolID];
+     } failure:^(RKObjectRequestOperation *operation, NSError *error){
+         [self.refreshControl endRefreshing];
+         self.isLoading = NO;
+     }];
+}
 
 
-- (void)getLeaderboard:(NSInteger)gameID type:(NSInteger)type title:(NSString *)title
+- (void)getLeaderboard:(NSInteger)gameID type:(NSInteger)type
 {
     // global leaderboard
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
@@ -769,7 +963,6 @@ numberOfRowsInComponent:(NSInteger)component
         path = [NSString stringWithFormat:@"competition/leaderboard?comp_id=%d&type=global", gameID];
     [objectManager getObjectsAtPath:path parameters:nil success:
      ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
-         self.title = title;
          if (type == GAMES)
             [self.dataController.globalGameLeaderboard removeAllObjects];
          else if (type == COMPETITIONS)
@@ -790,18 +983,23 @@ numberOfRowsInComponent:(NSInteger)component
             else if (type == COMPETITIONS)
                 [self.dataController.globalCompetitionLeaderboard addObject:leaderboard];
         }
-        if (temp.count == 100) {
-             Leaderboard *leaderboard = [[Leaderboard alloc] initWithRank:LARGESTRANK name:@"TOP 100 Returned" points:@"-" winnings:@"-"];
+        if (temp.count >= 100) {
+             Leaderboard *leaderboard = [[Leaderboard alloc] initWithRank:LARGESTRANK+1 name:@"TOP 100 Returned" points:@"-" winnings:@"-"];
              if (type == GAMES)
                  [self.dataController.globalGameLeaderboard addObject:leaderboard];
              else if (type == COMPETITIONS)
                  [self.dataController.globalCompetitionLeaderboard addObject:leaderboard];
         } else if ((temp.count == 0) && (type == COMPETITIONS)) {
-            Leaderboard *leaderboard = [[Leaderboard alloc] initWithRank:LARGESTRANK name:@"No Games Completed" points:@"-" winnings:@"-"];
+            Leaderboard *leaderboard = [[Leaderboard alloc] initWithRank:LARGESTRANK name:@"No Games Done" points:@"-" winnings:@"-"];
             [self.dataController.globalCompetitionLeaderboard addObject:leaderboard];
+        } else if ((temp.count == 0) && (type == GAMES)) {
+            Leaderboard *leaderboard = [[Leaderboard alloc] initWithRank:LARGESTRANK name:@"No Entries yet" points:@"-" winnings:@"-"];
+            [self.dataController.globalGameLeaderboard addObject:leaderboard];
         }
-        [self getFangroupLeaderboard:gameID type:type];
-        
+         if (type == GAMES)
+             [self getPoints:gameID];
+         else if (type == COMPETITIONS)
+             [self getCompetitionPoints:gameID];
      } failure:^(RKObjectRequestOperation *operation, NSError *error){
          [self.refreshControl endRefreshing];
          self.isLoading = NO;
@@ -840,17 +1038,23 @@ numberOfRowsInComponent:(NSInteger)component
                 [self.dataController.fangroupCompetitionLeaderboard addObject:leaderboard];
         }
          if ((temp.count == 0) && (type == COMPETITIONS)) {
-             Leaderboard *leaderboard = [[Leaderboard alloc] initWithRank:LARGESTRANK name:@"No Games Completed" points:@"-" winnings:@"-"];
+             Leaderboard *leaderboard = [[Leaderboard alloc] initWithRank:LARGESTRANK name:@"No Games Done" points:@"-" winnings:@"-"];
              [self.dataController.fangroupCompetitionLeaderboard addObject:leaderboard];
+         } else if ((temp.count == 0) && (type == GAMES)) {
+             Leaderboard *leaderboard = [[Leaderboard alloc] initWithRank:LARGESTRANK name:@"No Entries yet" points:@"-" winnings:@"-"];
+             [self.dataController.fangroupGameLeaderboard addObject:leaderboard];
          }
-        [self getUserinfangroupLeaderboard:gameID type:type];
-        
+         if (type == GAMES)
+             [self getPoints:gameID];
+         else if (type == COMPETITIONS)
+             [self getCompetitionPoints:gameID];
      } failure:^(RKObjectRequestOperation *operation, NSError *error){
          [self.refreshControl endRefreshing];
          self.isLoading = NO;
      }];
 }
-    
+
+/*
 - (void)getUserinfangroupLeaderboard:(NSInteger)gameID type:(NSInteger)type
 {
     // userinfangroup leaderboard
@@ -902,6 +1106,7 @@ numberOfRowsInComponent:(NSInteger)component
         self.isLoading = NO;
     }];
 }
+ */
 
 - (void)getPoints:(NSInteger)gameID
 {
@@ -958,7 +1163,10 @@ numberOfRowsInComponent:(NSInteger)component
             points.fangroupPoolSize = @"-";
         
         self.dataController.gamePoints = points;
-        [self refresh:GAMES];
+        if (self.lbType == GLOBAL)
+            [self refresh:GLOBAL];
+        else
+            [self refresh:FANGROUP];
     } failure:^(RKObjectRequestOperation *operation, NSError *error){
         [self.refreshControl endRefreshing];
         self.isLoading = NO;
@@ -1015,12 +1223,71 @@ numberOfRowsInComponent:(NSInteger)component
              points.totalUserinfangroupWinnings = [@"Total: $" stringByAppendingString:points.totalUserinfangroupWinnings];
          
          self.dataController.competitionPoints = points;
-         [self refresh:COMPETITIONS];
+         if (competitionID)
+             [self refresh:GLOBAL];
      } failure:^(RKObjectRequestOperation *operation, NSError *error){
          [self.refreshControl endRefreshing];
          self.isLoading = NO;
      }];
 }
 
+- (void)getPoolGamePoints:(NSInteger)gameID poolID:(NSInteger)poolID
+{
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    NSString *path = [NSString stringWithFormat:@"pool/points?pool_id=%d&game_id=%d", poolID, gameID];
+    [objectManager getObjectsAtPath:path parameters:nil success:
+     ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
+         PoolPoints *points = [result firstObject];
+         // data checking and formatting
+         if ((!points.poolPotSize) || ([points.poolPotSize isEqualToString:@"-1"]))
+             points.poolPotSize = @"Pot: $-";
+         else
+             points.poolPotSize = [@"Pot: $" stringByAppendingString:points.poolPotSize];
+         if ((!points.poolRank) || ([points.poolRank isEqualToString:@"2000000000"]) || ([points.poolRank isEqualToString:@"0"]))
+             points.poolRank = @"#-";
+         else
+             points.poolRank = [@"#" stringByAppendingString:points.poolRank];
+         if ((!points.points) || ([points.points isEqualToString:@"-1"]))
+             points.points = @"0";
+         if (!points.poolSize)
+             points.poolSize = @"-";
+         self.dataController.poolGamePoints = points;
+         [self refresh:GLOBAL];
+     } failure:^(RKObjectRequestOperation *operation, NSError *error){
+         [self.refreshControl endRefreshing];
+         self.isLoading = NO;
+     }];
+}
+
+- (void)getPoolCompetitionPoints:(NSInteger)compID poolID:(NSInteger)poolID
+{
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    NSString *path = [NSString stringWithFormat:@"pool/points?pool_id=%d&comp_id=%d", poolID, compID];
+    [objectManager getObjectsAtPath:path parameters:nil success:
+     ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
+         PoolPoints *points = [result firstObject];
+         // data checking and formatting
+         if ((!points.poolWinnings) || ([points.poolWinnings isEqualToString:@"-1"]))
+             points.poolWinnings = @"-";
+         else
+             points.poolWinnings = [@"$" stringByAppendingString:points.poolWinnings];
+         
+         if ((!points.poolRank) || ([points.poolRank isEqualToString:@"2000000000"]) || ([points.poolRank isEqualToString:@"0"]))
+             points.poolRank = @"#-";
+         else
+             points.poolRank = [@"#" stringByAppendingString:points.poolRank];
+         if (!points.poolSize)
+             points.poolSize = @"-";
+         if (!points.totalPoolWinnings)
+             points.totalPoolWinnings = @"Total: $-";
+         else
+             points.totalPoolWinnings = [@"Total: $" stringByAppendingString:points.totalPoolWinnings];
+         
+         self.dataController.poolCompetitionPoints = points;
+     } failure:^(RKObjectRequestOperation *operation, NSError *error){
+         [self.refreshControl endRefreshing];
+         self.isLoading = NO;
+     }];
+}
 
 @end

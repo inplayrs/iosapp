@@ -19,6 +19,7 @@
 @property (nonatomic, copy) NSString *h2hUser;
 @property (nonatomic, copy) NSString *h2hPoints;
 @property (nonatomic, copy) NSString *h2hPot;
+@property (nonatomic, copy) NSString *h2hFBID;
 @property (nonatomic, copy) NSString *userinfangroupRank;
 @property (nonatomic, copy) NSString *winnings;
 @property (nonatomic, copy) NSString *globalWinnings;
@@ -31,6 +32,6 @@
 @property (nonatomic, copy) NSMutableArray *periodSelections;
 
 
--(id)initWithPoints:(NSString *)globalPoints globalRank:(NSString *)globalRank globalPot:(NSString *)globalPot fangroupName:(NSString *)fangroupName fangroupRank:(NSString *)fangroupRank fangroupPot:(NSString *)fangroupPot h2hUser:(NSString *)h2hUser h2hPoints:(NSString *)h2hPoints h2hPot:(NSString *)h2hPot userinfangroupRank:(NSString *)userinfangroupRank winnings:(NSString *)winnings globalWinnings:(NSString *)globalWinnings fangroupWinnings:(NSString *)fangroupWinnings h2hWinnings:(NSString *)h2hWinnings globalPoolSize:(NSString *)globalPoolSize numFangroups:(NSString *)numFangroups fangroupPoolSize:(NSString *)fangroupPoolSize;
+-(id)initWithPoints:(NSString *)globalPoints globalRank:(NSString *)globalRank globalPot:(NSString *)globalPot fangroupName:(NSString *)fangroupName fangroupRank:(NSString *)fangroupRank fangroupPot:(NSString *)fangroupPot h2hUser:(NSString *)h2hUser h2hPoints:(NSString *)h2hPoints h2hPot:(NSString *)h2hPot h2hFBID:(NSString *)h2hFBID userinfangroupRank:(NSString *)userinfangroupRank winnings:(NSString *)winnings globalWinnings:(NSString *)globalWinnings fangroupWinnings:(NSString *)fangroupWinnings h2hWinnings:(NSString *)h2hWinnings globalPoolSize:(NSString *)globalPoolSize numFangroups:(NSString *)numFangroups fangroupPoolSize:(NSString *)fangroupPoolSize;
 
 @end

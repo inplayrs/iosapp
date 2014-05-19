@@ -11,13 +11,14 @@
 @implementation OverallWinners
 
 
--(id)initWithUsername:(NSString *)username rank:(NSInteger)rank winnings:(NSString *)winnings
+-(id)initWithUsername:(NSString *)username rank:(NSInteger)rank winnings:(NSString *)winnings fbID:(NSString *)fbID
 {
     self = [super init];
     if (self) {
         _username = username;
         _rank = rank;
         _winnings = winnings;
+        _fbID = fbID;
         return self;
     }
     return nil;

@@ -17,11 +17,16 @@
 #import "Competition.h"
 #import "Leaderboard.h"
 #import "CompetitionPoints.h"
+#import "PoolPoints.h"
 #import "CompetitionWinners.h"
 #import "OverallWinners.h"
+#import "FriendPool.h"
+#import "PoolMember.h"
 #import "Account.h"
 #import "Stats.h"
 #import "Error.h"
+#import "AddUsers.h"
+#import "Motd.h"
 #import <FacebookSDK/FacebookSDK.h>
 
 
@@ -47,15 +52,16 @@
     // navigationController.navigationBar.tintColor = [UIColor colorWithRed:249/255.0 green:242/255.0 blue:7/255.0 alpha:1.0];
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
         // navigationController.navigationBar.barTintColor = [UIColor colorWithRed:234/255.0 green:208/255.0 blue:23/255.0 alpha:1.0];
-        [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed: @"nav-bar.png"] forBarMetrics:UIBarMetricsDefault];
+        [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed: @"header-bar.png"] forBarMetrics:UIBarMetricsDefault];
         navigationController.navigationBar.translucent = NO;
     } else {
-        [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed: @"nav-bar.png"] forBarMetrics:UIBarMetricsDefault];
+        [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed: @"header-bar-small.png"] forBarMetrics:UIBarMetricsDefault];
         [navigationController.navigationBar setTitleVerticalPositionAdjustment:5.0 forBarMetrics:UIBarMetricsDefault];
     }
     navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                                               [UIColor blackColor], UITextAttributeTextColor,
                                                               [UIFont fontWithName:@"Avalon-Bold" size:18.0], UITextAttributeFont, [NSValue valueWithUIOffset:UIOffsetMake(0.0,0.0)],UITextAttributeTextShadowOffset, nil];
+    navigationController.navigationBar.tintColor = [UIColor blackColor];
     
     MFSideMenuOptions options = MFSideMenuOptionMenuButtonEnabled|MFSideMenuOptionBackButtonEnabled
                                                                  |MFSideMenuOptionShadowEnabled;
@@ -69,6 +75,7 @@
                                                             panMode:panMode];
     
     sideMenuController.sideMenu = sideMenu;
+    /*
     UIImage *backButtonNormal = [UIImage imageNamed:@"back-button.png"];
     UIImage *backButtonHighlighted = [UIImage imageNamed:@"back-button-hit-state.png"];
     CGRect frameimg = CGRectMake(0, 0, backButtonNormal.size.width, backButtonNormal.size.height);
@@ -79,6 +86,11 @@
          forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *barButtonItem =[[UIBarButtonItem alloc] initWithCustomView:backButton];
     navigationController.navigationItem.backBarButtonItem = barButtonItem;
+     */
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+        navigationController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+    else
+        navigationController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
     
     return sideMenu;
 }
@@ -118,8 +130,11 @@
     (UIRemoteNotificationTypeAlert)];
     
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
-        [application setStatusBarStyle:UIStatusBarStyleLightContent];
+        // [application setStatusBarStyle:UIStatusBarStyleDefault];
         self.window.clipsToBounds =YES;
+        [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
+    } else {
+        [application setStatusBarStyle:UIStatusBarStyleBlackOpaque];
     }
     
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -176,7 +191,9 @@
      @"state":          @"state",
      @"entered":        @"entered",
      @"banner_position":    @"bannerPosition",
-     @"banner_image_url":   @"bannerImageURL"
+     @"banner_image_url":   @"bannerImageURL",
+     @"comp_id":        @"competitionID",
+     @"inplay_type":    @"inplayType"
      }];
     
     RKObjectMapping *periodMapping = [RKObjectMapping mappingForClass:[Period class]];
@@ -205,6 +222,7 @@
      @"h2h_user":               @"h2hUser",
      @"h2h_pot_size":           @"h2hPot",
      @"h2h_points":             @"h2hPoints",
+     @"h2h_fbID":               @"h2hFBID",
      @"user_in_fangroup_rank":  @"userinfangroupRank",
      @"total_winnings":         @"winnings",
      @"global_winnings":        @"globalWinnings",
@@ -232,6 +250,16 @@
      @"total_userinfangroup_winnings":   @"totalUserinfangroupWinnings"
      }];
     
+    RKObjectMapping *poolPointsMapping = [RKObjectMapping mappingForClass:[PoolPoints class]];
+    [poolPointsMapping addAttributeMappingsFromDictionary:@{
+     @"pool_rank":              @"poolRank",
+     @"points":                 @"points",
+     @"pool_size":              @"poolSize",
+     @"pool_pot_size":          @"poolPotSize",
+     @"pool_winnings":          @"poolWinnings",
+     @"total_pool_winnings":    @"totalPoolWinnings"
+     }];
+    
     RKObjectMapping *selectionMapping = [RKObjectMapping mappingForClass:[Selection class]];
     [selectionMapping addAttributeMappingsFromDictionary:@{
      @"period_id":          @"periodID",
@@ -247,6 +275,12 @@
     [postSelectionMapping addAttributeMappingsFromDictionary:@{
      @"periodID":     @"period_id",
      @"selection":    @"selection"
+     }];
+    
+    RKObjectMapping *postAddUsersMapping = [RKObjectMapping requestMapping];
+    [postAddUsersMapping addAttributeMappingsFromDictionary:@{
+     @"facebookIDs":    @"facebookIDs",
+     @"usernames":      @"usernames"
      }];
    
     RKObjectMapping *fanMapping = [RKObjectMapping mappingForClass:[Fan class]];
@@ -311,7 +345,23 @@
     [overallWinnersMapping addAttributeMappingsFromDictionary:@{
      @"rank":           @"rank",
      @"username":       @"username",
-     @"winnings":       @"winnings"
+     @"winnings":       @"winnings",
+     @"fbID":           @"fbID"
+     }];
+    
+    RKObjectMapping *friendPoolMapping = [RKObjectMapping mappingForClass:[FriendPool class]];
+    [friendPoolMapping addAttributeMappingsFromDictionary:@{
+     @"pool_id":        @"poolID",
+     @"name":           @"name",
+     @"num_players":    @"numPlayers"
+     }];
+    
+    RKObjectMapping *poolMemberMapping = [RKObjectMapping mappingForClass:[PoolMember class]];
+    [poolMemberMapping addAttributeMappingsFromDictionary:@{
+     @"rank":           @"rank",
+     @"username":       @"username",
+     @"winnings":       @"winnings",
+     @"facebook_id":    @"facebookID"
      }];
     
     RKObjectMapping *userAccountMapping = [RKObjectMapping mappingForClass:[Account class]];
@@ -342,6 +392,10 @@
      @"code":       @"code",
      @"message":    @"message"
      }];
+    
+    RKObjectMapping *userMotdMapping = [RKObjectMapping mappingForClass:[Motd class]];
+    [userMotdMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:nil toKeyPath:@"message"]];
+    
     NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassClientError);
     NSIndexSet *successStatusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
     
@@ -350,40 +404,54 @@
     RKResponseDescriptor *periodResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:periodMapping method:RKRequestMethodGET pathPattern:@"game/periods" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *pointsResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:pointsMapping method:RKRequestMethodGET pathPattern:@"game/points" keyPath:nil statusCodes:nil];
     RKRequestDescriptor *postSelectionDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:postSelectionMapping objectClass:[Selection class] rootKeyPath:nil method:RKRequestMethodPOST];
+    RKRequestDescriptor *postAddUsersDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:postAddUsersMapping objectClass:[AddUsers class] rootKeyPath:nil method:RKRequestMethodPOST];
     RKResponseDescriptor *fanResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:fanMapping method:RKRequestMethodGET pathPattern:@"user/fangroups" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *competitionResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:competitionMapping method:RKRequestMethodGET pathPattern:@"competition/list" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *fangroupResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:fangroupMapping method:RKRequestMethodGET pathPattern:@"competition/fangroups" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *gameLeaderboardResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:gameLeaderboardMapping method:RKRequestMethodGET pathPattern:@"game/leaderboard" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *competitionLeaderboardResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:competitionLeaderboardMapping method:RKRequestMethodGET pathPattern:@"competition/leaderboard" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *competitionPointsResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:competitionPointsMapping method:RKRequestMethodGET pathPattern:@"competition/points" keyPath:nil statusCodes:nil];
+    RKResponseDescriptor *poolPointsResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:poolPointsMapping method:RKRequestMethodGET pathPattern:@"pool/points" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *competitionWinnersResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:competitionWinnersMapping method:RKRequestMethodGET pathPattern:@"competition/winners" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *gameWinnersResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:gameWinnersMapping method:RKRequestMethodGET pathPattern:@"game/winners" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *overallWinnersResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:overallWinnersMapping method:RKRequestMethodGET pathPattern:@"user/leaderboard" keyPath:nil statusCodes:nil];
+    RKResponseDescriptor *friendPoolResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:friendPoolMapping method:RKRequestMethodGET pathPattern:@"pool/mypools" keyPath:nil statusCodes:nil];
+    RKResponseDescriptor *poolMemberResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:poolMemberMapping method:RKRequestMethodGET pathPattern:@"pool/members" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *userAccountResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userAccountMapping method:RKRequestMethodGET pathPattern:@"user/account" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *userAccountUpdateResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userAccountMapping method:RKRequestMethodPOST pathPattern:@"user/account/update" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *userStatsResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userStatsMapping method:RKRequestMethodGET pathPattern:@"user/stats" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *errorDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:errorMapping method:RKRequestMethodGET pathPattern:nil keyPath:nil statusCodes:statusCodes];
     RKResponseDescriptor *registerDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userAccountMapping method:RKRequestMethodGET pathPattern:@"user/register" keyPath:nil statusCodes:successStatusCodes];
+    RKResponseDescriptor *createPoolResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:friendPoolMapping method:RKRequestMethodPOST pathPattern:@"pool/create" keyPath:nil statusCodes:successStatusCodes];
+    RKResponseDescriptor *userMotdResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userMotdMapping method:RKRequestMethodGET pathPattern:@"user/motd" keyPath:nil statusCodes:nil];
+    RKResponseDescriptor *userListResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userMotdMapping method:RKRequestMethodGET pathPattern:@"user/list" keyPath:nil statusCodes:nil];
     
     [objectManager setRequestSerializationMIMEType:RKMIMETypeJSON];
     [objectManager addResponseDescriptor:gameResponseDescriptor];
     [objectManager addResponseDescriptor:periodResponseDescriptor];
     [objectManager addResponseDescriptor:pointsResponseDescriptor];
     [objectManager addRequestDescriptor:postSelectionDescriptor];
+    [objectManager addRequestDescriptor:postAddUsersDescriptor];
     [objectManager addResponseDescriptor:fanResponseDescriptor];
     [objectManager addResponseDescriptor:competitionResponseDescriptor];
     [objectManager addResponseDescriptor:fangroupResponseDescriptor];
     [objectManager addResponseDescriptor:gameLeaderboardResponseDescriptor];
     [objectManager addResponseDescriptor:competitionLeaderboardResponseDescriptor];
     [objectManager addResponseDescriptor:competitionPointsResponseDescriptor];
+    [objectManager addResponseDescriptor:poolPointsResponseDescriptor];
     [objectManager addResponseDescriptor:competitionWinnersResponseDescriptor];
     [objectManager addResponseDescriptor:gameWinnersResponseDescriptor];
     [objectManager addResponseDescriptor:overallWinnersResponseDescriptor];
+    [objectManager addResponseDescriptor:friendPoolResponseDescriptor];
+    [objectManager addResponseDescriptor:poolMemberResponseDescriptor];
     [objectManager addResponseDescriptor:userAccountResponseDescriptor];
     [objectManager addResponseDescriptor:userAccountUpdateResponseDescriptor];
     [objectManager addResponseDescriptor:userStatsResponseDescriptor];
     [objectManager addResponseDescriptor:errorDescriptor];
     [objectManager addResponseDescriptor:registerDescriptor];
+    [objectManager addResponseDescriptor:createPoolResponseDescriptor];
+    [objectManager addResponseDescriptor:userMotdResponseDescriptor];
+    [objectManager addResponseDescriptor:userListResponseDescriptor];
     
     // Whenever a person opens the app, check for a cached session
     if ((FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) && (self.loggedin)) {
@@ -467,7 +535,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // if the app is going away, we close the session object
-    [FBSession.activeSession close];
+    // [FBSession.activeSession close];
 }
 
 

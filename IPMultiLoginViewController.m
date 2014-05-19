@@ -33,7 +33,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Sign In";
-    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"screen-football-b.png"]];
+    /*
     UIImage *backButtonNormal = [UIImage imageNamed:@"back-button.png"];
     UIImage *backButtonHighlighted = [UIImage imageNamed:@"back-button-hit-state.png"];
     CGRect frameimg = CGRectMake(0, 0, backButtonNormal.size.width, backButtonNormal.size.height);
@@ -50,10 +51,15 @@
     } else {
         self.navigationItem.leftBarButtonItem = barButtonItem;
     }
+     */
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+    else
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
     
     UIImage *image = [UIImage imageNamed:@"login-button-normal.png"];
     UIImage *image2 = [UIImage imageNamed:@"login-button-hit.png"];
-    UIImage *image3 = [UIImage imageNamed:@"grey-button.png"];
+    UIImage *image3 = [UIImage imageNamed:@"login-button-disabled.png"];
     [self.registerButton setBackgroundImage:image forState:UIControlStateNormal];
     [self.registerButton setBackgroundImage:image2 forState:UIControlStateHighlighted];
     [self.registerButton setBackgroundImage:image3 forState:UIControlStateDisabled];
@@ -95,7 +101,8 @@
     NSLog(@"FBLoginView name=%@", user.name);
     NSLog(@"FBLoginView username=%@", user.username);
      */
-    self.fbID = user.id;
+    // self.fbID = user.id;
+    self.fbID = [user objectForKey:@"id"];
     self.fbUsername = user.username;
     self.fbName = [user.name stringByReplacingOccurrencesOfString:@" " withString:@""];
     self.fbEmail = [user objectForKey:@"email"];
@@ -308,6 +315,10 @@
 - (IBAction)registerPressed:(id)sender {
     if (!self.registerViewController) {
         self.registerViewController = [[IPRegisterViewController alloc] initWithNibName:@"IPRegisterViewController" bundle:nil];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+        else
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
     }
     if (self.registerViewController)
         [self.navigationController pushViewController:self.registerViewController animated:YES];
@@ -317,6 +328,10 @@
 - (IBAction)termsPressed:(id)sender {
     if (!self.infoViewController) {
         self.infoViewController = [[IPInfoViewController alloc] initWithNibName:@"IPInfoViewController" bundle:nil];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+        else
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
     }
     if (self.infoViewController)
         [self.navigationController pushViewController:self.infoViewController animated:YES];
@@ -326,6 +341,10 @@
 - (IBAction)loginPressed:(id)sender {
     if (!self.loginViewController) {
         self.loginViewController = [[IPLoginViewController alloc] initWithNibName:@"IPLoginViewController" bundle:nil];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+        else
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
     }
     if (self.loginViewController)
         [self.navigationController pushViewController:self.loginViewController animated:YES];

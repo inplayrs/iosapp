@@ -19,9 +19,13 @@
 #import "IPFanViewController.h"
 #import "IPMultiLoginViewController.h"
 #import "IPTutorialViewController.h"
+#import "IPCreateViewController.h"
 #import "Flurry.h"
 #import "Error.h"
 #import "TSMessage.h"
+#import "FriendPool.h"
+#import "IPAddFriendsViewController.h"
+#import "IPStatsViewController.h"
 
 
 #define CONFIRM_BANK 1
@@ -56,7 +60,7 @@ enum GameType {
 
 @implementation IPGameViewController
 
-@synthesize leftLabel, rightLabel, pointsButton, left, selectedRow, selectionHeader1, selectionHeader2, selectionHeader3, selectionHeader4, selectionHeader5, selectionLabel0, selectionLabel1, selectionLabel2, isLoaded, isUpdated, isLoading, pointsChanged, inplayIndicator, leaderboardViewController, fanViewController, multiLoginViewController, tutorialViewController, submitButton, fangroupChallenge, username;
+@synthesize selectedRow, selectionHeader1, selectionHeader2, selectionHeader3, selectionHeader4, selectionHeader5, selectionLabel0, selectionLabel1, selectionLabel2, isLoaded, isUpdated, isLoading, pointsChanged, inplayIndicator, leaderboardViewController, fanViewController, multiLoginViewController, tutorialViewController, submitButton, fangroupChallenge, username, friendButton, createViewController, globalLabel, fangroupLabel, h2hLabel, friendLabel, global1, global2, fangroup1, fangroup2, h2h1, h2h2, friend1, friend2, friendPools, globalViewController, fangroupViewController, friendViewController, friendControllerList, selectedFriendPool, addFriendsViewController, globalButton, fangroupButton, h2hButton, fromLeaderboard, statsViewController;
 
 
 - (void)getPeriods:(id)sender
@@ -241,7 +245,7 @@ enum GameType {
         [formatter setDateFormat:@"MM-dd HH:mm"];
         NSString *lastUpdated = [NSString stringWithFormat:@"Last updated on %@",
                                  [formatter stringFromDate:[NSDate date]]];
-        self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:lastUpdated attributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]}];
+        self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:lastUpdated attributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]}];
         [self refresh:self];
         
     } failure:^(RKObjectRequestOperation *operation, NSError *error){
@@ -271,7 +275,7 @@ enum GameType {
                     [Flurry logEvent:@"SUBMIT" withParameters:dictionary];
                     [TSMessage showNotificationInViewController:self
                                                           title:@"Entry Successful"
-                                                       subtitle:@"Your selections have been entered. Your entry has been submitted to all 3 pools."
+                                                       subtitle:@"Your selections have been entered. Your entry has been submitted to all pools."
                                                           image:nil
                                                            type:TSMessageNotificationTypeSuccess
                                                        duration:TSMessageNotificationDurationAutomatic
@@ -332,6 +336,10 @@ enum GameType {
                 if (!self.fanViewController) {
                     self.fanViewController = [[IPFanViewController alloc] initWithNibName:@"IPFanViewController" bundle:nil];
                     self.fanViewController.game = self.game;
+                    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+                        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+                    else
+                        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
                 }
                 if (self.fanViewController)
                     [self.navigationController pushViewController:self.fanViewController animated:YES];
@@ -409,6 +417,7 @@ enum GameType {
         self.title = theGame.name;
     [self.tableView setAlwaysBounceVertical:YES];
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background-only.png"]];
+    /*
     UIImage *backButtonNormal = [UIImage imageNamed:@"back-button.png"];
     UIImage *backButtonHighlighted = [UIImage imageNamed:@"back-button-hit-state.png"];
     CGRect frameimg = CGRectMake(0, 0, backButtonNormal.size.width, backButtonNormal.size.height);
@@ -425,14 +434,23 @@ enum GameType {
     } else {
         self.navigationItem.leftBarButtonItem = barButtonItem;
     }
-    [self.submitButton setEnabled:NO];
+     */
     
+    [self.submitButton setEnabled:NO];
     self.dataController = [[GameDataController alloc] init];
+    friendPools = [[NSMutableArray alloc] init];
     fanViewController = nil;
     leaderboardViewController = nil;
     multiLoginViewController = nil;
     tutorialViewController = nil;
+    globalViewController = nil;
+    fangroupViewController = nil;
+    friendViewController = nil;
+    addFriendsViewController = nil;
+    statsViewController = nil;
     selectedRow = 0;
+    friendControllerList = [[NSMutableDictionary alloc] init];
+    
     if (self.game.type >= 30) {
         UINib *nib = [UINib nibWithNibName:@"IPGameItemCell" bundle:nil];
         [[self tableView] registerNib:nib forCellReuseIdentifier:@"IPGameItemCell"];
@@ -441,30 +459,41 @@ enum GameType {
         [[self tableView] registerNib:nib forCellReuseIdentifier:@"IPGameItemCell2"];
     }
     UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
-    refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh" attributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]}];
-    refresh.tintColor = [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0];
+    refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh" attributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]}];
+    refresh.tintColor = [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0];
     [refresh addTarget:self action:@selector(refreshView:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refresh;
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(addFriends:) name:@"AddFriends" object:nil];
 }
 
 - (void) backButtonPressed:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+/*
 - (void) pushLeaderboard:(id)sender {
     if (!self.leaderboardViewController) {
         self.leaderboardViewController = [[IPLeaderboardViewController alloc] initWithNibName:@"IPLeaderboardViewController" bundle:nil];
         self.leaderboardViewController.game = self.game;
+        self.leaderboardViewController.lbType = 0;
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+        else
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
     }
     if (self.leaderboardViewController)
         [self.navigationController pushViewController:self.leaderboardViewController animated:YES];
 }
-
+*/
 
 - (void) tutorialPressed:(id)sender {
     if (!self.tutorialViewController) {
         self.tutorialViewController = [[IPTutorialViewController alloc] initWithNibName:@"IPTutorialViewController" bundle:nil];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+        else
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
     }
     if (self.tutorialViewController) {
         [self.navigationController pushViewController:self.tutorialViewController animated:YES];
@@ -491,11 +520,15 @@ enum GameType {
     self.oldPoints = @"0";
     self.pointsChanged = NO;
     self.oldState = self.game.state;
+    if ([self.tableView respondsToSelector:@selector(setDelaysContentTouches:)]) {
+        [self.tableView setDelaysContentTouches:NO];
+    }
     
     NSString *stateString = [NSString stringWithFormat:@"%d", (int)self.game.state];
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:self.game.name,
                                 @"gameName", stateString, @"state", nil];
     [Flurry logEvent:@"GAME" withParameters:dictionary];
+    [self getMyPools:self];
     [self getPeriods:self];
 
      NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -516,7 +549,7 @@ enum GameType {
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        // custom code
     }
     return self;
 }
@@ -526,158 +559,196 @@ enum GameType {
     if (!headerView) {
         [[NSBundle mainBundle] loadNibNamed:@"IPGameHeaderView" owner:self options:nil];
     
-    switch (self.game.type) {
-        case (HOMEDRAWAWAY): {
-            selectionHeader1.text = @"HOME";
-            selectionHeader2.text = @"DRAW";
-            selectionHeader3.text = @"AWAY";
-            selectionLabel0 = @"HOME";
-            selectionLabel1 = @"DRAW";
-            selectionLabel2 = @"AWAY";
-            break;
+        switch (self.game.type) {
+            case (HOMEDRAWAWAY): {
+                selectionHeader1.text = @"HOME";
+                selectionHeader2.text = @"DRAW";
+                selectionHeader3.text = @"AWAY";
+                selectionLabel0 = @"HOME";
+                selectionLabel1 = @"DRAW";
+                selectionLabel2 = @"AWAY";
+                break;
+            }
+            case (TOP10): {
+                selectionHeader1.text = @"LEAD";
+                selectionHeader2.text = @"2-10";
+                selectionHeader3.text = @"11+";
+                selectionLabel0 = @"LEAD";
+                selectionLabel1 = @"2-10";
+                selectionLabel2 = @"11+";
+                break;
+            }
+            case (TOP5): {
+                selectionHeader1.text = @"LEAD";
+                selectionHeader2.text = @"2-5";
+                selectionHeader3.text = @"6+";
+                selectionLabel0 = @"LEAD";
+                selectionLabel1 = @"2-5";
+                selectionLabel2 = @"6+";
+                break;
+            }
+            case (TOP3): {
+                selectionHeader1.text = @"WIN";
+                selectionHeader2.text = @"2-3";
+                selectionHeader3.text = @"4+";
+                selectionLabel0 = @"WIN";
+                selectionLabel1 = @"2-3";
+                selectionLabel2 = @"4+";
+                break;
+            }
+            case (LEADTHRUCUT): {
+                selectionHeader1.text = @"LEAD";
+                selectionHeader2.text = @"THRU";
+                selectionHeader3.text = @"CUT";
+                selectionLabel0 = @"LEAD";
+                selectionLabel1 = @"THRU";
+                selectionLabel2 = @"CUT";
+                break;
+            }
+            case (ZEROONETWO): {
+                selectionHeader1.text = @"0";
+                selectionHeader2.text = @"1";
+                selectionHeader3.text = @"2+";
+                selectionLabel0 = @"0";
+                selectionLabel1 = @"1";
+                selectionLabel2 = @"2+";
+                break;
+            }
+            case (WINAB): {
+                selectionHeader4.text = @"WIN A";
+                selectionHeader5.text = @"WIN B";
+                selectionLabel0 = @"WIN A";
+                selectionLabel1 = @"WIN B";
+                selectionLabel2 = @" ";
+                break;
+            }
+            case (UPDOWN): {
+                selectionHeader4.text = @"+";
+                selectionHeader5.text = @"-/0";
+                selectionLabel0 = @"+";
+                selectionLabel1 = @"-/0";
+                selectionLabel2 = @" ";
+                break;
+            }
+            case (THRUCUT): {
+                selectionHeader4.text = @"THRU";
+                selectionHeader5.text = @"CUT";
+                selectionLabel0 = @"THRU";
+                selectionLabel1 = @"CUT";
+                selectionLabel2 = @" ";
+                break;
+            }
+            case (YESNO): {
+                selectionHeader4.text = @"YES";
+                selectionHeader5.text = @"NO";
+                selectionLabel0 = @"YES";
+                selectionLabel1 = @"NO";
+                selectionLabel2 = @" ";
+                break;
+            }
+            case (OVERUNDER): {
+                selectionHeader4.text = @"OVER";
+                selectionHeader5.text = @"UNDER";
+                selectionLabel0 = @"OVER";
+                selectionLabel1 = @"UNDER";
+                selectionLabel2 = @" ";
+                break;
+            }
+            default: {
+                selectionHeader4.text = @"WIN A";
+                selectionHeader5.text = @"WIN B";
+                selectionLabel0 = @"WIN A";
+                selectionLabel1 = @"WIN B";
+                selectionLabel2 = @" ";
+                break;
+            }
         }
-        case (TOP10): {
-            selectionHeader1.text = @"LEAD";
-            selectionHeader2.text = @"2-10";
-            selectionHeader3.text = @"11+";
-            selectionLabel0 = @"LEAD";
-            selectionLabel1 = @"2-10";
-            selectionLabel2 = @"11+";
-            break;
-        }
-        case (TOP5): {
-            selectionHeader1.text = @"LEAD";
-            selectionHeader2.text = @"2-5";
-            selectionHeader3.text = @"6+";
-            selectionLabel0 = @"LEAD";
-            selectionLabel1 = @"2-5";
-            selectionLabel2 = @"6+";
-            break;
-        }
-        case (TOP3): {
-            selectionHeader1.text = @"WIN";
-            selectionHeader2.text = @"2-3";
-            selectionHeader3.text = @"4+";
-            selectionLabel0 = @"WIN";
-            selectionLabel1 = @"2-3";
-            selectionLabel2 = @"4+";
-            break;
-        }
-        case (LEADTHRUCUT): {
-            selectionHeader1.text = @"LEAD";
-            selectionHeader2.text = @"THRU";
-            selectionHeader3.text = @"CUT";
-            selectionLabel0 = @"LEAD";
-            selectionLabel1 = @"THRU";
-            selectionLabel2 = @"CUT";
-            break;
-        }
-        case (ZEROONETWO): {
-            selectionHeader1.text = @"0";
-            selectionHeader2.text = @"1";
-            selectionHeader3.text = @"2+";
-            selectionLabel0 = @"0";
-            selectionLabel1 = @"1";
-            selectionLabel2 = @"2+";
-            break;
-        }
-        case (WINAB): {
-            selectionHeader4.text = @"WIN A";
-            selectionHeader5.text = @"WIN B";
-            selectionLabel0 = @"WIN A";
-            selectionLabel1 = @"WIN B";
-            selectionLabel2 = @" ";
-            break;
-        }
-        case (UPDOWN): {
-            selectionHeader4.text = @"+";
-            selectionHeader5.text = @"-/0";
-            selectionLabel0 = @"+";
-            selectionLabel1 = @"-/0";
-            selectionLabel2 = @" ";
-            break;
-        }
-        case (THRUCUT): {
-            selectionHeader4.text = @"THRU";
-            selectionHeader5.text = @"CUT";
-            selectionLabel0 = @"THRU";
-            selectionLabel1 = @"CUT";
-            selectionLabel2 = @" ";
-            break;
-        }
-        case (YESNO): {
-            selectionHeader4.text = @"YES";
-            selectionHeader5.text = @"NO";
-            selectionLabel0 = @"YES";
-            selectionLabel1 = @"NO";
-            selectionLabel2 = @" ";
-            break;
-        }
-        case (OVERUNDER): {
-            selectionHeader4.text = @"OVER";
-            selectionHeader5.text = @"UNDER";
-            selectionLabel0 = @"OVER";
-            selectionLabel1 = @"UNDER";
-            selectionLabel2 = @" ";
-            break;
-        }
-        default: {
-            selectionHeader4.text = @"WIN A";
-            selectionHeader5.text = @"WIN B";
-            selectionLabel0 = @"WIN A";
-            selectionLabel1 = @"WIN B";
-            selectionLabel2 = @" ";
-            break;
-        }
-    }
     
-    selectionHeader1.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
-    selectionHeader2.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
-    selectionHeader3.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
-    selectionHeader4.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
-    selectionHeader5.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
-    [selectionLabel0 sizeWithFont: [UIFont fontWithName:@"Avalon-Demi" size:12.0]];
-    [selectionLabel1 sizeWithFont: [UIFont fontWithName:@"Avalon-Demi" size:12.0]];
-    [selectionLabel2 sizeWithFont: [UIFont fontWithName:@"Avalon-Demi" size:12.0]];
-    
-    UIImage *segmentSelected = [UIImage imageNamed:@"segcontrol_sel.png"];
-    UIImage *segmentUnselected = [UIImage imageNamed:@"segcontrol_uns.png"];
-    UIImage *segmentSelectedUnselected = [UIImage imageNamed:@"segcontrol_sel-uns.png"];
-    UIImage *segUnselectedSelected = [UIImage imageNamed:@"segcontrol_uns-sel.png"];
-    UIImage *segmentUnselectedUnselected = [UIImage imageNamed:@"segcontrol_uns-uns.png"];
-    
-    [pointsButton setBackgroundImage:segmentUnselected forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [pointsButton setBackgroundImage:segmentSelected forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
-    [pointsButton setDividerImage:segmentUnselectedUnselected
-              forLeftSegmentState:UIControlStateNormal
-                rightSegmentState:UIControlStateNormal
-                    barMetrics:UIBarMetricsDefault];
-    [pointsButton setDividerImage:segmentSelectedUnselected
-              forLeftSegmentState:UIControlStateSelected
-                rightSegmentState:UIControlStateNormal
-                    barMetrics:UIBarMetricsDefault];
-    [pointsButton setDividerImage:segUnselectedSelected 
-              forLeftSegmentState:UIControlStateNormal 
-                rightSegmentState:UIControlStateSelected 
-                    barMetrics:UIBarMetricsDefault];
-    
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Avalon-Demi" size:14.0],UITextAttributeFont,[UIColor whiteColor],UITextAttributeTextColor,nil];
-    [pointsButton setTitleTextAttributes:attributes forState:UIControlStateNormal];
-    [pointsButton setTitleTextAttributes:attributes forState:UIControlStateSelected];
+        selectionHeader1.font = [UIFont fontWithName:@"Avalon-Bold" size:12.0];
+        selectionHeader2.font = [UIFont fontWithName:@"Avalon-Bold" size:12.0];
+        selectionHeader3.font = [UIFont fontWithName:@"Avalon-Bold" size:12.0];
+        selectionHeader4.font = [UIFont fontWithName:@"Avalon-Bold" size:12.0];
+        selectionHeader5.font = [UIFont fontWithName:@"Avalon-Bold" size:12.0];
+        [selectionLabel0 sizeWithFont: [UIFont fontWithName:@"Avalon-Demi" size:12.0]];
+        [selectionLabel1 sizeWithFont: [UIFont fontWithName:@"Avalon-Demi" size:12.0]];
+        [selectionLabel2 sizeWithFont: [UIFont fontWithName:@"Avalon-Demi" size:12.0]];
         
-    self.leftLabel.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
-    self.rightLabel.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
-    UIImage *image = [UIImage imageNamed: @"green_dot.png"];
-    [self.inplayIndicator setImage:image];
-    }
+        self.global1.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
+        self.global2.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
+        self.fangroup1.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
+        self.fangroup2.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
+        self.h2h1.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
+        self.h2h2.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
+        self.friend1.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
+        self.friend2.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
+        
+        self.globalLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:12.0];
+        self.fangroupLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:12.0];
+        self.h2hLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:12.0];
+        self.friendLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:12.0];
+        UIImage *image = [UIImage imageNamed: @"green_dot.png"];
+        UIImage *amberImage = [UIImage imageNamed:@"amber.png"];
+        if (self.game.inplayType == 0)
+            [self.inplayIndicator setImage:amberImage];
+        else
+            [self.inplayIndicator setImage:image];
+        UIImage *friendImage = [UIImage imageNamed:@"create-button-game.png"];
+        UIImage *friendImage2 = [UIImage imageNamed:@"create-button-game-hit-state.png"];
+        [self.friendButton setBackgroundImage:friendImage forState:UIControlStateNormal];
+        [self.friendButton setBackgroundImage:friendImage2 forState:UIControlStateHighlighted];
+        [self.friendButton setBackgroundImage:friendImage2 forState:UIControlStateDisabled];
+        self.friendButton.titleLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:12.0];
+        [self.friendButton setTitle:@"CREATE" forState:UIControlStateNormal];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+            UIEdgeInsets titleInsets = UIEdgeInsetsMake(0.0, 0.0, -3.0, 0.0);
+            self.friendButton.titleEdgeInsets = titleInsets;
+        }
+        UIImage *buttonImage = [UIImage imageNamed:@"game-header-button.png"];
+        UIImage *buttonImage2 = [UIImage imageNamed:@"game-header-button-hit.png"];
+        [self.globalButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+        [self.globalButton setBackgroundImage:buttonImage2 forState:UIControlStateHighlighted];
+        [self.fangroupButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+        [self.fangroupButton setBackgroundImage:buttonImage2 forState:UIControlStateHighlighted];
+        [self.h2hButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+        [self.h2hButton setBackgroundImage:buttonImage2 forState:UIControlStateHighlighted];
+        
+    } else {
     
-     if ((self.game.state == INPLAY) || (self.game.state == SUSPENDED)) {
-         [self.inplayIndicator setHidden:NO];
-     } else {
-         [self.inplayIndicator setHidden:YES];
-     }
-
-    [self changePoints:self];
+        if ((self.game.state == INPLAY) || (self.game.state == SUSPENDED)) {
+            [self.inplayIndicator setHidden:NO];
+        } else {
+            [self.inplayIndicator setHidden:YES];
+        }
+    
+        Points *points = self.dataController.points;
+        self.global1.text = [points.globalPoints stringByAppendingString:@" points"];
+        self.global2.text = [points.globalRank stringByAppendingFormat:@"/%@", points.globalPoolSize];
+        if (!points.lateEntry) {
+            self.fangroup1.text = points.fangroupName;
+            self.fangroup2.text = [points.fangroupRank stringByAppendingFormat:@"/%@", points.numFangroups];
+            self.h2h1.text = points.h2hUser;
+            self.h2h2.text = [points.h2hPoints stringByAppendingString:@" points"];
+        } else {
+            self.fangroup1.text = @"[Not Entered]";
+            self.fangroup2.text = @"";
+            self.h2h1.text = @"[Not Entered]";
+            self.h2h2.text = @"";
+        }
+        
+        if ([friendPools count] == 1) {
+            FriendPool *friendPool = [friendPools objectAtIndex:0];
+            [self.friendButton setTitle:friendPool.name forState:UIControlStateNormal];
+        } else if ([friendPools count] > 1) {
+            [self.friendButton setTitle:@"VIEW" forState:UIControlStateNormal];
+        } else if ((self.dataController.userState == SUBMITTED) && ([friendPools count] == 0)) {
+            [self.friendButton setTitle:@"Not Entered" forState:UIControlStateDisabled];
+            [self.friendButton setEnabled:NO];
+        } else if ([friendPools count] == 0) {
+            [self.friendButton setTitle:@"CREATE" forState:UIControlStateNormal];
+        }
+        
+    }
+ 
     return headerView;
 }
 
@@ -689,7 +760,7 @@ enum GameType {
     
         UIImage *image = [UIImage imageNamed:@"submit-button.png"];
         UIImage *image2 = [UIImage imageNamed:@"submit-button-hit-state.png"];
-        UIImage *image3 = [UIImage imageNamed:@"grey-button.png"];
+        UIImage *image3 = [UIImage imageNamed:@"submit-button-disabled.png"];
         [self.submitButton setBackgroundImage:image forState:UIControlStateNormal];
         [self.submitButton setBackgroundImage:image2 forState:UIControlStateHighlighted];
         [self.submitButton setBackgroundImage:image3 forState:UIControlStateDisabled];
@@ -717,9 +788,9 @@ enum GameType {
                     winnings = [@"YOU WON " stringByAppendingString:self.dataController.points.winnings];
                 winnings = [winnings stringByAppendingString:@"!"];
                 [self.submitButton setTitle:winnings forState:UIControlStateNormal];
-                [self.submitButton setTitleColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+                [self.submitButton setTitleColor:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0] forState:UIControlStateNormal];
                 [self.submitButton setTitle:winnings forState:UIControlStateDisabled];
-                [self.submitButton setTitleColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0] forState:UIControlStateDisabled];
+                [self.submitButton setTitleColor:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0] forState:UIControlStateDisabled];
             }
             [self.submitButton setEnabled:NO];
             break;
@@ -776,6 +847,7 @@ enum GameType {
     if (self.username)
         return;
     if (self.dataController.userState == SUBMITTED) {
+        /*
             UIImage *leaderboardButtonNormal = [UIImage imageNamed:@"leaderboard-button.png"];
             UIImage *leaderboardButtonHighlighted = [UIImage imageNamed:@"leaderboard-button-hit-state.png"];
             CGRect frameimg = CGRectMake(0, 0, leaderboardButtonNormal.size.width, leaderboardButtonNormal.size.height);
@@ -792,6 +864,8 @@ enum GameType {
             } else {
                 self.navigationItem.rightBarButtonItem = barButtonItem;
             }
+         */
+        self.navigationItem.rightBarButtonItem = nil;
     } else {
         if (!self.navigationItem.rightBarButtonItem) {
             /*
@@ -800,6 +874,7 @@ enum GameType {
             NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,[UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0],UITextAttributeFont,nil];
             [self.navigationItem.rightBarButtonItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
              */
+            /*
             UIImage *tutorialButtonNormal = [UIImage imageNamed:@"tutorial-button.png"];
             UIImage *tutorialButtonHighlighted = [UIImage imageNamed:@"tutorial-button-hit-state.png"];
             CGRect frameimg = CGRectMake(0, 0, tutorialButtonNormal.size.width, tutorialButtonNormal.size.height);
@@ -816,6 +891,12 @@ enum GameType {
             } else {
                 self.navigationItem.rightBarButtonItem = barButtonItem;
             }
+             */
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Tutorial" style:UIBarButtonItemStylePlain target:self action:@selector(tutorialPressed:)];
+            self.navigationItem.rightBarButtonItem.tintColor = [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0];
+            NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,[UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0],UITextAttributeFont,nil];
+            [self.navigationItem.rightBarButtonItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
+            [self.navigationItem.rightBarButtonItem setEnabled:YES];
         }
     }
     
@@ -857,6 +938,176 @@ enum GameType {
     */
 }
 
+- (IBAction)friendClicked:(id)sender {
+    /*
+    if ([friendPools count] > 1) {
+        if (!friendPopup) {
+            friendPopup = [[UIView alloc] initWithFrame:CGRectMake(160, 74, 85, 85)];
+            [friendPopup setBackgroundColor:[UIColor whiteColor]];
+        }
+        if (friendPopup) {
+            for (int i=0; i < [friendPools count]; i++) {
+                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+                button.frame = CGRectMake(5, 5+(15*i), 75, 10);
+                FriendPool *friendPool = [friendPools objectAtIndex:i];
+                button.backgroundColor = [UIColor clearColor];
+                button.tintColor = [UIColor yellowColor];
+                [button setTitle:friendPool.name forState:UIControlStateNormal];
+                [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                button.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:12.0];
+                button.tag = i;
+                [button addTarget:self action:@selector(friendLBPressed:)
+                         forControlEvents:UIControlEventTouchUpInside];
+                [friendPopup addSubview:button];
+                [friendPopup bringSubviewToFront:button];
+            }
+            [self.view.superview addSubview:friendPopup];
+            [self.view.superview bringSubviewToFront:friendPopup];
+        }
+     */
+    
+    if ([friendPools count] > 1) {
+        CGRect frame = CGRectMake(0, 0, 320, 44);
+        UIToolbar *pickerToolbar = [[UIToolbar alloc] initWithFrame:frame];
+        pickerToolbar.barStyle = UIBarStyleBlack;
+        NSMutableArray *barItems = [[NSMutableArray alloc] init];
+        UIBarButtonItem *cancelBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCancel target:self action:@selector(actionPickerCancel:)];
+        [barItems addObject:cancelBtn];
+        UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        [barItems addObject:flexSpace];
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(friendDone:)];
+        [barItems addObject:doneButton];
+        [pickerToolbar setItems:barItems animated:NO];
+        [pickerToolbar setTintColor:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]];
+        [cancelBtn setTintColor:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]];
+        [doneButton setTintColor:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+            [[UIBarButtonItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0] } forState:UIControlStateNormal];
+        } else {
+            NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,nil];
+            [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
+        }
+        
+        CGFloat windowHeight = self.view.superview.frame.size.height;
+        myView = [[UIView alloc] initWithFrame:CGRectMake(0, windowHeight-260, 320, 260)];
+        [myView setBackgroundColor:[UIColor lightGrayColor]];
+        UIPickerView *myPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 44, 320, 216)];
+        myPicker.showsSelectionIndicator=YES;
+        myPicker.dataSource = self;
+        myPicker.delegate = self;
+        [myPicker selectRow:0 inComponent:0 animated:NO];
+        [myView addSubview:pickerToolbar];
+        [myView addSubview:myPicker];
+        
+        [self.view.superview addSubview:myView];
+        [self.view.superview bringSubviewToFront:myView];
+        [self.tableView setUserInteractionEnabled:NO];
+        self.selectedFriendPool = [friendPools objectAtIndex:0];
+    
+    } else if ([friendPools count] == 1) {
+        if (!self.friendViewController) {
+            self.friendViewController = [[IPLeaderboardViewController alloc] initWithNibName:@"IPLeaderboardViewController" bundle:nil];
+            self.friendViewController.game = self.game;
+            self.friendViewController.friendPool = [friendPools objectAtIndex:0];
+            self.friendViewController.lbType = 2;
+            if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+                self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+            else
+                self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+        }
+        if (self.friendViewController)
+            [self.navigationController pushViewController:self.friendViewController animated:YES];
+    } else {
+        IPAppDelegate *appDelegate = (IPAppDelegate *)[[UIApplication sharedApplication] delegate];
+        if (appDelegate.loggedin == NO) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login required" message:@"Please login first!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
+        if (!self.createViewController) {
+            self.createViewController = [[IPCreateViewController alloc] initWithNibName:@"IPCreateViewController" bundle:nil];
+        }
+        if (self.createViewController) {
+            [self.navigationController presentViewController:self.createViewController animated:YES completion:nil];
+        }
+    }
+}
+
+-(void)friendDone:(id)sender {
+    [self friendLBPressed:self];
+    [myView removeFromSuperview];
+    [self.tableView setUserInteractionEnabled:YES];
+}
+
+-(void)actionPickerCancel:(id)sender {
+    [myView removeFromSuperview];
+    [self.tableView setUserInteractionEnabled:YES];
+}
+
+- (void) friendLBPressed:(id)sender {
+    if ([friendControllerList objectForKey:self.selectedFriendPool.name] == nil) {
+        friendViewController = [[IPLeaderboardViewController alloc] initWithNibName:@"IPLeaderboardViewController" bundle:nil];
+        friendViewController.game = self.game;
+        friendViewController.friendPool = self.selectedFriendPool;
+        friendViewController.lbType = 2;
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+        else
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+        [friendControllerList setObject:friendViewController forKey:self.selectedFriendPool.name];
+    }
+    
+    if ([friendControllerList objectForKey:self.selectedFriendPool.name]) {
+        [self.navigationController pushViewController:[friendControllerList objectForKey:self.selectedFriendPool.name] animated:YES];
+    }
+}
+
+
+- (IBAction)globalClicked:(id)sender {
+    if (!self.globalViewController) {
+        self.globalViewController = [[IPLeaderboardViewController alloc] initWithNibName:@"IPLeaderboardViewController" bundle:nil];
+        self.globalViewController.game = self.game;
+        self.globalViewController.lbType = 0;
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+        else
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+    }
+    if (self.globalViewController)
+        [self.navigationController pushViewController:self.globalViewController animated:YES];
+}
+
+- (IBAction)fangroupClicked:(id)sender {
+    if (!self.fangroupViewController) {
+        self.fangroupViewController = [[IPLeaderboardViewController alloc] initWithNibName:@"IPLeaderboardViewController" bundle:nil];
+        self.fangroupViewController.game = self.game;
+        self.fangroupViewController.lbType = 1;
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+        else
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+    }
+    if (self.fangroupViewController)
+        [self.navigationController pushViewController:self.fangroupViewController animated:YES];
+}
+
+- (IBAction)h2hClicked:(id)sender {
+    if ((self.dataController.points.h2hUser) && (self.game.state > 0) && (!self.dataController.points.lateEntry)) {
+        if (!self.statsViewController) {
+            self.statsViewController = [[IPStatsViewController alloc] initWithNibName:@"IPStatsViewController" bundle:nil];
+            self.statsViewController.externalUsername = self.dataController.points.h2hUser;
+            if (self.dataController.points.h2hFBID)
+                self.statsViewController.externalFBID = self.dataController.points.h2hFBID;
+            if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+                self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+            else
+                self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+        }
+        if (self.statsViewController)
+            [self.navigationController pushViewController:self.statsViewController animated:YES];
+    }
+}
+
 -(void)refreshView:(UIRefreshControl *)refresh
 {
     if (!self.isLoading)
@@ -896,14 +1147,20 @@ enum GameType {
     
     
     // generic stuff for all states
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-row.png"]];
+    // UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-row.png"]];
+    UIImageView *imageView;
+    if (indexPath.row % 2)
+        imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-bar-2.png"]];
+    else
+        imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-bar-1.png"]];
     cell.backgroundView = imageView;
     [[cell periodLabel] setText:periodAtIndex.name];
-    cell.periodLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0];
-    cell.timeLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:12.0];
-    cell.pointsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0];
+    cell.periodLabel.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
+    cell.timeLabel.font = [UIFont fontWithName:@"Avalon-Book" size:12.0];
+    cell.pointsLabel.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
     
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:29.0/255.0 green:28.0/255.0 blue:27.0/255.0 alpha:1.0],UITextAttributeTextColor,[UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0],UITextAttributeFont,[NSValue valueWithUIOffset:UIOffsetMake(0.0,0.0)],UITextAttributeTextShadowOffset,nil];
+    // NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:29.0/255.0 green:28.0/255.0 blue:27.0/255.0 alpha:1.0],UITextAttributeTextColor,[UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0],UITextAttributeFont,[NSValue valueWithUIOffset:UIOffsetMake(0.0,0.0)],UITextAttributeTextShadowOffset,nil];
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,[UIFont fontWithName:@"Avalon-Bold" size:12.0],UITextAttributeFont,[NSValue valueWithUIOffset:UIOffsetMake(0.0,0.0)],UITextAttributeTextShadowOffset,nil];
     [[cell selectionButton] setTitleTextAttributes:attributes forState:UIControlStateNormal];
     [[cell selectionButton] setTitleTextAttributes:attributes forState:UIControlStateDisabled];
     UIImage *segmentSelected = [UIImage imageNamed:@"gamecontrol_sel.png"];
@@ -950,14 +1207,17 @@ enum GameType {
                                  barMetrics:UIBarMetricsDefault];
     
     [[cell selectionButton] setDividerImage:segmentDisabledDisabled forLeftSegmentState:UIControlStateDisabled rightSegmentState:UIControlStateDisabled barMetrics:UIBarMetricsDefault];
+        
     
     // state specific stuff
     switch (self.game.state) {
         case (TRANSITION):
         case (PREPLAY):  {  // game state
             [[cell timeLabel] setText:periodAtIndex.startDate];
-            cell.periodLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
-            cell.timeLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0];
+            // cell.periodLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
+            // cell.timeLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0];
+            cell.periodLabel.textColor = [UIColor colorWithRed:32.0/255.0 green:35.0/255.0 blue:45.0/255.0 alpha:1.0];
+            cell.timeLabel.textColor = [UIColor colorWithRed:32.0/255.0 green:35.0/255.0 blue:45.0/255.0 alpha:1.0];
            
             if (cell.selectionButton.numberOfSegments == 3) {
                 [[cell selectionButton] setTitle:periodAtIndex.points0 forSegmentAtIndex:0];
@@ -970,7 +1230,7 @@ enum GameType {
             [[cell selectionButton] setSelectedSegmentIndex:selectionAtIndex.selection];
             if (self.dataController.userState == SUBMITTED) {
                 [[cell pointsLabel] setText:selectionAtIndex.potentialPoints];
-                [[cell pointsLabel] setTextColor:[UIColor whiteColor]];
+                [[cell pointsLabel] setTextColor:[UIColor blackColor]];
             }
             if ((periodAtIndex.state == INACTIVE) || (periodAtIndex.state == SUSPENDED))
                 [cell.selectionButton setEnabled:NO];
@@ -985,8 +1245,10 @@ enum GameType {
                 case (TRANSITION):
                 case (PREPLAY): {  // period state
                     [[cell timeLabel] setText:periodAtIndex.startDate];
-                    cell.periodLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
-                    cell.timeLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0];
+                    // cell.periodLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
+                    // cell.timeLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0];
+                    cell.periodLabel.textColor = [UIColor colorWithRed:32.0/255.0 green:35.0/255.0 blue:45.0/255.0 alpha:1.0];
+                    cell.timeLabel.textColor = [UIColor colorWithRed:32.0/255.0 green:35.0/255.0 blue:45.0/255.0 alpha:1.0];
                     
                     [[cell selectionButton] setSelectedSegmentIndex:-1];
                     if (cell.selectionButton.numberOfSegments == 3) {
@@ -1011,7 +1273,7 @@ enum GameType {
                     [[cell selectionButton] setSelectedSegmentIndex:selectionAtIndex.selection];
                     if (self.dataController.userState == SUBMITTED) {
                         [[cell pointsLabel] setText:selectionAtIndex.potentialPoints];
-                        [[cell pointsLabel] setTextColor:[UIColor whiteColor]];
+                        [[cell pointsLabel] setTextColor:[UIColor blackColor]];
                     }
                     break;
                 }
@@ -1021,10 +1283,16 @@ enum GameType {
                     NSString *subline = [periodAtIndex.elapsedTime stringByAppendingString:@" "];
                     subline = [subline stringByAppendingString:periodAtIndex.score];
                     [[cell timeLabel] setText:subline];
-                    cell.periodLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
-                    cell.timeLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0];
+                    // cell.periodLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
+                    // cell.timeLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0];
+                    cell.periodLabel.textColor = [UIColor colorWithRed:32.0/255.0 green:35.0/255.0 blue:45.0/255.0 alpha:1.0];
+                    cell.timeLabel.textColor = [UIColor colorWithRed:32.0/255.0 green:35.0/255.0 blue:45.0/255.0 alpha:1.0];
                     UIImage *image = [UIImage imageNamed: @"green_dot.png"];
-                    [[cell inplayIcon] setImage:image];
+                    UIImage *amberImage = [UIImage imageNamed:@"amber.png"];
+                    if (self.game.inplayType == 0)
+                        [[cell inplayIcon] setImage:amberImage];
+                    else
+                        [[cell inplayIcon] setImage:image];
                     [[cell inplayIcon] setHidden:NO];
                     
                     if (periodAtIndex.state == NEVERINPLAY) {
@@ -1038,17 +1306,17 @@ enum GameType {
                         else
                             inplay = @"INPLAY";
                         [[cell selectionButton] setTitle:inplay forSegmentAtIndex:0];
-                        NSDictionary *black = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:29.0/255.0 green:28.0/255.0 blue:27.0/255.0 alpha:1.0],UITextAttributeTextColor,nil];
-                        [[cell selectionButton] setTitleTextAttributes:black forState:UIControlStateDisabled];
+                        NSDictionary *yellow = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0],UITextAttributeTextColor,[UIFont fontWithName:@"Avalon-Bold" size:12.0],UITextAttributeFont,nil];
+                        [[cell selectionButton] setTitleTextAttributes:yellow forState:UIControlStateDisabled];
                         [[cell selectionButton] removeSegmentAtIndex:2 animated:NO];
                         [[cell selectionButton] removeSegmentAtIndex:1 animated:NO];
                         [[cell selectionButton] setSelectedSegmentIndex:-1];
-                        UIImage *bankSelected = [UIImage imageNamed:@"neverinplay.png"];
-                        [[cell selectionButton] setBackgroundImage:bankSelected forState:UIControlStateDisabled barMetrics:UIBarMetricsDefault];
-                        [cell.selectionButton setEnabled:NO];
+                        UIImage *neverinplay = [UIImage imageNamed:@"never-inplay.png"];
+                        [[cell selectionButton] setBackgroundImage:neverinplay forState:UIControlStateDisabled barMetrics:UIBarMetricsDefault];
+                        [cell.selectionButton setEnabled:NO forSegmentAtIndex:0];
                         if (self.dataController.userState == SUBMITTED) {
                             [[cell pointsLabel] setText:selectionAtIndex.potentialPoints];
-                            [[cell pointsLabel] setTextColor:[UIColor whiteColor]];
+                            [[cell pointsLabel] setTextColor:[UIColor blackColor]];
                         }
                     } else if (selectionAtIndex.bank == NO) {
                         NSString *bank;
@@ -1065,8 +1333,9 @@ enum GameType {
                             bank = @"BANK";
                         }
                         [[cell selectionButton] setTitle:bank forSegmentAtIndex:0];
-                        NSDictionary *black = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:29.0/255.0 green:28.0/255.0 blue:27.0/255.0 alpha:1.0],UITextAttributeTextColor,nil];
+                        NSDictionary *black = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:29.0/255.0 green:28.0/255.0 blue:27.0/255.0 alpha:1.0],UITextAttributeTextColor,[UIFont fontWithName:@"Avalon-Bold" size:12.0],UITextAttributeFont,nil];
                         [[cell selectionButton] setTitleTextAttributes:black forState:UIControlStateDisabled];
+                        [[cell selectionButton] setTitleTextAttributes:black forState:UIControlStateNormal];
                         [[cell selectionButton] removeSegmentAtIndex:2 animated:NO];
                         [[cell selectionButton] removeSegmentAtIndex:1 animated:NO];
                         [[cell selectionButton] setSelectedSegmentIndex:-1];
@@ -1078,7 +1347,7 @@ enum GameType {
                         if (self.dataController.userState == SUBMITTED) {
                             [cell.selectionButton setEnabled:YES];
                             [[cell pointsLabel] setText:selectionAtIndex.potentialPoints];
-                            [[cell pointsLabel] setTextColor:[UIColor whiteColor]];
+                            [[cell pointsLabel] setTextColor:[UIColor blackColor]];
                         } else {
                             [cell.selectionButton setEnabled:NO];
                         }
@@ -1095,7 +1364,7 @@ enum GameType {
                         else
                             bank = @" ";
                         [[cell selectionButton] setTitle:bank forSegmentAtIndex:0];
-                        NSDictionary *green = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:75.0/255.0 green:209.0/255.0 blue:3.0/255.0 alpha:1.0],UITextAttributeTextColor,nil];
+                        NSDictionary *green = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:0.0/255.0 green:255.0/255.0 blue:0.0/255.0 alpha:1.0],UITextAttributeTextColor,[UIFont fontWithName:@"Avalon-Bold" size:12.0],UITextAttributeFont,nil];
                         [[cell selectionButton] setTitleTextAttributes:green forState:UIControlStateDisabled];
                         [[cell selectionButton] removeSegmentAtIndex:2 animated:NO];
                         [[cell selectionButton] removeSegmentAtIndex:1 animated:NO];
@@ -1104,9 +1373,10 @@ enum GameType {
                         if (self.dataController.userState == SUBMITTED) {
                             [[cell pointsLabel] setText:selectionAtIndex.awardedPoints];
                             if ([selectionAtIndex.awardedPoints isEqualToString:@"0"]) {
-                                [[cell pointsLabel] setTextColor:[UIColor colorWithRed:255.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1.0]];
+                                [[cell pointsLabel] setTextColor:[UIColor colorWithRed:237.0/255.0 green:0.0/255.0 blue:9.0/255.0 alpha:1.0]];
                             } else {
-                                [[cell pointsLabel] setTextColor:[UIColor colorWithRed:75.0/255.0 green:209.0/255.0 blue:3.0/255.0 alpha:1.0]];
+                                [[cell pointsLabel] setTextColor:[UIColor colorWithRed:0.0/255.0 green:255.0/255.0 blue:0.0/255.0 alpha:1.0]];
+                                // [[cell pointsLabel] setTextColor:[UIColor colorWithRed:189.0/255.0 green:233.0/255.0 blue:51.0/255.0 alpha:1.0]];
                             }
                         }
                     }
@@ -1114,13 +1384,17 @@ enum GameType {
                 }
                 case (COMPLETED):  // period state
                 default: {
-                    UIImageView *completedView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"completed-row.png"]];
+                    UIImageView *completedView;
+                    if (indexPath.row % 2)
+                        completedView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"completed-row-dark.png"]];
+                    else
+                        completedView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"completed-row-light.png"]];
                     cell.backgroundView = completedView;
                     NSString *subline = [periodAtIndex.elapsedTime stringByAppendingString:@" "];
                     subline = [subline stringByAppendingString:periodAtIndex.score];
                     [[cell timeLabel] setText:subline];
-                    cell.periodLabel.textColor = [UIColor darkGrayColor];
-                    cell.timeLabel.textColor = [UIColor darkGrayColor];
+                    cell.periodLabel.textColor = [UIColor colorWithRed:71.0/255.0 green:71.0/255.0 blue:71.0/255.0 alpha:1.0];
+                    cell.timeLabel.textColor = [UIColor colorWithRed:71.0/255.0 green:71.0/255.0 blue:71.0/255.0 alpha:1.0];
                     [[cell selectionButton] setSelectedSegmentIndex:-1];
                     
                     if (selectionAtIndex.bank == YES) {
@@ -1134,7 +1408,7 @@ enum GameType {
                         else
                             bank = @" ";
                         [[cell selectionButton] setTitle:bank forSegmentAtIndex:0];
-                        NSDictionary *green = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:75.0/255.0 green:209.0/255.0 blue:3.0/255.0 alpha:1.0],UITextAttributeTextColor,[UIFont fontWithName:@"Avalon-Demi" size:12.0],UITextAttributeFont,nil];
+                        NSDictionary *green = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:0.0/255.0 green:255.0/255.0 blue:0.0/255.0 alpha:1.0],UITextAttributeTextColor,[UIFont fontWithName:@"Avalon-Bold" size:12.0],UITextAttributeFont,nil];
                         [[cell selectionButton] setTitleTextAttributes:green forState:UIControlStateDisabled];
                         [[cell selectionButton] removeSegmentAtIndex:2 animated:NO];
                         [[cell selectionButton] removeSegmentAtIndex:1 animated:NO];
@@ -1156,29 +1430,33 @@ enum GameType {
                             [[cell selectionButton] setTitle:@" " forSegmentAtIndex:2];
                             
                         }
+                        UIImage *tick;
+                        UIImage *cross;
+                        if ([UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)]) {
+                            tick = [[UIImage imageNamed:@"tick.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                            cross = [[UIImage imageNamed:@"cross.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                        } else {
+                            tick = [UIImage imageNamed:@"tick.png"];
+                            cross = [UIImage imageNamed:@"cross.png"];
+                        }
+                        
                         if (selectionAtIndex.selection == 0) {
                             if (periodAtIndex.result == 0) {
-                                [[cell selectionButton] setImage:[UIImage imageNamed:@"tick.png"] forSegmentAtIndex:0];
-                                [[cell selectionButton] setTintColor:[UIColor greenColor]];
+                                [[cell selectionButton] setImage:tick forSegmentAtIndex:0];
                             } else {
-                                [[cell selectionButton] setImage:[UIImage imageNamed:@"cross.png"] forSegmentAtIndex:0];
-                                [[cell selectionButton] setTintColor:[UIColor redColor]];
+                                [[cell selectionButton] setImage:cross forSegmentAtIndex:0];
                             }
                         } else if (selectionAtIndex.selection == 1) {
                             if (periodAtIndex.result == 1) {
-                                [[cell selectionButton] setImage:[UIImage imageNamed:@"tick.png"] forSegmentAtIndex:1];
-                                [[cell selectionButton] setTintColor:[UIColor greenColor]];
+                                [[cell selectionButton] setImage:tick forSegmentAtIndex:1];
                             } else {
-                                [[cell selectionButton] setImage:[UIImage imageNamed:@"cross.png"] forSegmentAtIndex:1];
-                                [[cell selectionButton] setTintColor:[UIColor redColor]];
+                                [[cell selectionButton] setImage:cross forSegmentAtIndex:1];
                             }
                         } else if ((selectionAtIndex.selection == 2) && (cell.selectionButton.numberOfSegments >2)) {
                             if (periodAtIndex.result == 2) {
-                                [[cell selectionButton] setImage:[UIImage imageNamed:@"tick.png"] forSegmentAtIndex:2];
-                                [[cell selectionButton] setTintColor:[UIColor greenColor]];
+                                [[cell selectionButton] setImage:tick forSegmentAtIndex:2];
                             } else {
-                                [[cell selectionButton] setImage:[UIImage imageNamed:@"cross.png"] forSegmentAtIndex:2];
-                                [[cell selectionButton] setTintColor:[UIColor redColor]];
+                                [[cell selectionButton] setImage:cross forSegmentAtIndex:2];
                             }
                         }
                         /*
@@ -1212,9 +1490,10 @@ enum GameType {
                     if (self.dataController.userState == SUBMITTED) {
                         [[cell pointsLabel] setText:selectionAtIndex.awardedPoints];
                         if ([selectionAtIndex.awardedPoints isEqualToString:@"0"]) {
-                            [[cell pointsLabel] setTextColor:[UIColor colorWithRed:255.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1.0]];
+                            [[cell pointsLabel] setTextColor:[UIColor colorWithRed:237.0/255.0 green:0.0/255.0 blue:9.0/255.0 alpha:1.0]];
                         } else {
-                            [[cell pointsLabel] setTextColor:[UIColor colorWithRed:75.0/255.0 green:209.0/255.0 blue:3.0/255.0 alpha:1.0]];
+                            [[cell pointsLabel] setTextColor:[UIColor colorWithRed:0.0/255.0 green:255.0/255.0 blue:0.0/255.0 alpha:1.0]];
+                            // [[cell pointsLabel] setTextColor:[UIColor colorWithRed:189.0/255.0 green:233.0/255.0 blue:51.0/255.0 alpha:1.0]];
                         }
                     }
                     break;
@@ -1223,11 +1502,15 @@ enum GameType {
             break;
         case (COMPLETED):  // game state
         default: {
-            UIImageView *completedView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"completed-row.png"]];
+            UIImageView *completedView;
+            if (indexPath.row % 2)
+                completedView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"completed-row-dark.png"]];
+            else
+                completedView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"completed-row-light.png"]];
             cell.backgroundView = completedView;
             [[cell timeLabel] setText:periodAtIndex.score];
-            cell.periodLabel.textColor = [UIColor darkGrayColor];
-            cell.timeLabel.textColor = [UIColor darkGrayColor];
+            cell.periodLabel.textColor = [UIColor colorWithRed:71.0/255.0 green:71.0/255.0 blue:71.0/255.0 alpha:1.0];
+            cell.timeLabel.textColor = [UIColor colorWithRed:71.0/255.0 green:71.0/255.0 blue:71.0/255.0 alpha:1.0];
             [[cell selectionButton] setSelectedSegmentIndex:-1];
             
             if (selectionAtIndex.bank == YES) {
@@ -1241,7 +1524,7 @@ enum GameType {
                 else
                     bank = @" ";
                 [[cell selectionButton] setTitle:bank forSegmentAtIndex:0];
-                NSDictionary *green = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:75.0/255.0 green:209.0/255.0 blue:3.0/255.0 alpha:1.0],UITextAttributeTextColor,[UIFont fontWithName:@"Avalon-Demi" size:12.0],UITextAttributeFont,nil];
+                NSDictionary *green = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:189.0/255.0 green:233.0/255.0 blue:51.0/255.0 alpha:1.0],UITextAttributeTextColor,[UIFont fontWithName:@"Avalon-Bold" size:12.0],UITextAttributeFont,nil];
                 [[cell selectionButton] setTitleTextAttributes:green forState:UIControlStateDisabled];
                 [[cell selectionButton] removeSegmentAtIndex:2 animated:NO];
                 [[cell selectionButton] removeSegmentAtIndex:1 animated:NO];
@@ -1262,29 +1545,32 @@ enum GameType {
                     [[cell selectionButton] setTitle:@" " forSegmentAtIndex:1];
                     [[cell selectionButton] setTitle:@" " forSegmentAtIndex:2];
                 }
+                UIImage *tick;
+                UIImage *cross;
+                if ([UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)]) {
+                    tick = [[UIImage imageNamed:@"tick.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                    cross = [[UIImage imageNamed:@"cross.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                } else {
+                    tick = [UIImage imageNamed:@"tick.png"];
+                    cross = [UIImage imageNamed:@"cross.png"];
+                }
                 if (selectionAtIndex.selection == 0) {
                     if (periodAtIndex.result == 0) {
-                        [[cell selectionButton] setImage:[UIImage imageNamed:@"tick.png"] forSegmentAtIndex:0];
-                        [[cell selectionButton] setTintColor:[UIColor greenColor]];
+                        [[cell selectionButton] setImage:tick forSegmentAtIndex:0];
                     } else {
-                        [[cell selectionButton] setImage:[UIImage imageNamed:@"cross.png"] forSegmentAtIndex:0];
-                        [[cell selectionButton] setTintColor:[UIColor redColor]];
+                        [[cell selectionButton] setImage:cross forSegmentAtIndex:0];
                     }
                 } else if (selectionAtIndex.selection == 1) {
                     if (periodAtIndex.result == 1) {
-                        [[cell selectionButton] setImage:[UIImage imageNamed:@"tick.png"] forSegmentAtIndex:1];
-                        [[cell selectionButton] setTintColor:[UIColor greenColor]];
+                        [[cell selectionButton] setImage:tick forSegmentAtIndex:1];
                     } else {
-                        [[cell selectionButton] setImage:[UIImage imageNamed:@"cross.png"] forSegmentAtIndex:1];
-                        [[cell selectionButton] setTintColor:[UIColor redColor]];
+                        [[cell selectionButton] setImage:cross forSegmentAtIndex:1];
                     }
                 } else if ((selectionAtIndex.selection == 2) && (cell.selectionButton.numberOfSegments >2)) {
                     if (periodAtIndex.result == 2) {
-                        [[cell selectionButton] setImage:[UIImage imageNamed:@"tick.png"] forSegmentAtIndex:2];
-                        [[cell selectionButton] setTintColor:[UIColor greenColor]];
+                        [[cell selectionButton] setImage:tick forSegmentAtIndex:2];
                     } else {
-                        [[cell selectionButton] setImage:[UIImage imageNamed:@"cross.png"] forSegmentAtIndex:2];
-                        [[cell selectionButton] setTintColor:[UIColor redColor]];
+                        [[cell selectionButton] setImage:cross forSegmentAtIndex:2];
                     }
                 }
             }
@@ -1294,9 +1580,9 @@ enum GameType {
             if (self.dataController.userState == SUBMITTED) {
                 [[cell pointsLabel] setText:selectionAtIndex.awardedPoints];
                 if ([selectionAtIndex.awardedPoints isEqualToString:@"0"]) {
-                    [[cell pointsLabel] setTextColor:[UIColor colorWithRed:255.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1.0]];
+                    [[cell pointsLabel] setTextColor:[UIColor colorWithRed:237.0/255.0 green:0.0/255.0 blue:9.0/255.0 alpha:1.0]];
                 } else {
-                    [[cell pointsLabel] setTextColor:[UIColor colorWithRed:75.0/255.0 green:209.0/255.0 blue:3.0/255.0 alpha:1.0]];
+                    [[cell pointsLabel] setTextColor:[UIColor colorWithRed:189.0/255.0 green:233.0/255.0 blue:51.0/255.0 alpha:1.0]];
                 }
             }
             break;
@@ -1321,13 +1607,19 @@ enum GameType {
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    return [self headerView];
+    if (fromLeaderboard)
+        return nil;
+    else
+        return [self headerView];
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return [[self headerView] bounds].size.height;
+    if (fromLeaderboard)
+        return 0;
+    else
+        return [[self headerView] bounds].size.height;
 }
 
 
@@ -1354,6 +1646,10 @@ enum GameType {
                 [alert show];
                 if (!self.multiLoginViewController) {
                     self.multiLoginViewController = [[IPMultiLoginViewController alloc] initWithNibName:@"IPMultiLoginViewController" bundle:nil];
+                    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+                        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+                    else
+                        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
                 }
                 if (self.multiLoginViewController)
                     [self.navigationController pushViewController:self.multiLoginViewController animated:YES];
@@ -1399,7 +1695,6 @@ enum GameType {
 - (void)changeSelection:(id)sender atIndexPath:(NSIndexPath *)ip
 {
     UISegmentedControl* segmentControl = sender;
-    // NSLog(@"row=%@ index=%d", ip, segmentControl.selectedSegmentIndex);
     Selection *selectionAtIndex = [self.dataController objectInSelectionListAtIndex:ip.row];
     Period *periodAtIndex = [self.dataController objectInPeriodListAtIndex:ip.row];
     if (((periodAtIndex.state == INPLAY) || (periodAtIndex.state == SUSPENDED)) && (self.game.state != PREPLAY)) {
@@ -1441,6 +1736,77 @@ enum GameType {
     }
 }
 
+- (void)getMyPools:(id)sender
+{
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    [objectManager getObjectsAtPath:@"pool/mypools" parameters:nil success:
+     ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
+         [friendPools removeAllObjects];
+         NSArray* temp = [result array];
+         for (int i=0; i<temp.count; i++) {
+             FriendPool *friendPool = [temp objectAtIndex:i];
+             if (!friendPool.name)
+                 friendPool.name = @"Unknown";
+             if (!friendPool.numPlayers)
+                 friendPool.numPlayers = @"0";
+             [friendPools addObject:friendPool];
+         }
+         if ([friendPools count] != 0) {
+             [friendPools sortUsingSelector:@selector(compareWithName:)];
+         }
+     } failure:nil];
+}
+
+#pragma mark PickerView DataSource
+
+- (NSInteger)numberOfComponentsInPickerView:
+(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView
+numberOfRowsInComponent:(NSInteger)component
+{
+    return [friendPools count];
+}
+
+
+- (NSString *)pickerView:(UIPickerView *)pickerView
+             titleForRow:(NSInteger)row
+            forComponent:(NSInteger)component
+{
+    FriendPool *friendPool = [friendPools objectAtIndex:row];
+    return friendPool.name;
+}
+
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row
+      inComponent:(NSInteger)component
+{
+    self.selectedFriendPool = [friendPools objectAtIndex:row];
+}
+
+
+- (void) addFriends:(NSNotification *)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    FriendPool *friendPool = [userInfo objectForKey:@"friendPool"];
+    [self.navigationController dismissViewControllerAnimated:NO completion:nil];
+    [self.tableView reloadData];
+    if (!self.addFriendsViewController) {
+        self.addFriendsViewController = [[IPAddFriendsViewController alloc] initWithNibName:@"IPAddFriendsViewController" bundle:nil];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+        else
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+    }
+    if (self.addFriendsViewController) {
+        self.addFriendsViewController.poolID = friendPool.poolID;
+        [self.navigationController pushViewController:self.addFriendsViewController animated:YES];
+    }
+}
+
+/*
 - (IBAction)changePoints:(id)sender
 {
     Points *points = self.dataController.points;
@@ -1474,6 +1840,7 @@ enum GameType {
     }
     
 }
+ */
 
 
 @end

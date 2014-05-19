@@ -47,13 +47,13 @@
 {
     [super viewDidLoad];
     self.title = @"Settings";
-    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"screen-football-b.png"]];
     // this isn't needed on the rootViewController of the navigation controller
     [self.navigationController.sideMenu setupSideMenuBarButtonItem];
     
     UIImage *image = [UIImage imageNamed:@"login-button-normal.png"];
     UIImage *image2 = [UIImage imageNamed:@"login-button-hit.png"];
-    UIImage *image3 = [UIImage imageNamed:@"grey-button.png"];
+    UIImage *image3 = [UIImage imageNamed:@"login-button-disabled.png"];
     [self.logoutButton setBackgroundImage:image forState:UIControlStateNormal];
     [self.logoutButton setBackgroundImage:image2 forState:UIControlStateHighlighted];
     [self.logoutButton setBackgroundImage:image3 forState:UIControlStateDisabled];
@@ -103,11 +103,11 @@
         [self.emailText setEnabled:YES];
         [self.userText setEnabled:YES];
         if ([prefs objectForKey:@"fbID"]) {
-            self.facebookLink.backgroundColor = [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0];
+            self.facebookLink.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0];
             [self.facebookLink setTitle:@"Linked" forState:UIControlStateDisabled];
             [self.facebookLink setEnabled:NO];
         } else {
-            self.facebookLink.backgroundColor = [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0];
+            self.facebookLink.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0];
             [self.facebookLink setTitle:@"Link..." forState:UIControlStateNormal];
             [self.facebookLink setEnabled:YES];
         }
@@ -220,6 +220,10 @@
     } else {
         if (!self.multiLoginViewController) {
             self.multiLoginViewController = [[IPMultiLoginViewController alloc] initWithNibName:@"IPMultiLoginViewController" bundle:nil];
+            if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+                self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+            else
+                self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
         }
         if (self.multiLoginViewController)
             [self.navigationController pushViewController:self.multiLoginViewController animated:YES];
@@ -309,6 +313,10 @@
 - (IBAction)callPassword:(id)sender {
     if (!self.passwordViewController) {
         self.passwordViewController = [[IPPasswordViewController alloc] initWithNibName:@"IPPasswordViewController" bundle:nil];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+        else
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
     }
     if (self.passwordViewController)
         [self.navigationController pushViewController:self.passwordViewController animated:YES];
@@ -317,6 +325,10 @@
 - (IBAction)linkFacebook:(id)sender {
     if (!self.facebookLinkViewController) {
         self.facebookLinkViewController = [[IPFacebookLinkViewController alloc] initWithNibName:@"IPFacebookLinkViewController" bundle:nil];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+        else
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
     }
     if (self.facebookLinkViewController)
         [self.navigationController pushViewController:self.facebookLinkViewController animated:YES];

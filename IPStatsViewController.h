@@ -9,25 +9,22 @@
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
 
-@interface IPStatsViewController : UIViewController
+@interface IPStatsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 
-@property (weak, nonatomic) IBOutlet UILabel *totalWinningsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *globalRankLabel;
-@property (weak, nonatomic) IBOutlet UILabel *gamesPlayedLabel;
-@property (weak, nonatomic) IBOutlet UILabel *correctLabel;
 @property (weak, nonatomic) IBOutlet UILabel *winningsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *winsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *totalWinnings;
-@property (weak, nonatomic) IBOutlet UILabel *globalRank;
-@property (weak, nonatomic) IBOutlet UILabel *gamesPlayed;
-@property (weak, nonatomic) IBOutlet UILabel *correct;
-@property (weak, nonatomic) IBOutlet UILabel *rating;
 @property (strong, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (strong, nonatomic) IBOutlet FBProfilePictureView *userProfileImage;
 @property (weak, nonatomic) IBOutlet UIImageView *noProfileImage;
 @property (weak, nonatomic) IBOutlet UILabel *winningsChart;
 @property (weak, nonatomic) IBOutlet UILabel *winsChart;
+@property (weak, nonatomic) IBOutlet UITableView *statsTableView;
+
+@property (strong, nonatomic) NSString *totalWinnings;
+@property (strong, nonatomic) NSString *globalRank;
+@property (strong, nonatomic) NSString *gamesPlayed;
+@property (strong, nonatomic) NSString *correctPicks;
 
 @property (nonatomic) NSInteger globalWinnings;
 @property (nonatomic) NSInteger fangroupWinnings;
@@ -36,5 +33,7 @@
 @property (nonatomic) NSInteger fangroupWins;
 @property (nonatomic) NSInteger h2hWins;
 @property (nonatomic) NSInteger totalChartWins;
+@property (nonatomic) NSString *externalUsername;
+@property (nonatomic) NSString *externalFBID;
 
 @end

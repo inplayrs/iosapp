@@ -10,6 +10,7 @@
 #import "Leaderboard.h"
 #import "Points.h"
 #import "CompetitionPoints.h"
+#import "PoolPoints.h"
 
 
 @interface LeaderboardDataController ()
@@ -43,6 +44,10 @@
     self.gamePoints = gamePoints;
     CompetitionPoints *competitionPoints;
     self.competitionPoints = competitionPoints;
+    PoolPoints *poolGamePoints;
+    self.poolGamePoints = poolGamePoints;
+    PoolPoints *poolCompetitionPoints;
+    self.poolCompetitionPoints = poolCompetitionPoints;
    
 }
 
@@ -92,6 +97,18 @@
 - (void)setCompetitionPoints:(CompetitionPoints *)newPoints {
     if (_competitionPoints != newPoints) {
         _competitionPoints = newPoints;
+    }
+}
+
+- (void)setPoolGamePoints:(PoolPoints *)newPoints {
+    if (_poolGamePoints != newPoints) {
+        _poolGamePoints = newPoints;
+    }
+}
+
+- (void)setPoolCompetitionPoints:(PoolPoints *)newPoints {
+    if (_poolCompetitionPoints != newPoints) {
+        _poolCompetitionPoints = newPoints;
     }
 }
 

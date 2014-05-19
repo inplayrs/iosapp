@@ -20,6 +20,8 @@
 #import "Banner.h"
 #import <SDWebImage/UIButton+WebCache.h>
 #import "Flurry.h"
+#import "TSMessage.h"
+#import "Motd.h"
 
 
 enum State {
@@ -188,8 +190,8 @@ enum Category {
     self.controllerList = [[NSMutableDictionary alloc] init];
 
     UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
-    refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh" attributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]}];
-    refresh.tintColor = [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0];
+    refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh" attributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]}];
+    refresh.tintColor = [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0];
     [refresh addTarget:self
                 action:@selector(refreshView:)
                 forControlEvents:UIControlEventValueChanged];
@@ -200,14 +202,14 @@ enum Category {
     NSString *savedUser = [prefs objectForKey:@"user"];
     if (savedUser) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:savedUser style:UIBarButtonItemStylePlain target:self action:@selector(statsPressed:)];
-        self.navigationItem.rightBarButtonItem.tintColor = [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0];
+        self.navigationItem.rightBarButtonItem.tintColor = [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0];
         NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,[UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0],UITextAttributeFont,nil];
         [self.navigationItem.rightBarButtonItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
         [self.navigationItem.rightBarButtonItem setTitleTextAttributes:attributes forState:UIControlStateDisabled];
         [self.navigationItem.rightBarButtonItem setEnabled:YES];
     } else {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Sign In" style:UIBarButtonItemStylePlain target:self action:@selector(loginPressed:)];
-        self.navigationItem.rightBarButtonItem.tintColor = [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0];
+        self.navigationItem.rightBarButtonItem.tintColor = [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0];
         NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,[UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0],UITextAttributeFont,nil];
         [self.navigationItem.rightBarButtonItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
         [self.navigationItem.rightBarButtonItem setEnabled:YES];
@@ -236,14 +238,14 @@ enum Category {
     [super viewDidAppear:animated];
     IPAppDelegate *appDelegate = (IPAppDelegate *)[[UIApplication sharedApplication] delegate];
     if (appDelegate.loggedin) {
-        self.navigationItem.rightBarButtonItem.tintColor = [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0];
+        self.navigationItem.rightBarButtonItem.tintColor = [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0];
         NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,[UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0],UITextAttributeFont,nil];
         [self.navigationItem.rightBarButtonItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
         [self.navigationItem.rightBarButtonItem setTitleTextAttributes:attributes forState:UIControlStateDisabled];
         [self.navigationItem.rightBarButtonItem setTitle:appDelegate.user];
         [self.navigationItem.rightBarButtonItem setAction:@selector(statsPressed:)];
         [self.navigationItem.rightBarButtonItem setEnabled:YES];
-        [self.navigationItem.rightBarButtonItem setTintColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]];
+        [self.navigationItem.rightBarButtonItem setTintColor:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]];
     } else {
         [self.navigationItem.rightBarButtonItem setTitle:@"Sign In"];
         [self.navigationItem.rightBarButtonItem setAction:@selector(loginPressed:)];
@@ -276,6 +278,10 @@ enum Category {
 - (void) loginPressed:(id)sender {
     if (!self.multiLoginViewController) {
         self.multiLoginViewController = [[IPMultiLoginViewController alloc] initWithNibName:@"IPMultiLoginViewController" bundle:nil];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+        else
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
     }
     if (self.multiLoginViewController) {
         [self.navigationController pushViewController:self.multiLoginViewController animated:YES];
@@ -288,6 +294,10 @@ enum Category {
 - (void) statsPressed:(id)sender {
     if (!self.statsViewController) {
         self.statsViewController = [[IPStatsViewController alloc] initWithNibName:@"IPStatsViewController" bundle:nil];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+        else
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
     }
     if (self.statsViewController) {
         [self.navigationController pushViewController:self.statsViewController animated:YES];
@@ -321,7 +331,7 @@ enum Category {
          [startingDateFormat setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
          [endingDateFormat setTimeZone:[NSTimeZone systemTimeZone]];
          NSMutableArray *defaultSubItems = [[NSMutableArray alloc] init];
-         Game *game = [[Game alloc] initWithGameID:0 name:@"Loading..." startDate:@"" state:COMPLETED category:FOOTBALL type:20 entered:NO];
+         Game *game = [[Game alloc] initWithGameID:0 name:@"Loading..." startDate:@"" state:COMPLETED category:FOOTBALL type:20 entered:NO inplayType:1 competitionID:0];
          [defaultSubItems addObject:game];
          [bannerItems removeAllObjects];
          [bannerImages removeAllObjects];
@@ -351,11 +361,12 @@ enum Category {
              Competition *competition = [tempTopItems objectAtIndex:i];
              [self getGames:competition.competitionID order:i competitionName:competition.name];
          }
+         [self getMotd];
          NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
          [formatter setDateFormat:@"MM-dd HH:mm"];
          NSString *lastUpdated = [NSString stringWithFormat:@"Last updated on %@",
                                   [formatter stringFromDate:[NSDate date]]];
-         self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:lastUpdated attributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]}];
+         self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:lastUpdated attributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]}];
     } failure:^(RKObjectRequestOperation *operation, NSError *error){
         // NSLog(@"Failed with error: %@", [error localizedDescription]);
         self.gamesLoading = NO;
@@ -415,6 +426,13 @@ enum Category {
             [subItems removeAllObjects];
             [topItems addObjectsFromArray:tempTopItems];
             [subItems addObjectsFromArray:tempSubItems];
+            /*
+            if ([topItems count] == 1) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+                [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+            }
+             */
             [self.tableView reloadData];
             [self.refreshControl endRefreshing];
             
@@ -444,6 +462,29 @@ enum Category {
     }];
     
     
+}
+
+-(void)getMotd
+{
+        RKObjectManager *objectManager = [RKObjectManager sharedManager];
+        [objectManager getObjectsAtPath:@"user/motd" parameters:nil success:
+         ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
+             NSArray* temp = [result array];
+             for (int i=0; i<temp.count; i++) {
+                 Motd *motd = [temp objectAtIndex:i];
+                 [TSMessage showNotificationInViewController:self
+                                                       title:@"Inplayrs Message"
+                                                    subtitle:motd.message
+                                                       image:nil
+                                                        type:TSMessageNotificationTypeSuccess
+                                                    duration:TSMessageNotificationDurationAutomatic
+                                                    callback:nil
+                                                 buttonTitle:nil
+                                              buttonCallback:nil
+                                                  atPosition:TSMessageNotificationPositionTop
+                                         canBeDismisedByUser:YES];
+             }
+         } failure:nil];
 }
 
 
@@ -482,29 +523,30 @@ enum Category {
     
     if (isChild) {
         IPLobbyChildCell *cell = [tableView dequeueReusableCellWithIdentifier:@"IPLobbyChildCell"];
-        cell.nameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
-        cell.timeLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
+        cell.nameLabel.font = [UIFont fontWithName:@"Avalon-Demi" size:14.0];
+        cell.timeLabel.font = [UIFont fontWithName:@"Avalon-Demi" size:14.0];
         Game *gameAtIndex = [[subItems objectAtIndex:currentExpandedIndex] objectAtIndex:indexPath.row - currentExpandedIndex - 1];
         [[cell nameLabel] setText:gameAtIndex.name];
-        cell.nameLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
+        [cell setGameState:gameAtIndex.state];
+        cell.nameLabel.textColor = [UIColor colorWithRed:236.0/255.0 green:236.0/255.0 blue:236.0/255.0 alpha:1.0];
         if (gameAtIndex.state == INPLAY) {
             UIImage *image = [UIImage imageNamed: @"green_dot.png"];
-            [[cell inplayIcon] setImage:image];
+            UIImage *amberImage = [UIImage imageNamed:@"amber.png"];
+            if (gameAtIndex.inplayType == 0)
+                [[cell inplayIcon] setImage:amberImage];
+            else
+                [[cell inplayIcon] setImage:image];
             [[cell inplayIcon] setHidden:NO];
             [[cell timeLabel] setText:@""];
         } else if ((gameAtIndex.state == PREPLAY) || (gameAtIndex.state == SUSPENDED)) {
             [[cell timeLabel] setText:gameAtIndex.startDate];
-            cell.timeLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
+            cell.timeLabel.textColor = [UIColor colorWithRed:236.0/255.0 green:236.0/255.0 blue:236.0/255.0 alpha:1.0];
             [[cell inplayIcon] setHidden:YES];
         } else if (gameAtIndex.state == COMPLETED) {
             [[cell timeLabel] setText:@"DONE"];
-            // cell.timeLabel.textColor = [UIColor darkGrayColor];
-            // cell.nameLabel.textColor = [UIColor darkGrayColor];
-            cell.timeLabel.textColor = [UIColor colorWithRed:45.0/255.0 green:45.0/255.0 blue:45.0/255.0 alpha:1.0];
-            cell.nameLabel.textColor = [UIColor colorWithRed:45.0/255.0 green:45.0/255.0 blue:45.0/255.0 alpha:1.0];
+            cell.timeLabel.textColor = [UIColor colorWithRed:32.0/255.0 green:35.0/255.0 blue:45.0/255.0 alpha:1.0];
+            cell.nameLabel.textColor = [UIColor colorWithRed:32.0/255.0 green:35.0/255.0 blue:45.0/255.0 alpha:1.0];
             [[cell inplayIcon] setHidden:YES];
-            // IPAppDelegate *appDelegate = (IPAppDelegate *)[[UIApplication sharedApplication] delegate];
-            // appDelegate.refreshLobby = YES;
         } else {
             [[cell timeLabel] setText:@""];
             [[cell inplayIcon] setHidden:YES];
@@ -518,24 +560,28 @@ enum Category {
         }
         cell.nameLabel.backgroundColor = [UIColor clearColor];
         cell.timeLabel.backgroundColor = [UIColor clearColor];
+        cell.contentView.backgroundColor = [UIColor clearColor];
+        cell.backgroundColor = [UIColor clearColor];
         
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-sub-row.png"]];
+        // UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-sub-row.png"]];
+        // UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-bar-drop-down-bar.png"]];
         // UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-row.png"]];
-        cell.backgroundView = imageView;
+        // cell.backgroundView = imageView;
         // cell.selectedBackgroundView = nil;
         
         return cell;
     } else {
         IPLobbyItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"IPLobbyItemCell"];
-        cell.nameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
-        cell.timeLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
+        cell.nameLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:14.0];
+        cell.timeLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:14.0];
         int topIndex = (currentExpandedIndex > -1 && indexPath.row > currentExpandedIndex)
         ? indexPath.row - [[subItems objectAtIndex:currentExpandedIndex] count]
         : indexPath.row;
         Competition *competition = [topItems objectAtIndex:topIndex];
+        cell.row = topIndex;
         [cell setCompetitionState:competition.state];
+        [cell setCompetitionCategory:competition.category];
         [[cell nameLabel] setText:competition.name];
-        cell.nameLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
         if (competition.state == INPLAY) {
             UIImage *image = [UIImage imageNamed: @"green_dot.png"];
             [[cell inplayIcon] setImage:image];
@@ -543,15 +589,12 @@ enum Category {
             [[cell timeLabel] setText:@""];
         } else if ((competition.state == PREPLAY) || (competition.state == SUSPENDED)) {
             [[cell timeLabel] setText:competition.startDate];
-            cell.timeLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
             [[cell inplayIcon] setHidden:YES];
         } else if (competition.state == COMPLETED) {
             [[cell timeLabel] setText:@"DONE"];
-            cell.timeLabel.textColor = [UIColor colorWithRed:45.0/255.0 green:45.0/255.0 blue:45.0/255.0 alpha:1.0];
-            cell.nameLabel.textColor = [UIColor colorWithRed:45.0/255.0 green:45.0/255.0 blue:45.0/255.0 alpha:1.0];
+            cell.timeLabel.textColor = [UIColor colorWithRed:151.0/255.0 green:151.0/255.0 blue:155.0/255.0 alpha:1.0];
+            cell.nameLabel.textColor = [UIColor colorWithRed:151.0/255.0 green:151.0/255.0 blue:155.0/255.0 alpha:1.0];
             [[cell inplayIcon] setHidden:YES];
-            // IPAppDelegate *appDelegate = (IPAppDelegate *)[[UIApplication sharedApplication] delegate];
-            // appDelegate.refreshLobby = YES;
         } else {
             [[cell timeLabel] setText:@""];
             [[cell inplayIcon] setHidden:YES];
@@ -560,87 +603,126 @@ enum Category {
         cell.nameLabel.backgroundColor = [UIColor clearColor];
         cell.timeLabel.backgroundColor = [UIColor clearColor];
         
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-main-row.png"]];
+        // UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-main-row.png"]];
+        /*
+        UIImageView *imageView;
+        if (indexPath.row % 2)
+            imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-bar-1.png"]];
+        else
+            imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-bar-2.png"]];
+            
         cell.backgroundView = imageView;
+         */
         // cell.selectedBackgroundView = nil;
-        
+        /*
         switch (competition.category) {
             case (FOOTBALL): {
                 UIImage *image = [UIImage imageNamed: @"football.png"];
+                UIImage *highlighted = [UIImage imageNamed:@"football-hit.png"];
                 [[cell categoryIcon] setImage:image];
+                [[cell categoryIcon] setHighlightedImage:highlighted];
                 break;
             }
             case (BASKETBALL): {
                 UIImage *image = [UIImage imageNamed: @"basketball.png"];
+                UIImage *highlighted = [UIImage imageNamed:@"basketball-hit.png"];
                 [[cell categoryIcon] setImage:image];
+                [[cell categoryIcon] setHighlightedImage:highlighted];
                 break;
             }
             case (TENNIS): {
                 UIImage *image = [UIImage imageNamed: @"tennis.png"];
+                UIImage *highlighted = [UIImage imageNamed:@"tennis-hit.png"];
                 [[cell categoryIcon] setImage:image];
+                [[cell categoryIcon] setHighlightedImage:highlighted];
                 break;
             }
             case (GOLF): {
                 UIImage *image = [UIImage imageNamed: @"golf.png"];
+                UIImage *highlighted = [UIImage imageNamed:@"golf-hit.png"];
                 [[cell categoryIcon] setImage:image];
+                [[cell categoryIcon] setHighlightedImage:highlighted];
                 break;
             }
             case (SNOOKER): {
                 UIImage *image = [UIImage imageNamed: @"snooker.png"];
+                UIImage *highlighted = [UIImage imageNamed:@"snooker-hit.png"];
                 [[cell categoryIcon] setImage:image];
+                [[cell categoryIcon] setHighlightedImage:highlighted];
                 break;
             }
             case (MOTORRACING): {
                 UIImage *image = [UIImage imageNamed: @"motor-racing.png"];
+                UIImage *highlighted = [UIImage imageNamed:@"motor-racing-hit.png"];
                 [[cell categoryIcon] setImage:image];
+                [[cell categoryIcon] setHighlightedImage:highlighted];
                 break;
             }
             case (CRICKET): {
                 UIImage *image = [UIImage imageNamed: @"cricket.png"];
+                UIImage *highlighted = [UIImage imageNamed:@"cricket-hit.png"];
                 [[cell categoryIcon] setImage:image];
+                [[cell categoryIcon] setHighlightedImage:highlighted];
                 break;
             }
             case (RUGBY): {
                 UIImage *image = [UIImage imageNamed: @"rugby.png"];
+                UIImage *highlighted = [UIImage imageNamed:@"rugby-hit.png"];
                 [[cell categoryIcon] setImage:image];
+                [[cell categoryIcon] setHighlightedImage:highlighted];
                 break;
             }
             case (BASEBALL): {
                 UIImage *image = [UIImage imageNamed: @"baseball.png"];
+                UIImage *highlighted = [UIImage imageNamed:@"baseball-hit.png"];
                 [[cell categoryIcon] setImage:image];
+                [[cell categoryIcon] setHighlightedImage:highlighted];
                 break;
             }
             case (ICEHOCKEY): {
                 UIImage *image = [UIImage imageNamed: @"ice-hockey.png"];
+                UIImage *highlighted = [UIImage imageNamed:@"ice-hockey-hit.png"];
                 [[cell categoryIcon] setImage:image];
+                [[cell categoryIcon] setHighlightedImage:highlighted];
                 break;
             }
             case (AMERICANFOOTBALL): {
                 UIImage *image = [UIImage imageNamed: @"american-football.png"];
+                UIImage *highlighted = [UIImage imageNamed:@"american-football-hit.png"];
                 [[cell categoryIcon] setImage:image];
+                [[cell categoryIcon] setHighlightedImage:highlighted];
                 break;
             }
             case (FINANCE): {
                 UIImage *image = [UIImage imageNamed: @"finance.png"];
+                UIImage *highlighted = [UIImage imageNamed:@"finance-hit.png"];
                 [[cell categoryIcon] setImage:image];
+                [[cell categoryIcon] setHighlightedImage:highlighted];
                 break;
             }
             case (REALITYTV): {
                 UIImage *image = [UIImage imageNamed: @"reality-tv.png"];
+                UIImage *highlighted = [UIImage imageNamed:@"reality-tv-hit.png"];
                 [[cell categoryIcon] setImage:image];
+                [[cell categoryIcon] setHighlightedImage:highlighted];
                 break;
             }
             case (AWARDS): {
                 UIImage *image = [UIImage imageNamed: @"awards.png"];
+                UIImage *highlighted = [UIImage imageNamed:@"awards-hit.png"];
                 [[cell categoryIcon] setImage:image];
+                [[cell categoryIcon] setHighlightedImage:highlighted];
                 break;
             }
             default: {
                 UIImage *image = [UIImage imageNamed: @"football.png"];
+                UIImage *highlighted = [UIImage imageNamed:@"football-hit.png"];
                 [[cell categoryIcon] setImage:image];
+                [[cell categoryIcon] setHighlightedImage:highlighted];
                 break;
             }
         }
+         */
         
         return cell;
     }
@@ -665,6 +747,7 @@ enum Category {
     && indexPath.row > currentExpandedIndex
     && indexPath.row <= currentExpandedIndex + [[subItems objectAtIndex:currentExpandedIndex] count];
     
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     if (isChild) {
         Game *game = [[subItems objectAtIndex:currentExpandedIndex] objectAtIndex:(indexPath.row - currentExpandedIndex - 1)];
         
@@ -674,14 +757,16 @@ enum Category {
             detailViewController.game = game;
             NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,nil];
             [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
-            [[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]];
+            [[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]];
+            if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+                self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+            else
+                self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
             [controllerList setObject:detailViewController forKey:game.name];
             
         }
         
-        if ([controllerList objectForKey:game.name] == nil) {
-            NSLog (@"something wrong");
-        } else {
+        if ([controllerList objectForKey:game.name]) {
             [self.navigationController pushViewController:[controllerList objectForKey:game.name] animated:YES];
         }
         return;
@@ -766,7 +851,11 @@ enum Category {
         detailViewController.game = game;
         NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,nil];
         [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
-        [[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0]];
+        [[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+        else
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
         [controllerList setObject:detailViewController forKey:game.name];
         
     }

@@ -27,7 +27,7 @@
 @implementation IPStatsViewController
 
 
-@synthesize totalWinningsLabel, globalRankLabel, gamesPlayedLabel, correctLabel, winningsLabel, winsLabel, totalWinnings, globalRank, gamesPlayed, correct, rating, usernameLabel, noProfileImage, winningsChart, winsChart, totalChartWins;
+@synthesize winningsLabel, winsLabel, usernameLabel, noProfileImage, winningsChart, winsChart, totalChartWins, externalUsername, externalFBID, totalWinnings, globalRank, gamesPlayed, correctPicks, statsTableView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -44,14 +44,11 @@
 	self.title = @"Stats";
     [self.navigationController.sideMenu setupSideMenuBarButtonItem];
     
-    self.totalWinningsLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:16.0];
-    self.globalRankLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:16.0];
-    self.gamesPlayedLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:16.0];
-    self.correctLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:16.0];
     self.winningsLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:16.0];
     self.winsLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:16.0];
-    self.usernameLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:18.0];
-    
+    self.usernameLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:16.0];
+    self.view.backgroundColor = [UIColor colorWithRed:32/255.0 green:35/255.0 blue:45/255.0 alpha:1];
+    [statsTableView setBackgroundColor:[UIColor clearColor]];
 }
 
 
@@ -59,7 +56,21 @@
 {
     [super viewDidAppear:animated];
     IPAppDelegate *appDelegate = (IPAppDelegate *)[[UIApplication sharedApplication] delegate];
-    if (appDelegate.loggedin) {
+    if (externalUsername) {
+        if ((FBSession.activeSession.isOpen) && (externalFBID)) {
+            self.userProfileImage.profileID = externalFBID;
+            self.userProfileImage.layer.cornerRadius = 30.0;
+            [self.noProfileImage setHidden:YES];
+            [self.userProfileImage setHidden:NO];
+        } else {
+            UIImage *image = [UIImage imageNamed: @"stats-avatar.png"];
+            [self.userProfileImage setHidden:YES];
+            [self.noProfileImage setImage:image];
+            [self.noProfileImage setHidden:NO];
+        }
+        self.usernameLabel.text = externalUsername;
+        [self getStats:externalUsername];
+    } else if (appDelegate.loggedin) {
         self.usernameLabel.text = appDelegate.user;
         if (FBSession.activeSession.isOpen) {
             [[FBRequest requestForMe] startWithCompletionHandler:
@@ -67,12 +78,16 @@
                NSDictionary<FBGraphUser> *user,
                NSError *error) {
                  if (!error) {
-                     self.userProfileImage.profileID = user.id;
+                     // self.userProfileImage.profileID = user.id;
+                     self.userProfileImage.profileID = [user objectForKey:@"id"];
+                     self.userProfileImage.layer.cornerRadius = 30.0;
                  }
              }];
             [self.noProfileImage setHidden:YES];
+            [self.userProfileImage setHidden:NO];
         } else {
-            UIImage *image = [UIImage imageNamed: @"user.png"];
+            UIImage *image = [UIImage imageNamed: @"stats-avatar.png"];
+            [self.userProfileImage setHidden:YES];
             [self.noProfileImage setImage:image];
             [self.noProfileImage setHidden:NO];
         }
@@ -80,14 +95,15 @@
     } else {
         self.usernameLabel.text = @"";
         self.userProfileImage.profileID = nil;
-        UIImage *image = [UIImage imageNamed: @"user.png"];
+        UIImage *image = [UIImage imageNamed: @"stats-avatar.png"];
         [self.noProfileImage setImage:image];
         [self.noProfileImage setHidden:NO];
-        self.totalWinnings.text = @"$0";
-        self.globalRank.text = @"-";
-        self.gamesPlayed.text = @"0";
-        self.correct.text = @"-";
-        self.rating.text = @"";
+        [self.userProfileImage setHidden:YES];
+        self.totalWinnings = @"$0";
+        self.globalRank = @"-";
+        self.gamesPlayed = @"0";
+        self.correctPicks = @"-";
+        // self.rating.text = @"";
         self.winningsChart.text = @"";
         self.winsChart.text = @"";
         self.globalWinnings = 0;
@@ -104,13 +120,13 @@
 
 - (void)drawPieCharts
 {
-    pieChartViewLeft = [[PieChartView alloc] initWithFrame:CGRectMake(20, 245, 120, 120)];
+    pieChartViewLeft = [[PieChartView alloc] initWithFrame:CGRectMake(40, 285, 100, 100)];
     pieChartViewLeft.delegate = self;
     pieChartViewLeft.datasource = self;
     [self.view addSubview:pieChartViewLeft];
-    self.winningsChart.text = self.totalWinnings.text;
+    self.winningsChart.text = self.totalWinnings;
     
-    pieChartViewRight = [[PieChartView alloc] initWithFrame:CGRectMake(180, 245, 120, 120)];
+    pieChartViewRight = [[PieChartView alloc] initWithFrame:CGRectMake(180, 285, 100, 100)];
     pieChartViewRight.delegate = self;
     pieChartViewRight.datasource = self;
     [self.view addSubview:pieChartViewRight];
@@ -139,25 +155,27 @@
          float hWins=0;
          float totalWins=0;
          if (!stats.totalWinnings)
-             self.totalWinnings.text = @"";
+             self.totalWinnings = @"";
          else
-             self.totalWinnings.text = [@"$" stringByAppendingString:stats.totalWinnings];
+             self.totalWinnings = [@"$" stringByAppendingString:stats.totalWinnings];
          if ((!stats.totalRank) || (!stats.totalUsers))
-             self.globalRank.text = @"";
+             self.globalRank = @"";
          else
-             self.globalRank.text = [stats.totalRank stringByAppendingFormat:@"/%@", stats.totalUsers];
+             self.globalRank = [stats.totalRank stringByAppendingFormat:@"/%@", stats.totalUsers];
          if (!stats.totalGames)
-             self.gamesPlayed.text = @"";
+             self.gamesPlayed = @"";
          else
-             self.gamesPlayed.text = stats.totalGames;
+             self.gamesPlayed = stats.totalGames;
          if (!stats.totalCorrect)
-             self.correct.text = @"";
+             self.correctPicks = @"";
          else
-             self.correct.text = [stats.totalCorrect stringByAppendingString:@"%"];
+             self.correctPicks = [stats.totalCorrect stringByAppendingString:@"%"];
+         /*
          if (!stats.userRating)
              self.rating.text = @"";
          else
              self.rating.text = stats.userRating;
+          */
          if (!stats.globalWinnings)
              self.globalWinnings = 0;
          else
@@ -196,12 +214,13 @@
              self.h2hWins = roundf((hWins/totalWins)*100);
          }
          [self drawPieCharts];
+         [statsTableView reloadData];
      } failure:^(RKObjectRequestOperation *operation, NSError *error){
-         self.totalWinnings.text = @"$0";
-         self.globalRank.text = @"-";
-         self.gamesPlayed.text = @"0";
-         self.correct.text = @"-";
-         self.rating.text = @"";
+         self.totalWinnings = @"$0";
+         self.globalRank = @"-";
+         self.gamesPlayed = @"0";
+         self.correctPicks = @"-";
+         // self.rating.text = @"";
          self.winningsChart.text = @"";
          self.winsChart.text = @"";
          self.globalWinnings = 0;
@@ -212,7 +231,6 @@
          self.h2hWins = 0;
          [pieChartViewLeft setHidden:YES];
          [pieChartViewRight setHidden:YES];
-         
      }];
 }
 
@@ -226,7 +244,7 @@
 
 -(CGFloat)centerCircleRadius
 {
-    return 35;
+    return 36;
 }
 
 #pragma mark - PieChartViewDataSource
@@ -240,11 +258,15 @@
 {
     UIColor *color;
     if (index == 0)
-        color = [UIColor colorWithRed:246/255.0 green:155/255.0 blue:0/255.0 alpha:1];
+        // color = [UIColor colorWithRed:246/255.0 green:155/255.0 blue:0/255.0 alpha:1];
+        color = [UIColor colorWithRed:255/255.0 green:224/255.0 blue:41/255.0 alpha:1];
     else if (index == 1)
-        color = [UIColor colorWithRed:129/255.0 green:195/255.0 blue:29/255.0 alpha:1];
+        // color = [UIColor colorWithRed:129/255.0 green:195/255.0 blue:29/255.0 alpha:1];
+        color = [UIColor colorWithRed:255/255.0 green:129/255.0 blue:83/255.0 alpha:1];
+        // color = [UIColor colorWithRed:255/255.0 green:0/255.0 blue:0/255.0 alpha:1];
     else
-        color = [UIColor colorWithRed:62/255.0 green:173/255.0 blue:219/255.0 alpha:1];
+        // color = [UIColor colorWithRed:62/255.0 green:173/255.0 blue:219/255.0 alpha:1];
+        color = [UIColor colorWithRed:74/255.0 green:202/255.0 blue:180/255.0 alpha:1];
     return color;
 }
 
@@ -263,6 +285,71 @@
     else
         return self.h2hWins;
 }
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 4;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"statsCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
+    }
+    cell.textLabel.backgroundColor = [UIColor clearColor];
+    cell.detailTextLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0];
+    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.textLabel.font = [UIFont fontWithName:@"Avalon-Demi" size:14.0];
+    cell.detailTextLabel.font = [UIFont fontWithName:@"Avalon-Demi" size:14.0];
+    
+    if (indexPath.row % 2) {
+        cell.backgroundColor = [UIColor colorWithRed:49/255.0 green:52/255.0 blue:62/255.0 alpha:1];
+        cell.contentView.backgroundColor = [UIColor colorWithRed:49/255.0 green:52/255.0 blue:62/255.0 alpha:1];
+    } else {
+        cell.backgroundColor = [UIColor colorWithRed:32/255.0 green:35/255.0 blue:45/255.0 alpha:1];
+        cell.contentView.backgroundColor = [UIColor colorWithRed:32/255.0 green:35/255.0 blue:45/255.0 alpha:1];
+    }
+    
+    switch (indexPath.row) {
+        case 0: {
+            cell.textLabel.text = @"Total Winnings";
+            cell.detailTextLabel.text = self.totalWinnings;
+            break;
+        }
+        case 1: {
+            cell.textLabel.text = @"Global Rank";
+            cell.detailTextLabel.text = self.globalRank;
+            break;
+        }
+        case 2: {
+            cell.textLabel.text = @"Games Played";
+            cell.detailTextLabel.text = self.gamesPlayed;
+            break;
+        }
+        case 3: {
+            cell.textLabel.text = @"Correct Picks";
+            cell.detailTextLabel.text = self.correctPicks;
+            break;
+        }
+    }
+    
+    return cell;
+}
+
 
 
 @end

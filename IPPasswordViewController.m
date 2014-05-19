@@ -38,6 +38,7 @@
     [super viewDidLoad];
     self.title = @"Password";
     
+    /*
     UIImage *backButtonNormal = [UIImage imageNamed:@"back-button.png"];
     UIImage *backButtonHighlighted = [UIImage imageNamed:@"back-button-hit-state.png"];
     CGRect frameimg = CGRectMake(0, 0, backButtonNormal.size.width, backButtonNormal.size.height);
@@ -54,10 +55,11 @@
     } else {
         self.navigationItem.leftBarButtonItem = barButtonItem;
     }
+    */
     
     UIImage *image = [UIImage imageNamed:@"login-button-normal.png"];
     UIImage *image2 = [UIImage imageNamed:@"login-button-hit.png"];
-    UIImage *image3 = [UIImage imageNamed:@"grey-button.png"];
+    UIImage *image3 = [UIImage imageNamed:@"login-button-disabled.png"];
     [self.passwordButton setBackgroundImage:image forState:UIControlStateNormal];
     [self.passwordButton setBackgroundImage:image2 forState:UIControlStateHighlighted];
     [self.passwordButton setBackgroundImage:image3 forState:UIControlStateDisabled];

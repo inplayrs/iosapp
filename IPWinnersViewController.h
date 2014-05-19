@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class IPStatsViewController;
+@class IPLeaderboardViewController;
 
 @interface IPWinnersViewController : UITableViewController
 {
@@ -25,6 +27,13 @@
 @property (nonatomic, copy) NSMutableArray *competitionWinnersList;
 @property (nonatomic, copy) NSMutableArray *gameWinnersList;
 @property (nonatomic, copy) NSMutableArray *overallWinnersList;
+@property (strong, nonatomic) NSMutableDictionary *competitionControllerList;
+@property (strong, nonatomic) NSMutableDictionary *gameControllerList;
+@property (strong, nonatomic) NSMutableDictionary *overallControllerList;
+@property (strong, nonatomic) IPStatsViewController *statsViewController;
+@property (strong, nonatomic) IPLeaderboardViewController *gameViewController;
+@property (strong, nonatomic) IPLeaderboardViewController *competitionViewController;
+@property (strong, nonatomic) NSMutableDictionary *gameList;
 
 
 @end

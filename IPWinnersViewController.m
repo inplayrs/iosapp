@@ -13,6 +13,10 @@
 #import "OverallWinners.h"
 #import "IPAppDelegate.h"
 #import "Error.h"
+#import "IPLeaderboardViewController.h"
+#import "IPStatsViewController.h"
+#import "Game.h"
+#import "Competition.h"
 
 
 enum Category {
@@ -38,7 +42,7 @@ enum Category {
 
 @implementation IPWinnersViewController
 
-@synthesize competitionWinnersList, gameWinnersList, overallWinnersList, winnersTab;
+@synthesize competitionWinnersList, gameWinnersList, overallWinnersList, winnersTab, gameControllerList, competitionControllerList, overallControllerList, statsViewController, gameViewController, competitionViewController, gameList;
 
 - (void) dealloc {
     self.navigationController.sideMenu.menuStateEventBlock = nil;
@@ -62,6 +66,13 @@ enum Category {
     overallWinnersList = [[NSMutableArray alloc] init];
     self.title = @"Winners";
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background-only.png"]];
+    gameControllerList = [[NSMutableDictionary alloc] init];
+    competitionControllerList = [[NSMutableDictionary alloc] init];
+    overallControllerList = [[NSMutableDictionary alloc] init];
+    statsViewController = nil;
+    gameViewController = nil;
+    competitionViewController = nil;
+    gameList = [[NSMutableDictionary alloc] init];
     
     // this isn't needed on the rootViewController of the navigation controller
     [self.navigationController.sideMenu setupSideMenuBarButtonItem];
@@ -71,6 +82,8 @@ enum Category {
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self getGames:self];
+    // [self getCompetitions:self];
     [self getGameWinnersList:self];
 }
 
@@ -139,6 +152,43 @@ enum Category {
      } failure:nil];
 }
 
+/*
+- (void)getCompetitions:(id)sender
+{
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    [objectManager getObjectsAtPath:@"competition/list" parameters:nil success:
+     ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
+         [competitionList removeAllObjects];
+         NSArray* temp = [result array];
+         for (int i=0; i<temp.count; i++) {
+             Competition *competition = [temp objectAtIndex:i];
+             if (!competition.name)
+                 competition.name = @"Unassigned";
+             // if (competition.entered)
+                 [competitionList setObject:competition forKey:competition.name];
+         }
+     } failure:nil];
+}
+ */
+
+- (void)getGames:(id)sender
+{
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    [objectManager getObjectsAtPath:@"competition/games" parameters:nil success:
+     ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
+         [gameList removeAllObjects];
+         NSArray* temp = [result array];
+         for (int i=0; i<temp.count; i++) {
+             Game *game = [temp objectAtIndex:i];
+             if (!game.name)
+                 game.name = @"Unassigned";
+             // if (game.entered)
+                 [gameList setObject:game forKey:game.name];
+         }
+     } failure:nil];
+    
+}
+
 - (UIView *)headerView
 {
     if (!headerView) {
@@ -163,9 +213,10 @@ enum Category {
                   forLeftSegmentState:UIControlStateNormal
                     rightSegmentState:UIControlStateSelected
                            barMetrics:UIBarMetricsDefault];
-        NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Avalon-Demi" size:14.0],UITextAttributeFont,[UIColor whiteColor], UITextAttributeTextColor, nil];
-        [winnersTab setTitleTextAttributes:attributes forState:UIControlStateNormal];
-        [winnersTab setTitleTextAttributes:attributes forState:UIControlStateSelected];
+        NSDictionary *attributesUnselected = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Avalon-Demi" size:14.0],UITextAttributeFont,[UIColor colorWithRed:96/255.0 green:97/255.0 blue:120/255.0 alpha:1], UITextAttributeTextColor, nil];
+        NSDictionary *attributesSelected = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Avalon-Demi" size:14.0],UITextAttributeFont,[UIColor colorWithRed:32/255.0 green:35/255.0 blue:45/255.0 alpha:1], UITextAttributeTextColor, nil];
+        [winnersTab setTitleTextAttributes:attributesUnselected forState:UIControlStateNormal];
+        [winnersTab setTitleTextAttributes:attributesSelected forState:UIControlStateSelected];
     }
     
     return headerView;
@@ -198,6 +249,15 @@ enum Category {
     return NO;
 }
 
+- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row % 2) {
+        cell.backgroundColor = [UIColor colorWithRed:49/255.0 green:52/255.0 blue:62/255.0 alpha:1];
+    } else {
+        cell.backgroundColor = [UIColor colorWithRed:32/255.0 green:35/255.0 blue:45/255.0 alpha:1];
+    }
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (winnersTab.selectedSegmentIndex == 2) {
@@ -207,18 +267,26 @@ enum Category {
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
         }
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         OverallWinners *overallWinners;
         overallWinners = [overallWinnersList objectAtIndex:indexPath.row];
         NSString *winners = [NSString stringWithFormat:@"%d", overallWinners.rank];
         winners = [winners stringByAppendingString:@"    "];
         winners = [winners stringByAppendingString:overallWinners.username];
         
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-row.png"]];
-        [cell setBackgroundView:imageView];
+        // UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-row.png"]];
+        // [cell setBackgroundView:imageView];
+        if (indexPath.row % 2) {
+            cell.backgroundColor = [UIColor colorWithRed:49/255.0 green:52/255.0 blue:62/255.0 alpha:1];
+            cell.contentView.backgroundColor = [UIColor colorWithRed:49/255.0 green:52/255.0 blue:62/255.0 alpha:1];
+        } else {
+            cell.backgroundColor = [UIColor colorWithRed:32/255.0 green:35/255.0 blue:45/255.0 alpha:1];
+            cell.contentView.backgroundColor = [UIColor colorWithRed:32/255.0 green:35/255.0 blue:45/255.0 alpha:1];
+        }
         cell.textLabel.text = winners;
         cell.detailTextLabel.text = [@"$" stringByAppendingString:overallWinners.winnings];
         cell.textLabel.backgroundColor = [UIColor clearColor];
-        cell.detailTextLabel.textColor = [UIColor colorWithRed:234.0/255.0 green:208.0/255.0 blue:23.0/255.0 alpha:1.0];
+        cell.detailTextLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0];
         // cell.detailTextLabel.textColor = [UIColor whiteColor];
         cell.detailTextLabel.backgroundColor = [UIColor clearColor];
         cell.textLabel.textColor = [UIColor whiteColor];
@@ -232,6 +300,7 @@ enum Category {
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         CompetitionWinners *competitionWinners;
         if (winnersTab.selectedSegmentIndex == 0)
             competitionWinners = [gameWinnersList objectAtIndex:indexPath.row];
@@ -250,8 +319,15 @@ enum Category {
         }
         competition = [competition stringByAppendingString:winners];
     
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-row.png"]];
-        [cell setBackgroundView:imageView];
+        // UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lobby-row.png"]];
+        // [cell setBackgroundView:imageView];
+        if (indexPath.row % 2) {
+            cell.backgroundColor = [UIColor colorWithRed:49/255.0 green:52/255.0 blue:62/255.0 alpha:1];
+            cell.contentView.backgroundColor = [UIColor colorWithRed:49/255.0 green:52/255.0 blue:62/255.0 alpha:1];
+        } else {
+            cell.backgroundColor = [UIColor colorWithRed:32/255.0 green:35/255.0 blue:45/255.0 alpha:1];
+            cell.contentView.backgroundColor = [UIColor colorWithRed:32/255.0 green:35/255.0 blue:45/255.0 alpha:1];
+        }
         cell.textLabel.text = competition;
         cell.textLabel.backgroundColor = [UIColor clearColor];
         cell.textLabel.textColor = [UIColor whiteColor];
@@ -348,6 +424,64 @@ enum Category {
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return [[self headerView] bounds].size.height;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (winnersTab.selectedSegmentIndex == 0) { // game
+        CompetitionWinners *competitionWinners = [gameWinnersList objectAtIndex:indexPath.row];
+        if ([gameControllerList objectForKey:competitionWinners.name] == nil) {
+            gameViewController = [[IPLeaderboardViewController alloc] initWithNibName:@"IPLeaderboardViewController" bundle:nil];
+            gameViewController.game = [gameList objectForKey:competitionWinners.name];
+            gameViewController.lbType = 0;
+            gameViewController.fromWinners = YES;
+            if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+                self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+            else
+                self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+            [gameControllerList setObject:gameViewController forKey:competitionWinners.name];
+        }
+        if ([gameControllerList objectForKey:competitionWinners.name]) {
+            [self.navigationController pushViewController:[gameControllerList objectForKey:competitionWinners.name] animated:YES];
+        }
+    } else if (winnersTab.selectedSegmentIndex == 1) { // competition
+        CompetitionWinners *competitionWinners = [competitionWinnersList objectAtIndex:indexPath.row];
+        if ([competitionControllerList objectForKey:competitionWinners.name] == nil) {
+            competitionViewController = [[IPLeaderboardViewController alloc] initWithNibName:@"IPLeaderboardViewController" bundle:nil];
+            competitionViewController.competitionName = competitionWinners.name;
+            competitionViewController.lbType = 0;
+            competitionViewController.competitionID = competitionWinners.competitionID;
+            if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+                self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+            else
+                self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+            [competitionControllerList setObject:competitionViewController forKey:competitionWinners.name];
+        }
+        if ([competitionControllerList objectForKey:competitionWinners.name]) {
+            [self.navigationController pushViewController:[competitionControllerList objectForKey:competitionWinners.name] animated:YES];
+        }
+        
+    } else { // overall winners
+        OverallWinners *overallWinners = [overallWinnersList objectAtIndex:indexPath.row];
+        if ([overallControllerList objectForKey:overallWinners.username] == nil) {
+            statsViewController = [[IPStatsViewController alloc] initWithNibName:@"IPStatsViewController" bundle:nil];
+            statsViewController.externalUsername = overallWinners.username;
+            if (overallWinners.fbID)
+                statsViewController.externalFBID = overallWinners.fbID;
+            NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,nil];
+            [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
+            [[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]];
+            if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+                self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+            else
+                self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+            [overallControllerList setObject:statsViewController forKey:overallWinners.username];
+        }
+        if ([overallControllerList objectForKey:overallWinners.username]) {
+            [self.navigationController pushViewController:[overallControllerList objectForKey:overallWinners.username] animated:YES];
+        }
+    }
+    return;
 }
 
 

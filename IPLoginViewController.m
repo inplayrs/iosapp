@@ -36,7 +36,8 @@
 {
     [super viewDidLoad];
     self.title = @"Login";
-
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"screen-football-b.png"]];
+    /*
     UIImage *backButtonNormal = [UIImage imageNamed:@"back-button.png"];
     UIImage *backButtonHighlighted = [UIImage imageNamed:@"back-button-hit-state.png"];
     CGRect frameimg = CGRectMake(0, 0, backButtonNormal.size.width, backButtonNormal.size.height);
@@ -53,10 +54,11 @@
     } else {
         self.navigationItem.leftBarButtonItem = barButtonItem;
     }
+     */
     
     UIImage *image = [UIImage imageNamed:@"login-button-normal.png"];
     UIImage *image2 = [UIImage imageNamed:@"login-button-hit.png"];
-    UIImage *image3 = [UIImage imageNamed:@"grey-button.png"];
+    UIImage *image3 = [UIImage imageNamed:@"login-button-disabled.png"];
     [self.loginButton setBackgroundImage:image forState:UIControlStateNormal];
     [self.loginButton setBackgroundImage:image2 forState:UIControlStateHighlighted];
     [self.loginButton setBackgroundImage:image3 forState:UIControlStateDisabled];

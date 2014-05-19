@@ -38,7 +38,8 @@
 {
     [super viewDidLoad];
     self.title = @"Register";
-    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"screen-football-b.png"]];
+    /*
     UIImage *backButtonNormal = [UIImage imageNamed:@"back-button.png"];
     UIImage *backButtonHighlighted = [UIImage imageNamed:@"back-button-hit-state.png"];
     CGRect frameimg = CGRectMake(0, 0, backButtonNormal.size.width, backButtonNormal.size.height);
@@ -55,10 +56,11 @@
     } else {
         self.navigationItem.leftBarButtonItem = barButtonItem;
     }
+     */
     
     UIImage *image = [UIImage imageNamed:@"login-button-normal.png"];
     UIImage *image2 = [UIImage imageNamed:@"login-button-hit.png"];
-    UIImage *image3 = [UIImage imageNamed:@"grey-button.png"];
+    UIImage *image3 = [UIImage imageNamed:@"login-button-disabled.png"];
     [self.registerButton setBackgroundImage:image forState:UIControlStateNormal];
     [self.registerButton setBackgroundImage:image2 forState:UIControlStateHighlighted];
     [self.registerButton setBackgroundImage:image3 forState:UIControlStateDisabled];

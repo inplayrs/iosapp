@@ -14,5 +14,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *inplayIcon;
 @property (weak, nonatomic) IBOutlet UIImageView *enteredIcon;
+@property (nonatomic) NSInteger gameState;
 
 @end

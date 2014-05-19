@@ -21,8 +21,9 @@
 @property (nonatomic, copy) NSURL *bannerImageURL;
 @property (nonatomic) NSInteger competitionID;
 @property (nonatomic, copy) NSString *competitionName;
+@property (nonatomic) NSInteger inplayType;
 
--(id)initWithGameID:(NSInteger)gameID name:(NSString *)name startDate:(NSString *)startDate state:(NSInteger)state category:(NSInteger)category type:(NSInteger)type entered:(BOOL)entered;
+-(id)initWithGameID:(NSInteger)gameID name:(NSString *)name startDate:(NSString *)startDate state:(NSInteger)state category:(NSInteger)category type:(NSInteger)type entered:(BOOL)entered inplayType:(NSInteger)inplayType competitionID:(NSInteger)competitionID;
 
 - (NSComparisonResult) compareWithGame:(Game*) anotherGame;
 
