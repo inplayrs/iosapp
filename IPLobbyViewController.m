@@ -426,15 +426,10 @@ enum Category {
             [subItems removeAllObjects];
             [topItems addObjectsFromArray:tempTopItems];
             [subItems addObjectsFromArray:tempSubItems];
-            /*
-            if ([topItems count] == 1) {
-                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-                [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-                [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
-            }
-             */
+            
             [self.tableView reloadData];
             [self.refreshControl endRefreshing];
+            
             
             NSSortDescriptor *rankSorter = [[NSSortDescriptor alloc] initWithKey:@"bannerPosition" ascending:YES];
             [bannerItems sortUsingDescriptors:[NSArray arrayWithObject:rankSorter]];
@@ -454,6 +449,11 @@ enum Category {
                 timer = [NSTimer scheduledTimerWithTimeInterval:5.00 target:self selector:@selector(changeBanner:) userInfo:nil repeats:YES];
             IPAppDelegate *appDelegate = (IPAppDelegate *)[[UIApplication sharedApplication] delegate];
             appDelegate.refreshLobby = NO;
+            
+            if ([topItems count] == 1) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+            }
         }
 
     } failure:^(RKObjectRequestOperation *operation, NSError *error){
@@ -514,7 +514,6 @@ enum Category {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     BOOL isChild =
     currentExpandedIndex > -1
     && indexPath.row > currentExpandedIndex

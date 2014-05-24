@@ -19,6 +19,7 @@
 #import "CompetitionPoints.h"
 #import "PoolPoints.h"
 #import "CompetitionWinners.h"
+#import "GameWinners.h"
 #import "OverallWinners.h"
 #import "FriendPool.h"
 #import "PoolMember.h"
@@ -54,6 +55,7 @@
         // navigationController.navigationBar.barTintColor = [UIColor colorWithRed:234/255.0 green:208/255.0 blue:23/255.0 alpha:1.0];
         [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed: @"header-bar.png"] forBarMetrics:UIBarMetricsDefault];
         navigationController.navigationBar.translucent = NO;
+        navigationController.navigationBar.barStyle = UIBarStyleDefault;
     } else {
         [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed: @"header-bar-small.png"] forBarMetrics:UIBarMetricsDefault];
         [navigationController.navigationBar setTitleVerticalPositionAdjustment:5.0 forBarMetrics:UIBarMetricsDefault];
@@ -132,7 +134,9 @@
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
         // [application setStatusBarStyle:UIStatusBarStyleDefault];
         self.window.clipsToBounds =YES;
-        [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
+        [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
+        // [[UIToolbar appearance] setBarTintColor:[UIColor whiteColor]];
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     } else {
         [application setStatusBarStyle:UIStatusBarStyleBlackOpaque];
     }
@@ -332,12 +336,16 @@
      @"winners":        @"winners"
      }];
     
-    RKObjectMapping *gameWinnersMapping = [RKObjectMapping mappingForClass:[CompetitionWinners class]];
+    RKObjectMapping *gameWinnersMapping = [RKObjectMapping mappingForClass:[GameWinners class]];
     [gameWinnersMapping addAttributeMappingsFromDictionary:@{
-     @"game_id":        @"competitionID",
+     @"game_id":        @"gameID",
      @"game":           @"name",
      @"category_id":    @"category",
      @"gameEndDate":    @"endDate",
+     @"comp_id":        @"competitionID",
+     @"inplay_type":    @"inplayType",
+     @"game_type":      @"type",
+     @"state":          @"state",
      @"winners":        @"winners"
      }];
     

@@ -33,7 +33,7 @@
 @property (strong, nonatomic) IPStatsViewController *statsViewController;
 @property (strong, nonatomic) IPLeaderboardViewController *gameViewController;
 @property (strong, nonatomic) IPLeaderboardViewController *competitionViewController;
-@property (strong, nonatomic) NSMutableDictionary *gameList;
+// @property (strong, nonatomic) NSMutableDictionary *gameList;
 
 
 @end

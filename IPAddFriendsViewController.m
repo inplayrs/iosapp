@@ -136,7 +136,6 @@
             friendPickerController.delegate = self;
             friendPickerController.fieldsForRequest = [NSSet setWithObjects:@"devices", @"installed", nil];
         }
-    
         [friendPickerController loadData];
         [friendPickerController clearSelection];
         [self.addUsers.facebookIDs removeAllObjects];

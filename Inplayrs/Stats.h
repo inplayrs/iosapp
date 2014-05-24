@@ -15,7 +15,7 @@
 @property (nonatomic, copy) NSString *totalRank;
 @property (nonatomic, copy) NSString *totalUsers;
 @property (nonatomic, copy) NSString *totalGames;
-@property (nonatomic, copy) NSString *totalCorrect;
+@property (nonatomic) float totalCorrect;
 @property (nonatomic, copy) NSString *userRating;
 @property (nonatomic, copy) NSString *globalWinnings;
 @property (nonatomic, copy) NSString *fangroupWinnings;

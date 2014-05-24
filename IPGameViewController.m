@@ -40,7 +40,8 @@ enum State {
     INPLAY=1,
     COMPLETED=2,
     SUSPENDED=3,
-    NEVERINPLAY=4
+    NEVERINPLAY=4,
+    ARCHIVED=5
 };
 
 enum GameType {
@@ -740,7 +741,7 @@ enum GameType {
             [self.friendButton setTitle:friendPool.name forState:UIControlStateNormal];
         } else if ([friendPools count] > 1) {
             [self.friendButton setTitle:@"VIEW" forState:UIControlStateNormal];
-        } else if ((self.dataController.userState == SUBMITTED) && ([friendPools count] == 0)) {
+        } else if ((self.game.state > 0) && ([friendPools count] == 0)) {
             [self.friendButton setTitle:@"Not Entered" forState:UIControlStateDisabled];
             [self.friendButton setEnabled:NO];
         } else if ([friendPools count] == 0) {
@@ -774,6 +775,7 @@ enum GameType {
     switch (self.game.state) {
         case (INACTIVE):
         case (COMPLETED):
+        case (ARCHIVED):
             if (([self.dataController.points.winnings isEqualToString:@"-"]) || (!self.dataController.points.winnings)) {
                 [self.submitButton setTitle:@"COMPLETE" forState:UIControlStateNormal];
                 [self.submitButton setTitle:@"COMPLETE" forState:UIControlStateDisabled];
@@ -1459,29 +1461,6 @@ enum GameType {
                                 [[cell selectionButton] setImage:cross forSegmentAtIndex:2];
                             }
                         }
-                        /*
-                        NSDictionary *green = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:75.0/255.0 green:209.0/255.0 blue:3.0/255.0 alpha:1.0],UITextAttributeTextColor,[UIFont fontWithName:@"Avalon-Demi" size:12.0],UITextAttributeFont,nil];
-                        NSDictionary *red = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:255.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1.0],UITextAttributeTextColor,[UIFont fontWithName:@"Avalon-Demi" size:12.0],UITextAttributeFont,nil];
-                        if (selectionAtIndex.selection == 0) {
-                            [[cell selectionButton] setTitle:selectionLabel0 forSegmentAtIndex:0];
-                            if (periodAtIndex.result == 0)
-                                [[cell selectionButton] setTitleTextAttributes:green forState:UIControlStateDisabled];
-                            else
-                                [[cell selectionButton] setTitleTextAttributes:red forState:UIControlStateDisabled];
-                        } else if (selectionAtIndex.selection == 1) {
-                            [[cell selectionButton] setTitle:selectionLabel1 forSegmentAtIndex:1];
-                            if (periodAtIndex.result == 1)
-                                [[cell selectionButton] setTitleTextAttributes:green forState:UIControlStateDisabled];
-                            else
-                                [[cell selectionButton] setTitleTextAttributes:red forState:UIControlStateDisabled];
-                        } else if ((selectionAtIndex.selection == 2) && (cell.selectionButton.numberOfSegments >2)) {
-                            [[cell selectionButton] setTitle:selectionLabel2 forSegmentAtIndex:2];
-                            if (periodAtIndex.result == 2)
-                                [[cell selectionButton] setTitleTextAttributes:green forState:UIControlStateDisabled];
-                            else
-                                [[cell selectionButton] setTitleTextAttributes:red forState:UIControlStateDisabled];
-                        }
-                         */
                     }
                     
                     [[cell selectionButton] setEnabled:NO];
@@ -1501,6 +1480,7 @@ enum GameType {
             }
             break;
         case (COMPLETED):  // game state
+        case (ARCHIVED):
         default: {
             UIImageView *completedView;
             if (indexPath.row % 2)

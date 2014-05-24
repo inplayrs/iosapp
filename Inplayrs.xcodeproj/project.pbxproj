@@ -270,6 +270,7 @@
 		F497611718B2366800016238 /* create-button-game-hit-state@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F497611518B2366800016238 /* create-button-game-hit-state@2x.png */; };
 		F497611A18B2396800016238 /* hamburger-hit-state@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F497611918B2396800016238 /* hamburger-hit-state@2x.png */; };
 		F49DD0C816BA9A0D004A08F2 /* IPGameItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F49DD0C716BA9A0D004A08F2 /* IPGameItemCell.m */; };
+		F4A42FF3192F5760009F91F8 /* GameWinners.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A42FF2192F5760009F91F8 /* GameWinners.m */; };
 		F4A540A216D6655F00E95491 /* IPGameItemCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4A540A116D6655F00E95491 /* IPGameItemCell2.xib */; };
 		F4ABEA071890348D00C87786 /* FriendPool.m in Sources */ = {isa = PBXBuildFile; fileRef = F4ABEA061890348D00C87786 /* FriendPool.m */; };
 		F4ABEA0A18903D5000C87786 /* PoolMember.m in Sources */ = {isa = PBXBuildFile; fileRef = F4ABEA0918903D5000C87786 /* PoolMember.m */; };
@@ -722,6 +723,8 @@
 		F497611918B2396800016238 /* hamburger-hit-state@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hamburger-hit-state@2x.png"; sourceTree = "<group>"; };
 		F49DD0C616BA9A0D004A08F2 /* IPGameItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPGameItemCell.h; sourceTree = "<group>"; };
 		F49DD0C716BA9A0D004A08F2 /* IPGameItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPGameItemCell.m; sourceTree = "<group>"; };
+		F4A42FF1192F574A009F91F8 /* GameWinners.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameWinners.h; path = Inplayrs/GameWinners.h; sourceTree = "<group>"; };
+		F4A42FF2192F5760009F91F8 /* GameWinners.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameWinners.m; path = Inplayrs/GameWinners.m; sourceTree = "<group>"; };
 		F4A540A116D6655F00E95491 /* IPGameItemCell2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPGameItemCell2.xib; sourceTree = "<group>"; };
 		F4ABEA051890347F00C87786 /* FriendPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendPool.h; path = Inplayrs/FriendPool.h; sourceTree = "<group>"; };
 		F4ABEA061890348D00C87786 /* FriendPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendPool.m; path = Inplayrs/FriendPool.m; sourceTree = "<group>"; };
@@ -1318,6 +1321,8 @@
 				F446726118CF398C00279A8F /* PoolPoints.m */,
 				F429F8F7170EDE50006E7CDE /* Competition.h */,
 				F429F8F8170EDE64006E7CDE /* Competition.m */,
+				F4A42FF1192F574A009F91F8 /* GameWinners.h */,
+				F4A42FF2192F5760009F91F8 /* GameWinners.m */,
 				F47B7BD917A67FE90008D3B9 /* CompetitionWinners.h */,
 				F47B7BDA17A67FFC0008D3B9 /* CompetitionWinners.m */,
 				F4F04704185881FB004D1498 /* OverallWinners.h */,
@@ -1963,6 +1968,7 @@
 				F49760F818A2B3AE00016238 /* Motd.m in Sources */,
 				F4CB023C182AB0F90016AB1D /* TSMessageView.m in Sources */,
 				F4F047061858820F004D1498 /* OverallWinners.m in Sources */,
+				F4A42FF3192F5760009F91F8 /* GameWinners.m in Sources */,
 				F4F714B916A712FA00FCCA82 /* SideMenuViewController.m in Sources */,
 				F4F714BF16AEB4AB00FCCA82 /* IPLobbyViewController.m in Sources */,
 				F4F714C416AEEF7F00FCCA82 /* IPGameViewController.m in Sources */,
@@ -2091,8 +2097,8 @@
 		F4B706EF1695C74700E9FCD8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Anil Bhagchandani (GKVQ38499U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Anil Bhagchandani (GKVQ38499U)";
 				FRAMEWORK_SEARCH_PATHS = /Users/inplayrs/Documents/Code/Inplayrs;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Inplayrs/Inplayrs-Prefix.pch";
@@ -2102,8 +2108,8 @@
 					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "EC6A74FC-26CC-4F37-99DA-64C1A986C77F";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EC6A74FC-26CC-4F37-99DA-64C1A986C77F";
+				PROVISIONING_PROFILE = "F891A74F-5CEE-4F58-AF9D-F60A1427862F";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F891A74F-5CEE-4F58-AF9D-F60A1427862F";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2123,8 +2129,8 @@
 					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C89EA132-0E9F-44A0-A8D6-41E232ACF4A7";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C89EA132-0E9F-44A0-A8D6-41E232ACF4A7";
+				PROVISIONING_PROFILE = "75B25BFC-02B8-448E-9D9A-4290313B8D0D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "75B25BFC-02B8-448E-9D9A-4290313B8D0D";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};

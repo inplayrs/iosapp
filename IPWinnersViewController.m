@@ -10,6 +10,7 @@
 #import "MFSideMenu.h"
 #import "RestKit.h"
 #import "CompetitionWinners.h"
+#import "GameWinners.h"
 #import "OverallWinners.h"
 #import "IPAppDelegate.h"
 #import "Error.h"
@@ -42,7 +43,7 @@ enum Category {
 
 @implementation IPWinnersViewController
 
-@synthesize competitionWinnersList, gameWinnersList, overallWinnersList, winnersTab, gameControllerList, competitionControllerList, overallControllerList, statsViewController, gameViewController, competitionViewController, gameList;
+@synthesize competitionWinnersList, gameWinnersList, overallWinnersList, winnersTab, gameControllerList, competitionControllerList, overallControllerList, statsViewController, gameViewController, competitionViewController;
 
 - (void) dealloc {
     self.navigationController.sideMenu.menuStateEventBlock = nil;
@@ -72,7 +73,7 @@ enum Category {
     statsViewController = nil;
     gameViewController = nil;
     competitionViewController = nil;
-    gameList = [[NSMutableDictionary alloc] init];
+    // gameList = [[NSMutableDictionary alloc] init];
     
     // this isn't needed on the rootViewController of the navigation controller
     [self.navigationController.sideMenu setupSideMenuBarButtonItem];
@@ -82,7 +83,7 @@ enum Category {
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self getGames:self];
+    // [self getGames:self];
     // [self getCompetitions:self];
     [self getGameWinnersList:self];
 }
@@ -120,7 +121,7 @@ enum Category {
          [gameWinnersList removeAllObjects];
          NSArray* temp = [result array];
          for (int i=0; i<temp.count; i++) {
-             CompetitionWinners *gameWinners = [temp objectAtIndex:i];
+             GameWinners *gameWinners = [temp objectAtIndex:i];
              if (!gameWinners.name)
                  gameWinners.name = @"Unassigned";
              [gameWinnersList addObject:gameWinners];
@@ -171,6 +172,7 @@ enum Category {
 }
  */
 
+/*
 - (void)getGames:(id)sender
 {
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
@@ -188,6 +190,7 @@ enum Category {
      } failure:nil];
     
 }
+ */
 
 - (UIView *)headerView
 {
@@ -429,20 +432,22 @@ enum Category {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (winnersTab.selectedSegmentIndex == 0) { // game
-        CompetitionWinners *competitionWinners = [gameWinnersList objectAtIndex:indexPath.row];
-        if ([gameControllerList objectForKey:competitionWinners.name] == nil) {
+        GameWinners *gameWinners = [gameWinnersList objectAtIndex:indexPath.row];
+        if ([gameControllerList objectForKey:gameWinners.name] == nil) {
             gameViewController = [[IPLeaderboardViewController alloc] initWithNibName:@"IPLeaderboardViewController" bundle:nil];
-            gameViewController.game = [gameList objectForKey:competitionWinners.name];
+            // gameViewController.game = [gameList objectForKey:competitionWinners.name];
+            Game *game = [[Game alloc] initWithGameID:gameWinners.gameID name:gameWinners.name startDate:@"" state:gameWinners.state category:gameWinners.category type:gameWinners.type entered:NO inplayType:gameWinners.inplayType competitionID:gameWinners.competitionID];
+            gameViewController.game = game;
             gameViewController.lbType = 0;
             gameViewController.fromWinners = YES;
             if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
                 self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
             else
                 self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
-            [gameControllerList setObject:gameViewController forKey:competitionWinners.name];
+            [gameControllerList setObject:gameViewController forKey:gameWinners.name];
         }
-        if ([gameControllerList objectForKey:competitionWinners.name]) {
-            [self.navigationController pushViewController:[gameControllerList objectForKey:competitionWinners.name] animated:YES];
+        if ([gameControllerList objectForKey:gameWinners.name]) {
+            [self.navigationController pushViewController:[gameControllerList objectForKey:gameWinners.name] animated:YES];
         }
     } else if (winnersTab.selectedSegmentIndex == 1) { // competition
         CompetitionWinners *competitionWinners = [competitionWinnersList objectAtIndex:indexPath.row];

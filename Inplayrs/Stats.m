@@ -20,7 +20,7 @@
         _totalRank = @"";
         _totalUsers = @"";
         _totalGames = @"";
-        _totalCorrect = @"";
+        _totalCorrect = 0.0;
         _userRating = @"";
         _globalWinnings = @"";
         _fangroupWinnings = @"";

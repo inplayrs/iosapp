@@ -11,7 +11,7 @@
 @implementation GameWinners
 
 
--(id)initWithGameID:(NSInteger)gameID name:(NSString *)name endDate:(NSString *)endDate category:(NSInteger)category
+-(id)initWithGameID:(NSInteger)gameID name:(NSString *)name endDate:(NSString *)endDate category:(NSInteger)category competitionID:(NSInteger)competitionID inplayType:(NSInteger)inplayType type:(NSInteger)type state:(NSInteger)state
 {
     self = [super init];
     if (self) {
@@ -19,6 +19,10 @@
         _name = name;
         _endDate = endDate;
         _category = category;
+        _competitionID = competitionID;
+        _inplayType = inplayType;
+        _type = type;
+        _state = state;
         return self;
     }
     return nil;

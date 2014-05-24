@@ -168,8 +168,10 @@
              self.gamesPlayed = stats.totalGames;
          if (!stats.totalCorrect)
              self.correctPicks = @"";
-         else
-             self.correctPicks = [stats.totalCorrect stringByAppendingString:@"%"];
+         else {
+             self.correctPicks = [NSString stringWithFormat:@"%.1f", stats.totalCorrect];
+             self.correctPicks = [self.correctPicks stringByAppendingString:@"%"];
+         }
          /*
          if (!stats.userRating)
              self.rating.text = @"";

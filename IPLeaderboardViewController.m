@@ -40,7 +40,8 @@ enum State {
     INPLAY=1,
     COMPLETED=2,
     SUSPENDED=3,
-    NEVERINPLAY=4
+    NEVERINPLAY=4,
+    ARCHIVED=5
 };
 
 
@@ -164,7 +165,7 @@ enum State {
     if (!self.isLoading) {
         self.isLoading = YES;
         if (competitionID) {
-            [self getLeaderboard:self.game.competitionID type:COMPETITIONS];
+            [self getLeaderboard:competitionID type:COMPETITIONS];
         } else if (self.lbType == FRIEND) {
             [self getFriendLeaderboard:self.game.gameID poolID:self.friendPool.poolID type:GAMES];
             [self getFriendLeaderboard:self.game.competitionID poolID:self.friendPool.poolID type:COMPETITIONS];
@@ -465,7 +466,7 @@ enum State {
     cell.pointsLabel.textColor = [UIColor whiteColor];
     cell.winningsLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0];
     
-    if (((self.lbType == GLOBAL) || (self.lbType == FRIEND)) && (self.type == GAMES) && (self.game.state == COMPLETED)) {
+    if (((self.lbType == GLOBAL) || (self.lbType == FRIEND)) && (self.type == GAMES) && ((self.game.state == COMPLETED) || (self.game.state == ARCHIVED))) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -578,7 +579,7 @@ enum State {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (((self.lbType == GLOBAL) || (self.lbType == FRIEND)) && (self.type == GAMES)) {
-        if (self.game.state == COMPLETED) {
+        if ((self.game.state == COMPLETED) || (self.game.state == ARCHIVED)) {
             Leaderboard *leaderboardAtIndex = [self.dataController.globalGameLeaderboard objectAtIndex:indexPath.row];
             if ([controllerList objectForKey:leaderboardAtIndex.name] == nil) {
                 detailViewController = [[IPGameViewController alloc] initWithNibName:@"IPGameViewController" bundle:nil];

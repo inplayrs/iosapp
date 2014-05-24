@@ -136,7 +136,7 @@
          } else {
              NSSortDescriptor *rankSorter = [[NSSortDescriptor alloc] initWithKey:@"rank" ascending:YES];
              NSSortDescriptor *nameSorter = [[NSSortDescriptor alloc] initWithKey:@"username" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-             [memberList sortedArrayUsingDescriptors:[NSArray arrayWithObjects:rankSorter, nameSorter, nil]];
+             [memberList sortUsingDescriptors:[NSArray arrayWithObjects:rankSorter, nameSorter, nil]];
          }
          [self.tableView reloadData];
      } failure:nil];
