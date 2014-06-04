@@ -256,8 +256,8 @@
         </view>
     </objects>
     <resources>
-        <image name="stats-background-bar.png" width="320" height="51"/>
-        <image name="stats-dividing-line.png" width="1" height="51"/>
+        <image name="stats-background-bar.png" width="640" height="103"/>
+        <image name="stats-dividing-line.png" width="2" height="103"/>
         <image name="title-bar.png" width="320" height="18"/>
     </resources>
 </document>

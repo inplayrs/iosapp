@@ -739,13 +739,16 @@ enum GameType {
         if ([friendPools count] == 1) {
             FriendPool *friendPool = [friendPools objectAtIndex:0];
             [self.friendButton setTitle:friendPool.name forState:UIControlStateNormal];
+            [self.friendButton setEnabled:YES];
         } else if ([friendPools count] > 1) {
             [self.friendButton setTitle:@"VIEW" forState:UIControlStateNormal];
+            [self.friendButton setEnabled:YES];
         } else if ((self.game.state > 0) && ([friendPools count] == 0)) {
             [self.friendButton setTitle:@"Not Entered" forState:UIControlStateDisabled];
             [self.friendButton setEnabled:NO];
         } else if ([friendPools count] == 0) {
             [self.friendButton setTitle:@"CREATE" forState:UIControlStateNormal];
+            [self.friendButton setEnabled:YES];
         }
         
     }
@@ -1298,16 +1301,14 @@ enum GameType {
                     [[cell inplayIcon] setHidden:NO];
                     
                     if (periodAtIndex.state == NEVERINPLAY) {
-                        NSString *inplay;
                         if (selectionAtIndex.selection == 0)
-                            inplay = [@"INPLAY: " stringByAppendingString:selectionLabel0];
+                            [[cell selectionButton] setTitle:selectionLabel0 forSegmentAtIndex:0];
                         else if (selectionAtIndex.selection == 1)
-                            inplay = [@"INPLAY: " stringByAppendingString:selectionLabel1];
+                            [[cell selectionButton] setTitle:selectionLabel1 forSegmentAtIndex:0];
                         else if (selectionAtIndex.selection == 2)
-                            inplay = [@"INPLAY: " stringByAppendingString:selectionLabel2];
+                            [[cell selectionButton] setTitle:selectionLabel2 forSegmentAtIndex:0];
                         else
-                            inplay = @"INPLAY";
-                        [[cell selectionButton] setTitle:inplay forSegmentAtIndex:0];
+                            [[cell selectionButton] setTitle:@"INPLAY" forSegmentAtIndex:0];
                         NSDictionary *yellow = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0],UITextAttributeTextColor,[UIFont fontWithName:@"Avalon-Bold" size:12.0],UITextAttributeFont,nil];
                         [[cell selectionButton] setTitleTextAttributes:yellow forState:UIControlStateDisabled];
                         [[cell selectionButton] removeSegmentAtIndex:2 animated:NO];
