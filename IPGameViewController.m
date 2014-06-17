@@ -310,7 +310,7 @@ enum GameType {
                 [Flurry logEvent:@"SUBMIT" withParameters:dictionary];
                 [TSMessage showNotificationInViewController:self
                                                       title:@"Update Successful"
-                                                   subtitle:@"Your selections have been updated."
+                                                   subtitle:@"Your points and selections have been updated."
                                                       image:nil
                                                        type:TSMessageNotificationTypeSuccess
                                                    duration:TSMessageNotificationDurationAutomatic
@@ -1300,7 +1300,7 @@ enum GameType {
                         [[cell inplayIcon] setImage:image];
                     [[cell inplayIcon] setHidden:NO];
                     
-                    if (periodAtIndex.state == NEVERINPLAY) {
+                    if ((periodAtIndex.state == NEVERINPLAY) && (selectionAtIndex.bank != YES)) {
                         if (selectionAtIndex.selection == 0)
                             [[cell selectionButton] setTitle:selectionLabel0 forSegmentAtIndex:0];
                         else if (selectionAtIndex.selection == 1)
@@ -1311,9 +1311,13 @@ enum GameType {
                             [[cell selectionButton] setTitle:@"INPLAY" forSegmentAtIndex:0];
                         NSDictionary *yellow = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0],UITextAttributeTextColor,[UIFont fontWithName:@"Avalon-Bold" size:12.0],UITextAttributeFont,nil];
                         [[cell selectionButton] setTitleTextAttributes:yellow forState:UIControlStateDisabled];
+                        [[cell selectionButton] setTitleTextAttributes:yellow forState:UIControlStateNormal];
+                        [[cell selectionButton] setTitleTextAttributes:yellow forState:UIControlStateSelected];
+                        [[cell selectionButton] setTitleTextAttributes:yellow forState:UIControlStateHighlighted];
                         [[cell selectionButton] removeSegmentAtIndex:2 animated:NO];
                         [[cell selectionButton] removeSegmentAtIndex:1 animated:NO];
                         [[cell selectionButton] setSelectedSegmentIndex:-1];
+                        [[cell selectionButton] setSelected:NO];
                         UIImage *neverinplay = [UIImage imageNamed:@"never-inplay.png"];
                         [[cell selectionButton] setBackgroundImage:neverinplay forState:UIControlStateDisabled barMetrics:UIBarMetricsDefault];
                         [cell.selectionButton setEnabled:NO forSegmentAtIndex:0];
@@ -1339,9 +1343,11 @@ enum GameType {
                         NSDictionary *black = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:29.0/255.0 green:28.0/255.0 blue:27.0/255.0 alpha:1.0],UITextAttributeTextColor,[UIFont fontWithName:@"Avalon-Bold" size:12.0],UITextAttributeFont,nil];
                         [[cell selectionButton] setTitleTextAttributes:black forState:UIControlStateDisabled];
                         [[cell selectionButton] setTitleTextAttributes:black forState:UIControlStateNormal];
+                        [[cell selectionButton] setTitleTextAttributes:black forState:UIControlStateSelected];
                         [[cell selectionButton] removeSegmentAtIndex:2 animated:NO];
                         [[cell selectionButton] removeSegmentAtIndex:1 animated:NO];
                         [[cell selectionButton] setSelectedSegmentIndex:-1];
+                        [[cell selectionButton] setSelected:NO];
                         UIImage *bankNormal = [UIImage imageNamed:@"bank-normal.png"];
                         UIImage *bankSelected = [UIImage imageNamed:@"bank-select.png"];
                         [[cell selectionButton] setBackgroundImage:bankNormal forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
@@ -1349,6 +1355,7 @@ enum GameType {
                         [[cell selectionButton] setBackgroundImage:bankSelected forState:UIControlStateDisabled barMetrics:UIBarMetricsDefault];
                         if (self.dataController.userState == SUBMITTED) {
                             [cell.selectionButton setEnabled:YES];
+                            [[cell selectionButton] setEnabled:YES forSegmentAtIndex:0];
                             [[cell pointsLabel] setText:selectionAtIndex.potentialPoints];
                             [[cell pointsLabel] setTextColor:[UIColor blackColor]];
                         } else {
@@ -1358,7 +1365,9 @@ enum GameType {
                             [cell.selectionButton setEnabled:NO];
                     } else {
                         NSString *bank;
-                        if (selectionAtIndex.selection == 0)
+                        if (fromLeaderboard)
+                            bank = @"BANKED";
+                        else if (selectionAtIndex.selection == 0)
                             bank = [@"BANKED: " stringByAppendingString:selectionLabel0];
                         else if (selectionAtIndex.selection == 1)
                             bank = [@"BANKED: " stringByAppendingString:selectionLabel1];
@@ -1369,6 +1378,8 @@ enum GameType {
                         [[cell selectionButton] setTitle:bank forSegmentAtIndex:0];
                         NSDictionary *green = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:0.0/255.0 green:255.0/255.0 blue:0.0/255.0 alpha:1.0],UITextAttributeTextColor,[UIFont fontWithName:@"Avalon-Bold" size:12.0],UITextAttributeFont,nil];
                         [[cell selectionButton] setTitleTextAttributes:green forState:UIControlStateDisabled];
+                        [[cell selectionButton] setTitleTextAttributes:green forState:UIControlStateNormal];
+                        [[cell selectionButton] setTitleTextAttributes:green forState:UIControlStateSelected];
                         [[cell selectionButton] removeSegmentAtIndex:2 animated:NO];
                         [[cell selectionButton] removeSegmentAtIndex:1 animated:NO];
                         [[cell selectionButton] setEnabled:NO];
@@ -1402,7 +1413,9 @@ enum GameType {
                     
                     if (selectionAtIndex.bank == YES) {
                         NSString *bank;
-                        if (selectionAtIndex.selection == 0)
+                        if (fromLeaderboard)
+                            bank = @"BANKED";
+                        else if (selectionAtIndex.selection == 0)
                             bank = [@"BANKED: " stringByAppendingString:selectionLabel0];
                         else if (selectionAtIndex.selection == 1)
                             bank = [@"BANKED: " stringByAppendingString:selectionLabel1];
@@ -1417,20 +1430,20 @@ enum GameType {
                         [[cell selectionButton] removeSegmentAtIndex:1 animated:NO];
                     } else { // bank == NO
                         if (cell.selectionButton.numberOfSegments == 1) {
-                            [[cell selectionButton] setTitle:@" " forSegmentAtIndex:0];
+                            [[cell selectionButton] setTitle:nil forSegmentAtIndex:0];
                             if (self.game.type >=30) {
-                                [[cell selectionButton] insertSegmentWithTitle:@" " atIndex:1 animated:NO];
-                                [[cell selectionButton] insertSegmentWithTitle:@" " atIndex:2 animated:NO];
+                                [[cell selectionButton] insertSegmentWithImage:[UIImage imageNamed:nil] atIndex:1 animated:NO];
+                                [[cell selectionButton] insertSegmentWithImage:[UIImage imageNamed:nil] atIndex:2 animated:NO];
                             } else {
-                                [[cell selectionButton] insertSegmentWithTitle:@" " atIndex:1 animated:NO];
+                                [[cell selectionButton] insertSegmentWithImage:[UIImage imageNamed:nil] atIndex:1 animated:NO];
                             }
                         } else if (cell.selectionButton.numberOfSegments == 2) {
-                            [[cell selectionButton] setTitle:@" " forSegmentAtIndex:0];
-                            [[cell selectionButton] setTitle:@" " forSegmentAtIndex:1];
+                            [[cell selectionButton] setTitle:nil forSegmentAtIndex:0];
+                            [[cell selectionButton] setTitle:nil forSegmentAtIndex:1];
                         } else if (cell.selectionButton.numberOfSegments == 3) {
-                            [[cell selectionButton] setTitle:@" " forSegmentAtIndex:0];
-                            [[cell selectionButton] setTitle:@" " forSegmentAtIndex:1];
-                            [[cell selectionButton] setTitle:@" " forSegmentAtIndex:2];
+                            [[cell selectionButton] setTitle:nil forSegmentAtIndex:0];
+                            [[cell selectionButton] setTitle:nil forSegmentAtIndex:1];
+                            [[cell selectionButton] setTitle:nil forSegmentAtIndex:2];
                             
                         }
                         UIImage *tick;
@@ -1449,23 +1462,28 @@ enum GameType {
                             } else {
                                 [[cell selectionButton] setImage:cross forSegmentAtIndex:0];
                             }
+                            [[cell selectionButton] setContentOffset:CGSizeMake(0,0) forSegmentAtIndex:0];
                         } else if (selectionAtIndex.selection == 1) {
                             if (periodAtIndex.result == 1) {
                                 [[cell selectionButton] setImage:tick forSegmentAtIndex:1];
                             } else {
                                 [[cell selectionButton] setImage:cross forSegmentAtIndex:1];
                             }
+                            [[cell selectionButton] setContentOffset:CGSizeMake(0,0) forSegmentAtIndex:1];
                         } else if ((selectionAtIndex.selection == 2) && (cell.selectionButton.numberOfSegments >2)) {
                             if (periodAtIndex.result == 2) {
                                 [[cell selectionButton] setImage:tick forSegmentAtIndex:2];
                             } else {
                                 [[cell selectionButton] setImage:cross forSegmentAtIndex:2];
                             }
+                            [[cell selectionButton] setContentOffset:CGSizeMake(0,0) forSegmentAtIndex:2];
                         }
                     }
                     
+                    [cell.selectionButton setEnabled:YES forSegmentAtIndex:0];
                     [[cell selectionButton] setEnabled:NO];
                     [[cell inplayIcon] setHidden:YES];
+                    
                     
                     if (self.dataController.userState == SUBMITTED) {
                         [[cell pointsLabel] setText:selectionAtIndex.awardedPoints];
@@ -1496,7 +1514,9 @@ enum GameType {
             
             if (selectionAtIndex.bank == YES) {
                 NSString *bank;
-                if (selectionAtIndex.selection == 0)
+                if (fromLeaderboard)
+                    bank = @"BANKED";
+                else if (selectionAtIndex.selection == 0)
                     bank = [@"BANKED: " stringByAppendingString:selectionLabel0];
                 else if (selectionAtIndex.selection == 1)
                     bank = [@"BANKED: " stringByAppendingString:selectionLabel1];
@@ -1541,22 +1561,25 @@ enum GameType {
                     } else {
                         [[cell selectionButton] setImage:cross forSegmentAtIndex:0];
                     }
+                    [[cell selectionButton] setContentOffset:CGSizeMake(0,0) forSegmentAtIndex:0];
                 } else if (selectionAtIndex.selection == 1) {
                     if (periodAtIndex.result == 1) {
                         [[cell selectionButton] setImage:tick forSegmentAtIndex:1];
                     } else {
                         [[cell selectionButton] setImage:cross forSegmentAtIndex:1];
                     }
+                    [[cell selectionButton] setContentOffset:CGSizeMake(0,0) forSegmentAtIndex:1];
                 } else if ((selectionAtIndex.selection == 2) && (cell.selectionButton.numberOfSegments >2)) {
                     if (periodAtIndex.result == 2) {
                         [[cell selectionButton] setImage:tick forSegmentAtIndex:2];
                     } else {
                         [[cell selectionButton] setImage:cross forSegmentAtIndex:2];
                     }
+                    [[cell selectionButton] setContentOffset:CGSizeMake(0,0) forSegmentAtIndex:2];
                 }
             }
             
-            [[cell selectionButton] setEnabled: NO];
+            [[cell selectionButton] setEnabled:NO];
             [[cell inplayIcon] setHidden:YES];
             if (self.dataController.userState == SUBMITTED) {
                 [[cell pointsLabel] setText:selectionAtIndex.awardedPoints];
