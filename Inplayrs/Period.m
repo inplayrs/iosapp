@@ -26,9 +26,17 @@
         _points1 = points1;
         _points2 = points2;
         _result = result;
+        NSMutableArray *periodOptions = [[NSMutableArray alloc] init];
+        self.periodOptions = periodOptions;
         return self;
     }
     return nil;
+}
+
+- (void)setPeriodOptions:(NSMutableArray *)newList {
+    if (_periodOptions != newList) {
+        _periodOptions = [newList mutableCopy];
+    }
 }
 
 - (NSComparisonResult) compareWithPeriod:(Period*) anotherPeriod

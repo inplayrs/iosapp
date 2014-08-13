@@ -50,6 +50,7 @@ enum GameType {
     THRUCUT=22,
     YESNO=23,
     OVERUNDER=24,
+    HOMEAWAY=25,
     HOMEDRAWAWAY=30,
     TOP10=31,
     TOP5=32,
@@ -61,7 +62,7 @@ enum GameType {
 
 @implementation IPGameViewController
 
-@synthesize selectedRow, selectionHeader1, selectionHeader2, selectionHeader3, selectionHeader4, selectionHeader5, selectionLabel0, selectionLabel1, selectionLabel2, isLoaded, isUpdated, isLoading, pointsChanged, inplayIndicator, leaderboardViewController, fanViewController, multiLoginViewController, tutorialViewController, submitButton, fangroupChallenge, username, friendButton, createViewController, globalLabel, fangroupLabel, h2hLabel, friendLabel, global1, global2, fangroup1, fangroup2, h2h1, h2h2, friend1, friend2, friendPools, globalViewController, fangroupViewController, friendViewController, friendControllerList, selectedFriendPool, addFriendsViewController, globalButton, fangroupButton, h2hButton, fromLeaderboard, statsViewController;
+@synthesize selectedRow, selectionHeader1, selectionHeader2, selectionHeader3, selectionHeader4, selectionHeader5, selectionLabel0, selectionLabel1, selectionLabel2, isLoaded, isUpdated, isLoading, pointsChanged, inplayIndicator, leaderboardViewController, multiLoginViewController, tutorialViewController, submitButton, username, friendButton, createViewController, globalLabel,  h2hLabel, friendLabel, global1, global2, h2h1, h2h2, friend1, friend2, friendPools, globalViewController, friendViewController, friendControllerList, selectedFriendPool, addFriendsViewController, globalButton, h2hButton, fromLeaderboard, statsViewController;
 
 
 - (void)getPeriods:(id)sender
@@ -72,7 +73,7 @@ enum GameType {
     self.isLoading = YES;
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    NSString *path = [NSString stringWithFormat:@"game/periods?game_id=%d", self.game.gameID];
+    NSString *path = [NSString stringWithFormat:@"game/periods?game_id=%ld", (long)self.game.gameID];
     [objectManager getObjectsAtPath:path parameters:nil success:
      ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
         NSArray* temp = [result array];
@@ -148,9 +149,9 @@ enum GameType {
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     NSString *path;
     if (username)
-        path = [NSString stringWithFormat:@"game/points?game_id=%d&username=%@", self.game.gameID, self.username];
+        path = [NSString stringWithFormat:@"game/points?game_id=%ld&username=%@", (long)self.game.gameID, self.username];
     else
-        path = [NSString stringWithFormat:@"game/points?game_id=%d", self.game.gameID];
+        path = [NSString stringWithFormat:@"game/points?game_id=%ld", (long)self.game.gameID];
     [objectManager getObjectsAtPath:path parameters:nil success:
      ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
         
@@ -261,7 +262,7 @@ enum GameType {
     [self.submitButton setEnabled:NO];
 
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    NSString *path = [NSString stringWithFormat:@"game/selections?game_id=%d", self.game.gameID];
+    NSString *path = [NSString stringWithFormat:@"game/selections?game_id=%ld", (long)self.game.gameID];
     [objectManager postObject:self.dataController.selectionList path:path parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
             self.isUpdated = YES;
             self.isLoading = NO;
@@ -328,6 +329,7 @@ enum GameType {
             Error *myerror = [errorMessages objectAtIndex:0];
             if (!myerror.message)
                 myerror.message = @"Please try again later!";
+            /*
             if (myerror.code == 2201) {
                 NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:self.game.name,
                                             @"gameName", @"Fangroup", @"result", nil];
@@ -345,13 +347,13 @@ enum GameType {
                 if (self.fanViewController)
                     [self.navigationController pushViewController:self.fanViewController animated:YES];
             } else {
+             */
                 NSString *errorString = [NSString stringWithFormat:@"%d", (int)myerror.code];
                 NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:self.game.name,
                                         @"gameName", @"Fail", @"result", errorString, @"error", nil];
                 [Flurry logEvent:@"SUBMIT" withParameters:dictionary];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Request Failed" message:myerror.message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
-            }
         }];
 
 }
@@ -362,7 +364,7 @@ enum GameType {
     self.isLoading = YES;
 
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    NSString *path = [NSString stringWithFormat:@"game/period/bank?period_id=%d", selection.periodID];
+    NSString *path = [NSString stringWithFormat:@"game/period/bank?period_id=%ld", (long)selection.periodID];
     [objectManager postObject:nil path:path parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
         selection.bank = YES;
         self.isUpdated = YES;
@@ -440,12 +442,10 @@ enum GameType {
     [self.submitButton setEnabled:NO];
     self.dataController = [[GameDataController alloc] init];
     friendPools = [[NSMutableArray alloc] init];
-    fanViewController = nil;
     leaderboardViewController = nil;
     multiLoginViewController = nil;
     tutorialViewController = nil;
     globalViewController = nil;
-    fangroupViewController = nil;
     friendViewController = nil;
     addFriendsViewController = nil;
     statsViewController = nil;
@@ -655,6 +655,14 @@ enum GameType {
                 selectionLabel2 = @" ";
                 break;
             }
+            case (HOMEAWAY): {
+                selectionHeader4.text = @"HOME";
+                selectionHeader5.text = @"AWAY";
+                selectionLabel0 = @"HOME";
+                selectionLabel1 = @"AWAY";
+                selectionLabel2 = @" ";
+                break;
+            }
             default: {
                 selectionHeader4.text = @"WIN A";
                 selectionHeader5.text = @"WIN B";
@@ -676,15 +684,12 @@ enum GameType {
         
         self.global1.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
         self.global2.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
-        self.fangroup1.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
-        self.fangroup2.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
         self.h2h1.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
         self.h2h2.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
         self.friend1.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
         self.friend2.font = [UIFont fontWithName:@"Avalon-Demi" size:12.0];
         
         self.globalLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:12.0];
-        self.fangroupLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:12.0];
         self.h2hLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:12.0];
         self.friendLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:12.0];
         UIImage *image = [UIImage imageNamed: @"green_dot.png"];
@@ -708,8 +713,6 @@ enum GameType {
         UIImage *buttonImage2 = [UIImage imageNamed:@"game-header-button-hit.png"];
         [self.globalButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
         [self.globalButton setBackgroundImage:buttonImage2 forState:UIControlStateHighlighted];
-        [self.fangroupButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
-        [self.fangroupButton setBackgroundImage:buttonImage2 forState:UIControlStateHighlighted];
         [self.h2hButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
         [self.h2hButton setBackgroundImage:buttonImage2 forState:UIControlStateHighlighted];
         
@@ -725,16 +728,22 @@ enum GameType {
         self.global1.text = [points.globalPoints stringByAppendingString:@" points"];
         self.global2.text = [points.globalRank stringByAppendingFormat:@"/%@", points.globalPoolSize];
         if (!points.lateEntry) {
-            self.fangroup1.text = points.fangroupName;
-            self.fangroup2.text = [points.fangroupRank stringByAppendingFormat:@"/%@", points.numFangroups];
+            // self.fangroup1.text = points.fangroupName;
+            // self.fangroup2.text = [points.fangroupRank stringByAppendingFormat:@"/%@", points.numFangroups];
             self.h2h1.text = points.h2hUser;
             self.h2h2.text = [points.h2hPoints stringByAppendingString:@" points"];
         } else {
-            self.fangroup1.text = @"[Not Entered]";
-            self.fangroup2.text = @"";
-            self.h2h1.text = @"[Not Entered]";
-            self.h2h2.text = @"";
+            // self.fangroup1.text = @"[Not Entered]";
+            // self.fangroup2.text = @"";
+            self.h2h2.text = @"[Not Entered]";
+            self.h2h1.text = @"";
         }
+        /*
+        if (!points.h2hUser) {
+            self.h2h2.text = @"[Not Entered]";
+            self.h2h1.text = @"";
+        }
+         */
         
         if ([friendPools count] == 1) {
             FriendPool *friendPool = [friendPools objectAtIndex:0];
@@ -1082,6 +1091,7 @@ enum GameType {
         [self.navigationController pushViewController:self.globalViewController animated:YES];
 }
 
+/*
 - (IBAction)fangroupClicked:(id)sender {
     if (!self.fangroupViewController) {
         self.fangroupViewController = [[IPLeaderboardViewController alloc] initWithNibName:@"IPLeaderboardViewController" bundle:nil];
@@ -1095,6 +1105,7 @@ enum GameType {
     if (self.fangroupViewController)
         [self.navigationController pushViewController:self.fangroupViewController animated:YES];
 }
+ */
 
 - (IBAction)h2hClicked:(id)sender {
     if ((self.dataController.points.h2hUser) && (self.game.state > 0) && (!self.dataController.points.lateEntry)) {
@@ -1110,6 +1121,30 @@ enum GameType {
         }
         if (self.statsViewController)
             [self.navigationController pushViewController:self.statsViewController animated:YES];
+    } else if (self.game.state <= 0) {
+        [TSMessage showNotificationInViewController:self
+                                              title:@"No Head2Head yet"
+                                           subtitle:@"You will be automatically assigned a H2H player when the game starts."
+                                              image:nil
+                                               type:TSMessageNotificationTypeWarning
+                                           duration:TSMessageNotificationDurationAutomatic
+                                           callback:nil
+                                        buttonTitle:nil
+                                     buttonCallback:nil
+                                         atPosition:TSMessageNotificationPositionTop
+                                canBeDismisedByUser:YES];
+    } else if (self.dataController.points.lateEntry) {
+        [TSMessage showNotificationInViewController:self
+                                              title:@"Late Entry"
+                                           subtitle:@"A H2H player is only assigned at the start of the game."
+                                              image:nil
+                                               type:TSMessageNotificationTypeWarning
+                                           duration:TSMessageNotificationDurationAutomatic
+                                           callback:nil
+                                        buttonTitle:nil
+                                     buttonCallback:nil
+                                         atPosition:TSMessageNotificationPositionTop
+                                canBeDismisedByUser:YES];
     }
 }
 

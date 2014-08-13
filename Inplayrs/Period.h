@@ -21,6 +21,7 @@
 @property (nonatomic, copy) NSString *points1;
 @property (nonatomic, copy) NSString *points2;
 @property (nonatomic) NSInteger result;
+@property (nonatomic, copy) NSMutableArray *periodOptions;
 
 -(id)initWithPeriodID:(NSInteger)periodID name:(NSString *)name state:(NSInteger)state gameState:(NSInteger)gameState startDate:(NSString *)startDate elapsedTime:(NSString *)elapsedTime score:(NSString *)score points0:(NSString *)points0 points1:(NSString *)points1 points2:(NSString *)points2 result:(NSInteger)result;
 

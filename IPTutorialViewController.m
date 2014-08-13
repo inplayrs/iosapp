@@ -48,11 +48,11 @@
     
     topImages = [[NSMutableArray alloc] init];
     if (IS_WIDESCREEN) {
-        UIImage *image1 = [UIImage imageNamed:@"screen_1.png"];
-        UIImage *image2 = [UIImage imageNamed:@"screen_2.png"];
-        UIImage *image3 = [UIImage imageNamed:@"screen_3.png"];
-        UIImage *image4 = [UIImage imageNamed:@"screen_6.png"];
-        UIImage *image5 = [UIImage imageNamed:@"screen_7.png"];
+        UIImage *image1 = [UIImage imageNamed:@"Tutorial1.png"];
+        UIImage *image2 = [UIImage imageNamed:@"Tutorial2.png"];
+        UIImage *image3 = [UIImage imageNamed:@"Tutorial3.png"];
+        UIImage *image4 = [UIImage imageNamed:@"Tutorial4.png"];
+        UIImage *image5 = [UIImage imageNamed:@"Tutorial5.png"];
         [topImages addObject:image1];
         [topImages addObject:image2];
         [topImages addObject:image3];
@@ -61,11 +61,11 @@
         tutorialImageView.frame = CGRectMake(0, 0, 320, 504);
         tutorialImageView.image = image1;
     } else {
-        UIImage *image1 = [UIImage imageNamed:@"screen_1s.png"];
-        UIImage *image2 = [UIImage imageNamed:@"screen_2s.png"];
-        UIImage *image3 = [UIImage imageNamed:@"screen_3s.png"];
-        UIImage *image4 = [UIImage imageNamed:@"screen_6s.png"];
-        UIImage *image5 = [UIImage imageNamed:@"screen_7s.png"];
+        UIImage *image1 = [UIImage imageNamed:@"Tutorial1s.png"];
+        UIImage *image2 = [UIImage imageNamed:@"Tutorial2s.png"];
+        UIImage *image3 = [UIImage imageNamed:@"Tutorial3s.png"];
+        UIImage *image4 = [UIImage imageNamed:@"Tutorial4s.png"];
+        UIImage *image5 = [UIImage imageNamed:@"Tutorial5s.png"];
         [topImages addObject:image1];
         [topImages addObject:image2];
         [topImages addObject:image3];
@@ -113,8 +113,8 @@
         default:
             break;
     }
-    imageIndex = (imageIndex < 0) ? ([topImages count] -1):
-    imageIndex % [topImages count];
+    imageIndex = (int) ((imageIndex < 0) ? ([topImages count] -1):
+    imageIndex % [topImages count]);
     tutorialImageView.image = [topImages objectAtIndex:imageIndex];
 }
 
@@ -212,8 +212,8 @@
         return;
     imageIndex--;
     
-    imageIndex = (imageIndex < 0) ? ([topImages count] -1):
-    imageIndex % [topImages count];
+    imageIndex = (int) ((imageIndex < 0) ? ([topImages count] -1):
+    imageIndex % [topImages count]);
     tutorialImageView.image = [topImages objectAtIndex:imageIndex];
 }
 
@@ -222,8 +222,8 @@
         return;
     imageIndex++;
     
-    imageIndex = (imageIndex < 0) ? ([topImages count] -1):
-    imageIndex % [topImages count];
+    imageIndex = (int) ((imageIndex < 0) ? ([topImages count] -1):
+    imageIndex % [topImages count]);
     tutorialImageView.image = [topImages objectAtIndex:imageIndex];
 }
 @end

@@ -11,6 +11,7 @@
 @class IPGameViewController;
 @class IPMultiLoginViewController;
 @class IPStatsViewController;
+@class IPFantasyViewController;
 
 @interface IPLobbyViewController : UITableViewController
 {
@@ -25,6 +26,7 @@
 - (void)getCompetitions:(id)sender;
 
 @property (strong, nonatomic) IPGameViewController *detailViewController;
+@property (strong, nonatomic) IPFantasyViewController *fantasyViewController;
 @property (strong, nonatomic) IPMultiLoginViewController *multiLoginViewController;
 @property (strong, nonatomic) IPStatsViewController *statsViewController;
 @property (strong, nonatomic) NSMutableDictionary *controllerList;

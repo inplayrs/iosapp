@@ -22,7 +22,10 @@
 #import "FriendPool.h"
 #import "PoolPoints.h"
 #import "IPAddFriendsViewController.h"
+#import "IPFantasyViewController.h"
 
+#define FANTASY 40
+#define QUIZ 100
 
 #define COMPETITIONS 1
 #define GAMES 2
@@ -47,7 +50,7 @@ enum State {
 
 @implementation IPLeaderboardViewController
 
-@synthesize leftLabel, rightLabel, pointsButton, left, rankHeader, nameHeader, pointsHeader, winningsHeader, isLoading, inplayIndicator, controllerList, detailViewController, friendPool, competitionID, competitionName, addFriendsViewController, fromWinners;
+@synthesize leftLabel, rightLabel, pointsButton, left, rankHeader, nameHeader, pointsHeader, winningsHeader, isLoading, inplayIndicator, controllerList, detailViewController, friendPool, competitionID, competitionName, addFriendsViewController, fromWinners, fantasyViewController;
 
 
 - (void) dealloc {
@@ -102,6 +105,7 @@ enum State {
     self.controllerList = [[NSMutableDictionary alloc] init];
     detailViewController = nil;
     addFriendsViewController = nil;
+    fantasyViewController = nil;
 
 }
 
@@ -582,10 +586,19 @@ enum State {
         if ((self.game.state == COMPLETED) || (self.game.state == ARCHIVED)) {
             Leaderboard *leaderboardAtIndex = [self.dataController.globalGameLeaderboard objectAtIndex:indexPath.row];
             if ([controllerList objectForKey:leaderboardAtIndex.name] == nil) {
-                detailViewController = [[IPGameViewController alloc] initWithNibName:@"IPGameViewController" bundle:nil];
-                detailViewController.game = self.game;
-                detailViewController.username = leaderboardAtIndex.name;
-                detailViewController.fromLeaderboard = YES;
+                if (self.game.type == FANTASY) {
+                    fantasyViewController = [[IPFantasyViewController alloc] initWithNibName:@"IPFantasyViewController" bundle:nil];
+                    fantasyViewController.game = self.game;
+                    [controllerList setObject:fantasyViewController forKey:leaderboardAtIndex.name];
+                    fantasyViewController.username = leaderboardAtIndex.name;
+                    fantasyViewController.fromLeaderboard = YES;
+                } else {
+                    detailViewController = [[IPGameViewController alloc] initWithNibName:@"IPGameViewController" bundle:nil];
+                    detailViewController.game = self.game;
+                    [controllerList setObject:detailViewController forKey:leaderboardAtIndex.name];
+                    detailViewController.username = leaderboardAtIndex.name;
+                    detailViewController.fromLeaderboard = YES;
+                }
                 NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,nil];
                 [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
                 [[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]];
@@ -593,7 +606,6 @@ enum State {
                     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
                 else
                     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
-                [controllerList setObject:detailViewController forKey:leaderboardAtIndex.name];
             }
             if ([controllerList objectForKey:leaderboardAtIndex.name]) {
                 [self.navigationController pushViewController:[controllerList objectForKey:leaderboardAtIndex.name] animated:YES];
@@ -910,9 +922,9 @@ numberOfRowsInComponent:(NSInteger)component
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     NSString *path;
     if (type == GAMES)
-        path = [NSString stringWithFormat:@"game/leaderboard?game_id=%d&type=pool&pool_id=%d", gameID, poolID];
+        path = [NSString stringWithFormat:@"game/leaderboard?game_id=%ld&type=pool&pool_id=%ld", (long)gameID, (long)poolID];
     else if (type == COMPETITIONS)
-        path = [NSString stringWithFormat:@"competition/leaderboard?comp_id=%d&type=pool&pool_id=%d", gameID, poolID];
+        path = [NSString stringWithFormat:@"competition/leaderboard?comp_id=%ld&type=pool&pool_id=%ld", (long)gameID, (long)poolID];
     [objectManager getObjectsAtPath:path parameters:nil success:
      ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
          if (type == GAMES)
@@ -959,9 +971,9 @@ numberOfRowsInComponent:(NSInteger)component
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     NSString *path;
     if (type == GAMES)
-        path = [NSString stringWithFormat:@"game/leaderboard?game_id=%d&type=global", gameID];
+        path = [NSString stringWithFormat:@"game/leaderboard?game_id=%ld&type=global", (long)gameID];
     else if (type == COMPETITIONS)
-        path = [NSString stringWithFormat:@"competition/leaderboard?comp_id=%d&type=global", gameID];
+        path = [NSString stringWithFormat:@"competition/leaderboard?comp_id=%ld&type=global", (long)gameID];
     [objectManager getObjectsAtPath:path parameters:nil success:
      ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
          if (type == GAMES)
@@ -1013,9 +1025,9 @@ numberOfRowsInComponent:(NSInteger)component
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     NSString *path2;
     if (type == GAMES)
-        path2 = [NSString stringWithFormat:@"game/leaderboard?game_id=%d&type=fangroup", gameID];
+        path2 = [NSString stringWithFormat:@"game/leaderboard?game_id=%ld&type=fangroup", (long)gameID];
     else if (type == COMPETITIONS)
-        path2 = [NSString stringWithFormat:@"competition/leaderboard?comp_id=%d&type=fangroup", gameID];
+        path2 = [NSString stringWithFormat:@"competition/leaderboard?comp_id=%ld&type=fangroup", (long)gameID];
     [objectManager getObjectsAtPath:path2 parameters:nil success:
      ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
         if (type == GAMES)
@@ -1112,7 +1124,7 @@ numberOfRowsInComponent:(NSInteger)component
 - (void)getPoints:(NSInteger)gameID
 {
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    NSString *path = [NSString stringWithFormat:@"game/points?game_id=%d&includeSelections=false", gameID];
+    NSString *path = [NSString stringWithFormat:@"game/points?game_id=%ld&includeSelections=false", (long)gameID];
     [objectManager getObjectsAtPath:path parameters:nil success:
      ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
         Points *points = [result firstObject];
@@ -1177,7 +1189,7 @@ numberOfRowsInComponent:(NSInteger)component
 - (void)getCompetitionPoints:(NSInteger)gameID
 {
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    NSString *path = [NSString stringWithFormat:@"competition/points?comp_id=%d", gameID];
+    NSString *path = [NSString stringWithFormat:@"competition/points?comp_id=%ld", (long)gameID];
     [objectManager getObjectsAtPath:path parameters:nil success:
      ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
          CompetitionPoints *points = [result firstObject];
@@ -1235,7 +1247,7 @@ numberOfRowsInComponent:(NSInteger)component
 - (void)getPoolGamePoints:(NSInteger)gameID poolID:(NSInteger)poolID
 {
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    NSString *path = [NSString stringWithFormat:@"pool/points?pool_id=%d&game_id=%d", poolID, gameID];
+    NSString *path = [NSString stringWithFormat:@"pool/points?pool_id=%ld&game_id=%ld", (long)poolID, (long)gameID];
     [objectManager getObjectsAtPath:path parameters:nil success:
      ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
          PoolPoints *points = [result firstObject];
@@ -1263,7 +1275,7 @@ numberOfRowsInComponent:(NSInteger)component
 - (void)getPoolCompetitionPoints:(NSInteger)compID poolID:(NSInteger)poolID
 {
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    NSString *path = [NSString stringWithFormat:@"pool/points?pool_id=%d&comp_id=%d", poolID, compID];
+    NSString *path = [NSString stringWithFormat:@"pool/points?pool_id=%ld&comp_id=%ld", (long)poolID, (long)compID];
     [objectManager getObjectsAtPath:path parameters:nil success:
      ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
          PoolPoints *points = [result firstObject];

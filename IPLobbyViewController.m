@@ -16,6 +16,7 @@
 #import "IPAppDelegate.h"
 #import "IPMultiLoginViewController.h"
 #import "IPStatsViewController.h"
+#import "IPFantasyViewController.h"
 #import "Competition.h"
 #import "Banner.h"
 #import <SDWebImage/UIButton+WebCache.h>
@@ -23,6 +24,8 @@
 #import "TSMessage.h"
 #import "Motd.h"
 
+#define FANTASY 40
+#define QUIZ 100
 
 enum State {
     INACTIVE=-2,
@@ -51,13 +54,15 @@ enum Category {
     AWARDS=32
 };
 
+
+
 @interface IPLobbyViewController ()
 
 @end
 
 @implementation IPLobbyViewController
 
-@synthesize controllerList, detailViewController, multiLoginViewController, topItems, subItems, bannerImages, bannerItems, tempTopItems, tempSubItems, bannerButton, statsViewController;
+@synthesize controllerList, detailViewController, fantasyViewController, multiLoginViewController, topItems, subItems, bannerImages, bannerItems, tempTopItems, tempSubItems, bannerButton, statsViewController;
 
 
 - (void) dealloc {
@@ -114,7 +119,7 @@ enum Category {
         default:
             break;
     }
-    imageIndex = (imageIndex < 0) ? ([bannerItems count] -1): imageIndex % [bannerItems count];
+    imageIndex = (int) ((imageIndex < 0) ? ([bannerItems count] -1): imageIndex % [bannerItems count]);
     Banner* banner = [bannerItems objectAtIndex:imageIndex];
     // UIImage* image = [UIImage imageNamed: @"inplayrs-banner.png"];
     if (banner) {
@@ -147,7 +152,7 @@ enum Category {
     }
      */
     imageIndex++;
-    imageIndex = (imageIndex < 0) ? ([bannerItems count] -1): imageIndex % [bannerItems count];
+    imageIndex = (int) ((imageIndex < 0) ? ([bannerItems count] -1): imageIndex % [bannerItems count]);
     Banner* banner = [bannerItems objectAtIndex:imageIndex];
     // UIImage* image = [UIImage imageNamed: @"inplayrs-banner.png"];
     if (banner) {
@@ -170,6 +175,7 @@ enum Category {
     // self.dataController = [[LobbyDataController alloc] init];
     self.title = @"Lobby";
     detailViewController = nil;
+    fantasyViewController = nil;
     multiLoginViewController = nil;
     statsViewController = nil;
     
@@ -382,7 +388,7 @@ enum Category {
     NSMutableArray *inplayItems = [[NSMutableArray alloc] init];
     NSMutableArray *completedItems = [[NSMutableArray alloc] init];
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    NSString *path = [NSString stringWithFormat:@"competition/games?comp_id=%d", competitionID];
+    NSString *path = [NSString stringWithFormat:@"competition/games?comp_id=%ld", (long)competitionID];
     self.gamesRequested++;
     [objectManager getObjectsAtPath:path parameters:nil success:
     ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
@@ -450,7 +456,7 @@ enum Category {
             IPAppDelegate *appDelegate = (IPAppDelegate *)[[UIApplication sharedApplication] delegate];
             appDelegate.refreshLobby = NO;
             
-            if ([topItems count] == 1) {
+            if (([topItems count] == 1) && (currentExpandedIndex == -1)) {
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
                 [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
             }
@@ -573,9 +579,9 @@ enum Category {
         IPLobbyItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"IPLobbyItemCell"];
         cell.nameLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:14.0];
         cell.timeLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:14.0];
-        int topIndex = (currentExpandedIndex > -1 && indexPath.row > currentExpandedIndex)
+        int topIndex = (int) ((currentExpandedIndex > -1 && indexPath.row > currentExpandedIndex)
         ? indexPath.row - [[subItems objectAtIndex:currentExpandedIndex] count]
-        : indexPath.row;
+        : indexPath.row);
         Competition *competition = [topItems objectAtIndex:topIndex];
         cell.row = topIndex;
         [cell setCompetitionState:competition.state];
@@ -749,11 +755,17 @@ enum Category {
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     if (isChild) {
         Game *game = [[subItems objectAtIndex:currentExpandedIndex] objectAtIndex:(indexPath.row - currentExpandedIndex - 1)];
-        
-        
+    
         if ([controllerList objectForKey:game.name] == nil) {
-            detailViewController = [[IPGameViewController alloc] initWithNibName:@"IPGameViewController" bundle:nil];
-            detailViewController.game = game;
+            if (game.type == FANTASY) {
+                fantasyViewController = [[IPFantasyViewController alloc] initWithNibName:@"IPFantasyViewController" bundle:nil];
+                fantasyViewController.game = game;
+                [controllerList setObject:fantasyViewController forKey:game.name];
+            } else {
+                detailViewController = [[IPGameViewController alloc] initWithNibName:@"IPGameViewController" bundle:nil];
+                detailViewController.game = game;
+                [controllerList setObject:detailViewController forKey:game.name];
+            }
             NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,nil];
             [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
             [[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]];
@@ -761,7 +773,6 @@ enum Category {
                 self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
             else
                 self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
-            [controllerList setObject:detailViewController forKey:game.name];
             
         }
         
@@ -787,7 +798,7 @@ enum Category {
             // [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
         }
         
-        currentExpandedIndex = (shouldCollapse && indexPath.row > currentExpandedIndex) ? indexPath.row - [[subItems objectAtIndex:currentExpandedIndex] count] : indexPath.row;
+        currentExpandedIndex = (int) ((shouldCollapse && indexPath.row > currentExpandedIndex) ? indexPath.row - [[subItems objectAtIndex:currentExpandedIndex] count] : indexPath.row);
         
         [self expandItemAtIndex:currentExpandedIndex];
         // topRowSelected = indexPath;
@@ -797,7 +808,7 @@ enum Category {
     
     // check if last row to scroll again
     if (indexPath.row == [topItems count] - 1) {
-        int newIndex = [self.tableView numberOfRowsInSection:0] - 1;
+        int newIndex = (int) ([self.tableView numberOfRowsInSection:0] - 1);
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:newIndex inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
     
@@ -846,8 +857,15 @@ enum Category {
     
     
     if ([controllerList objectForKey:game.name] == nil) {
-        detailViewController = [[IPGameViewController alloc] initWithNibName:@"IPGameViewController" bundle:nil];
-        detailViewController.game = game;
+        if (game.type == FANTASY) {
+            fantasyViewController = [[IPFantasyViewController alloc] initWithNibName:@"IPFantasyViewController" bundle:nil];
+            fantasyViewController.game = game;
+            [controllerList setObject:fantasyViewController forKey:game.name];
+        } else {
+            detailViewController = [[IPGameViewController alloc] initWithNibName:@"IPGameViewController" bundle:nil];
+            detailViewController.game = game;
+            [controllerList setObject:detailViewController forKey:game.name];
+        }
         NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,nil];
         [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
         [[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]];
@@ -855,7 +873,6 @@ enum Category {
             self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
         else
             self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
-        [controllerList setObject:detailViewController forKey:game.name];
         
     }
     

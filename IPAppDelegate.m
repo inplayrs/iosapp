@@ -28,6 +28,7 @@
 #import "Error.h"
 #import "AddUsers.h"
 #import "Motd.h"
+#import "PeriodOptions.h"
 #import <FacebookSDK/FacebookSDK.h>
 
 
@@ -268,6 +269,7 @@
     [selectionMapping addAttributeMappingsFromDictionary:@{
      @"period_id":          @"periodID",
      @"selection":          @"selection",
+     @"period_option_id":   @"periodOptionID",
      @"awarded_points":     @"awardedPoints",
      @"potential_points":   @"potentialPoints",
      @"cashed_out":         @"bank"
@@ -275,10 +277,21 @@
     
     [pointsMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"periodSelections" toKeyPath:@"periodSelections" withMapping:selectionMapping]];
     
+    RKObjectMapping *periodOptionsMapping = [RKObjectMapping mappingForClass:[PeriodOptions class]];
+    [periodOptionsMapping addAttributeMappingsFromDictionary:@{
+     @"po_id":      @"periodOptionID",
+     @"name":       @"name",
+     @"points":     @"points",
+     @"result":     @"result"
+     }];
+    
+    [periodMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"periodOptions" toKeyPath:@"periodOptions" withMapping:periodOptionsMapping]];
+    
     RKObjectMapping *postSelectionMapping = [RKObjectMapping requestMapping];
     [postSelectionMapping addAttributeMappingsFromDictionary:@{
-     @"periodID":     @"period_id",
-     @"selection":    @"selection"
+     @"periodID":       @"period_id",
+     @"selection":      @"selection",
+     @"periodOptionID": @"period_option_id"
      }];
     
     RKObjectMapping *postAddUsersMapping = [RKObjectMapping requestMapping];

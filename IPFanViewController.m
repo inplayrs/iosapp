@@ -190,7 +190,7 @@ enum Category {
 {
     [self.fangroupButton setEnabled:NO];
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    NSString *path = [NSString stringWithFormat:@"competition/fangroups?comp_id=%d", competitionID];
+    NSString *path = [NSString stringWithFormat:@"competition/fangroups?comp_id=%ld", (long)competitionID];
     [objectManager getObjectsAtPath:path parameters:nil success:
      ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
         [self.dataController.fangroupList removeAllObjects];
@@ -213,7 +213,7 @@ enum Category {
 - (void)postFangroup
 {
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    NSString *path = [NSString stringWithFormat:@"user/fan?comp_id=%d&fangroup_id=%d", self.selectedCompetitionID, self.selectedFangroupID];
+    NSString *path = [NSString stringWithFormat:@"user/fan?comp_id=%ld&fangroup_id=%ld", (long)self.selectedCompetitionID, (long)self.selectedFangroupID];
     [objectManager postObject:nil path:path parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
         [self getMyFanList:self];
         [self.dataController.fangroupList removeAllObjects];

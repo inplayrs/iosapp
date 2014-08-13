@@ -23,6 +23,12 @@
 		F4008C6D17451D5000B9A23E /* back-button.png in Resources */ = {isa = PBXBuildFile; fileRef = F4008C6817451D4B00B9A23E /* back-button.png */; };
 		F4008C6E17451D5000B9A23E /* back-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4008C6917451D4C00B9A23E /* back-button@2x.png */; };
 		F4008C6F17451D5000B9A23E /* menu-top-row-with-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4008C6A17451D4F00B9A23E /* menu-top-row-with-logo@2x.png */; };
+		F4075719198929FF00F2564A /* libFlurry_5.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4075718198929FF00F2564A /* libFlurry_5.2.0.a */; };
+		F407571B19893E0500F2564A /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F407571A19893E0500F2564A /* SDWebImage.framework */; };
+		F407571D198BB3D700F2564A /* IPFantasyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F407571C198BB3D700F2564A /* IPFantasyViewController.xib */; };
+		F407571F198BB48100F2564A /* IPFantasyItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F407571E198BB48100F2564A /* IPFantasyItemCell.xib */; };
+		F4075722198BB90900F2564A /* IPFantasyItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4075721198BB90900F2564A /* IPFantasyItemCell.m */; };
+		F4075725198BBD3100F2564A /* IPFantasyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4075724198BBD3100F2564A /* IPFantasyViewController.m */; };
 		F4119CAE16BADEFC0028DB2E /* IPGameItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4119CAD16BADEFB0028DB2E /* IPGameItemCell.xib */; };
 		F4119CB016BAF01A0028DB2E /* IPGameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4119CAF16BAF01A0028DB2E /* IPGameViewController.xib */; };
 		F4119CB616C00C7D0028DB2E /* IPGameFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4119CB516C00C7C0028DB2E /* IPGameFooterView.xib */; };
@@ -45,11 +51,6 @@
 		F41F601917E1BE6D003B713B /* tutorial-icon-hit-state@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F41F601117E1BE6D003B713B /* tutorial-icon-hit-state@2x.png */; };
 		F41F601A17E1BE6D003B713B /* tutorial-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F41F601217E1BE6D003B713B /* tutorial-icon.png */; };
 		F41F601B17E1BE6D003B713B /* tutorial-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F41F601317E1BE6D003B713B /* tutorial-icon@2x.png */; };
-		F422C69F17E861CB003CA923 /* screen_2.png in Resources */ = {isa = PBXBuildFile; fileRef = F422C68D17E861C2003CA923 /* screen_2.png */; };
-		F422C6A017E861CB003CA923 /* screen_3.png in Resources */ = {isa = PBXBuildFile; fileRef = F422C68E17E861C3003CA923 /* screen_3.png */; };
-		F422C6A217E861CB003CA923 /* screen_6.png in Resources */ = {isa = PBXBuildFile; fileRef = F422C69017E861C4003CA923 /* screen_6.png */; };
-		F422C6A317E861CB003CA923 /* screen_7.png in Resources */ = {isa = PBXBuildFile; fileRef = F422C69117E861C5003CA923 /* screen_7.png */; };
-		F422C6B417E87409003CA923 /* screen_1.png in Resources */ = {isa = PBXBuildFile; fileRef = F422C6B117E87408003CA923 /* screen_1.png */; };
 		F429F8CB1704B08D006E7CDE /* IPInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F429F8C91704B08D006E7CDE /* IPInfoViewController.m */; };
 		F429F8CC1704B08D006E7CDE /* IPInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F429F8CA1704B08D006E7CDE /* IPInfoViewController.xib */; };
 		F429F8CF17085403006E7CDE /* Leaderboard.m in Sources */ = {isa = PBXBuildFile; fileRef = F429F8CE17085403006E7CDE /* Leaderboard.m */; };
@@ -103,10 +104,22 @@
 		F44867A417C0CD7400975F75 /* IPRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F44867A317C0CD7400975F75 /* IPRegisterViewController.m */; };
 		F44867A717C240C600975F75 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F44867A617C240C600975F75 /* Security.framework */; };
 		F44867A917C2491B00975F75 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F44867A817C2491B00975F75 /* AdSupport.framework */; };
-		F44867AC17C249EB00975F75 /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F44867AB17C249EB00975F75 /* libFlurry.a */; };
 		F44867B017C2632F00975F75 /* lobby-sub-row-hit-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = F44867AF17C2632E00975F75 /* lobby-sub-row-hit-gray.png */; };
 		F44867B217C36ED200975F75 /* IPPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F44867B117C36ED100975F75 /* IPPasswordViewController.xib */; };
 		F44867B517C3707800975F75 /* IPPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F44867B417C3707700975F75 /* IPPasswordViewController.m */; };
+		F45EE48C198BDE0A0062429D /* IPFantasyHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F45EE48B198BDE0A0062429D /* IPFantasyHeaderView.xib */; };
+		F45EE48E198BDE1E0062429D /* IPFantasyFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F45EE48D198BDE1E0062429D /* IPFantasyFooterView.xib */; };
+		F45EE491198FC8A30062429D /* PeriodOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = F45EE490198FC8A30062429D /* PeriodOptions.m */; };
+		F45EE49A1991542C0062429D /* Tutorial1.png in Resources */ = {isa = PBXBuildFile; fileRef = F45EE4921991542C0062429D /* Tutorial1.png */; };
+		F45EE49B1991542C0062429D /* Tutorial1s.png in Resources */ = {isa = PBXBuildFile; fileRef = F45EE4931991542C0062429D /* Tutorial1s.png */; };
+		F45EE49C1991542C0062429D /* Tutorial2.png in Resources */ = {isa = PBXBuildFile; fileRef = F45EE4941991542C0062429D /* Tutorial2.png */; };
+		F45EE49D1991542C0062429D /* Tutorial2s.png in Resources */ = {isa = PBXBuildFile; fileRef = F45EE4951991542C0062429D /* Tutorial2s.png */; };
+		F45EE49E1991542C0062429D /* Tutorial3.png in Resources */ = {isa = PBXBuildFile; fileRef = F45EE4961991542C0062429D /* Tutorial3.png */; };
+		F45EE49F1991542C0062429D /* Tutorial3s.png in Resources */ = {isa = PBXBuildFile; fileRef = F45EE4971991542C0062429D /* Tutorial3s.png */; };
+		F45EE4A01991542C0062429D /* Tutorial4.png in Resources */ = {isa = PBXBuildFile; fileRef = F45EE4981991542C0062429D /* Tutorial4.png */; };
+		F45EE4A11991542C0062429D /* Tutorial4s.png in Resources */ = {isa = PBXBuildFile; fileRef = F45EE4991991542C0062429D /* Tutorial4s.png */; };
+		F45EE4A4199B64950062429D /* Tutorial5s.png in Resources */ = {isa = PBXBuildFile; fileRef = F45EE4A2199B64950062429D /* Tutorial5s.png */; };
+		F45EE4A5199B64950062429D /* Tutorial5.png in Resources */ = {isa = PBXBuildFile; fileRef = F45EE4A3199B64950062429D /* Tutorial5.png */; };
 		F4706C1A1886E730002D4525 /* IPAddFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4706C191886E730002D4525 /* IPAddFriendsViewController.m */; };
 		F4706C1C1886E857002D4525 /* IPCreateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4706C1B1886E857002D4525 /* IPCreateViewController.xib */; };
 		F4706C1F18880F73002D4525 /* IPFriendPoolViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4706C1E18880F73002D4525 /* IPFriendPoolViewController.xib */; };
@@ -174,7 +187,6 @@
 		F479D167172EAE6D008AF68D /* ice-hockey.png in Resources */ = {isa = PBXBuildFile; fileRef = F479D163172EAE6C008AF68D /* ice-hockey.png */; };
 		F479D168172EAE6D008AF68D /* ice-hockey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F479D164172EAE6C008AF68D /* ice-hockey@2x.png */; };
 		F47B7BDB17A67FFC0008D3B9 /* CompetitionWinners.m in Sources */ = {isa = PBXBuildFile; fileRef = F47B7BDA17A67FFC0008D3B9 /* CompetitionWinners.m */; };
-		F47B7BDD17A6C4F10008D3B9 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F47B7BDC17A6C4F10008D3B9 /* SDWebImage.framework */; };
 		F47B7BDF17A6C53F0008D3B9 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F47B7BDE17A6C53F0008D3B9 /* ImageIO.framework */; };
 		F47B7BE617AA91F90008D3B9 /* bottom-section.png in Resources */ = {isa = PBXBuildFile; fileRef = F47B7BE317AA91F90008D3B9 /* bottom-section.png */; };
 		F47B7BE817AA91F90008D3B9 /* top-game-bar.png in Resources */ = {isa = PBXBuildFile; fileRef = F47B7BE517AA91F90008D3B9 /* top-game-bar.png */; };
@@ -343,16 +355,6 @@
 		F4E4CCB917BD026E00468FB6 /* winners-hit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4E4CCAB17BD026E00468FB6 /* winners-hit@2x.png */; };
 		F4E4CCBB17BD1E1A00468FB6 /* IPFanFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4E4CCBA17BD1E1A00468FB6 /* IPFanFooterView.xib */; };
 		F4E4CCBD17BD202E00468FB6 /* IPFanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4E4CCBC17BD202E00468FB6 /* IPFanViewController.xib */; };
-		F4EE191F19275F2000CE2EF2 /* screen_1s.png in Resources */ = {isa = PBXBuildFile; fileRef = F4EE191A19275F2000CE2EF2 /* screen_1s.png */; };
-		F4EE192019275F2000CE2EF2 /* screen_2s.png in Resources */ = {isa = PBXBuildFile; fileRef = F4EE191B19275F2000CE2EF2 /* screen_2s.png */; };
-		F4EE192119275F2000CE2EF2 /* screen_3s.png in Resources */ = {isa = PBXBuildFile; fileRef = F4EE191C19275F2000CE2EF2 /* screen_3s.png */; };
-		F4EE192219275F2000CE2EF2 /* screen_6s.png in Resources */ = {isa = PBXBuildFile; fileRef = F4EE191D19275F2000CE2EF2 /* screen_6s.png */; };
-		F4EE192319275F2000CE2EF2 /* screen_7s.png in Resources */ = {isa = PBXBuildFile; fileRef = F4EE191E19275F2000CE2EF2 /* screen_7s.png */; };
-		F4EE1929192762BB00CE2EF2 /* screen_7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4EE1924192762BB00CE2EF2 /* screen_7@2x.png */; };
-		F4EE192A192762BB00CE2EF2 /* screen_6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4EE1925192762BB00CE2EF2 /* screen_6@2x.png */; };
-		F4EE192B192762BB00CE2EF2 /* screen_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4EE1926192762BB00CE2EF2 /* screen_3@2x.png */; };
-		F4EE192C192762BB00CE2EF2 /* screen_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4EE1927192762BB00CE2EF2 /* screen_2@2x.png */; };
-		F4EE192D192762BB00CE2EF2 /* screen_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4EE1928192762BB00CE2EF2 /* screen_1@2x.png */; };
 		F4EE194219276A7400CE2EF2 /* stats-dividing-line.png in Resources */ = {isa = PBXBuildFile; fileRef = F4EE192E19276A7400CE2EF2 /* stats-dividing-line.png */; };
 		F4EE194319276A7400CE2EF2 /* stats-circle-3.png in Resources */ = {isa = PBXBuildFile; fileRef = F4EE192F19276A7400CE2EF2 /* stats-circle-3.png */; };
 		F4EE194419276A7400CE2EF2 /* stats-circle-2.png in Resources */ = {isa = PBXBuildFile; fileRef = F4EE193019276A7400CE2EF2 /* stats-circle-2.png */; };
@@ -446,6 +448,15 @@
 		F4008C6917451D4C00B9A23E /* back-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-button@2x.png"; sourceTree = "<group>"; };
 		F4008C6A17451D4F00B9A23E /* menu-top-row-with-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-top-row-with-logo@2x.png"; sourceTree = "<group>"; };
 		F4008C78174A90C300B9A23E /* Error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Error.h; path = Inplayrs/Error.h; sourceTree = "<group>"; };
+		F4075717198929FF00F2564A /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		F4075718198929FF00F2564A /* libFlurry_5.2.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_5.2.0.a; sourceTree = "<group>"; };
+		F407571A19893E0500F2564A /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = "<group>"; };
+		F407571C198BB3D700F2564A /* IPFantasyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPFantasyViewController.xib; sourceTree = "<group>"; };
+		F407571E198BB48100F2564A /* IPFantasyItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPFantasyItemCell.xib; sourceTree = "<group>"; };
+		F4075720198BB8F300F2564A /* IPFantasyItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPFantasyItemCell.h; sourceTree = "<group>"; };
+		F4075721198BB90900F2564A /* IPFantasyItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPFantasyItemCell.m; sourceTree = "<group>"; };
+		F4075723198BBD1F00F2564A /* IPFantasyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPFantasyViewController.h; sourceTree = "<group>"; };
+		F4075724198BBD3100F2564A /* IPFantasyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPFantasyViewController.m; sourceTree = "<group>"; };
 		F40F7D57182552AF00EBA8A1 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		F4119CAD16BADEFB0028DB2E /* IPGameItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPGameItemCell.xib; sourceTree = "<group>"; };
 		F4119CAF16BAF01A0028DB2E /* IPGameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPGameViewController.xib; sourceTree = "<group>"; };
@@ -471,11 +482,6 @@
 		F41F601117E1BE6D003B713B /* tutorial-icon-hit-state@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial-icon-hit-state@2x.png"; sourceTree = "<group>"; };
 		F41F601217E1BE6D003B713B /* tutorial-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial-icon.png"; sourceTree = "<group>"; };
 		F41F601317E1BE6D003B713B /* tutorial-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial-icon@2x.png"; sourceTree = "<group>"; };
-		F422C68D17E861C2003CA923 /* screen_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screen_2.png; sourceTree = "<group>"; };
-		F422C68E17E861C3003CA923 /* screen_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screen_3.png; sourceTree = "<group>"; };
-		F422C69017E861C4003CA923 /* screen_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screen_6.png; sourceTree = "<group>"; };
-		F422C69117E861C5003CA923 /* screen_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screen_7.png; sourceTree = "<group>"; };
-		F422C6B117E87408003CA923 /* screen_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screen_1.png; sourceTree = "<group>"; };
 		F429F8C81704B08D006E7CDE /* IPInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPInfoViewController.h; sourceTree = "<group>"; };
 		F429F8C91704B08D006E7CDE /* IPInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPInfoViewController.m; sourceTree = "<group>"; };
 		F429F8CA1704B08D006E7CDE /* IPInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPInfoViewController.xib; sourceTree = "<group>"; };
@@ -537,12 +543,24 @@
 		F44867A517C0CD8400975F75 /* IPRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPRegisterViewController.h; sourceTree = "<group>"; };
 		F44867A617C240C600975F75 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		F44867A817C2491B00975F75 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
-		F44867AA17C249EB00975F75 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
-		F44867AB17C249EB00975F75 /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry.a; sourceTree = "<group>"; };
 		F44867AF17C2632E00975F75 /* lobby-sub-row-hit-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lobby-sub-row-hit-gray.png"; sourceTree = "<group>"; };
 		F44867B117C36ED100975F75 /* IPPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPPasswordViewController.xib; sourceTree = "<group>"; };
 		F44867B317C3706500975F75 /* IPPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPPasswordViewController.h; sourceTree = "<group>"; };
 		F44867B417C3707700975F75 /* IPPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPPasswordViewController.m; sourceTree = "<group>"; };
+		F45EE48B198BDE0A0062429D /* IPFantasyHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPFantasyHeaderView.xib; sourceTree = "<group>"; };
+		F45EE48D198BDE1E0062429D /* IPFantasyFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPFantasyFooterView.xib; sourceTree = "<group>"; };
+		F45EE48F198FC8960062429D /* PeriodOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeriodOptions.h; path = Inplayrs/PeriodOptions.h; sourceTree = "<group>"; };
+		F45EE490198FC8A30062429D /* PeriodOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeriodOptions.m; path = Inplayrs/PeriodOptions.m; sourceTree = "<group>"; };
+		F45EE4921991542C0062429D /* Tutorial1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tutorial1.png; sourceTree = "<group>"; };
+		F45EE4931991542C0062429D /* Tutorial1s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tutorial1s.png; sourceTree = "<group>"; };
+		F45EE4941991542C0062429D /* Tutorial2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tutorial2.png; sourceTree = "<group>"; };
+		F45EE4951991542C0062429D /* Tutorial2s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tutorial2s.png; sourceTree = "<group>"; };
+		F45EE4961991542C0062429D /* Tutorial3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tutorial3.png; sourceTree = "<group>"; };
+		F45EE4971991542C0062429D /* Tutorial3s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tutorial3s.png; sourceTree = "<group>"; };
+		F45EE4981991542C0062429D /* Tutorial4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tutorial4.png; sourceTree = "<group>"; };
+		F45EE4991991542C0062429D /* Tutorial4s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tutorial4s.png; sourceTree = "<group>"; };
+		F45EE4A2199B64950062429D /* Tutorial5s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tutorial5s.png; sourceTree = "<group>"; };
+		F45EE4A3199B64950062429D /* Tutorial5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tutorial5.png; sourceTree = "<group>"; };
 		F4706C181886E718002D4525 /* IPAddFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPAddFriendsViewController.h; sourceTree = "<group>"; };
 		F4706C191886E730002D4525 /* IPAddFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPAddFriendsViewController.m; sourceTree = "<group>"; };
 		F4706C1B1886E857002D4525 /* IPCreateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPCreateViewController.xib; sourceTree = "<group>"; };
@@ -615,7 +633,6 @@
 		F479D164172EAE6C008AF68D /* ice-hockey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ice-hockey@2x.png"; sourceTree = "<group>"; };
 		F47B7BD917A67FE90008D3B9 /* CompetitionWinners.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompetitionWinners.h; path = Inplayrs/CompetitionWinners.h; sourceTree = "<group>"; };
 		F47B7BDA17A67FFC0008D3B9 /* CompetitionWinners.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CompetitionWinners.m; path = Inplayrs/CompetitionWinners.m; sourceTree = "<group>"; };
-		F47B7BDC17A6C4F10008D3B9 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = "<group>"; };
 		F47B7BDE17A6C53F0008D3B9 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		F47B7BE317AA91F90008D3B9 /* bottom-section.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottom-section.png"; sourceTree = "<group>"; };
 		F47B7BE517AA91F90008D3B9 /* top-game-bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "top-game-bar.png"; sourceTree = "<group>"; };
@@ -813,16 +830,6 @@
 		F4E4CCAB17BD026E00468FB6 /* winners-hit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "winners-hit@2x.png"; sourceTree = "<group>"; };
 		F4E4CCBA17BD1E1A00468FB6 /* IPFanFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPFanFooterView.xib; sourceTree = "<group>"; };
 		F4E4CCBC17BD202E00468FB6 /* IPFanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPFanViewController.xib; sourceTree = "<group>"; };
-		F4EE191A19275F2000CE2EF2 /* screen_1s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screen_1s.png; sourceTree = "<group>"; };
-		F4EE191B19275F2000CE2EF2 /* screen_2s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screen_2s.png; sourceTree = "<group>"; };
-		F4EE191C19275F2000CE2EF2 /* screen_3s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screen_3s.png; sourceTree = "<group>"; };
-		F4EE191D19275F2000CE2EF2 /* screen_6s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screen_6s.png; sourceTree = "<group>"; };
-		F4EE191E19275F2000CE2EF2 /* screen_7s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screen_7s.png; sourceTree = "<group>"; };
-		F4EE1924192762BB00CE2EF2 /* screen_7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screen_7@2x.png"; sourceTree = "<group>"; };
-		F4EE1925192762BB00CE2EF2 /* screen_6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screen_6@2x.png"; sourceTree = "<group>"; };
-		F4EE1926192762BB00CE2EF2 /* screen_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screen_3@2x.png"; sourceTree = "<group>"; };
-		F4EE1927192762BB00CE2EF2 /* screen_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screen_2@2x.png"; sourceTree = "<group>"; };
-		F4EE1928192762BB00CE2EF2 /* screen_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screen_1@2x.png"; sourceTree = "<group>"; };
 		F4EE192E19276A7400CE2EF2 /* stats-dividing-line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stats-dividing-line.png"; sourceTree = "<group>"; };
 		F4EE192F19276A7400CE2EF2 /* stats-circle-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stats-circle-3.png"; sourceTree = "<group>"; };
 		F4EE193019276A7400CE2EF2 /* stats-circle-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stats-circle-2.png"; sourceTree = "<group>"; };
@@ -918,12 +925,12 @@
 				F4119CC016C030640028DB2E /* SystemConfiguration.framework in Frameworks */,
 				F48F94B216B98FC7004983EE /* MobileCoreServices.framework in Frameworks */,
 				F4B706CC1695C74700E9FCD8 /* UIKit.framework in Frameworks */,
+				F4075719198929FF00F2564A /* libFlurry_5.2.0.a in Frameworks */,
 				F4B706CE1695C74700E9FCD8 /* Foundation.framework in Frameworks */,
+				F407571B19893E0500F2564A /* SDWebImage.framework in Frameworks */,
 				F4B706D01695C74700E9FCD8 /* CoreGraphics.framework in Frameworks */,
 				EF02996F50A3463A8FCF020F /* libPods.a in Frameworks */,
 				F4B7072A169DDBFE00E9FCD8 /* QuartzCore.framework in Frameworks */,
-				F47B7BDD17A6C4F10008D3B9 /* SDWebImage.framework in Frameworks */,
-				F44867AC17C249EB00975F75 /* libFlurry.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -947,6 +954,16 @@
 		F4119CBA16C023360028DB2E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F45EE4A2199B64950062429D /* Tutorial5s.png */,
+				F45EE4A3199B64950062429D /* Tutorial5.png */,
+				F45EE4921991542C0062429D /* Tutorial1.png */,
+				F45EE4931991542C0062429D /* Tutorial1s.png */,
+				F45EE4941991542C0062429D /* Tutorial2.png */,
+				F45EE4951991542C0062429D /* Tutorial2s.png */,
+				F45EE4961991542C0062429D /* Tutorial3.png */,
+				F45EE4971991542C0062429D /* Tutorial3s.png */,
+				F45EE4981991542C0062429D /* Tutorial4.png */,
+				F45EE4991991542C0062429D /* Tutorial4s.png */,
 				F4EE19641927D0B900CE2EF2 /* 120x120-iPhone-Retina-icon.png */,
 				F4EE19651927D0B900CE2EF2 /* 114x114-iPhone-Retina-icon.png */,
 				F4EE19661927D0B900CE2EF2 /* 58x58-iPhone-Retina-icon.png */,
@@ -1164,21 +1181,6 @@
 				F479CDFA172EADBE008AF68D /* rugby@2x.png */,
 				F4F852B9192130D6002B19A4 /* screen-football-b@2x.png */,
 				F4F852BA192130D6002B19A4 /* screen-football@2x.png */,
-				F422C6B117E87408003CA923 /* screen_1.png */,
-				F4EE1928192762BB00CE2EF2 /* screen_1@2x.png */,
-				F4EE191A19275F2000CE2EF2 /* screen_1s.png */,
-				F422C68D17E861C2003CA923 /* screen_2.png */,
-				F4EE1927192762BB00CE2EF2 /* screen_2@2x.png */,
-				F4EE191B19275F2000CE2EF2 /* screen_2s.png */,
-				F422C68E17E861C3003CA923 /* screen_3.png */,
-				F4EE1926192762BB00CE2EF2 /* screen_3@2x.png */,
-				F4EE191C19275F2000CE2EF2 /* screen_3s.png */,
-				F422C69017E861C4003CA923 /* screen_6.png */,
-				F4EE1925192762BB00CE2EF2 /* screen_6@2x.png */,
-				F4EE191D19275F2000CE2EF2 /* screen_6s.png */,
-				F422C69117E861C5003CA923 /* screen_7.png */,
-				F4EE1924192762BB00CE2EF2 /* screen_7@2x.png */,
-				F4EE191E19275F2000CE2EF2 /* screen_7s.png */,
 				F479CD6E1711AAB2008AF68D /* segcontrol_sel-uns.png */,
 				F479CDA317215949008AF68D /* segcontrol_sel-uns@2x.png */,
 				F479CD6F1711AAB2008AF68D /* segcontrol_sel.png */,
@@ -1244,10 +1246,10 @@
 		F4119CBB16C0261D0028DB2E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F4075717198929FF00F2564A /* Flurry.h */,
+				F4075718198929FF00F2564A /* libFlurry_5.2.0.a */,
 				F4F046FA1850CAC8004D1498 /* PieChartView.h */,
 				F4F046FB1850CAC8004D1498 /* PieChartView.m */,
-				F44867AA17C249EB00975F75 /* Flurry.h */,
-				F44867AB17C249EB00975F75 /* libFlurry.a */,
 				F4D1A61F187C25DE00801F14 /* IPFriendViewController.h */,
 				F4D1A620187C25F900801F14 /* IPFriendViewController.m */,
 				F4D1A628187C6CDC00801F14 /* IPCreateViewController.h */,
@@ -1272,6 +1274,10 @@
 				F4F714C216AEEF7F00FCCA82 /* IPGameViewController.m */,
 				F49DD0C616BA9A0D004A08F2 /* IPGameItemCell.h */,
 				F49DD0C716BA9A0D004A08F2 /* IPGameItemCell.m */,
+				F4075723198BBD1F00F2564A /* IPFantasyViewController.h */,
+				F4075724198BBD3100F2564A /* IPFantasyViewController.m */,
+				F4075720198BB8F300F2564A /* IPFantasyItemCell.h */,
+				F4075721198BB90900F2564A /* IPFantasyItemCell.m */,
 				F429F8DB17086D35006E7CDE /* IPLeaderboardViewController.h */,
 				F429F8DC17086D4B006E7CDE /* IPLeaderboardViewController.m */,
 				F429F8DE17086DF5006E7CDE /* IPLeaderboardItemCell.h */,
@@ -1309,6 +1315,8 @@
 			children = (
 				F4F714CB16B9745C00FCCA82 /* Period.h */,
 				F48F94AC16B97488004983EE /* Period.m */,
+				F45EE48F198FC8960062429D /* PeriodOptions.h */,
+				F45EE490198FC8A30062429D /* PeriodOptions.m */,
 				F4D758621897E9D600242327 /* AddUsers.h */,
 				F4D758631897E9E600242327 /* AddUsers.m */,
 				F4119CEC16CEBD770028DB2E /* Selection.h */,
@@ -1388,11 +1396,11 @@
 		F4B706CA1695C74700E9FCD8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F407571A19893E0500F2564A /* SDWebImage.framework */,
 				F40F7D57182552AF00EBA8A1 /* FacebookSDK.framework */,
 				F44867A817C2491B00975F75 /* AdSupport.framework */,
 				F44867A617C240C600975F75 /* Security.framework */,
 				F47B7BDE17A6C53F0008D3B9 /* ImageIO.framework */,
-				F47B7BDC17A6C4F10008D3B9 /* SDWebImage.framework */,
 				F4119CBF16C030640028DB2E /* SystemConfiguration.framework */,
 				F48F94B116B98FC7004983EE /* MobileCoreServices.framework */,
 				F4B70729169DDBFE00E9FCD8 /* QuartzCore.framework */,
@@ -1431,6 +1439,10 @@
 				F4AFEDEF16D930F40055F376 /* IPLobbyItemCell.xib */,
 				F4857F7A17733BE10050FEDA /* IPLobbyChildCell.xib */,
 				F4F714C616AEF7FA00FCCA82 /* IPMenuHeaderView.xib */,
+				F407571C198BB3D700F2564A /* IPFantasyViewController.xib */,
+				F407571E198BB48100F2564A /* IPFantasyItemCell.xib */,
+				F45EE48B198BDE0A0062429D /* IPFantasyHeaderView.xib */,
+				F45EE48D198BDE1E0062429D /* IPFantasyFooterView.xib */,
 				F4119CAF16BAF01A0028DB2E /* IPGameViewController.xib */,
 				F4F714C316AEEF7F00FCCA82 /* IPGameHeaderView.xib */,
 				F4119CB516C00C7C0028DB2E /* IPGameFooterView.xib */,
@@ -1598,11 +1610,10 @@
 				F4F04712185A3A8A004D1498 /* amber.png in Resources */,
 				F4F714C716AEF7FB00FCCA82 /* IPMenuHeaderView.xib in Resources */,
 				F4F714CC16B9745C00FCCA82 /* Period.h in Resources */,
-				F4EE192319275F2000CE2EF2 /* screen_7s.png in Resources */,
+				F45EE48E198BDE1E0062429D /* IPFantasyFooterView.xib in Resources */,
 				F4119CAE16BADEFC0028DB2E /* IPGameItemCell.xib in Resources */,
 				F4119CB016BAF01A0028DB2E /* IPGameViewController.xib in Resources */,
 				F4119CB616C00C7D0028DB2E /* IPGameFooterView.xib in Resources */,
-				F4EE192C192762BB00CE2EF2 /* screen_2@2x.png in Resources */,
 				F4119CC216C910620028DB2E /* green_dot.png in Resources */,
 				1D6043371816B87300F058B0 /* IPMultiLoginViewController.xib in Resources */,
 				F4119CC816C910C30028DB2E /* lobby-row.png in Resources */,
@@ -1619,12 +1630,15 @@
 				F48A204D18E858DB00D2C4E7 /* game-header-button@2x.png in Resources */,
 				F4AFEDF616D93E810055F376 /* tennis.png in Resources */,
 				F4AFEDF816D9406C0055F376 /* basketball.png in Resources */,
+				F45EE49A1991542C0062429D /* Tutorial1.png in Resources */,
 				F494240816E6265400AC0644 /* IPLoginViewController.xib in Resources */,
 				F4EE194219276A7400CE2EF2 /* stats-dividing-line.png in Resources */,
 				F4D1A623187C281E00801F14 /* IPFriendViewController.xib in Resources */,
 				F446729118CF917E00279A8F /* reality-tv-hit.png in Resources */,
 				F494241916EBA35300AC0644 /* nav-bar@2x.png in Resources */,
+				F45EE49E1991542C0062429D /* Tutorial3.png in Resources */,
 				F4706C1C1886E857002D4525 /* IPCreateViewController.xib in Resources */,
+				F45EE49F1991542C0062429D /* Tutorial3s.png in Resources */,
 				F4EE196D1927D0B900CE2EF2 /* 29x29-iPhone-icon.png in Resources */,
 				F446728A18CF917E00279A8F /* basketball-hit@2x.png in Resources */,
 				F494241A16EBA35300AC0644 /* nav-bar.png in Resources */,
@@ -1633,6 +1647,7 @@
 				F494243316EE454E00AC0644 /* menu-row.png in Resources */,
 				F494243416EE454E00AC0644 /* menu-top-row-with-logo.png in Resources */,
 				F494244416EE583700AC0644 /* menu-final-row-line.png in Resources */,
+				F45EE49B1991542C0062429D /* Tutorial1s.png in Resources */,
 				F429F8CC1704B08D006E7CDE /* IPInfoViewController.xib in Resources */,
 				F48A2057190A70D600D2C4E7 /* lobby-bar-drop-done@2x.png in Resources */,
 				F4EE19691927D0B900CE2EF2 /* 120x120-iPhone-Retina-icon.png in Resources */,
@@ -1668,14 +1683,13 @@
 				F479CD9217156FE6008AF68D /* cricket.png in Resources */,
 				F479CD9A1720261F008AF68D /* bank-normal.png in Resources */,
 				F446728C18CF917E00279A8F /* football-hit@2x.png in Resources */,
-				F4EE192119275F2000CE2EF2 /* screen_3s.png in Resources */,
 				F446728018CF917E00279A8F /* rugby-hit@2x.png in Resources */,
 				F479CD9B1720261F008AF68D /* bank-select.png in Resources */,
 				F479CD9C1720261F008AF68D /* gamecontrol_sel-uns.png in Resources */,
 				F479CD9D1720261F008AF68D /* gamecontrol_sel.png in Resources */,
 				F479CD9E1720261F008AF68D /* gamecontrol_uns-sel.png in Resources */,
 				F479CD9F1720261F008AF68D /* gamecontrol_uns-uns.png in Resources */,
-				F4EE192A192762BB00CE2EF2 /* screen_6@2x.png in Resources */,
+				F45EE4A01991542C0062429D /* Tutorial4.png in Resources */,
 				F479CDA01720261F008AF68D /* gamecontrol_uns.png in Resources */,
 				F4D7CCC518B632F100AC025A /* header-bar.png in Resources */,
 				F4CB023A182AB0F90016AB1D /* TSMessagesDefaultDesign.json in Resources */,
@@ -1690,19 +1704,18 @@
 				F479CDAC1721594C008AF68D /* segcontrol_uns@2x.png in Resources */,
 				F4EE194C19276A7400CE2EF2 /* lobby-bar-drop-done.png in Resources */,
 				F446729018CF917E00279A8F /* rugby-hit.png in Resources */,
-				F4EE192019275F2000CE2EF2 /* screen_2s.png in Resources */,
 				F4D7CCCA18B6354F00AC025A /* header-bar-small@2x.png in Resources */,
 				F479CDB417215A9C008AF68D /* bank-normal@2x.png in Resources */,
 				F4CB022F182AB0F90016AB1D /* NotificationBackgroundMessage@2x.png in Resources */,
 				F4F852C0192130D6002B19A4 /* stats-circle-1@2x.png in Resources */,
 				F479CDB517215A9C008AF68D /* bank-select@2x.png in Resources */,
 				F479CDB617215A9C008AF68D /* gamecontrol_sel-uns@2x.png in Resources */,
+				F45EE49D1991542C0062429D /* Tutorial2s.png in Resources */,
 				F479CDB717215A9C008AF68D /* gamecontrol_sel@2x.png in Resources */,
 				F4CB0233182AB0F90016AB1D /* NotificationBackgroundSuccessIcon@2x.png in Resources */,
 				F4F046EE18464FA8004D1498 /* friends.png in Resources */,
 				F479CDB817215A9C008AF68D /* gamecontrol_uns-sel@2x.png in Resources */,
 				F479CDB917215A9C008AF68D /* gamecontrol_uns-uns@2x.png in Resources */,
-				F4EE191F19275F2000CE2EF2 /* screen_1s.png in Resources */,
 				F4EE194A19276A7400CE2EF2 /* lobby-bar-drop-down-bar.png in Resources */,
 				F479CDBA17215A9C008AF68D /* gamecontrol_uns@2x.png in Resources */,
 				F479CDC517215CBC008AF68D /* discontrol_sel-uns.png in Resources */,
@@ -1772,6 +1785,7 @@
 				F4008C5E173115DE00B9A23E /* Avalon-Book.otf in Resources */,
 				F4008C5F173115DE00B9A23E /* Avalon-Demi.otf in Resources */,
 				F4008C60173115DE00B9A23E /* Avalon-Medium.otf in Resources */,
+				F45EE4A11991542C0062429D /* Tutorial4s.png in Resources */,
 				F4F046F218464FA8004D1498 /* stats.png in Resources */,
 				F4008C62173948E600B9A23E /* menu-button-hit-state@2x.png in Resources */,
 				F497611418AA6F5900016238 /* title-bar@2x.png in Resources */,
@@ -1793,8 +1807,6 @@
 				F47E3788174FCC0B00C5C508 /* submit-button-background@2x.png in Resources */,
 				F4F852C1192130D6002B19A4 /* stats-circle-2@2x.png in Resources */,
 				F4EE196A1927D0B900CE2EF2 /* 114x114-iPhone-Retina-icon.png in Resources */,
-				F4EE192219275F2000CE2EF2 /* screen_6s.png in Resources */,
-				F4EE192B192762BB00CE2EF2 /* screen_3@2x.png in Resources */,
 				F4EE1963192798A300CE2EF2 /* 80x80-iPhone-Retina-icon.png in Resources */,
 				F4CB0236182AB0F90016AB1D /* NotificationBackgroundWarningIcon.png in Resources */,
 				F4F852BF192130D6002B19A4 /* screen-football@2x.png in Resources */,
@@ -1833,6 +1845,7 @@
 				F47B7C1417B0FE1C0008D3B9 /* fan@2x.png in Resources */,
 				F4F852C91922622B002B19A4 /* never-inplay.png in Resources */,
 				F47B7C1517B0FE1C0008D3B9 /* info.png in Resources */,
+				F407571D198BB3D700F2564A /* IPFantasyViewController.xib in Resources */,
 				F4EE194F19276A7400CE2EF2 /* lobby-bar-1.png in Resources */,
 				F446729A18CF917E00279A8F /* tennis-hit.png in Resources */,
 				F47B7C1617B0FE1C0008D3B9 /* info@2x.png in Resources */,
@@ -1855,6 +1868,8 @@
 				F4CB0231182AB0F90016AB1D /* NotificationBackgroundSuccess@2x.png in Resources */,
 				F47B7C2717BBAC340008D3B9 /* login-button-hit@2x.png in Resources */,
 				F4F852C619213A61002B19A4 /* completed-row-light@2x.png in Resources */,
+				F45EE4A4199B64950062429D /* Tutorial5s.png in Resources */,
+				F45EE49C1991542C0062429D /* Tutorial2.png in Resources */,
 				F47B7C2817BBAC340008D3B9 /* login-button-normal@2x.png in Resources */,
 				F497611718B2366800016238 /* create-button-game-hit-state@2x.png in Resources */,
 				F4F047031857D141004D1498 /* IPWinnersHeaderView.xib in Resources */,
@@ -1880,6 +1895,7 @@
 				F4D7CCCC18B7AC1A00AC025A /* submit-button_disabled@2x.png in Resources */,
 				F4D1A625187C288F00801F14 /* IPFriendFooterView.xib in Resources */,
 				F4E4CCB317BD026E00468FB6 /* lobby-hit@2x.png in Resources */,
+				F45EE4A5199B64950062429D /* Tutorial5.png in Resources */,
 				F4E4CCB417BD026E00468FB6 /* settings-hit.png in Resources */,
 				F446729718CF917E00279A8F /* american-football-hit.png in Resources */,
 				F497610B18AA642500016238 /* lobby-bar-2@2x.png in Resources */,
@@ -1909,27 +1925,22 @@
 				F446729518CF917E00279A8F /* snooker-hit.png in Resources */,
 				F4EE195019276A7400CE2EF2 /* lobby-bar-1-hitstate.png in Resources */,
 				F4CB0237182AB0F90016AB1D /* NotificationBackgroundWarningIcon@2x.png in Resources */,
-				F4EE1929192762BB00CE2EF2 /* screen_7@2x.png in Resources */,
+				F45EE48C198BDE0A0062429D /* IPFantasyHeaderView.xib in Resources */,
 				F41F601A17E1BE6D003B713B /* tutorial-icon.png in Resources */,
 				F4F852C519213A61002B19A4 /* completed-row-dark@2x.png in Resources */,
 				F41F601B17E1BE6D003B713B /* tutorial-icon@2x.png in Resources */,
-				F422C69F17E861CB003CA923 /* screen_2.png in Resources */,
 				F446728518CF917E00279A8F /* baseball-hit@2x.png in Resources */,
-				F422C6A017E861CB003CA923 /* screen_3.png in Resources */,
 				F4EE194B19276A7400CE2EF2 /* lobby-bar-drop-down-bar-hitstate.png in Resources */,
 				F48A204C18E858DB00D2C4E7 /* game-header-button-hit@2x.png in Resources */,
-				F4EE192D192762BB00CE2EF2 /* screen_1@2x.png in Resources */,
-				F422C6A217E861CB003CA923 /* screen_6.png in Resources */,
-				F422C6A317E861CB003CA923 /* screen_7.png in Resources */,
 				F4CB0244182BCA880016AB1D /* IPStatsViewController.xib in Resources */,
 				F446727F18CF917E00279A8F /* golf-hit@2x.png in Resources */,
 				F4EE194619276A7400CE2EF2 /* stats-background-bar.png in Resources */,
 				F4CB022A182AB0F90016AB1D /* NotificationBackgroundError.png in Resources */,
 				F4706C2118880F9F002D4525 /* IPFriendPoolFooterView.xib in Resources */,
 				F497610C18AA642500016238 /* lobby-bar-1@2x.png in Resources */,
-				F422C6B417E87409003CA923 /* screen_1.png in Resources */,
 				F4F046F118464FA8004D1498 /* stats-hit@2x.png in Resources */,
 				F48A20501906780E00D2C4E7 /* lobby-bar-1-hitstate@2x.png in Resources */,
+				F407571F198BB48100F2564A /* IPFantasyItemCell.xib in Resources */,
 				F4F046EC18464FA8004D1498 /* friends-hit.png in Resources */,
 				F497610A18AA642500016238 /* lobby-bar-drop-down-bar@2x.png in Resources */,
 				F4EE194919276A7400CE2EF2 /* screen-football-b.png in Resources */,
@@ -1985,6 +1996,7 @@
 				F4706C1A1886E730002D4525 /* IPAddFriendsViewController.m in Sources */,
 				F494240B16E648B900AC0644 /* MF_Base64Additions.m in Sources */,
 				F4ADF2B518BCF40000970324 /* IPPickUsernamesViewController.m in Sources */,
+				F4075725198BBD3100F2564A /* IPFantasyViewController.m in Sources */,
 				F446726218CF398C00279A8F /* PoolPoints.m in Sources */,
 				F494240F16E6500100AC0644 /* IPFanViewController.m in Sources */,
 				F4F046FC1850CAC8004D1498 /* PieChartView.m in Sources */,
@@ -1996,6 +2008,7 @@
 				F429F8CF17085403006E7CDE /* Leaderboard.m in Sources */,
 				F4ABEA071890348D00C87786 /* FriendPool.m in Sources */,
 				F429F8D21708543C006E7CDE /* LeaderboardDataController.m in Sources */,
+				F45EE491198FC8A30062429D /* PeriodOptions.m in Sources */,
 				F429F8DD17086D4B006E7CDE /* IPLeaderboardViewController.m in Sources */,
 				F429F8E017086E0A006E7CDE /* IPLeaderboardItemCell.m in Sources */,
 				F429F8F9170EDE64006E7CDE /* Competition.m in Sources */,
@@ -2004,6 +2017,7 @@
 				F4CB0229182AB0F90016AB1D /* TSMessage.m in Sources */,
 				F42D4CA6174A910F00206ABC /* Error.m in Sources */,
 				F4ABEA0A18903D5000C87786 /* PoolMember.m in Sources */,
+				F4075722198BB90900F2564A /* IPFantasyItemCell.m in Sources */,
 				F47E3793175FAFA900C5C508 /* IPSettingsViewController.m in Sources */,
 				F4CB0241182AB4130016AB1D /* HexColor.m in Sources */,
 				F47E37961760E27B00C5C508 /* Account.m in Sources */,
@@ -2099,18 +2113,23 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Anil Bhagchandani (GKVQ38499U)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Anil Bhagchandani (GKVQ38499U)";
-				FRAMEWORK_SEARCH_PATHS = /Users/inplayrs/Documents/Code/Inplayrs;
+				FRAMEWORK_SEARCH_PATHS = (
+					/Users/inplayrs/Documents/Code/Inplayrs,
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Inplayrs/Inplayrs-Prefix.pch";
 				INFOPLIST_FILE = "Inplayrs/Inplayrs-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					"$(PROJECT_DIR)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "257EE24A-BC13-49AC-9610-A521E7FA30E2";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "257EE24A-BC13-49AC-9610-A521E7FA30E2";
 				USER_HEADER_SEARCH_PATHS = "";
+				"VALID_ARCHS[sdk=*]" = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2120,13 +2139,17 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Inplayrs Ltd (TQ53V5B9SX)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Inplayrs Ltd (TQ53V5B9SX)";
-				FRAMEWORK_SEARCH_PATHS = /Users/inplayrs/Documents/Code/Inplayrs;
+				FRAMEWORK_SEARCH_PATHS = (
+					/Users/inplayrs/Documents/Code/Inplayrs,
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Inplayrs/Inplayrs-Prefix.pch";
 				INFOPLIST_FILE = "Inplayrs/Inplayrs-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					"$(PROJECT_DIR)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "75B25BFC-02B8-448E-9D9A-4290313B8D0D";

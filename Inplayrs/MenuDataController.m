@@ -18,11 +18,9 @@
 - (void)initializeDefaultDataList {
     NSMutableArray *menuList = [[NSMutableArray alloc] init];
     [menuList addObject:@"LOBBY"];
-    // [menuList addObject:@"Leaderboard"];
     [menuList addObject:@"WINNERS"];
     [menuList addObject:@"STATS"];
     [menuList addObject:@"FRIEND POOLS"];
-    [menuList addObject:@"FAN GROUPS"];
     [menuList addObject:@"TUTORIAL"];
     [menuList addObject:@"SETTINGS"];
     [menuList addObject:@"INFO"];

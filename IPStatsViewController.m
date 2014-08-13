@@ -107,10 +107,10 @@
         self.winningsChart.text = @"";
         self.winsChart.text = @"";
         self.globalWinnings = 0;
-        self.fangroupWinnings = 0;
+        // self.fangroupWinnings = 0;
         self.h2hWinnings = 0;
         self.globalWins = 0;
-        self.fangroupWins = 0;
+        // self.fangroupWins = 0;
         self.h2hWins = 0;
         [pieChartViewLeft setHidden:YES];
         [pieChartViewRight setHidden:YES];
@@ -130,7 +130,7 @@
     pieChartViewRight.delegate = self;
     pieChartViewRight.datasource = self;
     [self.view addSubview:pieChartViewRight];
-    self.winsChart.text = [NSString stringWithFormat:@"%d", totalChartWins];
+    self.winsChart.text = [NSString stringWithFormat:@"%ld", (long)totalChartWins];
     
     [pieChartViewLeft setHidden:NO];
     [pieChartViewRight setHidden:NO];
@@ -147,11 +147,9 @@
      ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
          Stats *stats = [result firstObject];
          float gWinnings=0;
-         float fWinnings=0;
          float hWinnings=0;
          float total=0;
          float gWins=0;
-         float fWins=0;
          float hWins=0;
          float totalWins=0;
          if (!stats.totalWinnings)
@@ -182,37 +180,41 @@
              self.globalWinnings = 0;
          else
              gWinnings = [stats.globalWinnings floatValue];
+         /*
          if (!stats.fangroupWinnings)
              self.fangroupWinnings = 0;
          else
              fWinnings = [stats.fangroupWinnings floatValue];
+          */
          if (!stats.h2hWinnings)
              self.h2hWinnings = 0;
          else
              hWinnings = [stats.h2hWinnings floatValue];
-         total = gWinnings + fWinnings + hWinnings;
+         total = gWinnings + hWinnings;
          if (total > 0) {
              self.globalWinnings = roundf((gWinnings/total)*100);
-             self.fangroupWinnings = roundf((fWinnings/total)*100);
+             // self.fangroupWinnings = roundf((fWinnings/total)*100);
              self.h2hWinnings = roundf((hWinnings/total)*100);
          }
          if (!stats.globalWon)
              self.globalWins = 0;
          else
              gWins = [stats.globalWon floatValue];
+         /*
          if (!stats.fangroupWon)
              self.fangroupWins = 0;
          else
              fWins = [stats.fangroupWon floatValue];
+          */
          if (!stats.h2hWon)
              self.h2hWins = 0;
          else
              hWins = [stats.h2hWon floatValue];
-         totalWins = gWins + fWins + hWins;
+         totalWins = gWins + hWins;
          totalChartWins = totalWins;
          if (totalWins > 0) {
              self.globalWins = roundf((gWins/totalWins)*100);
-             self.fangroupWins = roundf((fWins/totalWins)*100);
+             // self.fangroupWins = roundf((fWins/totalWins)*100);
              self.h2hWins = roundf((hWins/totalWins)*100);
          }
          [self drawPieCharts];
@@ -226,10 +228,10 @@
          self.winningsChart.text = @"";
          self.winsChart.text = @"";
          self.globalWinnings = 0;
-         self.fangroupWinnings = 0;
+         // self.fangroupWinnings = 0;
          self.h2hWinnings = 0;
          self.globalWins = 0;
-         self.fangroupWins = 0;
+         // self.fangroupWins = 0;
          self.h2hWins = 0;
          [pieChartViewLeft setHidden:YES];
          [pieChartViewRight setHidden:YES];
@@ -253,7 +255,7 @@
 
 -(int)numberOfSlicesInPieChartView:(PieChartView *)pieChartView
 {
-    return 3;
+    return 2;
 }
 
 -(UIColor *)pieChartView:(PieChartView *)pieChartView colorForSliceAtIndex:(NSUInteger)index
@@ -264,11 +266,11 @@
         color = [UIColor colorWithRed:255/255.0 green:224/255.0 blue:41/255.0 alpha:1];
     else if (index == 1)
         // color = [UIColor colorWithRed:129/255.0 green:195/255.0 blue:29/255.0 alpha:1];
-        color = [UIColor colorWithRed:255/255.0 green:129/255.0 blue:83/255.0 alpha:1];
+        color = [UIColor colorWithRed:74/255.0 green:202/255.0 blue:180/255.0 alpha:1];
         // color = [UIColor colorWithRed:255/255.0 green:0/255.0 blue:0/255.0 alpha:1];
     else
         // color = [UIColor colorWithRed:62/255.0 green:173/255.0 blue:219/255.0 alpha:1];
-        color = [UIColor colorWithRed:74/255.0 green:202/255.0 blue:180/255.0 alpha:1];
+        color = [UIColor colorWithRed:255/255.0 green:129/255.0 blue:83/255.0 alpha:1];
     return color;
 }
 
@@ -277,13 +279,9 @@
     if ((index == 0) && (pieChartView == pieChartViewLeft))
         return self.globalWinnings;
     else if ((index == 1) && (pieChartView == pieChartViewLeft))
-        return self.fangroupWinnings;
-    else if (pieChartView == pieChartViewLeft)
         return self.h2hWinnings;
     else if (index == 0)
         return self.globalWins;
-    else if (index == 1)
-        return self.fangroupWins;
     else
         return self.h2hWins;
 }

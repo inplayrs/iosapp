@@ -12,7 +12,6 @@
 @class GameDataController;
 @class Selection;
 @class IPLeaderboardViewController;
-@class IPFanViewController;
 @class IPMultiLoginViewController;
 @class IPTutorialViewController;
 @class IPCreateViewController;
@@ -41,19 +40,16 @@
 - (void)sortSelections;
 - (IBAction)friendClicked:(id)sender;
 - (IBAction)globalClicked:(id)sender;
-- (IBAction)fangroupClicked:(id)sender;
 - (IBAction)h2hClicked:(id)sender;
 - (void) addFriends:(NSNotification *)notification;
 
 @property (strong, nonatomic) Game *game;
 @property (strong, nonatomic) GameDataController *dataController;
 @property (strong, nonatomic) IPLeaderboardViewController *leaderboardViewController;
-@property (strong, nonatomic) IPFanViewController *fanViewController;
 @property (strong, nonatomic) IPMultiLoginViewController *multiLoginViewController;
 @property (strong, nonatomic) IPTutorialViewController *tutorialViewController;
 @property (strong, nonatomic) IPCreateViewController *createViewController;
 @property (strong, nonatomic) IPLeaderboardViewController *globalViewController;
-@property (strong, nonatomic) IPLeaderboardViewController *fangroupViewController;
 @property (strong, nonatomic) IPLeaderboardViewController *friendViewController;
 @property (strong, nonatomic) IPStatsViewController *statsViewController;
 @property (weak, nonatomic) IBOutlet UIButton *submitButton;
@@ -65,19 +61,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *selectionHeader5;
 @property (weak, nonatomic) IBOutlet UIButton *friendButton;
 @property (weak, nonatomic) IBOutlet UILabel *globalLabel;
-@property (weak, nonatomic) IBOutlet UILabel *fangroupLabel;
 @property (weak, nonatomic) IBOutlet UILabel *h2hLabel;
 @property (weak, nonatomic) IBOutlet UILabel *friendLabel;
 @property (weak, nonatomic) IBOutlet UILabel *global1;
 @property (weak, nonatomic) IBOutlet UILabel *global2;
-@property (weak, nonatomic) IBOutlet UILabel *fangroup1;
-@property (weak, nonatomic) IBOutlet UILabel *fangroup2;
 @property (weak, nonatomic) IBOutlet UILabel *h2h1;
 @property (weak, nonatomic) IBOutlet UILabel *h2h2;
 @property (weak, nonatomic) IBOutlet UILabel *friend1;
 @property (weak, nonatomic) IBOutlet UILabel *friend2;
 @property (weak, nonatomic) IBOutlet UIButton *globalButton;
-@property (weak, nonatomic) IBOutlet UIButton *fangroupButton;
 @property (weak, nonatomic) IBOutlet UIButton *h2hButton;
 
 
@@ -91,7 +83,6 @@
 @property (nonatomic) BOOL isUpdated;
 @property (nonatomic) BOOL isLoading;
 @property (nonatomic) BOOL pointsChanged;
-@property (nonatomic) BOOL fangroupChallenge;
 @property (weak, nonatomic) NSString *oldPoints;
 @property (nonatomic) NSInteger oldState;
 @property (nonatomic) NSString *username;

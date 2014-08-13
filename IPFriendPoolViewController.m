@@ -115,7 +115,7 @@
 - (void)getMemberList:(id)sender
 {
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    NSString *path = [NSString stringWithFormat:@"pool/members?pool_id=%d", self.poolID];
+    NSString *path = [NSString stringWithFormat:@"pool/members?pool_id=%ld", (long)self.poolID];
     [objectManager getObjectsAtPath:path parameters:nil success:
      ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
          [memberList removeAllObjects];
@@ -171,7 +171,7 @@
         self.leaveButton.enabled = NO;
         self.addButton.enabled = NO;
         RKObjectManager *objectManager = [RKObjectManager sharedManager];
-        NSString *path = [NSString stringWithFormat:@"pool/leave?pool_id=%d", self.poolID];
+        NSString *path = [NSString stringWithFormat:@"pool/leave?pool_id=%ld", (long)self.poolID];
         [objectManager postObject:nil path:path parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
             NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"Leave",
                                         @"type", @"Success", @"result", nil];

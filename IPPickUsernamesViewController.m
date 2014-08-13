@@ -153,7 +153,7 @@
     
     if ([self.addUsers.usernames count] > 0) {
         RKObjectManager *objectManager = [RKObjectManager sharedManager];
-        NSString *path = [NSString stringWithFormat:@"pool/addusers?pool_id=%d", self.poolID];
+        NSString *path = [NSString stringWithFormat:@"pool/addusers?pool_id=%ld", (long)self.poolID];
         [objectManager postObject:self.addUsers path:path parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
             NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"AddUsernames",
                                         @"type", @"Success", @"result", nil];

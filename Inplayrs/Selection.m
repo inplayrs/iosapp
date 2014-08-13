@@ -21,6 +21,8 @@
         _potentialPoints = @"0";
         _bank = NO;
         _row = -1;
+        _periodOptionID = -1;
+        _periodName = @"0";
 
         return self;
     }

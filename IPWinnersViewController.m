@@ -273,7 +273,7 @@ enum Category {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         OverallWinners *overallWinners;
         overallWinners = [overallWinnersList objectAtIndex:indexPath.row];
-        NSString *winners = [NSString stringWithFormat:@"%d", overallWinners.rank];
+        NSString *winners = [NSString stringWithFormat:@"%ld", (long)overallWinners.rank];
         winners = [winners stringByAppendingString:@"    "];
         winners = [winners stringByAppendingString:overallWinners.username];
         

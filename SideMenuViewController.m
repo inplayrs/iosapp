@@ -7,8 +7,6 @@
 #import "MFSideMenu.h"
 #import "IPLobbyViewController.h"
 #import "IPSettingsViewController.h"
-#import "IPFanViewController.h"
-// #import "IPLeaderboardViewController.h"
 #import "IPInfoViewController.h"
 #import "IPWinnersViewController.h"
 #import "IPTutorialViewController.h"
@@ -20,7 +18,7 @@
 
 @implementation SideMenuViewController
 
-@synthesize sideMenu, lobbyController, settingsController, fanController, infoController, winnersController, tutorialController, statsController,friendController;
+@synthesize sideMenu, lobbyController, settingsController, infoController, winnersController, tutorialController, statsController, friendController;
 
 - (void) viewDidLoad {
     [super viewDidLoad];
@@ -34,8 +32,6 @@
     
     lobbyController = (IPLobbyViewController *)self.sideMenu.navigationController.topViewController;
     settingsController = nil;
-    fanController = nil;
-    // leaderboardController = nil;
     infoController = nil;
     winnersController = nil;
     tutorialController = nil;
@@ -149,37 +145,33 @@
             cell.imageView.highlightedImage = imageHighlighted;
             break;
         }
+        /*
         case (4): {
             UIImage *image = [UIImage imageNamed: @"fan.png"];
             UIImage *imageHighlighted = [UIImage imageNamed: @"fan-hit.png"];
             cell.imageView.image = image;
             cell.imageView.highlightedImage = imageHighlighted;
             break;
-        }
-        case (5): {
+        */
+        case (4): {
             UIImage *image = [UIImage imageNamed: @"tutorial-icon.png"];
             UIImage *imageHighlighted = [UIImage imageNamed: @"tutorial-icon-hit-state.png"];
             cell.imageView.image = image;
             cell.imageView.highlightedImage = imageHighlighted;
             break;
         }
-        case (6): {
+        case (5): {
             UIImage *image = [UIImage imageNamed: @"settings.png"];
             UIImage *imageHighlighted = [UIImage imageNamed: @"settings-hit.png"];
             cell.imageView.image = image;
             cell.imageView.highlightedImage = imageHighlighted;
             break;
         }
-        case (7): {
+        case (6): {
             UIImage *image = [UIImage imageNamed: @"info.png"];
             UIImage *imageHighlighted = [UIImage imageNamed: @"info-hit.png"];
             cell.imageView.image = image;
             cell.imageView.highlightedImage = imageHighlighted;
-            /*
-            UIImageView *separatorLine = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, cell.frame.size.height - 1.0f, cell.frame.size.width, 1.0f)];
-            separatorLine.image = [[UIImage imageNamed:@"menu-final-row-line.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:0];
-            [cell.contentView addSubview:separatorLine];
-             */
             break;
         }
     }
@@ -220,7 +212,7 @@
             [Flurry logEvent:@"MENU" withParameters:dictionary];
             break;
         }
-         */
+        */
         case (1): {
             if (winnersController == nil) {
                 self.winnersController = [[IPWinnersViewController alloc]
@@ -261,6 +253,7 @@
             [Flurry logEvent:@"MENU" withParameters:dictionary];
             break;
         }
+        /*
         case (4): {
             if (fanController == nil) {
                 self.fanController = [[IPFanViewController alloc]
@@ -274,7 +267,8 @@
             [Flurry logEvent:@"MENU" withParameters:dictionary];
             break;
         }
-        case (5): {
+        */
+        case (4): {
             if (tutorialController == nil) {
                 self.tutorialController = [[IPTutorialViewController alloc]
                                            initWithNibName:@"IPTutorialViewController" bundle:nil];
@@ -287,7 +281,7 @@
             [Flurry logEvent:@"MENU" withParameters:dictionary];
             break;
         }
-        case (6): {
+        case (5): {
             if (settingsController == nil) {
                 self.settingsController = [[IPSettingsViewController alloc]
                                         initWithNibName:@"IPSettingsViewController" bundle:nil];
@@ -300,7 +294,7 @@
             [Flurry logEvent:@"MENU" withParameters:dictionary];
             break;
         }
-        case (7): {
+        case (6): {
             if (infoController == nil) {
                 self.infoController = [[IPInfoViewController alloc]
                                       initWithNibName:@"IPInfoViewController" bundle:nil];

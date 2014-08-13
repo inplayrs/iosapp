@@ -27,10 +27,10 @@
 @property (strong, nonatomic) NSString *correctPicks;
 
 @property (nonatomic) NSInteger globalWinnings;
-@property (nonatomic) NSInteger fangroupWinnings;
+// @property (nonatomic) NSInteger fangroupWinnings;
 @property (nonatomic) NSInteger h2hWinnings;
 @property (nonatomic) NSInteger globalWins;
-@property (nonatomic) NSInteger fangroupWins;
+// @property (nonatomic) NSInteger fangroupWins;
 @property (nonatomic) NSInteger h2hWins;
 @property (nonatomic) NSInteger totalChartWins;
 @property (nonatomic) NSString *externalUsername;

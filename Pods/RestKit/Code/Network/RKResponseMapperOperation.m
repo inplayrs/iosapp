@@ -19,7 +19,6 @@
 //
 
 #import "RKObjectMappingOperationDataSource.h"
-#import "RKManagedObjectMappingOperationDataSource.h"
 #import "RKLog.h"
 #import "RKResponseDescriptor.h"
 #import "RKPathMatcher.h"
@@ -28,6 +27,13 @@
 #import "RKMappingErrors.h"
 #import "RKMIMETypeSerialization.h"
 #import "RKDictionaryUtilities.h"
+
+#ifdef _COREDATADEFINES_H
+#if __has_include("RKCoreData.h")
+#define RKCoreDataIncluded
+#import "RKManagedObjectMappingOperationDataSource.h"
+#endif
+#endif
 
 // Set Logging Component
 #undef RKLogComponent
@@ -215,7 +221,7 @@ static NSMutableDictionary *RKRegisteredResponseMapperOperationDataSourceClasses
 - (NSArray *)buildMatchingResponseDescriptors
 {
     NSIndexSet *indexSet = [self.responseDescriptors indexesOfObjectsPassingTest:^BOOL(RKResponseDescriptor *responseDescriptor, NSUInteger idx, BOOL *stop) {
-        return [responseDescriptor matchesResponse:self.response];
+        return [responseDescriptor matchesResponse:self.response] && (RKRequestMethodFromString(self.request.HTTPMethod) & responseDescriptor.method);
     }];
     return [self.responseDescriptors objectsAtIndexes:indexSet];
 }
@@ -257,16 +263,26 @@ static NSMutableDictionary *RKRegisteredResponseMapperOperationDataSourceClasses
 
 - (void)cancel
 {
+    BOOL cancelledBeforeExecution = ![self isExecuting] && ![self isCancelled];
+    
     [super cancel];
     [self.mapperOperation cancel];
+ 
+    // NOTE: If we are cancelled before being started, then `main` and the `completionBlock` are never executed. We must ensure that we invoke `didFinishMappingBlock`, see Github issue #1494
+    if (cancelledBeforeExecution) {
+        [self willFinish];
+    }
 }
 
 - (void)willFinish
 {
-    if (self.isCancelled && !self.error) self.error = [NSError errorWithDomain:RKErrorDomain code:RKOperationCancelledError userInfo:nil];
+    if (self.isCancelled && !self.error) self.error = [NSError errorWithDomain:RKErrorDomain code:RKOperationCancelledError userInfo:@{ NSLocalizedDescriptionKey: @"The operation was cancelled." }];
     
-    if (self.error && self.didFinishMappingBlock) self.didFinishMappingBlock(nil, self.error);
-    else if (self.didFinishMappingBlock) self.didFinishMappingBlock(self.mappingResult, nil);
+    if (self.didFinishMappingBlock) {
+        if (self.error) self.didFinishMappingBlock(nil, self.error);
+        else self.didFinishMappingBlock(self.mappingResult, nil);
+        [self setDidFinishMappingBlock:nil];
+    }
 }
 
 - (void)main
@@ -313,7 +329,7 @@ static NSMutableDictionary *RKRegisteredResponseMapperOperationDataSourceClasses
         parsedBody = self.willMapDeserializedResponseBlock(parsedBody);
         if (! parsedBody) {
             NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: @"Mapping was declined due to a `willMapDeserializedResponseBlock` returning nil." };
-            self.error = [NSError errorWithDomain:RKErrorDomain code:RKMappingErrorFromMappingResult userInfo:userInfo];
+            self.error = [NSError errorWithDomain:RKErrorDomain code:RKMappingErrorMappingDeclined userInfo:userInfo];
             RKLogError(@"Failed to parse response data: %@", [error localizedDescription]);
             [self willFinish];
             return;
@@ -376,6 +392,8 @@ static NSMutableDictionary *RKRegisteredResponseMapperOperationDataSourceClasses
 }
 
 @end
+
+#ifdef RKCoreDataIncluded
 
 static inline NSManagedObjectID *RKObjectIDFromObjectIfManaged(id object)
 {
@@ -476,3 +494,5 @@ static inline NSManagedObjectID *RKObjectIDFromObjectIfManaged(id object)
 }
 
 @end
+
+#endif

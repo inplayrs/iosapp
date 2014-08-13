@@ -16,6 +16,8 @@
 @property (nonatomic, copy) NSString *potentialPoints;
 @property (nonatomic) BOOL bank;
 @property (nonatomic) NSInteger row;
+@property (nonatomic) NSInteger periodOptionID;
+@property (nonatomic, copy) NSString *periodName;
 
 
 -(id)initWithPeriodID:(NSInteger)periodID;
