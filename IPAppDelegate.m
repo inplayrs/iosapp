@@ -417,6 +417,8 @@
     RKObjectMapping *userMotdMapping = [RKObjectMapping mappingForClass:[Motd class]];
     [userMotdMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:nil toKeyPath:@"message"]];
     
+    RKObjectMapping* responseMapping = [RKObjectMapping mappingForClass:[NSNull class]];
+    
     NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassClientError);
     NSIndexSet *successStatusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
     
@@ -439,13 +441,18 @@
     RKResponseDescriptor *friendPoolResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:friendPoolMapping method:RKRequestMethodGET pathPattern:@"pool/mypools" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *poolMemberResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:poolMemberMapping method:RKRequestMethodGET pathPattern:@"pool/members" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *userAccountResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userAccountMapping method:RKRequestMethodGET pathPattern:@"user/account" keyPath:nil statusCodes:nil];
-    RKResponseDescriptor *userAccountUpdateResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userAccountMapping method:RKRequestMethodPOST pathPattern:@"user/account/update" keyPath:nil statusCodes:nil];
+    RKResponseDescriptor *userAccountUpdateResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userAccountMapping method:RKRequestMethodPOST pathPattern:@"user/account/update" keyPath:nil statusCodes:successStatusCodes];
     RKResponseDescriptor *userStatsResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userStatsMapping method:RKRequestMethodGET pathPattern:@"user/stats" keyPath:nil statusCodes:nil];
-    RKResponseDescriptor *errorDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:errorMapping method:RKRequestMethodGET pathPattern:nil keyPath:nil statusCodes:statusCodes];
-    RKResponseDescriptor *registerDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userAccountMapping method:RKRequestMethodGET pathPattern:@"user/register" keyPath:nil statusCodes:successStatusCodes];
+    RKResponseDescriptor *errorDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:errorMapping method:RKRequestMethodPOST pathPattern:nil keyPath:nil statusCodes:statusCodes];
+    RKResponseDescriptor *registerDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userAccountMapping method:RKRequestMethodPOST pathPattern:@"user/register" keyPath:nil statusCodes:successStatusCodes];
     RKResponseDescriptor *createPoolResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:friendPoolMapping method:RKRequestMethodPOST pathPattern:@"pool/create" keyPath:nil statusCodes:successStatusCodes];
     RKResponseDescriptor *userMotdResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userMotdMapping method:RKRequestMethodGET pathPattern:@"user/motd" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *userListResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userMotdMapping method:RKRequestMethodGET pathPattern:@"user/list" keyPath:nil statusCodes:nil];
+    
+    RKResponseDescriptor *responseSelectionDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:responseMapping method:RKRequestMethodPOST pathPattern:@"game/selections" keyPath:nil statusCodes:successStatusCodes];
+    RKResponseDescriptor *responseAddUsersDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:responseMapping method:RKRequestMethodPOST pathPattern:@"pool/addusers" keyPath:nil statusCodes:successStatusCodes];
+    RKResponseDescriptor *responsePoolLeaveDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:responseMapping method:RKRequestMethodPOST pathPattern:@"pool/leave" keyPath:nil statusCodes:successStatusCodes];
+    RKResponseDescriptor *responseBankDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:responseMapping method:RKRequestMethodPOST pathPattern:@"game/period/bank" keyPath:nil statusCodes:successStatusCodes];
     
     [objectManager setRequestSerializationMIMEType:RKMIMETypeJSON];
     [objectManager addResponseDescriptor:gameResponseDescriptor];
@@ -473,6 +480,10 @@
     [objectManager addResponseDescriptor:createPoolResponseDescriptor];
     [objectManager addResponseDescriptor:userMotdResponseDescriptor];
     [objectManager addResponseDescriptor:userListResponseDescriptor];
+    [objectManager addResponseDescriptor:responseSelectionDescriptor];
+    [objectManager addResponseDescriptor:responseAddUsersDescriptor];
+    [objectManager addResponseDescriptor:responsePoolLeaveDescriptor];
+    [objectManager addResponseDescriptor:responseBankDescriptor];
     
     // Whenever a person opens the app, check for a cached session
     if ((FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) && (self.loggedin)) {

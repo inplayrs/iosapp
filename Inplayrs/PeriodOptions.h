@@ -12,7 +12,7 @@
 
 @property (nonatomic) NSInteger periodOptionID;
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *points;
+@property (nonatomic) NSInteger points;
 @property (nonatomic) NSInteger result;
 @property (nonatomic) NSInteger row;
 

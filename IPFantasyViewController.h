@@ -19,6 +19,7 @@
 @class IPAddFriendsViewController;
 @class IPStatsViewController;
 @class PeriodOptions;
+@class IPFantasyResultViewController;
 
 @interface IPFantasyViewController : UITableViewController <UIAlertViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 {
@@ -84,5 +85,7 @@
 @property (nonatomic, weak) PeriodOptions *selectedPeriodOption;
 @property (strong, nonatomic) IPAddFriendsViewController *addFriendsViewController;
 @property (nonatomic) BOOL fromLeaderboard;
+@property (strong, nonatomic) IPFantasyResultViewController *detailViewController;
+@property (strong, nonatomic) NSMutableDictionary *controllerList;
 
 @end

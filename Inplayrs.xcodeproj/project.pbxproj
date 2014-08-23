@@ -107,7 +107,9 @@
 		F44867B017C2632F00975F75 /* lobby-sub-row-hit-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = F44867AF17C2632E00975F75 /* lobby-sub-row-hit-gray.png */; };
 		F44867B217C36ED200975F75 /* IPPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F44867B117C36ED100975F75 /* IPPasswordViewController.xib */; };
 		F44867B517C3707800975F75 /* IPPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F44867B417C3707700975F75 /* IPPasswordViewController.m */; };
-		F45EE48C198BDE0A0062429D /* IPFantasyHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F45EE48B198BDE0A0062429D /* IPFantasyHeaderView.xib */; };
+		F45C6D1919A65874005780DD /* IPFantasyResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F45C6D1819A65874005780DD /* IPFantasyResultCell.m */; };
+		F45C6D1D19A8BB9E005780DD /* IPFantasyHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F45C6D1C19A8BB9E005780DD /* IPFantasyHeaderView.xib */; };
+		F45EE48C198BDE0A0062429D /* IPFantasyResultHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F45EE48B198BDE0A0062429D /* IPFantasyResultHeaderView.xib */; };
 		F45EE48E198BDE1E0062429D /* IPFantasyFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F45EE48D198BDE1E0062429D /* IPFantasyFooterView.xib */; };
 		F45EE491198FC8A30062429D /* PeriodOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = F45EE490198FC8A30062429D /* PeriodOptions.m */; };
 		F45EE49A1991542C0062429D /* Tutorial1.png in Resources */ = {isa = PBXBuildFile; fileRef = F45EE4921991542C0062429D /* Tutorial1.png */; };
@@ -120,6 +122,9 @@
 		F45EE4A11991542C0062429D /* Tutorial4s.png in Resources */ = {isa = PBXBuildFile; fileRef = F45EE4991991542C0062429D /* Tutorial4s.png */; };
 		F45EE4A4199B64950062429D /* Tutorial5s.png in Resources */ = {isa = PBXBuildFile; fileRef = F45EE4A2199B64950062429D /* Tutorial5s.png */; };
 		F45EE4A5199B64950062429D /* Tutorial5.png in Resources */ = {isa = PBXBuildFile; fileRef = F45EE4A3199B64950062429D /* Tutorial5.png */; };
+		F45EE4A719A633140062429D /* IPFantasyResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F45EE4A619A633140062429D /* IPFantasyResultCell.xib */; };
+		F45EE4A919A642D50062429D /* IPFantasyResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F45EE4A819A642D50062429D /* IPFantasyResultViewController.m */; };
+		F45EE4AF19A649190062429D /* IPFantasyResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F45EE4AE19A649190062429D /* IPFantasyResultViewController.xib */; };
 		F4706C1A1886E730002D4525 /* IPAddFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4706C191886E730002D4525 /* IPAddFriendsViewController.m */; };
 		F4706C1C1886E857002D4525 /* IPCreateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4706C1B1886E857002D4525 /* IPCreateViewController.xib */; };
 		F4706C1F18880F73002D4525 /* IPFriendPoolViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4706C1E18880F73002D4525 /* IPFriendPoolViewController.xib */; };
@@ -547,7 +552,9 @@
 		F44867B117C36ED100975F75 /* IPPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPPasswordViewController.xib; sourceTree = "<group>"; };
 		F44867B317C3706500975F75 /* IPPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPPasswordViewController.h; sourceTree = "<group>"; };
 		F44867B417C3707700975F75 /* IPPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPPasswordViewController.m; sourceTree = "<group>"; };
-		F45EE48B198BDE0A0062429D /* IPFantasyHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPFantasyHeaderView.xib; sourceTree = "<group>"; };
+		F45C6D1819A65874005780DD /* IPFantasyResultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPFantasyResultCell.m; sourceTree = "<group>"; };
+		F45C6D1C19A8BB9E005780DD /* IPFantasyHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPFantasyHeaderView.xib; sourceTree = "<group>"; };
+		F45EE48B198BDE0A0062429D /* IPFantasyResultHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPFantasyResultHeaderView.xib; sourceTree = "<group>"; };
 		F45EE48D198BDE1E0062429D /* IPFantasyFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPFantasyFooterView.xib; sourceTree = "<group>"; };
 		F45EE48F198FC8960062429D /* PeriodOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeriodOptions.h; path = Inplayrs/PeriodOptions.h; sourceTree = "<group>"; };
 		F45EE490198FC8A30062429D /* PeriodOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeriodOptions.m; path = Inplayrs/PeriodOptions.m; sourceTree = "<group>"; };
@@ -561,6 +568,11 @@
 		F45EE4991991542C0062429D /* Tutorial4s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tutorial4s.png; sourceTree = "<group>"; };
 		F45EE4A2199B64950062429D /* Tutorial5s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tutorial5s.png; sourceTree = "<group>"; };
 		F45EE4A3199B64950062429D /* Tutorial5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tutorial5.png; sourceTree = "<group>"; };
+		F45EE4A619A633140062429D /* IPFantasyResultCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPFantasyResultCell.xib; sourceTree = "<group>"; };
+		F45EE4A819A642D50062429D /* IPFantasyResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPFantasyResultViewController.m; sourceTree = "<group>"; };
+		F45EE4AA19A642E90062429D /* IPFantasyResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPFantasyResultViewController.h; sourceTree = "<group>"; };
+		F45EE4AB19A646700062429D /* IPFantasyResultCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPFantasyResultCell.h; sourceTree = "<group>"; };
+		F45EE4AE19A649190062429D /* IPFantasyResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPFantasyResultViewController.xib; sourceTree = "<group>"; };
 		F4706C181886E718002D4525 /* IPAddFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPAddFriendsViewController.h; sourceTree = "<group>"; };
 		F4706C191886E730002D4525 /* IPAddFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPAddFriendsViewController.m; sourceTree = "<group>"; };
 		F4706C1B1886E857002D4525 /* IPCreateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPCreateViewController.xib; sourceTree = "<group>"; };
@@ -1278,6 +1290,10 @@
 				F4075724198BBD3100F2564A /* IPFantasyViewController.m */,
 				F4075720198BB8F300F2564A /* IPFantasyItemCell.h */,
 				F4075721198BB90900F2564A /* IPFantasyItemCell.m */,
+				F45EE4AB19A646700062429D /* IPFantasyResultCell.h */,
+				F45C6D1819A65874005780DD /* IPFantasyResultCell.m */,
+				F45EE4AA19A642E90062429D /* IPFantasyResultViewController.h */,
+				F45EE4A819A642D50062429D /* IPFantasyResultViewController.m */,
 				F429F8DB17086D35006E7CDE /* IPLeaderboardViewController.h */,
 				F429F8DC17086D4B006E7CDE /* IPLeaderboardViewController.m */,
 				F429F8DE17086DF5006E7CDE /* IPLeaderboardItemCell.h */,
@@ -1441,7 +1457,10 @@
 				F4F714C616AEF7FA00FCCA82 /* IPMenuHeaderView.xib */,
 				F407571C198BB3D700F2564A /* IPFantasyViewController.xib */,
 				F407571E198BB48100F2564A /* IPFantasyItemCell.xib */,
-				F45EE48B198BDE0A0062429D /* IPFantasyHeaderView.xib */,
+				F45EE4AE19A649190062429D /* IPFantasyResultViewController.xib */,
+				F45EE4A619A633140062429D /* IPFantasyResultCell.xib */,
+				F45EE48B198BDE0A0062429D /* IPFantasyResultHeaderView.xib */,
+				F45C6D1C19A8BB9E005780DD /* IPFantasyHeaderView.xib */,
 				F45EE48D198BDE1E0062429D /* IPFantasyFooterView.xib */,
 				F4119CAF16BAF01A0028DB2E /* IPGameViewController.xib */,
 				F4F714C316AEEF7F00FCCA82 /* IPGameHeaderView.xib */,
@@ -1721,6 +1740,7 @@
 				F479CDC517215CBC008AF68D /* discontrol_sel-uns.png in Resources */,
 				F446728E18CF917E00279A8F /* football-hit.png in Resources */,
 				F47D6A1618DCAF82001FD785 /* menu-logo.png in Resources */,
+				F45C6D1D19A8BB9E005780DD /* IPFantasyHeaderView.xib in Resources */,
 				F479CDC617215CBC008AF68D /* discontrol_sel-uns@2x.png in Resources */,
 				F479CDC717215CBC008AF68D /* discontrol_sel.png in Resources */,
 				F446728718CF917E00279A8F /* ice-hockey-hit@2x.png in Resources */,
@@ -1743,6 +1763,7 @@
 				F4F8043617FEE2B40048A944 /* cross@2x.png in Resources */,
 				F479CDF017294AA8008AF68D /* cricket@2x.png in Resources */,
 				F48A20551906786100D2C4E7 /* lobby-bar-drop-down-bar-hitstate@2x.png in Resources */,
+				F45EE4A719A633140062429D /* IPFantasyResultCell.xib in Resources */,
 				F497610618AA532000016238 /* hamburger@2x.png in Resources */,
 				F479CDF117294AA8008AF68D /* golf@2x.png in Resources */,
 				F446728D18CF917E00279A8F /* golf-hit.png in Resources */,
@@ -1784,6 +1805,7 @@
 				F4008C5A173027C700B9A23E /* login-field-box@2x.png in Resources */,
 				F4008C5E173115DE00B9A23E /* Avalon-Book.otf in Resources */,
 				F4008C5F173115DE00B9A23E /* Avalon-Demi.otf in Resources */,
+				F45EE4AF19A649190062429D /* IPFantasyResultViewController.xib in Resources */,
 				F4008C60173115DE00B9A23E /* Avalon-Medium.otf in Resources */,
 				F45EE4A11991542C0062429D /* Tutorial4s.png in Resources */,
 				F4F046F218464FA8004D1498 /* stats.png in Resources */,
@@ -1925,7 +1947,7 @@
 				F446729518CF917E00279A8F /* snooker-hit.png in Resources */,
 				F4EE195019276A7400CE2EF2 /* lobby-bar-1-hitstate.png in Resources */,
 				F4CB0237182AB0F90016AB1D /* NotificationBackgroundWarningIcon@2x.png in Resources */,
-				F45EE48C198BDE0A0062429D /* IPFantasyHeaderView.xib in Resources */,
+				F45EE48C198BDE0A0062429D /* IPFantasyResultHeaderView.xib in Resources */,
 				F41F601A17E1BE6D003B713B /* tutorial-icon.png in Resources */,
 				F4F852C519213A61002B19A4 /* completed-row-dark@2x.png in Resources */,
 				F41F601B17E1BE6D003B713B /* tutorial-icon@2x.png in Resources */,
@@ -1987,6 +2009,7 @@
 				F48F94AD16B97488004983EE /* Period.m in Sources */,
 				1D6043381816B87300F058B0 /* IPMultiLoginViewController.m in Sources */,
 				F4D1A62A187C6CEF00801F14 /* IPCreateViewController.m in Sources */,
+				F45EE4A919A642D50062429D /* IPFantasyResultViewController.m in Sources */,
 				F48F94B016B974BD004983EE /* GameDataController.m in Sources */,
 				F49DD0C816BA9A0D004A08F2 /* IPGameItemCell.m in Sources */,
 				F4119CEF16CEBD940028DB2E /* Selection.m in Sources */,
@@ -2000,6 +2023,7 @@
 				F446726218CF398C00279A8F /* PoolPoints.m in Sources */,
 				F494240F16E6500100AC0644 /* IPFanViewController.m in Sources */,
 				F4F046FC1850CAC8004D1498 /* PieChartView.m in Sources */,
+				F45C6D1919A65874005780DD /* IPFantasyResultCell.m in Sources */,
 				F4F046F91850A905004D1498 /* Stats.m in Sources */,
 				F494241316E6564800AC0644 /* FanDataController.m in Sources */,
 				F4CB023B182AB0F90016AB1D /* TSBlurView.m in Sources */,

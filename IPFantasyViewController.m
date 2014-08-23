@@ -26,6 +26,7 @@
 #import "FriendPool.h"
 #import "IPAddFriendsViewController.h"
 #import "IPStatsViewController.h"
+#import "IPFantasyResultViewController.h"
 
 #define NOTSUBMITTED -1
 #define SUBMITTED 0
@@ -47,7 +48,7 @@ enum State {
 
 @implementation IPFantasyViewController
 
-@synthesize selectedRow, isLoaded, isUpdated, isLoading, pointsChanged, inplayIndicator, leaderboardViewController, multiLoginViewController, tutorialViewController, submitButton, username, friendButton, createViewController, globalLabel,  h2hLabel, friendLabel, global1, global2, h2h1, h2h2, friend1, friend2, friendPools, globalViewController, friendViewController, friendControllerList, selectedFriendPool, addFriendsViewController, globalButton, h2hButton, fromLeaderboard, statsViewController, selectedPeriodOption, periodOptionList, changeSelectionList;
+@synthesize selectedRow, isLoaded, isUpdated, isLoading, pointsChanged, inplayIndicator, leaderboardViewController, multiLoginViewController, tutorialViewController, submitButton, username, friendButton, createViewController, globalLabel,  h2hLabel, friendLabel, global1, global2, h2h1, h2h2, friend1, friend2, friendPools, globalViewController, friendViewController, friendControllerList, selectedFriendPool, addFriendsViewController, globalButton, h2hButton, fromLeaderboard, statsViewController, selectedPeriodOption, periodOptionList, changeSelectionList, detailViewController, controllerList;
 
 
 - (void)getPeriods:(id)sender
@@ -99,8 +100,6 @@ enum State {
                 PeriodOptions *periodOptions = [period.periodOptions objectAtIndex:i];
                 if (!periodOptions.name)
                     periodOptions.name = @"0";
-                if (!periodOptions.points)
-                    periodOptions.points = @"0";
                 [periodOptionList setObject:periodOptions forKey:[NSString stringWithFormat: @"%ld",(long)periodOptions.periodOptionID]];
             }
             NSSortDescriptor *pointsSorter = [[NSSortDescriptor alloc] initWithKey:@"points" ascending:YES];
@@ -223,7 +222,7 @@ enum State {
                         if (newSelection.periodOptionID > 0) {
                             PeriodOptions *periodOption = [periodOptionList objectForKey:[NSString stringWithFormat: @"%ld", (long)newSelection.periodOptionID]];
                             newSelection.periodName = periodOption.name;
-                            newSelection.potentialPoints = periodOption.points;
+                            newSelection.potentialPoints = [NSString stringWithFormat:@"%d", (int)periodOption.points];
                         }
                         if (!newSelection.awardedPoints)
                             newSelection.awardedPoints = @"0";
@@ -356,8 +355,10 @@ enum State {
     friendViewController = nil;
     addFriendsViewController = nil;
     statsViewController = nil;
+    detailViewController = nil;
     selectedRow = 0;
     friendControllerList = [[NSMutableDictionary alloc] init];
+    controllerList = [[NSMutableDictionary alloc] init];
     
     UINib *nib = [UINib nibWithNibName:@"IPFantasyItemCell" bundle:nil];
     [[self tableView] registerNib:nib forCellReuseIdentifier:@"IPFantasyItemCell"];
@@ -735,7 +736,7 @@ enum State {
     Selection *selection = [self.dataController objectInSelectionListAtIndex:selectedRow];
     selection.periodOptionID = selectedPeriodOption.periodOptionID;
     selection.periodName = selectedPeriodOption.name;
-    selection.potentialPoints = selectedPeriodOption.points;
+    selection.potentialPoints = [NSString stringWithFormat:@"%d", (int)selectedPeriodOption.points];
     if (self.dataController.userState == SUBMITTED) {
         [changeSelectionList removeAllObjects];
         [changeSelectionList addObject:selection];
@@ -899,6 +900,7 @@ enum State {
                 [[cell pointsLabel] setText:selectionAtIndex.potentialPoints];
                 [[cell pointsLabel] setTextColor:[UIColor blackColor]];
             }
+            cell.accessoryType = UITableViewCellAccessoryNone;
             break;
         }
         case (NEVERINPLAY):
@@ -913,6 +915,7 @@ enum State {
                 [[cell pointsLabel] setText:selectionAtIndex.potentialPoints];
                 [[cell pointsLabel] setTextColor:[UIColor blackColor]];
             }
+            cell.accessoryType = UITableViewCellAccessoryNone;
             break;
         }
         case (COMPLETED):
@@ -924,6 +927,7 @@ enum State {
             else
                 completedView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"completed-row-light.png"]];
             cell.backgroundView = completedView;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.periodLabel.textColor = [UIColor colorWithRed:71.0/255.0 green:71.0/255.0 blue:71.0/255.0 alpha:1.0];
             cell.timeLabel.textColor = [UIColor colorWithRed:71.0/255.0 green:71.0/255.0 blue:71.0/255.0 alpha:1.0];
             [[cell selectionButton] setEnabled:NO];
@@ -1047,12 +1051,17 @@ enum State {
         [barItems addObject:cancelBtn];
         UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         [barItems addObject:flexSpace];
+        UIBarButtonItem *title = [[UIBarButtonItem alloc] initWithTitle:periodAtIndex.name style:UIBarButtonItemStylePlain target:nil action:nil];
+        [barItems addObject:title];
+        UIBarButtonItem *flexSpace2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        [barItems addObject:flexSpace2];
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(playerDone:)];
         [barItems addObject:doneButton];
         [pickerToolbar setItems:barItems animated:NO];
         [pickerToolbar setTintColor:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]];
         [cancelBtn setTintColor:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]];
         [doneButton setTintColor:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]];
+        [title setTintColor:[UIColor whiteColor]];
         if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
             [[UIBarButtonItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0] } forState:UIControlStateNormal];
         } else {
@@ -1135,7 +1144,7 @@ numberOfRowsInComponent:(NSInteger)component
         Period *period = [self.dataController objectInPeriodListAtIndex:self.selectedRow];
         if ([period.periodOptions count] > 0) {
             PeriodOptions *periodOption = [period.periodOptions objectAtIndex:row];
-            return [periodOption.name stringByAppendingFormat:@"  %@", periodOption.points];
+            return [periodOption.name stringByAppendingFormat:@"  %ld", (long)periodOption.points];
         } else {
             return @"No Players loaded yet";
         }
@@ -1185,7 +1194,29 @@ numberOfRowsInComponent:(NSInteger)component
     }
 }
 
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+        if ((self.game.state == COMPLETED) || (self.game.state == ARCHIVED)) {
+            Period *periodAtIndex = [self.dataController objectInPeriodListAtIndex:indexPath.row];
+            if ([controllerList objectForKey:periodAtIndex.name] == nil) {
+                detailViewController = [[IPFantasyResultViewController alloc] initWithNibName:@"IPFantasyResultViewController" bundle:nil];
+                detailViewController.title = self.game.name;
+                detailViewController.periodOptions = periodAtIndex.periodOptions;
+                [controllerList setObject:detailViewController forKey:periodAtIndex.name];
+                NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,nil];
+                [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
+                [[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]];
+                if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+                    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+                else
+                    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+            }
+            if ([controllerList objectForKey:periodAtIndex.name]) {
+                [self.navigationController pushViewController:[controllerList objectForKey:periodAtIndex.name] animated:YES];
+            }
+            return;
+        }
+}
 
 
 @end
