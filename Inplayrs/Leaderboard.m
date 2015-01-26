@@ -19,6 +19,7 @@
         _name = name;
         _points = points;
         _winnings = winnings;
+        _fbID = @"0";
         return self;
     }
     return nil;

@@ -37,7 +37,7 @@
     
     // this isn't needed on the rootViewController of the navigation controller
     [self.navigationController.sideMenu setupSideMenuBarButtonItem];
-    self.title = @"Info";
+    self.title = @"More Info";
     
     activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     activityIndicator.frame = CGRectMake(160.0, 160.0, 40.0, 40.0);

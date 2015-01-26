@@ -13,6 +13,7 @@
 #import "Stats.h"
 #import "IPAppDelegate.h"
 #import "PieChartView.h"
+#import "IPTrophyViewController.h"
 
 @interface IPStatsViewController () <PieChartViewDelegate, PieChartViewDataSource>
 {
@@ -27,7 +28,7 @@
 @implementation IPStatsViewController
 
 
-@synthesize winningsLabel, winsLabel, usernameLabel, noProfileImage, winningsChart, winsChart, totalChartWins, externalUsername, externalFBID, totalWinnings, globalRank, gamesPlayed, correctPicks, statsTableView;
+@synthesize winningsLabel, winsLabel, usernameLabel, noProfileImage, winningsChart, winsChart, totalChartWins, externalUsername, externalFBID, totalWinnings, globalRank, gamesPlayed, correctPicks, statsTableView, trophyButton, trophyViewController, titleLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -47,8 +48,10 @@
     self.winningsLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:16.0];
     self.winsLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:16.0];
     self.usernameLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:16.0];
+    self.titleLabel.font = [UIFont fontWithName:@"Avalon-Bold" size:16.0];
     self.view.backgroundColor = [UIColor colorWithRed:32/255.0 green:35/255.0 blue:45/255.0 alpha:1];
     [statsTableView setBackgroundColor:[UIColor clearColor]];
+    trophyViewController = nil;
 }
 
 
@@ -81,6 +84,7 @@
                      // self.userProfileImage.profileID = user.id;
                      self.userProfileImage.profileID = [user objectForKey:@"id"];
                      self.userProfileImage.layer.cornerRadius = 30.0;
+                     externalFBID = [user objectForKey:@"id"];
                  }
              }];
             [self.noProfileImage setHidden:YES];
@@ -94,6 +98,7 @@
         [self getStats:appDelegate.user];
     } else {
         self.usernameLabel.text = @"";
+        self.titleLabel.text = @"";
         self.userProfileImage.profileID = nil;
         UIImage *image = [UIImage imageNamed: @"stats-avatar.png"];
         [self.noProfileImage setImage:image];
@@ -120,13 +125,13 @@
 
 - (void)drawPieCharts
 {
-    pieChartViewLeft = [[PieChartView alloc] initWithFrame:CGRectMake(40, 285, 100, 100)];
+    pieChartViewLeft = [[PieChartView alloc] initWithFrame:CGRectMake(40, 314, 100, 100)];
     pieChartViewLeft.delegate = self;
     pieChartViewLeft.datasource = self;
     [self.view addSubview:pieChartViewLeft];
     self.winningsChart.text = self.totalWinnings;
     
-    pieChartViewRight = [[PieChartView alloc] initWithFrame:CGRectMake(180, 285, 100, 100)];
+    pieChartViewRight = [[PieChartView alloc] initWithFrame:CGRectMake(180, 314, 100, 100)];
     pieChartViewRight.delegate = self;
     pieChartViewRight.datasource = self;
     [self.view addSubview:pieChartViewRight];
@@ -170,12 +175,10 @@
              self.correctPicks = [NSString stringWithFormat:@"%.1f", stats.totalCorrect];
              self.correctPicks = [self.correctPicks stringByAppendingString:@"%"];
          }
-         /*
          if (!stats.userRating)
-             self.rating.text = @"";
+             self.titleLabel.text = @"";
          else
-             self.rating.text = stats.userRating;
-          */
+             self.titleLabel.text = stats.userRating;
          if (!stats.globalWinnings)
              self.globalWinnings = 0;
          else
@@ -233,6 +236,7 @@
          self.globalWins = 0;
          // self.fangroupWins = 0;
          self.h2hWins = 0;
+         self.titleLabel.text = @"";
          [pieChartViewLeft setHidden:YES];
          [pieChartViewRight setHidden:YES];
      }];
@@ -351,5 +355,28 @@
 }
 
 
-
+- (IBAction)trophyClicked:(id)sender {
+    if (!self.trophyViewController) {
+        self.trophyViewController = [[IPTrophyViewController alloc] initWithNibName:@"IPTrophyView" bundle:nil];
+        if (externalUsername)
+            self.trophyViewController.externalUsername = externalUsername;
+        else {
+            IPAppDelegate *appDelegate = (IPAppDelegate *)[[UIApplication sharedApplication] delegate];
+            self.trophyViewController.externalUsername = appDelegate.user;
+        }
+        self.trophyViewController.externalTitle = self.titleLabel.text;
+        if (externalFBID)
+            self.trophyViewController.externalFBID = externalFBID;
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+        else
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+    }
+    if (self.trophyViewController) {
+        [self.navigationController pushViewController:self.trophyViewController animated:YES];
+        NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"Trophy",
+                                    @"click", nil];
+        [Flurry logEvent:@"MENU" withParameters:dictionary];
+    }
+}
 @end

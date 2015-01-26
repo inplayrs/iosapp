@@ -23,6 +23,7 @@
 #import "PoolPoints.h"
 #import "IPAddFriendsViewController.h"
 #import "IPFantasyViewController.h"
+#import "IPStatsViewController.h"
 
 #define FANTASY 40
 #define QUIZ 100
@@ -50,7 +51,7 @@ enum State {
 
 @implementation IPLeaderboardViewController
 
-@synthesize leftLabel, rightLabel, pointsButton, left, rankHeader, nameHeader, pointsHeader, winningsHeader, isLoading, inplayIndicator, controllerList, detailViewController, friendPool, competitionID, competitionName, addFriendsViewController, fromWinners, fantasyViewController;
+@synthesize leftLabel, rightLabel, pointsButton, left, rankHeader, nameHeader, pointsHeader, winningsHeader, isLoading, inplayIndicator, controllerList, detailViewController, friendPool, competitionID, competitionName, addFriendsViewController, fromWinners, fantasyViewController, statsViewController, overallControllerList;
 
 
 - (void) dealloc {
@@ -103,9 +104,11 @@ enum State {
     
     self.type = GAMES;
     self.controllerList = [[NSMutableDictionary alloc] init];
+    overallControllerList = [[NSMutableDictionary alloc] init];
     detailViewController = nil;
     addFriendsViewController = nil;
     fantasyViewController = nil;
+    statsViewController = nil;
 
 }
 
@@ -128,14 +131,16 @@ enum State {
         NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,[UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0],UITextAttributeFont,nil];
         [self.navigationItem.rightBarButtonItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
         [self.navigationItem.rightBarButtonItem setEnabled:YES];
-        self.type = GAMES;
+        if (!self.type)
+            self.type = GAMES;
         self.title = friendPool.name;
         [self getFriendLeaderboard:self.game.gameID poolID:self.friendPool.poolID type:GAMES];
         [self getFriendLeaderboard:self.game.competitionID poolID:self.friendPool.poolID type:COMPETITIONS];
         NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"Friend", @"type", nil];
         [Flurry logEvent:@"LEADERBOARD" withParameters:dictionary];
     } else if (self.lbType == GLOBAL) {
-        self.type = GAMES;
+        if (!self.type)
+            self.type = GAMES;
         if (fromWinners)
             self.title = self.game.name;
         else
@@ -470,11 +475,23 @@ enum State {
     cell.pointsLabel.textColor = [UIColor whiteColor];
     cell.winningsLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0];
     
+    /*
     if (((self.lbType == GLOBAL) || (self.lbType == FRIEND)) && (self.type == GAMES) && ((self.game.state == COMPLETED) || (self.game.state == ARCHIVED))) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
+     */
+    
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    if (((self.lbType == GLOBAL) || (self.lbType == FRIEND)) && (self.type == GAMES)) {
+        if ([self.dataController.globalGameLeaderboard count] == 1)
+            cell.accessoryType = UITableViewCellAccessoryNone;
+    } else if (((self.lbType == GLOBAL) || (self.lbType == FRIEND)) && (self.type == COMPETITIONS)) {
+        if ([self.dataController.globalCompetitionLeaderboard count] == 1)
+            cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+
     cell.row = indexPath.row;
     /*
     if (indexPath.row % 2) {
@@ -613,6 +630,34 @@ enum State {
             return;
         }
     }
+    Leaderboard *leaderboardAtIndex;
+    if (((self.lbType == GLOBAL) || (self.lbType == FRIEND)) && (self.type == GAMES)) {
+        leaderboardAtIndex = [self.dataController.globalGameLeaderboard objectAtIndex:indexPath.row];
+        if ([self.dataController.globalGameLeaderboard count] == 1)
+            return;
+    } else if (((self.lbType == GLOBAL) || (self.lbType == FRIEND)) && (self.type == COMPETITIONS)) {
+        leaderboardAtIndex = [self.dataController.globalCompetitionLeaderboard objectAtIndex:indexPath.row];
+        if ([self.dataController.globalCompetitionLeaderboard count] == 1)
+            return;
+    }
+    if ([overallControllerList objectForKey:leaderboardAtIndex.name] == nil) {
+        statsViewController = [[IPStatsViewController alloc] initWithNibName:@"IPStatsViewController" bundle:nil];
+        statsViewController.externalUsername = leaderboardAtIndex.name;
+        if (leaderboardAtIndex.fbID)
+            statsViewController.externalFBID = leaderboardAtIndex.fbID;
+        NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,nil];
+        [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
+        [[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:255.0/255.0 green:242.0/255.0 blue:41.0/255.0 alpha:1.0]];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+        else
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:@selector(backButtonPressed:)];
+        [overallControllerList setObject:statsViewController forKey:leaderboardAtIndex.name];
+    }
+    if ([overallControllerList objectForKey:leaderboardAtIndex.name]) {
+        [self.navigationController pushViewController:[overallControllerList objectForKey:leaderboardAtIndex.name] animated:YES];
+    }
+    return;
 }
 
 - (IBAction)changePoints:(id)sender

@@ -397,6 +397,10 @@ enum State {
     [super viewDidDisappear:animated];
     [timer invalidate];
     timer = nil;
+    if (myView.window) {
+        [myView removeFromSuperview];
+        [self.tableView setUserInteractionEnabled:YES];
+    }
 }
 
 
@@ -419,6 +423,7 @@ enum State {
     [Flurry logEvent:@"GAME" withParameters:dictionary];
     [self getMyPools:self];
     [self getPeriods:self];
+    
 
      NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     if (((self.game.state == INPLAY) || (self.game.state == TRANSITION)) && ([prefs boolForKey:@"autoRefresh"]))

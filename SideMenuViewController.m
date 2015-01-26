@@ -6,8 +6,7 @@
 #import "SideMenuViewController.h"
 #import "MFSideMenu.h"
 #import "IPLobbyViewController.h"
-#import "IPSettingsViewController.h"
-#import "IPInfoViewController.h"
+#import "IPNewInfoViewController.h"
 #import "IPWinnersViewController.h"
 #import "IPTutorialViewController.h"
 #import "IPStatsViewController.h"
@@ -18,7 +17,7 @@
 
 @implementation SideMenuViewController
 
-@synthesize sideMenu, lobbyController, settingsController, infoController, winnersController, tutorialController, statsController, friendController;
+@synthesize sideMenu, lobbyController, infoController, winnersController, tutorialController, statsController, friendController;
 
 - (void) viewDidLoad {
     [super viewDidLoad];
@@ -31,7 +30,6 @@
     self.dataController = [[MenuDataController alloc] init];
     
     lobbyController = (IPLobbyViewController *)self.sideMenu.navigationController.topViewController;
-    settingsController = nil;
     infoController = nil;
     winnersController = nil;
     tutorialController = nil;
@@ -116,14 +114,6 @@
             cell.imageView.highlightedImage = imageHighlighted;
             break;
         }
-        /*
-        case (1): {
-            UIImage *image = [UIImage imageNamed: @"leaderboard.png"];
-            UIImage *imageHighlighted = [UIImage imageNamed: @"leaderboard-hit.png"];
-            cell.imageView.image = image;
-            cell.imageView.highlightedImage = imageHighlighted;
-            break;
-        */
         case (1): {
             UIImage *image = [UIImage imageNamed: @"winners.png"];
             UIImage *imageHighlighted = [UIImage imageNamed: @"winners-hit.png"];
@@ -145,14 +135,6 @@
             cell.imageView.highlightedImage = imageHighlighted;
             break;
         }
-        /*
-        case (4): {
-            UIImage *image = [UIImage imageNamed: @"fan.png"];
-            UIImage *imageHighlighted = [UIImage imageNamed: @"fan-hit.png"];
-            cell.imageView.image = image;
-            cell.imageView.highlightedImage = imageHighlighted;
-            break;
-        */
         case (4): {
             UIImage *image = [UIImage imageNamed: @"tutorial-icon.png"];
             UIImage *imageHighlighted = [UIImage imageNamed: @"tutorial-icon-hit-state.png"];
@@ -161,13 +143,6 @@
             break;
         }
         case (5): {
-            UIImage *image = [UIImage imageNamed: @"settings.png"];
-            UIImage *imageHighlighted = [UIImage imageNamed: @"settings-hit.png"];
-            cell.imageView.image = image;
-            cell.imageView.highlightedImage = imageHighlighted;
-            break;
-        }
-        case (6): {
             UIImage *image = [UIImage imageNamed: @"info.png"];
             UIImage *imageHighlighted = [UIImage imageNamed: @"info-hit.png"];
             cell.imageView.image = image;
@@ -198,21 +173,6 @@
             [Flurry logEvent:@"MENU" withParameters:dictionary];
             break;
         }
-        /*
-        case (1): {
-            if (leaderboardController == nil) {
-                self.leaderboardController = [[IPLeaderboardViewController alloc]
-                                              initWithNibName:@"IPLeaderboardViewController" bundle:nil];
-            }
-            NSArray *controllers = [NSArray arrayWithObject:leaderboardController];
-            self.sideMenu.navigationController.viewControllers = controllers;
-            [self.sideMenu setMenuState:MFSideMenuStateHidden];
-            NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"Leaderboard",
-                                        @"row", nil];
-            [Flurry logEvent:@"MENU" withParameters:dictionary];
-            break;
-        }
-        */
         case (1): {
             if (winnersController == nil) {
                 self.winnersController = [[IPWinnersViewController alloc]
@@ -253,21 +213,6 @@
             [Flurry logEvent:@"MENU" withParameters:dictionary];
             break;
         }
-        /*
-        case (4): {
-            if (fanController == nil) {
-                self.fanController = [[IPFanViewController alloc]
-                                                      initWithNibName:@"IPFanViewController" bundle:nil];
-            }
-            NSArray *controllers = [NSArray arrayWithObject:fanController];
-            self.sideMenu.navigationController.viewControllers = controllers;
-            [self.sideMenu setMenuState:MFSideMenuStateHidden];
-            NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"Fan",
-                                        @"row", nil];
-            [Flurry logEvent:@"MENU" withParameters:dictionary];
-            break;
-        }
-        */
         case (4): {
             if (tutorialController == nil) {
                 self.tutorialController = [[IPTutorialViewController alloc]
@@ -282,22 +227,9 @@
             break;
         }
         case (5): {
-            if (settingsController == nil) {
-                self.settingsController = [[IPSettingsViewController alloc]
-                                        initWithNibName:@"IPSettingsViewController" bundle:nil];
-            }
-            NSArray *controllers = [NSArray arrayWithObject:settingsController];
-            self.sideMenu.navigationController.viewControllers = controllers;
-            [self.sideMenu setMenuState:MFSideMenuStateHidden];
-            NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"Settings",
-                                        @"row", nil];
-            [Flurry logEvent:@"MENU" withParameters:dictionary];
-            break;
-        }
-        case (6): {
             if (infoController == nil) {
-                self.infoController = [[IPInfoViewController alloc]
-                                      initWithNibName:@"IPInfoViewController" bundle:nil];
+                self.infoController = [[IPNewInfoViewController alloc]
+                                      initWithNibName:@"IPNewInfoViewController" bundle:nil];
             }
             NSArray *controllers = [NSArray arrayWithObject:infoController];
             self.sideMenu.navigationController.viewControllers = controllers;

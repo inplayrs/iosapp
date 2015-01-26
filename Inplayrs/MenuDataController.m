@@ -22,7 +22,6 @@
     [menuList addObject:@"STATS"];
     [menuList addObject:@"FRIEND POOLS"];
     [menuList addObject:@"TUTORIAL"];
-    [menuList addObject:@"SETTINGS"];
     [menuList addObject:@"INFO"];
     
     self.menuList = menuList;

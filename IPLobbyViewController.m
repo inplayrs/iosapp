@@ -237,6 +237,11 @@ enum Category {
     // [self getGames:self];
     // [self viewDidAppear:YES];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(appplicationIsActive:)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -280,6 +285,13 @@ enum Category {
     timer = nil;
 }
 
+- (void)appplicationIsActive:(NSNotification *)notification {
+    IPAppDelegate *appDelegate = (IPAppDelegate *)[[UIApplication sharedApplication] delegate];
+    if ((appDelegate.refreshLobby) && (self.gamesLoading == NO)) {
+        self.gamesLoading = YES;
+        [self getCompetitions:self];
+    }
+}
 
 - (void) loginPressed:(id)sender {
     if (!self.multiLoginViewController) {

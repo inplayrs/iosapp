@@ -441,6 +441,7 @@
 - (CGPoint) pointAdjustedForInterfaceOrientation:(CGPoint)point {
     switch (self.rootViewController.interfaceOrientation)
     {
+        case UIInterfaceOrientationUnknown:
         case UIInterfaceOrientationPortrait:
             return CGPointMake(point.x, point.y);
             break;
@@ -489,6 +490,7 @@
     [self.leftConstraint setConstant:0.0];
     
     switch (orientation) {
+        case UIInterfaceOrientationUnknown:
         case UIInterfaceOrientationPortrait:
             angle = 0.0;
             
@@ -627,6 +629,7 @@
     // need to account for the controller's transform
     switch (rootController.interfaceOrientation)
     {
+        case UIInterfaceOrientationUnknown:
         case UIInterfaceOrientationPortrait:
             frame.origin.x = xOffset;
             break;

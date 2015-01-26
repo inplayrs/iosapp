@@ -109,6 +109,10 @@
 		F44867B517C3707800975F75 /* IPPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F44867B417C3707700975F75 /* IPPasswordViewController.m */; };
 		F45C6D1919A65874005780DD /* IPFantasyResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F45C6D1819A65874005780DD /* IPFantasyResultCell.m */; };
 		F45C6D1D19A8BB9E005780DD /* IPFantasyHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F45C6D1C19A8BB9E005780DD /* IPFantasyHeaderView.xib */; };
+		F45C6D2119B872B6005780DD /* IPTrophyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F45C6D2019B872B6005780DD /* IPTrophyView.xib */; };
+		F45C6D2419B8764C005780DD /* IPTrophyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F45C6D2319B8764C005780DD /* IPTrophyViewController.m */; };
+		F45C6D2719B87746005780DD /* Trophy.m in Sources */ = {isa = PBXBuildFile; fileRef = F45C6D2619B87745005780DD /* Trophy.m */; };
+		F45C6D3419B8B4A9005780DD /* IPTrophyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F45C6D3319B8B4A9005780DD /* IPTrophyCell.xib */; };
 		F45EE48C198BDE0A0062429D /* IPFantasyResultHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F45EE48B198BDE0A0062429D /* IPFantasyResultHeaderView.xib */; };
 		F45EE48E198BDE1E0062429D /* IPFantasyFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F45EE48D198BDE1E0062429D /* IPFantasyFooterView.xib */; };
 		F45EE491198FC8A30062429D /* PeriodOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = F45EE490198FC8A30062429D /* PeriodOptions.m */; };
@@ -125,6 +129,11 @@
 		F45EE4A719A633140062429D /* IPFantasyResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F45EE4A619A633140062429D /* IPFantasyResultCell.xib */; };
 		F45EE4A919A642D50062429D /* IPFantasyResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F45EE4A819A642D50062429D /* IPFantasyResultViewController.m */; };
 		F45EE4AF19A649190062429D /* IPFantasyResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F45EE4AE19A649190062429D /* IPFantasyResultViewController.xib */; };
+		F46EB1201A5C1C210004619F /* profile-background-costa.png in Resources */ = {isa = PBXBuildFile; fileRef = F46EB11E1A5C1C210004619F /* profile-background-costa.png */; };
+		F46EB1211A5C1C210004619F /* profile-background-costa@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46EB11F1A5C1C210004619F /* profile-background-costa@2x.png */; };
+		F46EB1241A5FF2220004619F /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = F46EB1231A5FF2220004619F /* iRate.m */; };
+		F46EB1271A602AB40004619F /* IPNewInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F46EB1261A602AB40004619F /* IPNewInfoViewController.m */; };
+		F46EB1291A60300B0004619F /* IPNewInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F46EB1281A60300B0004619F /* IPNewInfoViewController.xib */; };
 		F4706C1A1886E730002D4525 /* IPAddFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4706C191886E730002D4525 /* IPAddFriendsViewController.m */; };
 		F4706C1C1886E857002D4525 /* IPCreateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4706C1B1886E857002D4525 /* IPCreateViewController.xib */; };
 		F4706C1F18880F73002D4525 /* IPFriendPoolViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4706C1E18880F73002D4525 /* IPFriendPoolViewController.xib */; };
@@ -346,6 +355,26 @@
 		F4D7CCCC18B7AC1A00AC025A /* submit-button_disabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4D7CCCB18B7AC1A00AC025A /* submit-button_disabled@2x.png */; };
 		F4D7CCCF18B7ACEE00AC025A /* login-button-disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = F4D7CCCD18B7ACEE00AC025A /* login-button-disabled.png */; };
 		F4D7CCD018B7ACEE00AC025A /* login-button-disabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4D7CCCE18B7ACEE00AC025A /* login-button-disabled@2x.png */; };
+		F4DF07241A43288300837FAE /* profile-background.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DF07221A43288300837FAE /* profile-background.png */; };
+		F4DF07261A43295B00837FAE /* profile-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DF07251A43295B00837FAE /* profile-background@2x.png */; };
+		F4DF07391A432D8900837FAE /* 10-games-complete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DF07271A432D8900837FAE /* 10-games-complete@2x.png */; };
+		F4DF073A1A432D8900837FAE /* 10-games@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DF07281A432D8900837FAE /* 10-games@2x.png */; };
+		F4DF073B1A432D8900837FAE /* 50-games-complete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DF07291A432D8900837FAE /* 50-games-complete@2x.png */; };
+		F4DF073C1A432D8900837FAE /* 50-games@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DF072A1A432D8900837FAE /* 50-games@2x.png */; };
+		F4DF073D1A432D8900837FAE /* banked-3-times-complete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DF072B1A432D8900837FAE /* banked-3-times-complete@2x.png */; };
+		F4DF073E1A432D8900837FAE /* banked-3-times@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DF072C1A432D8900837FAE /* banked-3-times@2x.png */; };
+		F4DF073F1A432D8900837FAE /* competition-win-complete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DF072D1A432D8900837FAE /* competition-win-complete@2x.png */; };
+		F4DF07401A432D8900837FAE /* competition-win@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DF072E1A432D8900837FAE /* competition-win@2x.png */; };
+		F4DF07411A432D8900837FAE /* friend-win-complete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DF072F1A432D8900837FAE /* friend-win-complete@2x.png */; };
+		F4DF07421A432D8900837FAE /* friend-win@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DF07301A432D8900837FAE /* friend-win@2x.png */; };
+		F4DF07431A432D8900837FAE /* global-win-complete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DF07311A432D8900837FAE /* global-win-complete@2x.png */; };
+		F4DF07441A432D8900837FAE /* global-win@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DF07321A432D8900837FAE /* global-win@2x.png */; };
+		F4DF07451A432D8900837FAE /* head-to-head-complete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DF07331A432D8900837FAE /* head-to-head-complete@2x.png */; };
+		F4DF07461A432D8900837FAE /* head-to-head@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DF07341A432D8900837FAE /* head-to-head@2x.png */; };
+		F4DF07471A432D8900837FAE /* invited-5-people-complete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DF07351A432D8900837FAE /* invited-5-people-complete@2x.png */; };
+		F4DF07481A432D8900837FAE /* invited-5-people@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DF07361A432D8900837FAE /* invited-5-people@2x.png */; };
+		F4DF07491A432D8900837FAE /* perfect-game-complete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DF07371A432D8900837FAE /* perfect-game-complete@2x.png */; };
+		F4DF074A1A432D8900837FAE /* perfect-game@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DF07381A432D8900837FAE /* perfect-game@2x.png */; };
 		F4E4CCAC17BD026E00468FB6 /* fan-hit.png in Resources */ = {isa = PBXBuildFile; fileRef = F4E4CC9E17BD026E00468FB6 /* fan-hit.png */; };
 		F4E4CCAD17BD026E00468FB6 /* fan-hit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4E4CC9F17BD026E00468FB6 /* fan-hit@2x.png */; };
 		F4E4CCAE17BD026E00468FB6 /* info-hit.png in Resources */ = {isa = PBXBuildFile; fileRef = F4E4CCA017BD026E00468FB6 /* info-hit.png */; };
@@ -430,6 +459,10 @@
 		F4F852C619213A61002B19A4 /* completed-row-light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F852C419213A61002B19A4 /* completed-row-light@2x.png */; };
 		F4F852C91922622B002B19A4 /* never-inplay.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F852C71922622B002B19A4 /* never-inplay.png */; };
 		F4F852CA1922622B002B19A4 /* never-inplay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F852C81922622B002B19A4 /* never-inplay@2x.png */; };
+		F4F8C2EA1A487A490004272E /* profile-background-aguero.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F8C2E61A487A490004272E /* profile-background-aguero.png */; };
+		F4F8C2EB1A487A490004272E /* profile-background-aguero@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F8C2E71A487A490004272E /* profile-background-aguero@2x.png */; };
+		F4F8C2EC1A487A490004272E /* trophy.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F8C2E81A487A490004272E /* trophy.png */; };
+		F4F8C2ED1A487A490004272E /* trophy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4F8C2E91A487A490004272E /* trophy@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -554,6 +587,12 @@
 		F44867B417C3707700975F75 /* IPPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPPasswordViewController.m; sourceTree = "<group>"; };
 		F45C6D1819A65874005780DD /* IPFantasyResultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPFantasyResultCell.m; sourceTree = "<group>"; };
 		F45C6D1C19A8BB9E005780DD /* IPFantasyHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPFantasyHeaderView.xib; sourceTree = "<group>"; };
+		F45C6D2019B872B6005780DD /* IPTrophyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPTrophyView.xib; sourceTree = "<group>"; };
+		F45C6D2219B8763A005780DD /* IPTrophyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPTrophyViewController.h; sourceTree = "<group>"; };
+		F45C6D2319B8764C005780DD /* IPTrophyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPTrophyViewController.m; sourceTree = "<group>"; };
+		F45C6D2519B87739005780DD /* Trophy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Trophy.h; path = Inplayrs/Trophy.h; sourceTree = "<group>"; };
+		F45C6D2619B87745005780DD /* Trophy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Trophy.m; path = Inplayrs/Trophy.m; sourceTree = "<group>"; };
+		F45C6D3319B8B4A9005780DD /* IPTrophyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPTrophyCell.xib; sourceTree = "<group>"; };
 		F45EE48B198BDE0A0062429D /* IPFantasyResultHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPFantasyResultHeaderView.xib; sourceTree = "<group>"; };
 		F45EE48D198BDE1E0062429D /* IPFantasyFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPFantasyFooterView.xib; sourceTree = "<group>"; };
 		F45EE48F198FC8960062429D /* PeriodOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeriodOptions.h; path = Inplayrs/PeriodOptions.h; sourceTree = "<group>"; };
@@ -573,6 +612,13 @@
 		F45EE4AA19A642E90062429D /* IPFantasyResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPFantasyResultViewController.h; sourceTree = "<group>"; };
 		F45EE4AB19A646700062429D /* IPFantasyResultCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPFantasyResultCell.h; sourceTree = "<group>"; };
 		F45EE4AE19A649190062429D /* IPFantasyResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPFantasyResultViewController.xib; sourceTree = "<group>"; };
+		F46EB11E1A5C1C210004619F /* profile-background-costa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile-background-costa.png"; sourceTree = "<group>"; };
+		F46EB11F1A5C1C210004619F /* profile-background-costa@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile-background-costa@2x.png"; sourceTree = "<group>"; };
+		F46EB1221A5FF2220004619F /* iRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
+		F46EB1231A5FF2220004619F /* iRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
+		F46EB1251A602AA40004619F /* IPNewInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPNewInfoViewController.h; sourceTree = "<group>"; };
+		F46EB1261A602AB40004619F /* IPNewInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPNewInfoViewController.m; sourceTree = "<group>"; };
+		F46EB1281A60300B0004619F /* IPNewInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPNewInfoViewController.xib; sourceTree = "<group>"; };
 		F4706C181886E718002D4525 /* IPAddFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPAddFriendsViewController.h; sourceTree = "<group>"; };
 		F4706C191886E730002D4525 /* IPAddFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPAddFriendsViewController.m; sourceTree = "<group>"; };
 		F4706C1B1886E857002D4525 /* IPCreateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPCreateViewController.xib; sourceTree = "<group>"; };
@@ -828,6 +874,26 @@
 		F4D7CCCB18B7AC1A00AC025A /* submit-button_disabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "submit-button_disabled@2x.png"; sourceTree = "<group>"; };
 		F4D7CCCD18B7ACEE00AC025A /* login-button-disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-button-disabled.png"; sourceTree = "<group>"; };
 		F4D7CCCE18B7ACEE00AC025A /* login-button-disabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-button-disabled@2x.png"; sourceTree = "<group>"; };
+		F4DF07221A43288300837FAE /* profile-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile-background.png"; sourceTree = "<group>"; };
+		F4DF07251A43295B00837FAE /* profile-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile-background@2x.png"; sourceTree = "<group>"; };
+		F4DF07271A432D8900837FAE /* 10-games-complete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "10-games-complete@2x.png"; sourceTree = "<group>"; };
+		F4DF07281A432D8900837FAE /* 10-games@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "10-games@2x.png"; sourceTree = "<group>"; };
+		F4DF07291A432D8900837FAE /* 50-games-complete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "50-games-complete@2x.png"; sourceTree = "<group>"; };
+		F4DF072A1A432D8900837FAE /* 50-games@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "50-games@2x.png"; sourceTree = "<group>"; };
+		F4DF072B1A432D8900837FAE /* banked-3-times-complete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "banked-3-times-complete@2x.png"; sourceTree = "<group>"; };
+		F4DF072C1A432D8900837FAE /* banked-3-times@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "banked-3-times@2x.png"; sourceTree = "<group>"; };
+		F4DF072D1A432D8900837FAE /* competition-win-complete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "competition-win-complete@2x.png"; sourceTree = "<group>"; };
+		F4DF072E1A432D8900837FAE /* competition-win@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "competition-win@2x.png"; sourceTree = "<group>"; };
+		F4DF072F1A432D8900837FAE /* friend-win-complete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "friend-win-complete@2x.png"; sourceTree = "<group>"; };
+		F4DF07301A432D8900837FAE /* friend-win@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "friend-win@2x.png"; sourceTree = "<group>"; };
+		F4DF07311A432D8900837FAE /* global-win-complete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "global-win-complete@2x.png"; sourceTree = "<group>"; };
+		F4DF07321A432D8900837FAE /* global-win@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "global-win@2x.png"; sourceTree = "<group>"; };
+		F4DF07331A432D8900837FAE /* head-to-head-complete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "head-to-head-complete@2x.png"; sourceTree = "<group>"; };
+		F4DF07341A432D8900837FAE /* head-to-head@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "head-to-head@2x.png"; sourceTree = "<group>"; };
+		F4DF07351A432D8900837FAE /* invited-5-people-complete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "invited-5-people-complete@2x.png"; sourceTree = "<group>"; };
+		F4DF07361A432D8900837FAE /* invited-5-people@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "invited-5-people@2x.png"; sourceTree = "<group>"; };
+		F4DF07371A432D8900837FAE /* perfect-game-complete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "perfect-game-complete@2x.png"; sourceTree = "<group>"; };
+		F4DF07381A432D8900837FAE /* perfect-game@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "perfect-game@2x.png"; sourceTree = "<group>"; };
 		F4E4CC9E17BD026E00468FB6 /* fan-hit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fan-hit.png"; sourceTree = "<group>"; };
 		F4E4CC9F17BD026E00468FB6 /* fan-hit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fan-hit@2x.png"; sourceTree = "<group>"; };
 		F4E4CCA017BD026E00468FB6 /* info-hit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-hit.png"; sourceTree = "<group>"; };
@@ -923,6 +989,10 @@
 		F4F852C419213A61002B19A4 /* completed-row-light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "completed-row-light@2x.png"; sourceTree = "<group>"; };
 		F4F852C71922622B002B19A4 /* never-inplay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "never-inplay.png"; sourceTree = "<group>"; };
 		F4F852C81922622B002B19A4 /* never-inplay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "never-inplay@2x.png"; sourceTree = "<group>"; };
+		F4F8C2E61A487A490004272E /* profile-background-aguero.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile-background-aguero.png"; sourceTree = "<group>"; };
+		F4F8C2E71A487A490004272E /* profile-background-aguero@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile-background-aguero@2x.png"; sourceTree = "<group>"; };
+		F4F8C2E81A487A490004272E /* trophy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trophy.png; sourceTree = "<group>"; };
+		F4F8C2E91A487A490004272E /* trophy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trophy@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -966,6 +1036,32 @@
 		F4119CBA16C023360028DB2E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F46EB11E1A5C1C210004619F /* profile-background-costa.png */,
+				F46EB11F1A5C1C210004619F /* profile-background-costa@2x.png */,
+				F4F8C2E61A487A490004272E /* profile-background-aguero.png */,
+				F4F8C2E71A487A490004272E /* profile-background-aguero@2x.png */,
+				F4F8C2E81A487A490004272E /* trophy.png */,
+				F4F8C2E91A487A490004272E /* trophy@2x.png */,
+				F4DF07271A432D8900837FAE /* 10-games-complete@2x.png */,
+				F4DF07281A432D8900837FAE /* 10-games@2x.png */,
+				F4DF07291A432D8900837FAE /* 50-games-complete@2x.png */,
+				F4DF072A1A432D8900837FAE /* 50-games@2x.png */,
+				F4DF072B1A432D8900837FAE /* banked-3-times-complete@2x.png */,
+				F4DF072C1A432D8900837FAE /* banked-3-times@2x.png */,
+				F4DF072D1A432D8900837FAE /* competition-win-complete@2x.png */,
+				F4DF072E1A432D8900837FAE /* competition-win@2x.png */,
+				F4DF072F1A432D8900837FAE /* friend-win-complete@2x.png */,
+				F4DF07301A432D8900837FAE /* friend-win@2x.png */,
+				F4DF07311A432D8900837FAE /* global-win-complete@2x.png */,
+				F4DF07321A432D8900837FAE /* global-win@2x.png */,
+				F4DF07331A432D8900837FAE /* head-to-head-complete@2x.png */,
+				F4DF07341A432D8900837FAE /* head-to-head@2x.png */,
+				F4DF07351A432D8900837FAE /* invited-5-people-complete@2x.png */,
+				F4DF07361A432D8900837FAE /* invited-5-people@2x.png */,
+				F4DF07371A432D8900837FAE /* perfect-game-complete@2x.png */,
+				F4DF07381A432D8900837FAE /* perfect-game@2x.png */,
+				F4DF07251A43295B00837FAE /* profile-background@2x.png */,
+				F4DF07221A43288300837FAE /* profile-background.png */,
 				F45EE4A2199B64950062429D /* Tutorial5s.png */,
 				F45EE4A3199B64950062429D /* Tutorial5.png */,
 				F45EE4921991542C0062429D /* Tutorial1.png */,
@@ -1258,6 +1354,8 @@
 		F4119CBB16C0261D0028DB2E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F46EB1221A5FF2220004619F /* iRate.h */,
+				F46EB1231A5FF2220004619F /* iRate.m */,
 				F4075717198929FF00F2564A /* Flurry.h */,
 				F4075718198929FF00F2564A /* libFlurry_5.2.0.a */,
 				F4F046FA1850CAC8004D1498 /* PieChartView.h */,
@@ -1276,6 +1374,8 @@
 				F4AE7C03179824D400303B34 /* IPWinnersViewController.m */,
 				F47E3791175FAF9800C5C508 /* IPSettingsViewController.h */,
 				F47E3792175FAFA900C5C508 /* IPSettingsViewController.m */,
+				F46EB1251A602AA40004619F /* IPNewInfoViewController.h */,
+				F46EB1261A602AB40004619F /* IPNewInfoViewController.m */,
 				F494240416E6265400AC0644 /* IPLoginViewController.h */,
 				F494240516E6265400AC0644 /* IPLoginViewController.m */,
 				F44867A517C0CD8400975F75 /* IPRegisterViewController.h */,
@@ -1322,6 +1422,8 @@
 				F41F600417E0A911003B713B /* IPTutorialViewController.m */,
 				F4CB0245182BCACF0016AB1D /* IPStatsViewController.h */,
 				F4CB0246182BCACF0016AB1D /* IPStatsViewController.m */,
+				F45C6D2219B8763A005780DD /* IPTrophyViewController.h */,
+				F45C6D2319B8764C005780DD /* IPTrophyViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1361,6 +1463,8 @@
 				F479CD81171486C7008AF68D /* Fan.m */,
 				F4F046F71850A8F8004D1498 /* Stats.h */,
 				F4F046F81850A905004D1498 /* Stats.m */,
+				F45C6D2519B87739005780DD /* Trophy.h */,
+				F45C6D2619B87745005780DD /* Trophy.m */,
 				F47E37941760E26700C5C508 /* Account.h */,
 				F49760F618A2B3A300016238 /* Motd.h */,
 				F49760F718A2B3AE00016238 /* Motd.m */,
@@ -1471,8 +1575,11 @@
 				F44867A117C0C60C00975F75 /* IPRegisterViewController.xib */,
 				F44867B117C36ED100975F75 /* IPPasswordViewController.xib */,
 				1D07A68E18172A1F00E0F783 /* IPSettingsViewController.xib */,
+				F46EB1281A60300B0004619F /* IPNewInfoViewController.xib */,
 				F41F600117E0A7C4003B713B /* IPTutorialViewController.xib */,
 				F429F8CA1704B08D006E7CDE /* IPInfoViewController.xib */,
+				F45C6D2019B872B6005780DD /* IPTrophyView.xib */,
+				F45C6D3319B8B4A9005780DD /* IPTrophyCell.xib */,
 				F4CB0243182BCA880016AB1D /* IPStatsViewController.xib */,
 				F4F047021857D141004D1498 /* IPWinnersHeaderView.xib */,
 				F4AE7C0717982E8E00303B34 /* IPWinnersViewController.xib */,
@@ -1623,6 +1730,7 @@
 				F4008C5617301C5300B9A23E /* Avalon-Bold.otf in Resources */,
 				F4B706D61695C74700E9FCD8 /* InfoPlist.strings in Resources */,
 				F4F714C016AEB4AB00FCCA82 /* IPLobbyViewController.xib in Resources */,
+				F4DF073B1A432D8900837FAE /* 50-games-complete@2x.png in Resources */,
 				F4F714C516AEEF7F00FCCA82 /* IPGameHeaderView.xib in Resources */,
 				F497611218AA6F5900016238 /* stats-dividing-line@2x.png in Resources */,
 				F446728B18CF917E00279A8F /* tennis-hit@2x.png in Resources */,
@@ -1650,18 +1758,22 @@
 				F4AFEDF616D93E810055F376 /* tennis.png in Resources */,
 				F4AFEDF816D9406C0055F376 /* basketball.png in Resources */,
 				F45EE49A1991542C0062429D /* Tutorial1.png in Resources */,
+				F46EB1211A5C1C210004619F /* profile-background-costa@2x.png in Resources */,
 				F494240816E6265400AC0644 /* IPLoginViewController.xib in Resources */,
 				F4EE194219276A7400CE2EF2 /* stats-dividing-line.png in Resources */,
 				F4D1A623187C281E00801F14 /* IPFriendViewController.xib in Resources */,
 				F446729118CF917E00279A8F /* reality-tv-hit.png in Resources */,
 				F494241916EBA35300AC0644 /* nav-bar@2x.png in Resources */,
+				F4DF073E1A432D8900837FAE /* banked-3-times@2x.png in Resources */,
 				F45EE49E1991542C0062429D /* Tutorial3.png in Resources */,
+				F4DF07441A432D8900837FAE /* global-win@2x.png in Resources */,
 				F4706C1C1886E857002D4525 /* IPCreateViewController.xib in Resources */,
 				F45EE49F1991542C0062429D /* Tutorial3s.png in Resources */,
 				F4EE196D1927D0B900CE2EF2 /* 29x29-iPhone-icon.png in Resources */,
 				F446728A18CF917E00279A8F /* basketball-hit@2x.png in Resources */,
 				F494241A16EBA35300AC0644 /* nav-bar.png in Resources */,
 				F494241C16EBA65100AC0644 /* menu-button@2x.png in Resources */,
+				F4DF07471A432D8900837FAE /* invited-5-people-complete@2x.png in Resources */,
 				F494243216EE454E00AC0644 /* menu-row-hit.png in Resources */,
 				F494243316EE454E00AC0644 /* menu-row.png in Resources */,
 				F494243416EE454E00AC0644 /* menu-top-row-with-logo.png in Resources */,
@@ -1672,6 +1784,7 @@
 				F4EE19691927D0B900CE2EF2 /* 120x120-iPhone-Retina-icon.png in Resources */,
 				F48A204718E2161B00D2C4E7 /* IPLeaderboardHeaderView.xib in Resources */,
 				F429F8D417086162006E7CDE /* IPCompLeaderboardHeaderView.xib in Resources */,
+				F4F8C2ED1A487A490004272E /* trophy@2x.png in Resources */,
 				F429F8D6170865F3006E7CDE /* IPLeaderboardFooterView.xib in Resources */,
 				F429F8D817086677006E7CDE /* IPLeaderboardViewController.xib in Resources */,
 				F429F8DA17086A81006E7CDE /* IPLeaderboardItemCell.xib in Resources */,
@@ -1683,6 +1796,7 @@
 				F446728118CF917E00279A8F /* reality-tv-hit@2x.png in Resources */,
 				F429F8F1170B19A4006E7CDE /* rank-points-main-background.png in Resources */,
 				F429F8F2170B19A4006E7CDE /* submit-button-background.png in Resources */,
+				F4DF073D1A432D8900837FAE /* banked-3-times-complete@2x.png in Resources */,
 				F429F8F4170B19A4006E7CDE /* submit-button.png in Resources */,
 				F429F8F5170B19A4006E7CDE /* submit-button-hit-state.png in Resources */,
 				F429F8F6170B19A4006E7CDE /* grey-button.png in Resources */,
@@ -1691,6 +1805,7 @@
 				F479CD751711AAB2008AF68D /* segcontrol_uns-sel.png in Resources */,
 				F479CD761711AAB2008AF68D /* segcontrol_uns-uns.png in Resources */,
 				F446728818CF917E00279A8F /* american-football-hit@2x.png in Resources */,
+				F4DF07241A43288300837FAE /* profile-background.png in Resources */,
 				F479CD771711AAB2008AF68D /* segcontrol_uns.png in Resources */,
 				F479CD8F17156FE6008AF68D /* snooker.png in Resources */,
 				F4F8043317FEBF8B0048A944 /* tick.png in Resources */,
@@ -1728,6 +1843,7 @@
 				F4CB022F182AB0F90016AB1D /* NotificationBackgroundMessage@2x.png in Resources */,
 				F4F852C0192130D6002B19A4 /* stats-circle-1@2x.png in Resources */,
 				F479CDB517215A9C008AF68D /* bank-select@2x.png in Resources */,
+				F4DF074A1A432D8900837FAE /* perfect-game@2x.png in Resources */,
 				F479CDB617215A9C008AF68D /* gamecontrol_sel-uns@2x.png in Resources */,
 				F45EE49D1991542C0062429D /* Tutorial2s.png in Resources */,
 				F479CDB717215A9C008AF68D /* gamecontrol_sel@2x.png in Resources */,
@@ -1737,6 +1853,7 @@
 				F479CDB917215A9C008AF68D /* gamecontrol_uns-uns@2x.png in Resources */,
 				F4EE194A19276A7400CE2EF2 /* lobby-bar-drop-down-bar.png in Resources */,
 				F479CDBA17215A9C008AF68D /* gamecontrol_uns@2x.png in Resources */,
+				F4F8C2EB1A487A490004272E /* profile-background-aguero@2x.png in Resources */,
 				F479CDC517215CBC008AF68D /* discontrol_sel-uns.png in Resources */,
 				F446728E18CF917E00279A8F /* football-hit.png in Resources */,
 				F47D6A1618DCAF82001FD785 /* menu-logo.png in Resources */,
@@ -1753,8 +1870,11 @@
 				F4706C1F18880F73002D4525 /* IPFriendPoolViewController.xib in Resources */,
 				F479CDCC17215CBC008AF68D /* discontrol_uns-uns@2x.png in Resources */,
 				F4F047081858D540004D1498 /* IPFacebookLinkViewController.xib in Resources */,
+				F4DF07491A432D8900837FAE /* perfect-game-complete@2x.png in Resources */,
+				F4DF07481A432D8900837FAE /* invited-5-people@2x.png in Resources */,
 				F4F04714185A3A8A004D1498 /* leaderboard-row-normal.png in Resources */,
 				F497611118AA6F5900016238 /* create-button-game@2x.png in Resources */,
+				F4DF07411A432D8900837FAE /* friend-win-complete@2x.png in Resources */,
 				F479CDCD17215CBC008AF68D /* discontrol_uns.png in Resources */,
 				F479CDCE17215CBC008AF68D /* discontrol_uns@2x.png in Resources */,
 				F4CB022E182AB0F90016AB1D /* NotificationBackgroundMessage.png in Resources */,
@@ -1762,6 +1882,7 @@
 				F479CDEF17294AA8008AF68D /* basketball@2x.png in Resources */,
 				F4F8043617FEE2B40048A944 /* cross@2x.png in Resources */,
 				F479CDF017294AA8008AF68D /* cricket@2x.png in Resources */,
+				F4DF07431A432D8900837FAE /* global-win-complete@2x.png in Resources */,
 				F48A20551906786100D2C4E7 /* lobby-bar-drop-down-bar-hitstate@2x.png in Resources */,
 				F45EE4A719A633140062429D /* IPFantasyResultCell.xib in Resources */,
 				F497610618AA532000016238 /* hamburger@2x.png in Resources */,
@@ -1781,6 +1902,7 @@
 				F49760FE18A934DA00016238 /* create-inplayrs-logo@2x.png in Resources */,
 				F4EE194819276A7400CE2EF2 /* screen-football.png in Resources */,
 				F4CB0230182AB0F90016AB1D /* NotificationBackgroundSuccess.png in Resources */,
+				F4DF07461A432D8900837FAE /* head-to-head@2x.png in Resources */,
 				F479CDFE172EADC0008AF68D /* rugby@2x.png in Resources */,
 				F479D15D172EAE49008AF68D /* american-football.png in Resources */,
 				F479D15E172EAE49008AF68D /* american-football@2x.png in Resources */,
@@ -1789,6 +1911,7 @@
 				F446728218CF917E00279A8F /* awards-hit@2x.png in Resources */,
 				F47D6A1418DCAF3D001FD785 /* menu-logo@2x.png in Resources */,
 				F4F852BE192130D6002B19A4 /* screen-football-b@2x.png in Resources */,
+				F4DF073A1A432D8900837FAE /* 10-games@2x.png in Resources */,
 				1D07A68F18172A1F00E0F783 /* IPSettingsViewController.xib in Resources */,
 				F446729618CF917E00279A8F /* ice-hockey-hit.png in Resources */,
 				F446728918CF917E00279A8F /* motor-racing-hit@2x.png in Resources */,
@@ -1796,6 +1919,7 @@
 				F479D165172EAE6D008AF68D /* finance.png in Resources */,
 				F479D166172EAE6D008AF68D /* finance@2x.png in Resources */,
 				F4EE194D19276A7400CE2EF2 /* lobby-bar-2.png in Resources */,
+				F45C6D2119B872B6005780DD /* IPTrophyView.xib in Resources */,
 				F4F046F318464FA8004D1498 /* stats@2x.png in Resources */,
 				F479D167172EAE6D008AF68D /* ice-hockey.png in Resources */,
 				F4EE194519276A7400CE2EF2 /* stats-circle-1.png in Resources */,
@@ -1814,6 +1938,7 @@
 				F4008C6B17451D5000B9A23E /* back-button-hit-state.png in Resources */,
 				F4EE195119276A7400CE2EF2 /* game-header-button.png in Resources */,
 				F4008C6C17451D5000B9A23E /* back-button-hit-state@2x.png in Resources */,
+				F4DF07401A432D8900837FAE /* competition-win@2x.png in Resources */,
 				F4008C6D17451D5000B9A23E /* back-button.png in Resources */,
 				F4008C6E17451D5000B9A23E /* back-button@2x.png in Resources */,
 				F4008C6F17451D5000B9A23E /* menu-top-row-with-logo@2x.png in Resources */,
@@ -1834,10 +1959,13 @@
 				F4F852BF192130D6002B19A4 /* screen-football@2x.png in Resources */,
 				F47E3789174FCC0B00C5C508 /* submit-button-hit-state@2x.png in Resources */,
 				F4F04715185A3A8A004D1498 /* leaderboard-row-normal@2x.png in Resources */,
+				F4DF07421A432D8900837FAE /* friend-win@2x.png in Resources */,
 				F446728618CF917E00279A8F /* snooker-hit@2x.png in Resources */,
+				F4DF07451A432D8900837FAE /* head-to-head-complete@2x.png in Resources */,
 				F47E378A174FCC0B00C5C508 /* submit-button@2x.png in Resources */,
 				F4857F7B17733BE10050FEDA /* IPLobbyChildCell.xib in Resources */,
 				F4857F801775B3E20050FEDA /* IPBannerView.xib in Resources */,
+				F4DF07391A432D8900837FAE /* 10-games-complete@2x.png in Resources */,
 				F4857F901779A4D20050FEDA /* entered-tick.png in Resources */,
 				F4857F911779A4D20050FEDA /* entered-tick@2x.png in Resources */,
 				F4857F921779A4D20050FEDA /* lobby-main-row.png in Resources */,
@@ -1888,6 +2016,7 @@
 				F47B7C2217B0FE1C0008D3B9 /* winners@2x.png in Resources */,
 				F47B7C2417B6BC7D0008D3B9 /* menu-final-row-line@2x.png in Resources */,
 				F4CB0231182AB0F90016AB1D /* NotificationBackgroundSuccess@2x.png in Resources */,
+				F46EB1291A60300B0004619F /* IPNewInfoViewController.xib in Resources */,
 				F47B7C2717BBAC340008D3B9 /* login-button-hit@2x.png in Resources */,
 				F4F852C619213A61002B19A4 /* completed-row-light@2x.png in Resources */,
 				F45EE4A4199B64950062429D /* Tutorial5s.png in Resources */,
@@ -1899,16 +2028,20 @@
 				F4D7CCD018B7ACEE00AC025A /* login-button-disabled@2x.png in Resources */,
 				F446729418CF917E00279A8F /* baseball-hit.png in Resources */,
 				F47B7C2E17BBBDB50008D3B9 /* gamecontrol_sel-sel.png in Resources */,
+				F46EB1201A5C1C210004619F /* profile-background-costa.png in Resources */,
 				F4CB0235182AB0F90016AB1D /* NotificationBackgroundWarning@2x.png in Resources */,
 				F47B7C2F17BBBDB50008D3B9 /* gamecontrol_sel-sel@2x.png in Resources */,
 				F47B7C3017BBBDB50008D3B9 /* leaderboard-row.png in Resources */,
 				F4F852C2192130D6002B19A4 /* stats-circle-3@2x.png in Resources */,
 				F497611318AA6F5900016238 /* stats-background-bar@2x.png in Resources */,
+				F4DF073C1A432D8900837FAE /* 50-games@2x.png in Resources */,
 				F47B7C3217BCFCA00008D3B9 /* lobby-sub-row.png in Resources */,
+				F4DF073F1A432D8900837FAE /* competition-win-complete@2x.png in Resources */,
 				F4E4CCAC17BD026E00468FB6 /* fan-hit.png in Resources */,
 				F4E4CCAD17BD026E00468FB6 /* fan-hit@2x.png in Resources */,
 				F4E4CCAE17BD026E00468FB6 /* info-hit.png in Resources */,
 				F4E4CCAF17BD026E00468FB6 /* info-hit@2x.png in Resources */,
+				F45C6D3419B8B4A9005780DD /* IPTrophyCell.xib in Resources */,
 				F4EE195419276A7400CE2EF2 /* create-button-game.png in Resources */,
 				F4E4CCB017BD026E00468FB6 /* leaderboard-hit.png in Resources */,
 				F446728F18CF917E00279A8F /* cricket-hit.png in Resources */,
@@ -1955,10 +2088,13 @@
 				F4EE194B19276A7400CE2EF2 /* lobby-bar-drop-down-bar-hitstate.png in Resources */,
 				F48A204C18E858DB00D2C4E7 /* game-header-button-hit@2x.png in Resources */,
 				F4CB0244182BCA880016AB1D /* IPStatsViewController.xib in Resources */,
+				F4DF07261A43295B00837FAE /* profile-background@2x.png in Resources */,
 				F446727F18CF917E00279A8F /* golf-hit@2x.png in Resources */,
 				F4EE194619276A7400CE2EF2 /* stats-background-bar.png in Resources */,
 				F4CB022A182AB0F90016AB1D /* NotificationBackgroundError.png in Resources */,
+				F4F8C2EA1A487A490004272E /* profile-background-aguero.png in Resources */,
 				F4706C2118880F9F002D4525 /* IPFriendPoolFooterView.xib in Resources */,
+				F4F8C2EC1A487A490004272E /* trophy.png in Resources */,
 				F497610C18AA642500016238 /* lobby-bar-1@2x.png in Resources */,
 				F4F046F118464FA8004D1498 /* stats-hit@2x.png in Resources */,
 				F48A20501906780E00D2C4E7 /* lobby-bar-1-hitstate@2x.png in Resources */,
@@ -2003,10 +2139,12 @@
 				F4F047061858820F004D1498 /* OverallWinners.m in Sources */,
 				F4A42FF3192F5760009F91F8 /* GameWinners.m in Sources */,
 				F4F714B916A712FA00FCCA82 /* SideMenuViewController.m in Sources */,
+				F46EB1271A602AB40004619F /* IPNewInfoViewController.m in Sources */,
 				F4F714BF16AEB4AB00FCCA82 /* IPLobbyViewController.m in Sources */,
 				F4F714C416AEEF7F00FCCA82 /* IPGameViewController.m in Sources */,
 				F4F714CA16B1748900FCCA82 /* MenuDataController.m in Sources */,
 				F48F94AD16B97488004983EE /* Period.m in Sources */,
+				F46EB1241A5FF2220004619F /* iRate.m in Sources */,
 				1D6043381816B87300F058B0 /* IPMultiLoginViewController.m in Sources */,
 				F4D1A62A187C6CEF00801F14 /* IPCreateViewController.m in Sources */,
 				F45EE4A919A642D50062429D /* IPFantasyResultViewController.m in Sources */,
@@ -2026,6 +2164,7 @@
 				F45C6D1919A65874005780DD /* IPFantasyResultCell.m in Sources */,
 				F4F046F91850A905004D1498 /* Stats.m in Sources */,
 				F494241316E6564800AC0644 /* FanDataController.m in Sources */,
+				F45C6D2719B87746005780DD /* Trophy.m in Sources */,
 				F4CB023B182AB0F90016AB1D /* TSBlurView.m in Sources */,
 				F494241616E6611400AC0644 /* Fangroup.m in Sources */,
 				F429F8CB1704B08D006E7CDE /* IPInfoViewController.m in Sources */,
@@ -2036,6 +2175,7 @@
 				F429F8DD17086D4B006E7CDE /* IPLeaderboardViewController.m in Sources */,
 				F429F8E017086E0A006E7CDE /* IPLeaderboardItemCell.m in Sources */,
 				F429F8F9170EDE64006E7CDE /* Competition.m in Sources */,
+				F45C6D2419B8764C005780DD /* IPTrophyViewController.m in Sources */,
 				F479CD82171486C7008AF68D /* Fan.m in Sources */,
 				F4008C651740FCC700B9A23E /* CompetitionPoints.m in Sources */,
 				F4CB0229182AB0F90016AB1D /* TSMessage.m in Sources */,
@@ -2150,8 +2290,8 @@
 					"$(PROJECT_DIR)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "257EE24A-BC13-49AC-9610-A521E7FA30E2";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "257EE24A-BC13-49AC-9610-A521E7FA30E2";
+				PROVISIONING_PROFILE = "f0bc141b-ef48-4c01-80d2-5383d126c8b5";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "f0bc141b-ef48-4c01-80d2-5383d126c8b5";
 				USER_HEADER_SEARCH_PATHS = "";
 				"VALID_ARCHS[sdk=*]" = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
@@ -2161,8 +2301,8 @@
 		F4B706F01695C74700E9FCD8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Inplayrs Ltd (TQ53V5B9SX)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Inplayrs Ltd (TQ53V5B9SX)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Inplayrs Ltd";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Inplayrs Ltd";
 				FRAMEWORK_SEARCH_PATHS = (
 					/Users/inplayrs/Documents/Code/Inplayrs,
 					"$(PROJECT_DIR)",
@@ -2176,8 +2316,8 @@
 					"$(PROJECT_DIR)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "75B25BFC-02B8-448E-9D9A-4290313B8D0D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "75B25BFC-02B8-448E-9D9A-4290313B8D0D";
+				PROVISIONING_PROFILE = "bce0ffac-09e3-49de-ac75-f0e74b46c51f";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "bce0ffac-09e3-49de-ac75-f0e74b46c51f";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};

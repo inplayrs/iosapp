@@ -29,7 +29,9 @@
 #import "AddUsers.h"
 #import "Motd.h"
 #import "PeriodOptions.h"
+#import "Trophy.h"
 #import <FacebookSDK/FacebookSDK.h>
+// #import "iRate.h"
 
 
 
@@ -129,8 +131,22 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [Flurry startSession:@"8C4BSDMV8CNX5KKZFWMG"];
     [self setupNavigationControllerApp];
+    
+    #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
+        if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+            [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeAlert) categories:nil]];
+            [[UIApplication sharedApplication] registerForRemoteNotifications];
+        } else {
+            [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert)];
+        }
+    #else
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert)];
+    #endif
+    
+    /*
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
     (UIRemoteNotificationTypeAlert)];
+     */
     
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
         // [application setStatusBarStyle:UIStatusBarStyleDefault];
@@ -329,7 +345,8 @@
      @"rank":               @"rank",
      @"name":               @"name",
      @"points":             @"points",
-     @"potential_winnings": @"winnings"
+     @"potential_winnings": @"winnings",
+     @"fbID":           @"fbID"
      }];
    
     RKObjectMapping *competitionLeaderboardMapping = [RKObjectMapping mappingForClass:[Leaderboard class]];
@@ -337,7 +354,8 @@
      @"rank":           @"rank",
      @"name":           @"name",
      @"games_played":   @"points",
-     @"winnings":       @"winnings"
+     @"winnings":       @"winnings",
+     @"fbID":           @"fbID"
      }];
     
     RKObjectMapping *competitionWinnersMapping = [RKObjectMapping mappingForClass:[CompetitionWinners class]];
@@ -417,6 +435,14 @@
     RKObjectMapping *userMotdMapping = [RKObjectMapping mappingForClass:[Motd class]];
     [userMotdMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:nil toKeyPath:@"message"]];
     
+    RKObjectMapping *trophyMapping = [RKObjectMapping mappingForClass:[Trophy class]];
+    [trophyMapping addAttributeMappingsFromDictionary:@{
+     @"trophy_id":  @"trophyID",
+     @"name":       @"name",
+     @"order":      @"order",
+     @"achieved":   @"achieved"
+     }];
+    
     RKObjectMapping* responseMapping = [RKObjectMapping mappingForClass:[NSNull class]];
     
     NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassClientError);
@@ -448,6 +474,7 @@
     RKResponseDescriptor *createPoolResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:friendPoolMapping method:RKRequestMethodPOST pathPattern:@"pool/create" keyPath:nil statusCodes:successStatusCodes];
     RKResponseDescriptor *userMotdResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userMotdMapping method:RKRequestMethodGET pathPattern:@"user/motd" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *userListResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userMotdMapping method:RKRequestMethodGET pathPattern:@"user/list" keyPath:nil statusCodes:nil];
+    RKResponseDescriptor *trophyResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:trophyMapping method:RKRequestMethodGET pathPattern:@"user/trophies" keyPath:nil statusCodes:nil];
     
     RKResponseDescriptor *responseSelectionDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:responseMapping method:RKRequestMethodPOST pathPattern:@"game/selections" keyPath:nil statusCodes:successStatusCodes];
     RKResponseDescriptor *responseAddUsersDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:responseMapping method:RKRequestMethodPOST pathPattern:@"pool/addusers" keyPath:nil statusCodes:successStatusCodes];
@@ -479,6 +506,7 @@
     [objectManager addResponseDescriptor:registerDescriptor];
     [objectManager addResponseDescriptor:createPoolResponseDescriptor];
     [objectManager addResponseDescriptor:userMotdResponseDescriptor];
+    [objectManager addResponseDescriptor:trophyResponseDescriptor];
     [objectManager addResponseDescriptor:userListResponseDescriptor];
     [objectManager addResponseDescriptor:responseSelectionDescriptor];
     [objectManager addResponseDescriptor:responseAddUsersDescriptor];
@@ -544,12 +572,10 @@
 	NSLog(@"Failed to get token, error: %@", error);
 }
 
-
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     self.refreshLobby = YES;
 }
-
 
 
 - (BOOL)application:(UIApplication *)application
@@ -580,6 +606,14 @@
     //  (e.g., returning from iOS 6.0 authorization dialog or from fast app switching).
     [FBAppCall handleDidBecomeActive];
 }
+
+/*
++ (void)initialize
+{
+    //enable preview mode
+    [iRate sharedInstance].previewMode = YES;
+}
+ */
 
 
 

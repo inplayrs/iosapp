@@ -8,8 +8,7 @@
 
 @class MenuDataController;
 @class IPLobbyViewController;
-@class IPSettingsViewController;
-@class IPInfoViewController;
+@class IPNewInfoViewController;
 @class IPWinnersViewController;
 @class IPTutorialViewController;
 @class IPStatsViewController;
@@ -25,8 +24,7 @@
 @property (nonatomic, assign) MFSideMenu *sideMenu;
 @property (strong, nonatomic) MenuDataController *dataController;
 @property (strong, nonatomic) IPLobbyViewController *lobbyController;
-@property (strong, nonatomic) IPSettingsViewController *settingsController;
-@property (strong, nonatomic) IPInfoViewController *infoController;
+@property (strong, nonatomic) IPNewInfoViewController *infoController;
 @property (strong, nonatomic) IPWinnersViewController *winnersController;
 @property (strong, nonatomic) IPTutorialViewController *tutorialController;
 @property (strong, nonatomic) IPStatsViewController *statsController;

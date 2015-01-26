@@ -14,6 +14,7 @@
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *points;
 @property (nonatomic, copy) NSString *winnings;
+@property (nonatomic, copy) NSString *fbID;
 
 
 -(id)initWithRank:(NSInteger)rank name:(NSString *)name points:(NSString *)points winnings:(NSString *)winnings;

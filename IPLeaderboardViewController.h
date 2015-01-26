@@ -15,6 +15,7 @@
 @class FriendPool;
 @class IPAddFriendsViewController;
 @class IPFantasyViewController;
+@class IPStatsViewController;
 
 @interface IPLeaderboardViewController : UITableViewController <UIAlertViewDelegate>
 {
@@ -61,8 +62,10 @@
 @property (strong, nonatomic) Game *game;
 @property (strong, nonatomic) FriendPool *friendPool;
 @property (strong, nonatomic) NSMutableDictionary *controllerList;
+@property (strong, nonatomic) NSMutableDictionary *overallControllerList;
 @property (strong, nonatomic) IPGameViewController *detailViewController;
 @property (strong, nonatomic) IPFantasyViewController *fantasyViewController;
+@property (strong, nonatomic) IPStatsViewController *statsViewController;
 @property (nonatomic) NSInteger lbType;
 @property (nonatomic) NSInteger competitionID;
 @property (weak, nonatomic) NSString *competitionName;
