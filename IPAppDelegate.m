@@ -30,7 +30,11 @@
 #import "Motd.h"
 #import "PeriodOptions.h"
 #import "Trophy.h"
+#import "PhotoUpload.h"
+#import "Photo.h"
+#import "PhotoLeaderboard.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import "AWSCore.h"
 // #import "iRate.h"
 
 
@@ -346,7 +350,19 @@
      @"name":               @"name",
      @"points":             @"points",
      @"potential_winnings": @"winnings",
-     @"fbID":           @"fbID"
+     @"fbID":               @"fbID"
+     }];
+    
+    RKObjectMapping *photoLeaderboardMapping = [RKObjectMapping mappingForClass:[PhotoLeaderboard class]];
+    [photoLeaderboardMapping addAttributeMappingsFromDictionary:@{
+     @"rank":               @"rank",
+     @"username":           @"name",
+     @"fbID":               @"fbID",
+     @"photo_id":           @"photoID",
+     @"likes":              @"likes",
+     @"url":                @"url",
+     @"caption":            @"caption",
+     @"winnings":           @"winnings"
      }];
    
     RKObjectMapping *competitionLeaderboardMapping = [RKObjectMapping mappingForClass:[Leaderboard class]];
@@ -409,6 +425,21 @@
      @"username":       @"username"
      }];
     
+    RKObjectMapping *photoUploadMapping = [RKObjectMapping mappingForClass:[PhotoUpload class]];
+    [photoUploadMapping addAttributeMappingsFromDictionary:@{
+     @"photo_id":       @"photoID",
+     @"photoKey":       @"photoKey"
+     }];
+    
+    RKObjectMapping *photoMapping = [RKObjectMapping mappingForClass:[Photo class]];
+    [photoMapping addAttributeMappingsFromDictionary:@{
+     @"photo_id":       @"photoID",
+     @"user_id":        @"userID",
+     @"url":            @"url",
+     @"caption":        @"caption",
+     @"likes":          @"likes"
+     }];
+    
     RKObjectMapping *userStatsMapping = [RKObjectMapping mappingForClass:[Stats class]];
     [userStatsMapping addAttributeMappingsFromDictionary:@{
      @"username":           @"username",
@@ -458,6 +489,7 @@
     RKResponseDescriptor *competitionResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:competitionMapping method:RKRequestMethodGET pathPattern:@"competition/list" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *fangroupResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:fangroupMapping method:RKRequestMethodGET pathPattern:@"competition/fangroups" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *gameLeaderboardResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:gameLeaderboardMapping method:RKRequestMethodGET pathPattern:@"game/leaderboard" keyPath:nil statusCodes:nil];
+    RKResponseDescriptor *photoLeaderboardResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:photoLeaderboardMapping method:RKRequestMethodGET pathPattern:@"game/photo/leaderboard" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *competitionLeaderboardResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:competitionLeaderboardMapping method:RKRequestMethodGET pathPattern:@"competition/leaderboard" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *competitionPointsResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:competitionPointsMapping method:RKRequestMethodGET pathPattern:@"competition/points" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *poolPointsResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:poolPointsMapping method:RKRequestMethodGET pathPattern:@"pool/points" keyPath:nil statusCodes:nil];
@@ -468,6 +500,7 @@
     RKResponseDescriptor *poolMemberResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:poolMemberMapping method:RKRequestMethodGET pathPattern:@"pool/members" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *userAccountResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userAccountMapping method:RKRequestMethodGET pathPattern:@"user/account" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *userAccountUpdateResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userAccountMapping method:RKRequestMethodPOST pathPattern:@"user/account/update" keyPath:nil statusCodes:successStatusCodes];
+    RKResponseDescriptor *photoUploadResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:photoUploadMapping method:RKRequestMethodPOST pathPattern:@"game/photo" keyPath:nil statusCodes:successStatusCodes];
     RKResponseDescriptor *userStatsResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userStatsMapping method:RKRequestMethodGET pathPattern:@"user/stats" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *errorDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:errorMapping method:RKRequestMethodPOST pathPattern:nil keyPath:nil statusCodes:statusCodes];
     RKResponseDescriptor *registerDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userAccountMapping method:RKRequestMethodPOST pathPattern:@"user/register" keyPath:nil statusCodes:successStatusCodes];
@@ -475,11 +508,15 @@
     RKResponseDescriptor *userMotdResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userMotdMapping method:RKRequestMethodGET pathPattern:@"user/motd" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *userListResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userMotdMapping method:RKRequestMethodGET pathPattern:@"user/list" keyPath:nil statusCodes:nil];
     RKResponseDescriptor *trophyResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:trophyMapping method:RKRequestMethodGET pathPattern:@"user/trophies" keyPath:nil statusCodes:nil];
+    RKResponseDescriptor *photoResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:photoMapping method:RKRequestMethodGET pathPattern:@"game/photos" keyPath:nil statusCodes:nil];
     
     RKResponseDescriptor *responseSelectionDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:responseMapping method:RKRequestMethodPOST pathPattern:@"game/selections" keyPath:nil statusCodes:successStatusCodes];
     RKResponseDescriptor *responseAddUsersDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:responseMapping method:RKRequestMethodPOST pathPattern:@"pool/addusers" keyPath:nil statusCodes:successStatusCodes];
     RKResponseDescriptor *responsePoolLeaveDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:responseMapping method:RKRequestMethodPOST pathPattern:@"pool/leave" keyPath:nil statusCodes:successStatusCodes];
     RKResponseDescriptor *responseBankDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:responseMapping method:RKRequestMethodPOST pathPattern:@"game/period/bank" keyPath:nil statusCodes:successStatusCodes];
+    RKResponseDescriptor *responseLikeDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:responseMapping method:RKRequestMethodPOST pathPattern:@"game/photo/like" keyPath:nil statusCodes:successStatusCodes];
+    RKResponseDescriptor *responseActivePhotoDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:responseMapping method:RKRequestMethodPOST pathPattern:@"game/photo/setActive" keyPath:nil statusCodes:successStatusCodes];
+    RKResponseDescriptor *responseFlagDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:responseMapping method:RKRequestMethodPOST pathPattern:@"game/photo/flag" keyPath:nil statusCodes:successStatusCodes];
     
     [objectManager setRequestSerializationMIMEType:RKMIMETypeJSON];
     [objectManager addResponseDescriptor:gameResponseDescriptor];
@@ -491,6 +528,7 @@
     [objectManager addResponseDescriptor:competitionResponseDescriptor];
     [objectManager addResponseDescriptor:fangroupResponseDescriptor];
     [objectManager addResponseDescriptor:gameLeaderboardResponseDescriptor];
+    [objectManager addResponseDescriptor:photoLeaderboardResponseDescriptor];
     [objectManager addResponseDescriptor:competitionLeaderboardResponseDescriptor];
     [objectManager addResponseDescriptor:competitionPointsResponseDescriptor];
     [objectManager addResponseDescriptor:poolPointsResponseDescriptor];
@@ -501,6 +539,8 @@
     [objectManager addResponseDescriptor:poolMemberResponseDescriptor];
     [objectManager addResponseDescriptor:userAccountResponseDescriptor];
     [objectManager addResponseDescriptor:userAccountUpdateResponseDescriptor];
+    [objectManager addResponseDescriptor:photoUploadResponseDescriptor];
+    [objectManager addResponseDescriptor:photoResponseDescriptor];
     [objectManager addResponseDescriptor:userStatsResponseDescriptor];
     [objectManager addResponseDescriptor:errorDescriptor];
     [objectManager addResponseDescriptor:registerDescriptor];
@@ -512,11 +552,14 @@
     [objectManager addResponseDescriptor:responseAddUsersDescriptor];
     [objectManager addResponseDescriptor:responsePoolLeaveDescriptor];
     [objectManager addResponseDescriptor:responseBankDescriptor];
+    [objectManager addResponseDescriptor:responseLikeDescriptor];
+    [objectManager addResponseDescriptor:responseActivePhotoDescriptor];
+    [objectManager addResponseDescriptor:responseFlagDescriptor];
     
     // Whenever a person opens the app, check for a cached session
     if ((FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) && (self.loggedin)) {
         // If there's one, just open the session silently, without showing the user the login UI
-        [FBSession openActiveSessionWithReadPermissions:@[@"basic_info"]
+        [FBSession openActiveSessionWithReadPermissions:@[@"public_profile", @"email", @"user_friends"]
                                            allowLoginUI:NO
                                       completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
                                           // Handler for session state changes
@@ -548,6 +591,13 @@
             } failure:nil];
         }
     }
+    
+    // initialize credentials for AWS
+    AWSCognitoCredentialsProvider *credentialsProvider = [AWSCognitoCredentialsProvider
+                                                          credentialsWithRegionType:AWSRegionEUWest1
+                                                          identityPoolId:@"eu-west-1:0e17fd92-b790-4ef8-a83b-fa03c1b7c45c"];
+    AWSServiceConfiguration *configuration = [AWSServiceConfiguration configurationWithRegion:AWSRegionEUWest1 credentialsProvider:credentialsProvider];
+    [AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;
     
     return YES;
 }

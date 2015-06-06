@@ -17,6 +17,7 @@
 #import "IPMultiLoginViewController.h"
 #import "IPStatsViewController.h"
 #import "IPFantasyViewController.h"
+#import "IPPhotoViewController.h"
 #import "Competition.h"
 #import "Banner.h"
 #import <SDWebImage/UIButton+WebCache.h>
@@ -25,6 +26,7 @@
 #import "Motd.h"
 
 #define FANTASY 40
+#define PHOTO 45
 #define QUIZ 100
 
 enum State {
@@ -62,7 +64,7 @@ enum Category {
 
 @implementation IPLobbyViewController
 
-@synthesize controllerList, detailViewController, fantasyViewController, multiLoginViewController, topItems, subItems, bannerImages, bannerItems, tempTopItems, tempSubItems, bannerButton, statsViewController;
+@synthesize controllerList, detailViewController, fantasyViewController, photoViewController, multiLoginViewController, topItems, subItems, bannerImages, bannerItems, tempTopItems, tempSubItems, bannerButton, statsViewController;
 
 
 - (void) dealloc {
@@ -176,6 +178,7 @@ enum Category {
     self.title = @"Lobby";
     detailViewController = nil;
     fantasyViewController = nil;
+    photoViewController = nil;
     multiLoginViewController = nil;
     statsViewController = nil;
     
@@ -773,6 +776,10 @@ enum Category {
                 fantasyViewController = [[IPFantasyViewController alloc] initWithNibName:@"IPFantasyViewController" bundle:nil];
                 fantasyViewController.game = game;
                 [controllerList setObject:fantasyViewController forKey:game.name];
+            } else if (game.type == PHOTO) {
+                photoViewController = [[IPPhotoViewController alloc] initWithNibName:@"IPPhotoViewController" bundle:nil];
+                photoViewController.game = game;
+                [controllerList setObject:photoViewController forKey:game.name];
             } else {
                 detailViewController = [[IPGameViewController alloc] initWithNibName:@"IPGameViewController" bundle:nil];
                 detailViewController.game = game;

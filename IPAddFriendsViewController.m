@@ -139,9 +139,9 @@
         [friendPickerController loadData];
         [friendPickerController clearSelection];
         [self.addUsers.facebookIDs removeAllObjects];
-        [self presentViewController:friendPickerController
-                       animated:YES
-                     completion:nil];
+        // [self presentViewController:friendPickerController animated:YES completion:nil];
+        [self.navigationController pushViewController:friendPickerController animated:YES];
+        
     } else {
         if (!self.facebookLinkViewController) {
             self.facebookLinkViewController = [[IPFacebookLinkViewController alloc] initWithNibName:@"IPFacebookLinkViewController" bundle:nil];

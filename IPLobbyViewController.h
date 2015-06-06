@@ -12,6 +12,7 @@
 @class IPMultiLoginViewController;
 @class IPStatsViewController;
 @class IPFantasyViewController;
+@class IPPhotoViewController;
 
 @interface IPLobbyViewController : UITableViewController
 {
@@ -27,6 +28,7 @@
 
 @property (strong, nonatomic) IPGameViewController *detailViewController;
 @property (strong, nonatomic) IPFantasyViewController *fantasyViewController;
+@property (strong, nonatomic) IPPhotoViewController *photoViewController;
 @property (strong, nonatomic) IPMultiLoginViewController *multiLoginViewController;
 @property (strong, nonatomic) IPStatsViewController *statsViewController;
 @property (strong, nonatomic) NSMutableDictionary *controllerList;

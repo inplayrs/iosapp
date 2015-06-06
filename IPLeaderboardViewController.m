@@ -26,6 +26,7 @@
 #import "IPStatsViewController.h"
 
 #define FANTASY 40
+#define PHOTO 45
 #define QUIZ 100
 
 #define COMPETITIONS 1

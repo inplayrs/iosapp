@@ -41,6 +41,25 @@
 		F4119CED16CEBD770028DB2E /* Selection.h in Resources */ = {isa = PBXBuildFile; fileRef = F4119CEC16CEBD770028DB2E /* Selection.h */; };
 		F4119CEF16CEBD940028DB2E /* Selection.m in Sources */ = {isa = PBXBuildFile; fileRef = F4119CEE16CEBD930028DB2E /* Selection.m */; };
 		F4119CF216CFB92B0028DB2E /* Points.m in Sources */ = {isa = PBXBuildFile; fileRef = F4119CF116CFB92A0028DB2E /* Points.m */; };
+		F415827B1AAE0D6800645EC1 /* goal.png in Resources */ = {isa = PBXBuildFile; fileRef = F415827A1AAE0D6800645EC1 /* goal.png */; };
+		F415827D1AAE0F6700645EC1 /* IPUploadPhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F415827C1AAE0F6700645EC1 /* IPUploadPhotoViewController.xib */; };
+		F41582801AAE0F9F00645EC1 /* IPUploadPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F415827F1AAE0F9F00645EC1 /* IPUploadPhotoViewController.m */; };
+		F41B48521AF25DBF008C28AD /* PhotoLeaderboard.m in Sources */ = {isa = PBXBuildFile; fileRef = F41B48511AF25DBF008C28AD /* PhotoLeaderboard.m */; };
+		F41B48541AF262BF008C28AD /* IPPhotoLeaderboardHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F41B48531AF262BF008C28AD /* IPPhotoLeaderboardHeaderView.xib */; };
+		F41B48561AF262E3008C28AD /* IPPhotoLeaderboardItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F41B48551AF262E3008C28AD /* IPPhotoLeaderboardItemCell.xib */; };
+		F41B48591AF264CE008C28AD /* IPPhotoLeaderboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F41B48581AF264CE008C28AD /* IPPhotoLeaderboardViewController.m */; };
+		F41B485C1AF264F2008C28AD /* IPPhotoLeaderboardItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F41B485B1AF264F2008C28AD /* IPPhotoLeaderboardItemCell.m */; };
+		F41B485E1AF7B0A5008C28AD /* IPPhotoLeaderboardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F41B485D1AF7B0A5008C28AD /* IPPhotoLeaderboardViewController.xib */; };
+		F41B48611AF8D397008C28AD /* PhotoLeaderboardDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = F41B48601AF8D397008C28AD /* PhotoLeaderboardDataController.m */; };
+		F41B48631AFA87FC008C28AD /* IPPhotoResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F41B48621AFA87FC008C28AD /* IPPhotoResultViewController.xib */; };
+		F41B48661AFA88C6008C28AD /* IPPhotoResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F41B48651AFA88C6008C28AD /* IPPhotoResultViewController.m */; };
+		F41B486C1AFBA967008C28AD /* dislike-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F41B48671AFBA967008C28AD /* dislike-button@2x.png */; };
+		F41B486D1AFBA967008C28AD /* global-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F41B48681AFBA967008C28AD /* global-icon@2x.png */; };
+		F41B486E1AFBA967008C28AD /* like-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F41B48691AFBA967008C28AD /* like-button@2x.png */; };
+		F41B486F1AFBA967008C28AD /* red-card-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F41B486A1AFBA967008C28AD /* red-card-icon@2x.png */; };
+		F41B48701AFBA967008C28AD /* upload-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F41B486B1AFBA967008C28AD /* upload-button@2x.png */; };
+		F41B48721AFCF26D008C28AD /* add-photo-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F41B48711AFCF26D008C28AD /* add-photo-button@2x.png */; };
+		F41B48741B0DF767008C28AD /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F41B48731B0DF767008C28AD /* FacebookSDK.framework */; };
 		F41F600217E0A7C4003B713B /* IPTutorialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F41F600117E0A7C4003B713B /* IPTutorialViewController.xib */; };
 		F41F600517E0A911003B713B /* IPTutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F41F600417E0A911003B713B /* IPTutorialViewController.m */; };
 		F41F601417E1BE6D003B713B /* tutorial-button-hit-state.png in Resources */ = {isa = PBXBuildFile; fileRef = F41F600C17E1BE6C003B713B /* tutorial-button-hit-state.png */; };
@@ -295,6 +314,17 @@
 		F497611418AA6F5900016238 /* title-bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F497611018AA6F5900016238 /* title-bar@2x.png */; };
 		F497611718B2366800016238 /* create-button-game-hit-state@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F497611518B2366800016238 /* create-button-game-hit-state@2x.png */; };
 		F497611A18B2396800016238 /* hamburger-hit-state@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F497611918B2396800016238 /* hamburger-hit-state@2x.png */; };
+		F49868A51AB1D49600C03AAE /* PhotoUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = F49868A41AB1D49600C03AAE /* PhotoUpload.m */; };
+		F49868A81ACC35B600C03AAE /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = F49868A71ACC35B600C03AAE /* Photo.m */; };
+		F49868AF1ACD795E00C03AAE /* DraggableView.m in Sources */ = {isa = PBXBuildFile; fileRef = F49868AA1ACD795E00C03AAE /* DraggableView.m */; };
+		F49868B01ACD795E00C03AAE /* DraggableViewBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = F49868AC1ACD795E00C03AAE /* DraggableViewBackground.m */; };
+		F49868B11ACD795E00C03AAE /* OverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = F49868AE1ACD795E00C03AAE /* OverlayView.m */; };
+		F49868B41ACD7A4000C03AAE /* yesButton.png in Resources */ = {isa = PBXBuildFile; fileRef = F49868B21ACD7A4000C03AAE /* yesButton.png */; };
+		F49868B51ACD7A4000C03AAE /* noButton.png in Resources */ = {isa = PBXBuildFile; fileRef = F49868B31ACD7A4000C03AAE /* noButton.png */; };
+		F49868B81ACD8DAB00C03AAE /* checkButton.png in Resources */ = {isa = PBXBuildFile; fileRef = F49868B61ACD8DAB00C03AAE /* checkButton.png */; };
+		F49868B91ACD8DAB00C03AAE /* xButton.png in Resources */ = {isa = PBXBuildFile; fileRef = F49868B71ACD8DAB00C03AAE /* xButton.png */; };
+		F49DD0491AADC78A007A08D6 /* IPPhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F49DD0481AADC78A007A08D6 /* IPPhotoViewController.xib */; };
+		F49DD04C1AADC7C7007A08D6 /* IPPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F49DD04B1AADC7C7007A08D6 /* IPPhotoViewController.m */; };
 		F49DD0C816BA9A0D004A08F2 /* IPGameItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F49DD0C716BA9A0D004A08F2 /* IPGameItemCell.m */; };
 		F4A42FF3192F5760009F91F8 /* GameWinners.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A42FF2192F5760009F91F8 /* GameWinners.m */; };
 		F4A540A216D6655F00E95491 /* IPGameItemCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4A540A116D6655F00E95491 /* IPGameItemCell2.xib */; };
@@ -319,7 +349,6 @@
 		F4B86F6D17BE54CA00B6FA20 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = F4B86F6C17BE54CA00B6FA20 /* Default.png */; };
 		F4B86F7017BFAA2200B6FA20 /* login-screen-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4B86F6E17BFAA2100B6FA20 /* login-screen-logo@2x.png */; };
 		F4B86F7117BFAA2200B6FA20 /* login-screen-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = F4B86F6F17BFAA2100B6FA20 /* login-screen-logo.png */; };
-		F4CB02011827D04E0016AB1D /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F40F7D57182552AF00EBA8A1 /* FacebookSDK.framework */; };
 		F4CB0229182AB0F90016AB1D /* TSMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CB0210182AB0F90016AB1D /* TSMessage.m */; };
 		F4CB022A182AB0F90016AB1D /* NotificationBackgroundError.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CB0213182AB0F90016AB1D /* NotificationBackgroundError.png */; };
 		F4CB022B182AB0F90016AB1D /* NotificationBackgroundError@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CB0214182AB0F90016AB1D /* NotificationBackgroundError@2x.png */; };
@@ -509,6 +538,31 @@
 		F4119CEE16CEBD930028DB2E /* Selection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Selection.m; path = Inplayrs/Selection.m; sourceTree = "<group>"; };
 		F4119CF016CFB91B0028DB2E /* Points.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Points.h; path = Inplayrs/Points.h; sourceTree = "<group>"; };
 		F4119CF116CFB92A0028DB2E /* Points.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Points.m; path = Inplayrs/Points.m; sourceTree = "<group>"; };
+		F415827A1AAE0D6800645EC1 /* goal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goal.png; sourceTree = "<group>"; };
+		F415827C1AAE0F6700645EC1 /* IPUploadPhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPUploadPhotoViewController.xib; sourceTree = "<group>"; };
+		F415827E1AAE0F9100645EC1 /* IPUploadPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPUploadPhotoViewController.h; sourceTree = "<group>"; };
+		F415827F1AAE0F9F00645EC1 /* IPUploadPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPUploadPhotoViewController.m; sourceTree = "<group>"; };
+		F41B48501AF25DA6008C28AD /* PhotoLeaderboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoLeaderboard.h; path = Inplayrs/PhotoLeaderboard.h; sourceTree = "<group>"; };
+		F41B48511AF25DBF008C28AD /* PhotoLeaderboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoLeaderboard.m; path = Inplayrs/PhotoLeaderboard.m; sourceTree = "<group>"; };
+		F41B48531AF262BF008C28AD /* IPPhotoLeaderboardHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPPhotoLeaderboardHeaderView.xib; sourceTree = "<group>"; };
+		F41B48551AF262E3008C28AD /* IPPhotoLeaderboardItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPPhotoLeaderboardItemCell.xib; sourceTree = "<group>"; };
+		F41B48571AF264B3008C28AD /* IPPhotoLeaderboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPPhotoLeaderboardViewController.h; sourceTree = "<group>"; };
+		F41B48581AF264CE008C28AD /* IPPhotoLeaderboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPPhotoLeaderboardViewController.m; sourceTree = "<group>"; };
+		F41B485A1AF264E1008C28AD /* IPPhotoLeaderboardItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPPhotoLeaderboardItemCell.h; sourceTree = "<group>"; };
+		F41B485B1AF264F2008C28AD /* IPPhotoLeaderboardItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPPhotoLeaderboardItemCell.m; sourceTree = "<group>"; };
+		F41B485D1AF7B0A5008C28AD /* IPPhotoLeaderboardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPPhotoLeaderboardViewController.xib; sourceTree = "<group>"; };
+		F41B485F1AF8D387008C28AD /* PhotoLeaderboardDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoLeaderboardDataController.h; path = Inplayrs/PhotoLeaderboardDataController.h; sourceTree = "<group>"; };
+		F41B48601AF8D397008C28AD /* PhotoLeaderboardDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoLeaderboardDataController.m; path = Inplayrs/PhotoLeaderboardDataController.m; sourceTree = "<group>"; };
+		F41B48621AFA87FC008C28AD /* IPPhotoResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPPhotoResultViewController.xib; sourceTree = "<group>"; };
+		F41B48641AFA88B6008C28AD /* IPPhotoResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPPhotoResultViewController.h; sourceTree = "<group>"; };
+		F41B48651AFA88C6008C28AD /* IPPhotoResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPPhotoResultViewController.m; sourceTree = "<group>"; };
+		F41B48671AFBA967008C28AD /* dislike-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dislike-button@2x.png"; sourceTree = "<group>"; };
+		F41B48681AFBA967008C28AD /* global-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "global-icon@2x.png"; sourceTree = "<group>"; };
+		F41B48691AFBA967008C28AD /* like-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "like-button@2x.png"; sourceTree = "<group>"; };
+		F41B486A1AFBA967008C28AD /* red-card-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red-card-icon@2x.png"; sourceTree = "<group>"; };
+		F41B486B1AFBA967008C28AD /* upload-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "upload-button@2x.png"; sourceTree = "<group>"; };
+		F41B48711AFCF26D008C28AD /* add-photo-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add-photo-button@2x.png"; sourceTree = "<group>"; };
+		F41B48731B0DF767008C28AD /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		F41F600117E0A7C4003B713B /* IPTutorialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPTutorialViewController.xib; sourceTree = "<group>"; };
 		F41F600317E0A901003B713B /* IPTutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPTutorialViewController.h; sourceTree = "<group>"; };
 		F41F600417E0A911003B713B /* IPTutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPTutorialViewController.m; sourceTree = "<group>"; };
@@ -796,6 +850,23 @@
 		F497611018AA6F5900016238 /* title-bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "title-bar@2x.png"; sourceTree = "<group>"; };
 		F497611518B2366800016238 /* create-button-game-hit-state@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "create-button-game-hit-state@2x.png"; sourceTree = "<group>"; };
 		F497611918B2396800016238 /* hamburger-hit-state@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hamburger-hit-state@2x.png"; sourceTree = "<group>"; };
+		F49868A31AB1D48600C03AAE /* PhotoUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoUpload.h; path = Inplayrs/PhotoUpload.h; sourceTree = "<group>"; };
+		F49868A41AB1D49600C03AAE /* PhotoUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoUpload.m; path = Inplayrs/PhotoUpload.m; sourceTree = "<group>"; };
+		F49868A61ACC35A300C03AAE /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Photo.h; path = Inplayrs/Photo.h; sourceTree = "<group>"; };
+		F49868A71ACC35B600C03AAE /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Photo.m; path = Inplayrs/Photo.m; sourceTree = "<group>"; };
+		F49868A91ACD795E00C03AAE /* DraggableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DraggableView.h; sourceTree = "<group>"; };
+		F49868AA1ACD795E00C03AAE /* DraggableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DraggableView.m; sourceTree = "<group>"; };
+		F49868AB1ACD795E00C03AAE /* DraggableViewBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DraggableViewBackground.h; sourceTree = "<group>"; };
+		F49868AC1ACD795E00C03AAE /* DraggableViewBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DraggableViewBackground.m; sourceTree = "<group>"; };
+		F49868AD1ACD795E00C03AAE /* OverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayView.h; sourceTree = "<group>"; };
+		F49868AE1ACD795E00C03AAE /* OverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayView.m; sourceTree = "<group>"; };
+		F49868B21ACD7A4000C03AAE /* yesButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yesButton.png; sourceTree = "<group>"; };
+		F49868B31ACD7A4000C03AAE /* noButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noButton.png; sourceTree = "<group>"; };
+		F49868B61ACD8DAB00C03AAE /* checkButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkButton.png; sourceTree = "<group>"; };
+		F49868B71ACD8DAB00C03AAE /* xButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xButton.png; sourceTree = "<group>"; };
+		F49DD0481AADC78A007A08D6 /* IPPhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPPhotoViewController.xib; sourceTree = "<group>"; };
+		F49DD04A1AADC7B7007A08D6 /* IPPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPPhotoViewController.h; sourceTree = "<group>"; };
+		F49DD04B1AADC7C7007A08D6 /* IPPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPPhotoViewController.m; sourceTree = "<group>"; };
 		F49DD0C616BA9A0D004A08F2 /* IPGameItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPGameItemCell.h; sourceTree = "<group>"; };
 		F49DD0C716BA9A0D004A08F2 /* IPGameItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPGameItemCell.m; sourceTree = "<group>"; };
 		F4A42FF1192F574A009F91F8 /* GameWinners.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameWinners.h; path = Inplayrs/GameWinners.h; sourceTree = "<group>"; };
@@ -1000,7 +1071,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4CB02011827D04E0016AB1D /* FacebookSDK.framework in Frameworks */,
+				F41B48741B0DF767008C28AD /* FacebookSDK.framework in Frameworks */,
 				F44867A917C2491B00975F75 /* AdSupport.framework in Frameworks */,
 				F44867A717C240C600975F75 /* Security.framework in Frameworks */,
 				F47B7BDF17A6C53F0008D3B9 /* ImageIO.framework in Frameworks */,
@@ -1036,6 +1107,17 @@
 		F4119CBA16C023360028DB2E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F41B48711AFCF26D008C28AD /* add-photo-button@2x.png */,
+				F41B48671AFBA967008C28AD /* dislike-button@2x.png */,
+				F41B48681AFBA967008C28AD /* global-icon@2x.png */,
+				F41B48691AFBA967008C28AD /* like-button@2x.png */,
+				F41B486A1AFBA967008C28AD /* red-card-icon@2x.png */,
+				F41B486B1AFBA967008C28AD /* upload-button@2x.png */,
+				F49868B61ACD8DAB00C03AAE /* checkButton.png */,
+				F49868B71ACD8DAB00C03AAE /* xButton.png */,
+				F49868B21ACD7A4000C03AAE /* yesButton.png */,
+				F49868B31ACD7A4000C03AAE /* noButton.png */,
+				F415827A1AAE0D6800645EC1 /* goal.png */,
 				F46EB11E1A5C1C210004619F /* profile-background-costa.png */,
 				F46EB11F1A5C1C210004619F /* profile-background-costa@2x.png */,
 				F4F8C2E61A487A490004272E /* profile-background-aguero.png */,
@@ -1354,6 +1436,18 @@
 		F4119CBB16C0261D0028DB2E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F49868A91ACD795E00C03AAE /* DraggableView.h */,
+				F49868AA1ACD795E00C03AAE /* DraggableView.m */,
+				F49868AB1ACD795E00C03AAE /* DraggableViewBackground.h */,
+				F49868AC1ACD795E00C03AAE /* DraggableViewBackground.m */,
+				F49868AD1ACD795E00C03AAE /* OverlayView.h */,
+				F49868AE1ACD795E00C03AAE /* OverlayView.m */,
+				F49DD04A1AADC7B7007A08D6 /* IPPhotoViewController.h */,
+				F49DD04B1AADC7C7007A08D6 /* IPPhotoViewController.m */,
+				F415827E1AAE0F9100645EC1 /* IPUploadPhotoViewController.h */,
+				F415827F1AAE0F9F00645EC1 /* IPUploadPhotoViewController.m */,
+				F41B48641AFA88B6008C28AD /* IPPhotoResultViewController.h */,
+				F41B48651AFA88C6008C28AD /* IPPhotoResultViewController.m */,
 				F46EB1221A5FF2220004619F /* iRate.h */,
 				F46EB1231A5FF2220004619F /* iRate.m */,
 				F4075717198929FF00F2564A /* Flurry.h */,
@@ -1398,6 +1492,10 @@
 				F429F8DC17086D4B006E7CDE /* IPLeaderboardViewController.m */,
 				F429F8DE17086DF5006E7CDE /* IPLeaderboardItemCell.h */,
 				F429F8DF17086E0A006E7CDE /* IPLeaderboardItemCell.m */,
+				F41B48571AF264B3008C28AD /* IPPhotoLeaderboardViewController.h */,
+				F41B48581AF264CE008C28AD /* IPPhotoLeaderboardViewController.m */,
+				F41B485A1AF264E1008C28AD /* IPPhotoLeaderboardItemCell.h */,
+				F41B485B1AF264F2008C28AD /* IPPhotoLeaderboardItemCell.m */,
 				F4F714BC16AEB4AA00FCCA82 /* IPLobbyViewController.h */,
 				F4F714BD16AEB4AB00FCCA82 /* IPLobbyViewController.m */,
 				F4AFEDEC16D930900055F376 /* IPLobbyItemCell.h */,
@@ -1433,6 +1531,10 @@
 			children = (
 				F4F714CB16B9745C00FCCA82 /* Period.h */,
 				F48F94AC16B97488004983EE /* Period.m */,
+				F49868A61ACC35A300C03AAE /* Photo.h */,
+				F49868A71ACC35B600C03AAE /* Photo.m */,
+				F49868A31AB1D48600C03AAE /* PhotoUpload.h */,
+				F49868A41AB1D49600C03AAE /* PhotoUpload.m */,
 				F45EE48F198FC8960062429D /* PeriodOptions.h */,
 				F45EE490198FC8A30062429D /* PeriodOptions.m */,
 				F4D758621897E9D600242327 /* AddUsers.h */,
@@ -1477,10 +1579,14 @@
 				F4B706F21695CB0100E9FCD8 /* Game.m */,
 				F429F8CD170853F3006E7CDE /* Leaderboard.h */,
 				F429F8CE17085403006E7CDE /* Leaderboard.m */,
+				F41B48501AF25DA6008C28AD /* PhotoLeaderboard.h */,
+				F41B48511AF25DBF008C28AD /* PhotoLeaderboard.m */,
 				F48F94AE16B974A0004983EE /* GameDataController.h */,
 				F48F94AF16B974BD004983EE /* GameDataController.m */,
 				F429F8D017085425006E7CDE /* LeaderboardDataController.h */,
 				F429F8D11708543C006E7CDE /* LeaderboardDataController.m */,
+				F41B485F1AF8D387008C28AD /* PhotoLeaderboardDataController.h */,
+				F41B48601AF8D397008C28AD /* PhotoLeaderboardDataController.m */,
 				F4F714C816B1748800FCCA82 /* MenuDataController.h */,
 				F4F714C916B1748800FCCA82 /* MenuDataController.m */,
 				F494241116E6563400AC0644 /* FanDataController.h */,
@@ -1516,6 +1622,7 @@
 		F4B706CA1695C74700E9FCD8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F41B48731B0DF767008C28AD /* FacebookSDK.framework */,
 				F407571A19893E0500F2564A /* SDWebImage.framework */,
 				F40F7D57182552AF00EBA8A1 /* FacebookSDK.framework */,
 				F44867A817C2491B00975F75 /* AdSupport.framework */,
@@ -1577,6 +1684,9 @@
 				1D07A68E18172A1F00E0F783 /* IPSettingsViewController.xib */,
 				F46EB1281A60300B0004619F /* IPNewInfoViewController.xib */,
 				F41F600117E0A7C4003B713B /* IPTutorialViewController.xib */,
+				F49DD0481AADC78A007A08D6 /* IPPhotoViewController.xib */,
+				F415827C1AAE0F6700645EC1 /* IPUploadPhotoViewController.xib */,
+				F41B48621AFA87FC008C28AD /* IPPhotoResultViewController.xib */,
 				F429F8CA1704B08D006E7CDE /* IPInfoViewController.xib */,
 				F45C6D2019B872B6005780DD /* IPTrophyView.xib */,
 				F45C6D3319B8B4A9005780DD /* IPTrophyCell.xib */,
@@ -1588,6 +1698,9 @@
 				F429F8D5170865F3006E7CDE /* IPLeaderboardFooterView.xib */,
 				F429F8D717086677006E7CDE /* IPLeaderboardViewController.xib */,
 				F429F8D917086A81006E7CDE /* IPLeaderboardItemCell.xib */,
+				F41B485D1AF7B0A5008C28AD /* IPPhotoLeaderboardViewController.xib */,
+				F41B48531AF262BF008C28AD /* IPPhotoLeaderboardHeaderView.xib */,
+				F41B48551AF262E3008C28AD /* IPPhotoLeaderboardItemCell.xib */,
 				F4E4CCBA17BD1E1A00468FB6 /* IPFanFooterView.xib */,
 				F4E4CCBC17BD202E00468FB6 /* IPFanViewController.xib */,
 				F4D1A624187C288F00801F14 /* IPFriendFooterView.xib */,
@@ -1747,6 +1860,8 @@
 				F4119CD016C910D80028DB2E /* lobby-row-hit-state.png in Resources */,
 				F4119CD216C910D80028DB2E /* menu-button-hit-state.png in Resources */,
 				F4119CDC16CA6E4F0028DB2E /* menu-button.png in Resources */,
+				F41B48721AFCF26D008C28AD /* add-photo-button@2x.png in Resources */,
+				F41B48631AFA87FC008C28AD /* IPPhotoResultViewController.xib in Resources */,
 				F4119CED16CEBD770028DB2E /* Selection.h in Resources */,
 				F4CB022B182AB0F90016AB1D /* NotificationBackgroundError@2x.png in Resources */,
 				F48A20511906780E00D2C4E7 /* lobby-bar-2-hitstate@2x.png in Resources */,
@@ -1780,6 +1895,7 @@
 				F494244416EE583700AC0644 /* menu-final-row-line.png in Resources */,
 				F45EE49B1991542C0062429D /* Tutorial1s.png in Resources */,
 				F429F8CC1704B08D006E7CDE /* IPInfoViewController.xib in Resources */,
+				F415827D1AAE0F6700645EC1 /* IPUploadPhotoViewController.xib in Resources */,
 				F48A2057190A70D600D2C4E7 /* lobby-bar-drop-done@2x.png in Resources */,
 				F4EE19691927D0B900CE2EF2 /* 120x120-iPhone-Retina-icon.png in Resources */,
 				F48A204718E2161B00D2C4E7 /* IPLeaderboardHeaderView.xib in Resources */,
@@ -1794,6 +1910,7 @@
 				F429F8E8170A0A9E006E7CDE /* login-button-normal.png in Resources */,
 				F429F8E9170A0A9E006E7CDE /* login-button-hit.png in Resources */,
 				F446728118CF917E00279A8F /* reality-tv-hit@2x.png in Resources */,
+				F41B486C1AFBA967008C28AD /* dislike-button@2x.png in Resources */,
 				F429F8F1170B19A4006E7CDE /* rank-points-main-background.png in Resources */,
 				F429F8F2170B19A4006E7CDE /* submit-button-background.png in Resources */,
 				F4DF073D1A432D8900837FAE /* banked-3-times-complete@2x.png in Resources */,
@@ -1838,6 +1955,7 @@
 				F479CDAC1721594C008AF68D /* segcontrol_uns@2x.png in Resources */,
 				F4EE194C19276A7400CE2EF2 /* lobby-bar-drop-done.png in Resources */,
 				F446729018CF917E00279A8F /* rugby-hit.png in Resources */,
+				F49868B51ACD7A4000C03AAE /* noButton.png in Resources */,
 				F4D7CCCA18B6354F00AC025A /* header-bar-small@2x.png in Resources */,
 				F479CDB417215A9C008AF68D /* bank-normal@2x.png in Resources */,
 				F4CB022F182AB0F90016AB1D /* NotificationBackgroundMessage@2x.png in Resources */,
@@ -1945,16 +2063,19 @@
 				F446729218CF917E00279A8F /* awards-hit.png in Resources */,
 				F4F04713185A3A8A004D1498 /* amber@2x.png in Resources */,
 				F47E3777174FBD7500C5C508 /* completed-row.png in Resources */,
+				F49868B81ACD8DAB00C03AAE /* checkButton.png in Resources */,
 				F47E3778174FBD7500C5C508 /* grey-button@2x.png in Resources */,
 				F47E377D174FC1F400C5C508 /* leaderboard-button-hit-state.png in Resources */,
 				F47E377E174FC1F400C5C508 /* leaderboard-button-hit-state@2x.png in Resources */,
 				F47E377F174FC1F400C5C508 /* leaderboard-button.png in Resources */,
 				F47E3780174FC1F400C5C508 /* leaderboard-button@2x.png in Resources */,
+				F41B486D1AFBA967008C28AD /* global-icon@2x.png in Resources */,
 				F47E3787174FCC0B00C5C508 /* rank-points-main-background@2x.png in Resources */,
 				F47E3788174FCC0B00C5C508 /* submit-button-background@2x.png in Resources */,
 				F4F852C1192130D6002B19A4 /* stats-circle-2@2x.png in Resources */,
 				F4EE196A1927D0B900CE2EF2 /* 114x114-iPhone-Retina-icon.png in Resources */,
 				F4EE1963192798A300CE2EF2 /* 80x80-iPhone-Retina-icon.png in Resources */,
+				F49868B41ACD7A4000C03AAE /* yesButton.png in Resources */,
 				F4CB0236182AB0F90016AB1D /* NotificationBackgroundWarningIcon.png in Resources */,
 				F4F852BF192130D6002B19A4 /* screen-football@2x.png in Resources */,
 				F47E3789174FCC0B00C5C508 /* submit-button-hit-state@2x.png in Resources */,
@@ -1986,6 +2107,7 @@
 				F4EE196C1927D0B900CE2EF2 /* 57x57-iPhone-icon.png in Resources */,
 				F47B7BF817AA9B570008D3B9 /* bottom-section-leaderboard@2x.png in Resources */,
 				F446729318CF917E00279A8F /* finance-hit.png in Resources */,
+				F41B48541AF262BF008C28AD /* IPPhotoLeaderboardHeaderView.xib in Resources */,
 				F4F8043717FEE2B40048A944 /* tick@2x.png in Resources */,
 				F47B7BFA17AAC12C0008D3B9 /* background-only@2x.png in Resources */,
 				F47B7BFD17AAC4A60008D3B9 /* line-divider.png in Resources */,
@@ -1995,7 +2117,9 @@
 				F47B7C1417B0FE1C0008D3B9 /* fan@2x.png in Resources */,
 				F4F852C91922622B002B19A4 /* never-inplay.png in Resources */,
 				F47B7C1517B0FE1C0008D3B9 /* info.png in Resources */,
+				F49868B91ACD8DAB00C03AAE /* xButton.png in Resources */,
 				F407571D198BB3D700F2564A /* IPFantasyViewController.xib in Resources */,
+				F415827B1AAE0D6800645EC1 /* goal.png in Resources */,
 				F4EE194F19276A7400CE2EF2 /* lobby-bar-1.png in Resources */,
 				F446729A18CF917E00279A8F /* tennis-hit.png in Resources */,
 				F47B7C1617B0FE1C0008D3B9 /* info@2x.png in Resources */,
@@ -2012,6 +2136,7 @@
 				F47B7C1E17B0FE1C0008D3B9 /* settings@2x.png in Resources */,
 				F446729918CF917E00279A8F /* basketball-hit.png in Resources */,
 				F4CB0239182AB0F90016AB1D /* NotificationButtonBackground@2x.png in Resources */,
+				F41B486F1AFBA967008C28AD /* red-card-icon@2x.png in Resources */,
 				F47B7C2117B0FE1C0008D3B9 /* winners.png in Resources */,
 				F47B7C2217B0FE1C0008D3B9 /* winners@2x.png in Resources */,
 				F47B7C2417B6BC7D0008D3B9 /* menu-final-row-line@2x.png in Resources */,
@@ -2024,6 +2149,7 @@
 				F47B7C2817BBAC340008D3B9 /* login-button-normal@2x.png in Resources */,
 				F497611718B2366800016238 /* create-button-game-hit-state@2x.png in Resources */,
 				F4F047031857D141004D1498 /* IPWinnersHeaderView.xib in Resources */,
+				F41B485E1AF7B0A5008C28AD /* IPPhotoLeaderboardViewController.xib in Resources */,
 				F4EE194419276A7400CE2EF2 /* stats-circle-2.png in Resources */,
 				F4D7CCD018B7ACEE00AC025A /* login-button-disabled@2x.png in Resources */,
 				F446729418CF917E00279A8F /* baseball-hit.png in Resources */,
@@ -2070,11 +2196,14 @@
 				F44867A217C0C60C00975F75 /* IPRegisterViewController.xib in Resources */,
 				F44867B017C2632F00975F75 /* lobby-sub-row-hit-gray.png in Resources */,
 				F44867B217C36ED200975F75 /* IPPasswordViewController.xib in Resources */,
+				F41B48561AF262E3008C28AD /* IPPhotoLeaderboardItemCell.xib in Resources */,
 				F41F600217E0A7C4003B713B /* IPTutorialViewController.xib in Resources */,
 				F41F601417E1BE6D003B713B /* tutorial-button-hit-state.png in Resources */,
 				F41F601517E1BE6D003B713B /* tutorial-button-hit-state@2x.png in Resources */,
+				F41B486E1AFBA967008C28AD /* like-button@2x.png in Resources */,
 				F41F601617E1BE6D003B713B /* tutorial-button.png in Resources */,
 				F41F601717E1BE6D003B713B /* tutorial-button@2x.png in Resources */,
+				F49DD0491AADC78A007A08D6 /* IPPhotoViewController.xib in Resources */,
 				F41F601817E1BE6D003B713B /* tutorial-icon-hit-state.png in Resources */,
 				F41F601917E1BE6D003B713B /* tutorial-icon-hit-state@2x.png in Resources */,
 				F446729518CF917E00279A8F /* snooker-hit.png in Resources */,
@@ -2099,6 +2228,7 @@
 				F4F046F118464FA8004D1498 /* stats-hit@2x.png in Resources */,
 				F48A20501906780E00D2C4E7 /* lobby-bar-1-hitstate@2x.png in Resources */,
 				F407571F198BB48100F2564A /* IPFantasyItemCell.xib in Resources */,
+				F41B48701AFBA967008C28AD /* upload-button@2x.png in Resources */,
 				F4F046EC18464FA8004D1498 /* friends-hit.png in Resources */,
 				F497610A18AA642500016238 /* lobby-bar-drop-down-bar@2x.png in Resources */,
 				F4EE194919276A7400CE2EF2 /* screen-football-b.png in Resources */,
@@ -2135,16 +2265,23 @@
 				F4F714B716A712FA00FCCA82 /* UINavigationController+MFSideMenu.m in Sources */,
 				F4F714B816A712FA00FCCA82 /* IPAppDelegate.m in Sources */,
 				F49760F818A2B3AE00016238 /* Motd.m in Sources */,
+				F49868A51AB1D49600C03AAE /* PhotoUpload.m in Sources */,
 				F4CB023C182AB0F90016AB1D /* TSMessageView.m in Sources */,
 				F4F047061858820F004D1498 /* OverallWinners.m in Sources */,
+				F41B48661AFA88C6008C28AD /* IPPhotoResultViewController.m in Sources */,
 				F4A42FF3192F5760009F91F8 /* GameWinners.m in Sources */,
 				F4F714B916A712FA00FCCA82 /* SideMenuViewController.m in Sources */,
 				F46EB1271A602AB40004619F /* IPNewInfoViewController.m in Sources */,
+				F49868A81ACC35B600C03AAE /* Photo.m in Sources */,
+				F49868AF1ACD795E00C03AAE /* DraggableView.m in Sources */,
 				F4F714BF16AEB4AB00FCCA82 /* IPLobbyViewController.m in Sources */,
 				F4F714C416AEEF7F00FCCA82 /* IPGameViewController.m in Sources */,
+				F49868B11ACD795E00C03AAE /* OverlayView.m in Sources */,
 				F4F714CA16B1748900FCCA82 /* MenuDataController.m in Sources */,
 				F48F94AD16B97488004983EE /* Period.m in Sources */,
 				F46EB1241A5FF2220004619F /* iRate.m in Sources */,
+				F41B48521AF25DBF008C28AD /* PhotoLeaderboard.m in Sources */,
+				F49DD04C1AADC7C7007A08D6 /* IPPhotoViewController.m in Sources */,
 				1D6043381816B87300F058B0 /* IPMultiLoginViewController.m in Sources */,
 				F4D1A62A187C6CEF00801F14 /* IPCreateViewController.m in Sources */,
 				F45EE4A919A642D50062429D /* IPFantasyResultViewController.m in Sources */,
@@ -2155,6 +2292,7 @@
 				F4AFEDEE16D930900055F376 /* IPLobbyItemCell.m in Sources */,
 				F494240716E6265400AC0644 /* IPLoginViewController.m in Sources */,
 				F4706C1A1886E730002D4525 /* IPAddFriendsViewController.m in Sources */,
+				F49868B01ACD795E00C03AAE /* DraggableViewBackground.m in Sources */,
 				F494240B16E648B900AC0644 /* MF_Base64Additions.m in Sources */,
 				F4ADF2B518BCF40000970324 /* IPPickUsernamesViewController.m in Sources */,
 				F4075725198BBD3100F2564A /* IPFantasyViewController.m in Sources */,
@@ -2177,12 +2315,15 @@
 				F429F8F9170EDE64006E7CDE /* Competition.m in Sources */,
 				F45C6D2419B8764C005780DD /* IPTrophyViewController.m in Sources */,
 				F479CD82171486C7008AF68D /* Fan.m in Sources */,
+				F41B48611AF8D397008C28AD /* PhotoLeaderboardDataController.m in Sources */,
 				F4008C651740FCC700B9A23E /* CompetitionPoints.m in Sources */,
 				F4CB0229182AB0F90016AB1D /* TSMessage.m in Sources */,
 				F42D4CA6174A910F00206ABC /* Error.m in Sources */,
 				F4ABEA0A18903D5000C87786 /* PoolMember.m in Sources */,
 				F4075722198BB90900F2564A /* IPFantasyItemCell.m in Sources */,
 				F47E3793175FAFA900C5C508 /* IPSettingsViewController.m in Sources */,
+				F41582801AAE0F9F00645EC1 /* IPUploadPhotoViewController.m in Sources */,
+				F41B485C1AF264F2008C28AD /* IPPhotoLeaderboardItemCell.m in Sources */,
 				F4CB0241182AB4130016AB1D /* HexColor.m in Sources */,
 				F47E37961760E27B00C5C508 /* Account.m in Sources */,
 				F4CB0247182BCACF0016AB1D /* IPStatsViewController.m in Sources */,
@@ -2192,6 +2333,7 @@
 				F4706C2418881079002D4525 /* IPFriendPoolViewController.m in Sources */,
 				F4857F871777539A0050FEDA /* Banner.m in Sources */,
 				F4AE7C04179824D400303B34 /* IPWinnersViewController.m in Sources */,
+				F41B48591AF264CE008C28AD /* IPPhotoLeaderboardViewController.m in Sources */,
 				F47B7BDB17A67FFC0008D3B9 /* CompetitionWinners.m in Sources */,
 				F44867A417C0CD7400975F75 /* IPRegisterViewController.m in Sources */,
 				F44867B517C3707800975F75 /* IPPasswordViewController.m in Sources */,
@@ -2280,6 +2422,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					/Users/inplayrs/Documents/Code/Inplayrs,
 					"$(PROJECT_DIR)",
+					/Users/inplayrs/Documents/FacebookSDK,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Inplayrs/Inplayrs-Prefix.pch";
@@ -2290,8 +2433,8 @@
 					"$(PROJECT_DIR)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f0bc141b-ef48-4c01-80d2-5383d126c8b5";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "f0bc141b-ef48-4c01-80d2-5383d126c8b5";
+				PROVISIONING_PROFILE = "b7d5a182-82da-4f62-8a7c-ee055fb1e695";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "b7d5a182-82da-4f62-8a7c-ee055fb1e695";
 				USER_HEADER_SEARCH_PATHS = "";
 				"VALID_ARCHS[sdk=*]" = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
@@ -2306,6 +2449,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					/Users/inplayrs/Documents/Code/Inplayrs,
 					"$(PROJECT_DIR)",
+					/Users/inplayrs/Documents/FacebookSDK,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Inplayrs/Inplayrs-Prefix.pch";
